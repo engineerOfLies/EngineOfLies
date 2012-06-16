@@ -1,0 +1,101 @@
+Engine Components to make:
+eol
+  The core of the library.  All of EOL can initialized through it.
+  
+eol_types
+  Common types library.  unified across all component libraries (SDL, OpenGL, Chipmunk)
+  
+eol_logger
+  Generic logging to file, terminal / in game console
+  
+eol_loader
+  Generic file loading through PhysFS when available
+  
+eol_resource
+  generic resource pool manager.  common boilerplate code used for all resource managers
+  
+eol_opengl
+  helpful openGL utilities and definitions to make openGL work across all platforms
+  
+eol_graphics
+  video set up, opengl & sdl initialization
+  
+eol_font
+  resource manager for the loading of fonts and rendering of text to screen.
+  
+eol_input
+  manager of standard and custom inputs from keyboard/mouse/joystick
+  
+eol_matrix
+  matrix types and math functions for working with matricies
+  
+eol_sprite
+  resource manager for the loading / rendering of 2D animated sprites
+  
+eol_mesh
+  resource manager for the loading / rendering of 3D objects
+  
+eol_armature
+  resource manager for the loading of armatures and the deformation of eolMesh's
+  
+eol_particle
+  resource manager for the spawning and rendering of particles.
+  
+eol_lighting
+  resource manager for the spawning and control of openGL lights.
+  
+eol_buttons
+  definition of button types and maintenance functions
+
+eol_windows
+  resource manager for in engine windows
+  
+eol_audio
+  resource manager for the loading and playing of sounds and music
+
+eol_actor
+  resource manager for the loading of actors (inherits from sprite, mesh and armature)
+  
+eol_collide
+  physics simulation layer/ resource manager for collision entities (colliders)
+
+eol_net       - meehan
+  network interfacing layer
+
+eol_server    - meehan
+  initialization of the engine as a server instance.  handles the publication of state / client sync
+  
+eol_client    - meehan
+  initialization of the engine as a client instance.  handles publication of input / server sync
+  
+eol_config    - meehan
+  loads configuration from file and loads it into memory structures.  Uses include system component configuration  (Graphics config, etc) and in game asset configuration such as item / spell lists
+  
+eol_entity
+  handle generic entity maintenance such as the creation of, updating to and destruction of entities.
+  
+eol_console
+  Handles the rendering (through windows/font) of an in game console.  used for live changes to game components while testing.
+eol_dialog
+  stock dialogs, such as string/number prompts, yes/no dialogs
+
+Game Components to Make:
+
+menus - in game menus
+
+level - draws background, spawns all level_ents
+
+items - player inventory loaded from config
+
+player - entity def - uses player input.
+
+monsters - entity def - loads monster config
+
+projectiles - entity def
+
+editor - level / game object editor
+
+npcs - inherits monster config, plus dialog / shop behavior.
+
+level_ents - entity components placed in the level, ie: spawn points, doors, item drops, etc.
+
