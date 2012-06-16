@@ -1,0 +1,5 @@
+game.o: game.c ../include/eol.h ../include/eol_types.h \
+ ../include/eol_opengl.h ../include/eol_graphics.h \
+ ../include/eol_sprite.h ../include/eol_graphics.h ../include/eol_input.h \
+ ../include/eol_mesh.h ../include/eol_sprite.h ../include/eol_armature.h \
+ ../include/eol_mesh.h ../include/eol_matrix.h ../include/eol_font.h
