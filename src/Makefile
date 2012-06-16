@@ -17,6 +17,7 @@ OBJ = $(patsubst %.c,%.o,$(wildcard *.c))
 # Linux
 PROJECT = eoltest
 CC      = gcc
+#CC	= clang
 GLIB_CFLAGS = `pkg-config --cflags glib-2.0`
 GLIB_LDFLAGS = `pkg-config --libs glib-2.0`
 SDL_CFLAGS = `sdl-config --cflags`
@@ -34,7 +35,7 @@ DOXYGEN = doxygen
 #
 
 $(PROJECT): $(OBJ)
-	gcc $(OBJ) $(LFLAGS) $(EOL_LDFLAGS) $(SDL_LDFLAGS)
+	$(CC) $(OBJ) $(LFLAGS) $(EOL_LDFLAGS) $(SDL_LDFLAGS)
 docs:
 	$(DOXYGEN) doxygen.cfg
   
@@ -61,5 +62,5 @@ include makefile.dep
 #
 
 .c.o:
-	gcc $(CFLAGS) $(EOL_CFLAGS) $(SDL_CFLAGS) -c $<
+	$(CC) $(CFLAGS) $(EOL_CFLAGS) $(SDL_CFLAGS) -c $<
 
