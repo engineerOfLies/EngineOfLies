@@ -1,0 +1,27 @@
+eol.o: eol.c eol.h eol_types.h eol_opengl.h eol_logger.h eol_graphics.h \
+ eol_font.h eol_sprite.h eol_input.h eol_mesh.h eol_armature.h \
+ eol_matrix.h eol_loader.h
+eol_actor.o: eol_actor.c eol_actor.h eol_types.h eol_opengl.h eol_mesh.h \
+ eol_sprite.h eol_graphics.h eol_armature.h eol_matrix.h eol_resource.h \
+ eol_logger.h
+eol_armature.o: eol_armature.c eol_armature.h eol_mesh.h eol_types.h \
+ eol_opengl.h eol_sprite.h eol_graphics.h eol_matrix.h eol_logger.h \
+ eol_loader.h
+eol_font.o: eol_font.c eol_font.h eol_types.h eol_opengl.h eol_logger.h \
+ eol_graphics.h
+eol_graphics.o: eol_graphics.c eol_graphics.h eol_types.h eol_opengl.h \
+ eol_logger.h
+eol_input.o: eol_input.c eol_input.h eol_types.h eol_opengl.h
+eol_loader.o: eol_loader.c eol_loader.h eol_types.h eol_opengl.h \
+ eol_logger.h
+eol_logger.o: eol_logger.c eol_logger.h eol_types.h eol_opengl.h
+eol_matrix.o: eol_matrix.c eol_matrix.h eol_types.h eol_opengl.h \
+ eol_mesh.h eol_sprite.h eol_graphics.h eol_logger.h
+eol_mesh.o: eol_mesh.c eol_mesh.h eol_types.h eol_opengl.h eol_sprite.h \
+ eol_graphics.h eol_logger.h eol_loader.h
+eol_opengl.o: eol_opengl.c eol_opengl.h
+eol_resource.o: eol_resource.c eol_resource.h eol_types.h eol_opengl.h \
+ eol_logger.h
+eol_sprite.o: eol_sprite.c eol_sprite.h eol_graphics.h eol_types.h \
+ eol_opengl.h eol_logger.h eol_loader.h
+eol_types.o: eol_types.c eol_types.h eol_opengl.h

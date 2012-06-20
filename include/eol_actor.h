@@ -51,7 +51,7 @@ typedef struct
 /*NOTE: may want to make meshes and sprites possibly lists...*/
 typedef struct
 {
-  eolResourceHeader header;          /**<to make this compatible with the resource manager*/
+  eolLine        name;               /**<name of the actor, likely the filename*/
   eolMesh      * _mesh;              /**<optional pointer to the 3d Mesh data*/
   eolLine        _meshFile;          /**<file to load for a mesh*/
   eolSprite    * _skin;              /**<optional pointer to the mesh skin sprite*/
@@ -65,7 +65,8 @@ typedef struct
   eolFloat       currentFrame;       /**<the frame that will next be drawn*/
   eolFloat       frameRate;          /**<ammount a frame changes each round*/
   eolInt         frameDirection;     /**<direction of the animation*/
-  eolAction   ** _actionList;        /**<allocated list of actions*/
+  eolUint        numActions;         /**<number of actions for this actor*/
+  eolAction    * _actionList;        /**<allocated list of actions*/
 }eolActor;
 
 /**
@@ -166,5 +167,8 @@ void eol_actor_draw(
     eolFloat alpha
   );
 
+eolActor *eol_actor_load(
+    char *filename
+  );
 #endif
 

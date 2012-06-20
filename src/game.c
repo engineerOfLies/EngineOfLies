@@ -5,6 +5,7 @@
 #include "eol_mesh.h"
 #include "eol_armature.h"
 #include "eol_font.h"
+#include "eol_actor.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -24,6 +25,7 @@ int main(int argc, char *argv[])
   eolMesh *mesh2 = NULL;
   eolSprite *skin2 = NULL;
   eolArmature *arm2 = NULL;
+  eolActor *actor = NULL;
   for(i = 1;i < argc;i++)
   {
     if(strcmp(argv[i],"-fs")== 0)
@@ -35,13 +37,13 @@ int main(int argc, char *argv[])
   }
   Init_All(argv[0]);
   done = 0;
+  actor = eol_actor_load("models/bruiser.actor");
   sprite = eol_sprite_load("images/skeleton.png",128,128);
   mesh = eol_mesh_load("models/bruiser/model.obj");
   skin = eol_sprite_load("models/bruiser/skin1.png",-1,-1);
   arm = eol_armature_load("models/bruiser/model.obj");
   mesh2 = eol_mesh_load("models/testmodel/whitecell.obj");
   skin2 = eol_sprite_load("models/testmodel/whitecell.png",-1,-1);
-//  arm2 = eol_armature_load("models/zombie/model.obj");
   eol_armature_link_mesh(arm,mesh);
   eol_armature_link_mesh(arm2,mesh2);
   do

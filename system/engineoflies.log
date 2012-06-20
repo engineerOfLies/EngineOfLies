@@ -2,6 +2,8 @@ eol_graphics: initializing
 eol_graphics: initialized
 eol_font: initializing
 eol_font: initialized
+eol_actor:initializing
+eol_actor:initialized
 eol_sprites: initializing
 eol_sprites: initialized
 eol_mesh:initializing
@@ -15,3 +17,5 @@ eol_mesh:closing
 eol_mesh:closed
 eol_sprite: closing
 eol_sprite: closed
+eol_actor:closing
+eol_actor:closed

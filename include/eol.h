@@ -27,6 +27,7 @@ enum eol_components {
 	EOL_MESH      = 8,
 	EOL_ARMATURE  = 16,
 	EOL_INPUT     = 32,
+	EOL_ACTOR     = 64,
 	EOL_ALL       = 0xFFFF
 };
 

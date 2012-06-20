@@ -33,7 +33,8 @@ typedef struct
   eolUint   _data_max;
   eolUint   _data_size;
   char *    _data_list;   /**<character buffer of data*/
-  void (*data_delete)(void **data);
+  void (*data_delete)(void *data);
+  eolBool (*data_load)(char *filename,void *data);
 }eolResourceManager;
 
 /*All resources managed by this system must contain this header structure.*/
@@ -44,26 +45,31 @@ typedef struct
   eolUint index;
 }eolResourceHeader;
 
-typedef struct
-{
-  eolResourceHeader header; /*this will be how an actual resource is set up.*/
-  /*resource specific data will go here*/
-}eolResource;
-
 eolResourceManager *eol_resource_manager_new();
 
 eolResourceManager * eol_resource_manager_init(
     eolLine managerName,
     eolUint max,
     eolUint dataSize,
-    void    (*data_delete)(void **data)
+    void    (*data_delete)(void *data),
+    eolBool (*data_load)(char *filename,void *data)
     );
     
 void * eol_resource_new_element(eolResourceManager *manager);
+
+void eol_resource_free_element(eolResourceManager *manager,void **data);
     
-void eol_resource_manager_close(eolResourceManager *manager);
+void eol_resource_manager_free(eolResourceManager **manager);
 
+/**
+ * @brief delete any unreferenced data from the resource manager
+ *        a delete function must be set.
+ *
+ * @param manager the resource manager to be cleaned.
+ */
+void eol_resource_manager_clean(eolResourceManager *manager);
 
+void *eol_resource_manager_load_resource(eolResourceManager *manager,char *filename);
 
 #endif
 
