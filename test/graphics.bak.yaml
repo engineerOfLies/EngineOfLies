@@ -1,0 +1,25 @@
+---
+graphics: 
+  view:
+    depth:     32
+    openGLOn:   1
+    xRes:     640
+    yRes:     480
+    mipmapping: false
+    mask:
+      - 
+        endian: big
+        red:    0xff000000
+        green:  0x00ff0000
+        blue:   0x0000ff00
+        alpha:  0x000000ff
+      - 
+                endian: little
+        red:    0x000000ff
+        green:  0x0000ff00
+        blue:   0x00ff0000
+        alpha:  0xff000000
+  trackFPS: 1
+  fullScreen: 0
+  scaleFactor: 1
+  frameDelay: 16

@@ -17,6 +17,7 @@ OBJECTS = $(patsubst %.c,%.o,$(wildcard *.c))
 # Linux
 PROJECT = eol
 CC      = gcc
+#CC      = clang
 GLIB_CFLAGS = `pkg-config --cflags glib-2.0`
 GLIB_LDFLAGS = `pkg-config --libs glib-2.0`
 SDL_CFLAGS = `sdl-config --cflags` 
@@ -32,7 +33,7 @@ DOXYGEN = doxygen
 #
 
 $(PROJECT): $(OBJECTS)
-	gcc $(OBJECTS) $(LFLAGS) $(SDL_LDFLAGS) $(GLIB_LDFLAGS) libchipmunk.a
+	$(CC) $(OBJECTS) $(LFLAGS) $(SDL_LDFLAGS) $(GLIB_LDFLAGS) libchipmunk.a
 
 docs:
 	$(DOXYGEN) doxygen.cfg
@@ -70,6 +71,6 @@ include makefile.dep
 #
 
 .c.o:
-	gcc $(CFLAGS) $(SDL_CFLAGS) $(GLIB_CFLAGS) -c $<
+	$(CC) $(CFLAGS) $(SDL_CFLAGS) $(GLIB_CFLAGS) -c $<
 
 
