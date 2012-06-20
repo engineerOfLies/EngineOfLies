@@ -60,6 +60,7 @@ typedef struct
   eolLine        _armFile;           /**<file to load for a mesh armature*/
   eolSprite    * _sprite;            /**<optional pointer to the rendered sprite*/
   eolLine        _spriteFile;        /**<file to load for a sprite*/
+  eolBool        _sprite_3D;      /**<sprites are assumed to be 2D unless this is true*/
   eolWord        currentActionName;  /**<The name of the current action*/
   eolUint        currentActionIndex; /**<index into the actionList of the current action*/
   eolFloat       currentFrame;       /**<the frame that will next be drawn*/
@@ -167,6 +168,13 @@ void eol_actor_draw(
     eolFloat alpha
   );
 
+/**
+ * @brief loads an actor from a .actor file returning a pointer to it
+ *
+ * @param filename the file to load the actor from
+ *
+ * @return a pointer to the loaded actor, or NULL if not found or other error
+ */
 eolActor *eol_actor_load(
     char *filename
   );

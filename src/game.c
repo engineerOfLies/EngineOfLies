@@ -2,8 +2,6 @@
 #include "eol_graphics.h"
 #include "eol_sprite.h"
 #include "eol_input.h"
-#include "eol_mesh.h"
-#include "eol_armature.h"
 #include "eol_font.h"
 #include "eol_actor.h"
 #include <string.h>
@@ -19,12 +17,6 @@ int main(int argc, char *argv[])
   eolLine fps;
   eolFloat frame = 0;
   eolSprite *sprite = NULL;
-  eolMesh *mesh = NULL;
-  eolSprite *skin = NULL;
-  eolArmature *arm = NULL;
-  eolMesh *mesh2 = NULL;
-  eolSprite *skin2 = NULL;
-  eolArmature *arm2 = NULL;
   eolActor *actor = NULL;
   for(i = 1;i < argc;i++)
   {
@@ -39,13 +31,6 @@ int main(int argc, char *argv[])
   done = 0;
   actor = eol_actor_load("models/bruiser.actor");
   sprite = eol_sprite_load("images/skeleton.png",128,128);
-  mesh = eol_mesh_load("models/bruiser/model.obj");
-  skin = eol_sprite_load("models/bruiser/skin1.png",-1,-1);
-  arm = eol_armature_load("models/bruiser/model.obj");
-  mesh2 = eol_mesh_load("models/testmodel/whitecell.obj");
-  skin2 = eol_sprite_load("models/testmodel/whitecell.png",-1,-1);
-  eol_armature_link_mesh(arm,mesh);
-  eol_armature_link_mesh(arm2,mesh2);
   do
   {
     eol_input_update();
@@ -61,27 +46,14 @@ int main(int argc, char *argv[])
 
   	eol_sprite_draw(sprite,(eolInt)frame,100,100);
   
-//    eol_armature_deform_mesh(arm2, mesh2,frame);
-  	eol_mesh_draw(
-        mesh2,
-        eol_vec3d(2, 0, -10),
-        eol_vec3d(-90, 0, rot+=1),
-        eol_vec3d(0.3,0.3,0.3),
-        eol_vec3d(1,1,1),
-        1,
-        skin2
-      );
-
-    eol_armature_deform_mesh(arm, mesh,frame);
-  	eol_mesh_draw(
-        mesh,
-        eol_vec3d(-2, 0, -10),
-        eol_vec3d(-90, 0, rot),
-        eol_vec3d(1,1,1),
-        eol_vec3d(1, 1, 1),
-        1,
-        skin
-      );
+    eol_actor_draw(
+      actor,
+      eol_vec3d(0,0,-10),
+      eol_vec3d(-90,0,rot),
+      eol_vec3d(1,1,1),
+      eol_vec3d(1,1,1),
+      1
+    );
 
     eol_font_draw_text(
       "TESTING",
@@ -91,7 +63,18 @@ int main(int argc, char *argv[])
       1,
       3);
 
-
+/*TODO: make text work in 3D
+      eol_font_draw_text_3D(
+      "ROTATING 3D TEXT",
+      eol_vec3d(0,2,-10),
+      eol_vec3d(-90,0,rot),
+      eol_vec3d(1,1,1),
+      eol_vec3d(1,1,1),
+      1,
+      3
+    );      
+*/
+    rot = rot + 0.25;
     if (rot > 360)rot -= 360;
     eol_graphics_frame_end();
   	if(frame >= 14.0)frame = 2.0;

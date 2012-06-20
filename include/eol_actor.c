@@ -37,6 +37,14 @@ void eol_actor_config()
   _eol_actor_max = 2048;
 }
 
+void eol_actor_free(
+    eolActor **act
+  )
+{
+  if (!eol_actor_initialized())return;
+  eol_resource_free_element(_eol_actor_manager,(void **)act);
+}
+
 eolActor *eol_actor_load(
     char *filename
   )
@@ -117,6 +125,8 @@ eolBool eol_actor_load_data_from_file(char * filename,void *data)
   eolLine buf;
   eolFile *file;
   eolActor *act;
+  eolInt temp;
+  eolInt sw = -1,sh = -1;
   file = eol_loader_read_file(filename);
 
   if (file == NULL)
@@ -142,14 +152,134 @@ eolBool eol_actor_load_data_from_file(char * filename,void *data)
       fscanf(file->file, "%s",act->_skinFile);
       continue;
     }
+    if(strcmp(buf,"arm:") == 0)
+    {
+      fscanf(file->file, "%s",act->_armFile);
+      continue;
+    }
+    if(strcmp(buf,"sprite:") == 0)
+    {
+      fscanf(file->file, "%s",act->_spriteFile);
+      continue;
+    }
+    if(strcmp(buf,"spritecellsize:") == 0)
+    {
+      fscanf(file->file, "%i %i",&sw,&sh);
+      continue;
+    }
+    if(strcmp(buf,"sprite_is_3D") == 0)
+    {
+      fscanf(file->file, "%i",&temp);
+      if (temp != eolFalse)
+      {
+        act->_sprite_3D = eolTrue;
+      }
+      else
+      {
+        act->_sprite_3D = eolFalse;
+      }
+      continue;
+    }
   }
   eol_loader_close_file(&file);
+  if (strlen(act->_spriteFile) > 0)
+  {
+    act->_sprite = eol_sprite_load(act->_spriteFile,sw,sh);
+  }
+  if (strlen(act->_skinFile) > 0)
+  {
+    act->_skin = eol_sprite_load(act->_skinFile,-1,-1);
+  }
+  if (strlen(act->_meshFile) > 0)
+  {
+    act->_mesh = eol_mesh_load(act->_meshFile);
+  }
+  if (strlen(act->_armFile) > 0)
+  {
+    act->_arm = eol_armature_load(act->_armFile);
+    if (act->_mesh != NULL)
+    {
+      eol_armature_link_mesh(act->_arm,act->_mesh);
+    }
+  }
   return eolTrue;
 }
 
 eolBool eol_actor_initialized()
 {
   return _eol_actor_initialized;
+}
+
+void eol_actor_draw(
+    eolActor *act,
+    eolVec3D position,
+    eolVec3D rotation,
+    eolVec3D scale,
+    eolVec3D color,
+    eolFloat alpha
+  )
+{
+  if (!act)return;
+  if (alpha == 0)
+  {
+    /*cannot draw a clear actor, so don't waste the math*/
+    return;
+  }
+  if ((scale.x == 0) &&
+      (scale.y == 0) &&
+      (scale.z == 0))
+  {
+    /*cannot draw a zero scaled actor*/
+    return;
+  }
+  /*TODO: check to see if the actor is on camera...*/
+  if (act->_mesh != NULL)
+  {
+    if (act->_arm != NULL)
+    {
+      eol_armature_deform_mesh(act->_arm, act->_mesh,act->currentFrame);
+    }
+  	eol_mesh_draw(
+        act->_mesh,
+        position,
+        rotation,
+        scale,
+        color,
+        alpha,
+        act->_skin
+      );    
+  }
+  if (act->_sprite != NULL) 
+  {
+    if (act->_sprite_3D)
+    {
+      eol_sprite_draw_transformed_3d(
+        act->_sprite,
+        act->currentFrame,
+        position,
+        scale,
+        rotation,
+        color,
+        alpha
+      );
+    }
+    else
+    {
+      eol_sprite_draw_transformed(
+        act->_sprite,
+        act->currentFrame,
+        position.x,
+        position.y,
+        scale.x,
+        scale.y,
+        rotation.z,
+        eolFalse,
+        eolFalse,
+        color,
+        alpha
+      );
+    }
+  }
 }
 
 /*eol@eof*/

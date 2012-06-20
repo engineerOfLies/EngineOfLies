@@ -622,6 +622,7 @@ int eol_armature_load_poses(FILE *file,eolArmature *arm)
 
 void eol_armature_free(eolArmature **arm)
 {
+  if (!eol_armature_initialized())return;
   if ((arm == NULL) || (*arm == NULL))return;
   if ((*arm)->_refCount == 0)return;
   (*arm)->_refCount--;

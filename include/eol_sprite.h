@@ -99,6 +99,7 @@ void eol_sprite_free(eolSprite **sprite);
  *  @param rotation the rotation, in degrees to draw the sprite
  *  @param hFlip if true, the sprite will be flipped horizontally
  *  @param vFlip if true, the sprite will be flipped vertically
+ *  @param color a vector of (R,G,B) color shift. (1,1,1) is no shift
  *  @param alpha the transparency of the draw.  0 is clear, 1 is solid
  */
 void eol_sprite_draw_transformed(
@@ -111,6 +112,7 @@ void eol_sprite_draw_transformed(
     eolFloat rotation,
     eolBool hFlip,
     eolBool vFlip,
+    eolVec3D color,
     eolFloat alpha
   );
 
@@ -137,6 +139,7 @@ void eol_sprite_draw(
  * @param position the position in space to draw the sprite
  * @param scale the scale to apply to the sprite.  1,1,1 is no scale
  * @param rotation the orientation to apply to the sprite
+ * @param color a vector of (R,G,B) color shift. (1,1,1) is no shift
  * @param alpha the transparency of the draw.  0 is clear, 1 is solid
  */
 void eol_sprite_draw_transformed_3d(
@@ -145,6 +148,7 @@ void eol_sprite_draw_transformed_3d(
     eolVec3D position,
     eolVec3D scale,
     eolVec3D rotation,
+    eolVec3D color,
     eolFloat alpha
   );
 
@@ -158,7 +162,7 @@ void eol_sprite_draw_transformed_3d(
  * @param scale the scale to apply to the sprite.  1,1,1 is no scale
  * @param alpha the transparency of the draw.  0 is clear, 1 is solid
  */
-void eol_sprite_3d(
+void eol_sprite_draw_3d(
     eolSprite *sprite,
     eolUint frame,
     eolVec3D position,

@@ -24,6 +24,11 @@ void eol_sprite_load_config()
 	_max_sprites = 255;
 }
 
+eolBool eol_sprite_initialized()
+{
+  return _sprite_init;
+}
+
 void eol_sprite_init()
 {
   eol_logger_message(EOL_LOG_INFO,"eol_sprites: initializing\n");
@@ -224,6 +229,93 @@ void eol_sprite_resync_graphics_view(eolGraphicsView info)
   }
 }
 
+void eol_sprite_draw_3d(
+    eolSprite *sprite,
+    eolUint frame,
+    eolVec3D position,
+    eolVec3D scale,
+    eolFloat alpha
+  )
+{
+  eol_sprite_draw_transformed_3d(
+    sprite,
+    frame,
+    position,
+    scale,
+    eol_vec3d(0,0,0),
+    eol_vec3d(1,1,1),
+    alpha
+  );
+}
+
+void eol_sprite_draw_transformed_3d(
+    eolSprite *sprite,
+    eolUint frame,
+    eolVec3D position,
+    eolVec3D scale,
+    eolVec3D rotation,
+    eolVec3D color,
+    eolFloat alpha
+  )
+{
+  eolRectFloat src;
+  float left,right,top,bottom;
+  if(sprite == NULL)
+  {
+    eol_logger_message(
+        EOL_LOG_ERROR,
+  	    "passed in a NULL sprite to draw.\n");
+    return;
+  }
+  glDisable(GL_DEPTH_TEST);
+  glEnable(GL_TEXTURE_2D);
+  glEnable(GL_COLOR_MATERIAL);
+  glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_BLEND);
+  glColor4f(color.x,color.y,color.z,alpha);
+  
+  src.x = frame%sprite->framesPerLine * sprite->frameTextureWidth;
+  src.y = frame/sprite->framesPerLine * sprite->frameTextureHeight;
+  src.w = sprite->frameTextureWidth + src.x;
+  src.h = sprite->frameTextureHeight + src.y;
+
+  left = src.x;
+  right = src.w;
+  top = src.y;
+  bottom = src.h;
+  
+  glBindTexture(GL_TEXTURE_2D,sprite->_glImage);
+  glPushMatrix();
+  glTranslatef(position.x,position.y,position.z);
+  glRotatef(rotation.x, 1.0f, 0.0f, 0.0f);
+  glRotatef(rotation.y, 0.0f, 1.0f, 0.0f);
+  glRotatef(rotation.z, 0.0f, 0.0f, 1.0f);
+  glScalef(scale.x,scale.y,scale.z);
+  glTranslatef(sprite->x3D *  0.5f,sprite->y3D *  0.5f,0.0f);
+  glTranslatef(sprite->x3D * -0.5f,sprite->y3D * -0.5f,0.0f);
+  glBegin( GL_QUADS );
+  
+  glTexCoord2f(left,top);
+  glVertex3f(-sprite->x3D/2,-sprite->y3D/2,0.0f);
+  
+  glTexCoord2f(left,bottom);
+  glVertex3f(-sprite->x3D/2,sprite->y3D/2,0.0f);
+  
+  glTexCoord2f(right,bottom);
+  glVertex3f(sprite->x3D/2,sprite->y3D/2,0.0f);
+  
+  glTexCoord2f(right,top);
+  glVertex3f(sprite->x3D/2,-sprite->y3D/2,0.0f);
+  
+  glEnd( );
+  glPopMatrix();
+  glColor4f(1,1,1,1);
+  glDisable(GL_BLEND);
+  glDisable(GL_COLOR_MATERIAL);
+  glDisable(GL_TEXTURE_2D);
+  glEnable(GL_DEPTH_TEST);  
+}
+
 void eol_sprite_draw(
   eolSprite *sprite,
   eolUint    frame,
@@ -241,6 +333,7 @@ void eol_sprite_draw(
     0,
     eolFalse,
     eolFalse,
+    eol_vec3d(1,1,1),
     1
   );
 }
@@ -255,6 +348,7 @@ void eol_sprite_draw_transformed(
     eolFloat rotation,
     eolBool hFlip,
     eolBool vFlip,
+    eolVec3D color,
     eolFloat alpha
   )
 {
@@ -273,7 +367,7 @@ void eol_sprite_draw_transformed(
   glEnable(GL_COLOR_MATERIAL);
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
-  glColor4f(1,1,1,alpha);
+  glColor4f(color.x,color.y,color.z,alpha);
   
   src.x = frame%sprite->framesPerLine * sprite->frameTextureWidth;
   src.y = frame/sprite->framesPerLine * sprite->frameTextureHeight;
@@ -344,6 +438,9 @@ void eol_sprite_draw_transformed(
 
 void eol_sprite_free(eolSprite **sprite)
 {
+  if (!eol_sprite_initialized())return;
+  if (!sprite)return;
+  if (!*sprite)return;
   (*sprite)->_refCount--;
   *sprite = NULL;
 }

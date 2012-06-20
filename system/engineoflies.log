@@ -10,7 +10,6 @@ eol_mesh:initializing
 eol_mesh:initialized
 eol_armature: initializing
 eol_armature: initialized
-eol_armature: passed null parameter to link_mesh
 eol_armature: closing down
 eol_armature: closed
 eol_mesh:closing

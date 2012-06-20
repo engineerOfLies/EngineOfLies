@@ -150,6 +150,7 @@ eolMesh * eol_mesh_new()
 
 void eol_mesh_free(eolMesh **mesh)
 {
+  if (!eol_mesh_initialized())return;
   if ((mesh == NULL) ||
      (*mesh == NULL) ||
      ((*mesh)->_refCount == 0))return;
