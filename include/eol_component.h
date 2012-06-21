@@ -106,7 +106,7 @@ typedef struct
   eolUint   fontSize;    /**<size of the font to use when displaying the text*/
   eolFont * font;    /**<if defined, it will use the custom font to draw text*/
   eolBool   number; /**<if true, limits input to 0-9 - and .*/
-}eolComponentTextInput;
+}eolComponentInput;
 
 typedef struct
 {

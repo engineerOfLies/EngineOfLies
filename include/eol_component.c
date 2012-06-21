@@ -10,7 +10,7 @@ void eol_component_label_free(eolComponent *component);
 
 void eol_component_textinput_new(eolComponent *component);
 void eol_component_textinput_get_text(eolComponent *component,char *text);
-eolComponentTextInput *eol_component_textinput_get_component(eolComponent *component);
+eolComponentInput *eol_component_textinput_get_component(eolComponent *component);
 
 void eol_component_actor_new(eolComponent *component);
 void eol_component_actor_load(eolComponent *component,char * filename);
@@ -113,7 +113,7 @@ eolComponentLabel *eol_component_get_label_data(eolComponent *component)
   return (eolComponentLabel*)component->componentData;
 }
 
-eolComponentTextInput *eol_component_get_input_data(eolComponent *component)
+eolComponentInput *eol_component_get_input_data(eolComponent *component)
 {
   if ((!component)||
     (!component->componentData)||
@@ -121,7 +121,7 @@ eolComponentTextInput *eol_component_get_input_data(eolComponent *component)
   {
     return NULL;
   }
-  return (eolComponentTextInput*)component->componentData;
+  return (eolComponentInput*)component->componentData;
 }
 
 eolComponentImage *eol_component_get_image_data(eolComponent *component)
@@ -175,7 +175,17 @@ void eol_component_label_free(eolComponent *component)
   component->componentData = NULL;
 }
 
-void eol_component_textinput_free(eolComponent *component);
+void eol_component_textinput_free(eolComponent *component)
+{
+  eolComponentInput *input = eol_component_get_input_data(component);
+  if (input == NULL)return;
+  if (input->buffer != NULL)free(input->buffer);
+  if (input->font != NULL)eol_font_free(&input->font);
+  free(input);
+  input = NULL;
+  component->componentData = NULL;
+}
+
 void eol_component_actor_free(eolComponent *component);
 void eol_component_slider_free(eolComponent *component);
 void eol_component_list_free(eolComponent *component);
