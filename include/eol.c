@@ -7,7 +7,7 @@
 #include "eol_mesh.h"
 #include "eol_armature.h"
 #include "eol_loader.h"
-#include "eol_actor.h"
+#include "eol_model.h"
 
 eolUint             _eol_major_version = 0;
 eolUint             _eol_minor_version = 1;
@@ -31,10 +31,10 @@ void eol_init(eolUint components)
       eol_font_config();
       eol_font_init();
     }
-    if (components & EOL_ACTOR)
+    if (components & EOL_MODEL)
     {
-      eol_actor_config();
-      eol_actor_init();
+      eol_model_config();
+      eol_model_init();
     }
     /*sprite is dependant on graphics*/
     if (components & EOL_SPRITE)

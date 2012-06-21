@@ -38,10 +38,10 @@ enum eolFontSizes {
 typedef struct
 {
   eolUint    _refCount;
-  eolLine   filename;
-  eolInt    point;
-  eolInt    index;
-  TTF_Font *_font;
+  eolLine    filename;
+  eolInt     point;
+  eolInt     index;
+  TTF_Font * _font;
 }eolFont;
 
 void eol_font_init();
@@ -242,7 +242,7 @@ void eol_font_draw_text_3D(
     eolVec3D color,
     eolFloat alpha,
     eolInt   size
-  );      
+  );
 
 void eol_font_draw_text_3D_custom(
     char *text,
@@ -264,7 +264,7 @@ void eol_font_draw_text_3D_block(
     eolFloat alpha,
     eolInt   size
   );
-  
+
 void eol_font_draw_text_3D_block_custom(
     char *text,
     eolRect  block,
