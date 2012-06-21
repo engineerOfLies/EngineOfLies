@@ -22,6 +22,7 @@
 #include "eol_sprite.h"
 #include "eol_actor.h"
 #include "eol_types.h"
+#include <glib/glist.h>
 
 /**
  * @purpose This will create the components used for window construction.
@@ -36,7 +37,7 @@ enum eolComponentTypes {
   eolInputComponent  = 3,
   eolSliderComponent = 4,
   eolImageComponent  = 5,
-  eolModelComponent  = 6,
+  eolActorComponent  = 6,
   eolListComponent   = 7
 };
 
@@ -52,6 +53,14 @@ enum eolTextJustify {
   eolJustifyRight     = 2
 };
 
+enum eolListTypes {
+  eolListLines  = 0, /**<items are drawn from top to bottom fit within bounding
+                         rect*/
+  eolListBlock  = 1, /**<items are drawn left to right, then top to bottom fit
+                         within bounding rect*/
+  eolListDock   = 2  /**<items are drawn left to right.  fit within bounding rect*/
+};
+
 #define eolButtonStateMax 3
 
 /**
@@ -59,13 +68,15 @@ enum eolTextJustify {
  */
 typedef struct
 {
-  eolUint   id;
-  eolWord   name;
-  eolRect   rect;
-  eolBool   hasFocus;
-  eolInt    state;
-  eolUint   type;
-  void    * componentData;
+  eolUint       id;
+  eolWord       name;
+  eolRectFloat  rect;
+  eolBool       canHasFocus;    /**<I apologize for the lolcat reference*/
+  eolBool       hasFocus;
+  eolInt        state;
+  eolInt        oldState;
+  eolUint       type;
+  void        * componentData;
 }eolComponent;
 
 typedef struct
@@ -80,7 +91,9 @@ typedef struct
 
 typedef struct
 {
-  eolLine     buttonText;
+  eolWord     input;                    /**<if defined, the input will operate as a hotkey*/
+  eolLine     buttonText;               /**<text to display over button...should it be a label component?*/
+  eolUint     buttonType;               /**<if its an image, or raw text or both*/
   eolSprite * button[eolButtonStateMax];/**<if defined, it will use these over
                                             stock button images*/
 }eolComponentButton;
@@ -98,6 +111,45 @@ typedef struct
 typedef struct
 {
   eolActor * actor;
+  eolVec3D   position;
+  eolVec3D   rotation;
+  eolVec3D   scale;
+  eolVec3D   color;
+  eolFloat   alpha;
 }eolComponentActor;
+
+typedef struct
+{
+  eolSprite *image;
+  eolUint    frame;
+  eolBool    scaleToBounds;
+}eolComponentImage;
+
+typedef struct
+{
+  eolSprite *slider;
+  eolSprite *bar;
+  eolBool    vertical;
+  eolFloat   position;
+  eolFloat   oldPosition;
+}eolComponentSlider;
+
+typedef struct
+{
+  eolUint   listCount;
+  eolInt    focusItem;
+  eolUint   listType;
+  eolVec2D  itemBounds; /**<width (x) and height limit of items in the list*/
+  GList   * itemList;   /**<list of eolComponent's*/
+}eolComponentList;
+
+eolComponent * eol_component_new();
+void eol_component_free(eolComponent **component);
+void eol_component_update(eolComponent *component);
+void eol_component_set_focus(eolComponent *component,eolBool focus);
+eolBool eol_component_has_changed(eolComponent *component);
+eolInt eol_component_get_state(eolComponent *component);
+void eol_component_draw(eolComponent *component);
+
 
 #endif
