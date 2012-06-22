@@ -42,7 +42,6 @@ void eol_resource_manager_free(eolResourceManager **manager_pp)
   if (!manager_pp)return;
   if (!*manager_pp)return;
   manager = *manager_pp;
-  fprintf(stdout,"got here\n");
   if (manager->data_delete != NULL)
   {
     for (i = 0 ; i < manager->_data_max;i++)
@@ -51,7 +50,6 @@ void eol_resource_manager_free(eolResourceManager **manager_pp)
       manager->data_delete(eol_resource_get_data_by_header(element));
     }
   }
-  fprintf(stdout,"got here\n");
   free(manager->_data_list);
   free(manager);
   *manager_pp = NULL;

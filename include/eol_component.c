@@ -1,5 +1,76 @@
 #include "eol_component.h"
 #include "eol_logger.h"
+#include "eol_font.h"
+#include "eol_sprite.h"
+#include "eol_actor.h"
+#include <glib/glist.h>
+#include <glib/gstring.h>
+
+/*local types*/
+typedef struct
+{
+  GString  * buffer;
+  eolInt     justify;
+  eolBool    wordWrap;
+  eolUint    fontSize;
+  eolVec3D   color;
+  eolFloat   alpha;
+  eolFont  * font;    /**<if defined, it will use the custom font to draw text*/
+}eolComponentLabel;
+
+typedef struct
+{
+  eolWord     input;                    /**<if defined, the input will operate as a hotkey*/
+  eolLine     buttonText;               /**<text to display over button...should it be a label component?*/
+  eolUint     buttonType;               /**<if its an image, or raw text or both*/
+  eolSprite * button[eolButtonStateMax];/**<if defined, it will use these over
+  stock button images*/
+}eolComponentButton;
+
+typedef struct
+{
+  char    * buffer;
+  eolInt    bufferLimit; /**<if -1 no limit, otherwise its the maximum character
+  that will be added to buffer*/
+  eolUint   fontSize;    /**<size of the font to use when displaying the text*/
+  eolFont * font;    /**<if defined, it will use the custom font to draw text*/
+  eolBool   number; /**<if true, limits input to 0-9 - and .*/
+}eolComponentInput;
+
+typedef struct
+{
+  eolActor * actor;
+  eolVec3D   position;
+  eolVec3D   rotation;
+  eolVec3D   scale;
+  eolVec3D   color;
+  eolFloat   alpha;
+}eolComponentActor;
+
+typedef struct
+{
+  eolSprite *image;
+  eolUint    frame;
+  eolBool    scaleToBounds;
+}eolComponentImage;
+
+typedef struct
+{
+  eolSprite *slider;
+  eolSprite *bar;
+  eolBool    vertical;
+  eolFloat   position;
+  eolFloat   oldPosition;
+}eolComponentSlider;
+
+typedef struct
+{
+  eolUint   listCount;
+  eolInt    focusItem;
+  eolUint   listType;
+  eolVec2D  itemBounds; /**<width (x) and height limit of items in the list*/
+  GList   * itemList;   /**<list of eolComponent's*/
+}eolComponentList;
 
 /*local global variables*/
 
@@ -24,6 +95,15 @@ void eol_component_actor_free(eolComponent *component);
 void eol_component_slider_free(eolComponent *component);
 void eol_component_list_free(eolComponent *component);
 void eol_component_image_free(eolComponent *component);
+
+void eol_component_make_label(
+    eolComponent * component,
+    char         * text,
+    eolInt         fontSize,
+    char         * fontName,
+    eolVec3D       color,
+    eolFloat       alpha
+  );
 
 /*definitions*/
 
@@ -230,7 +310,7 @@ void eol_component_label_draw(eolComponent *component, eolRect bounds)
     if (label->wordWrap)
     {
       eol_font_draw_text_block(
-      label->buffer,
+      label->buffer->str,
       bounds.x,
       bounds.y,
       bounds.w,
@@ -243,7 +323,7 @@ void eol_component_label_draw(eolComponent *component, eolRect bounds)
     else
     {
       eol_font_draw_text_justify(
-        label->buffer,
+        label->buffer->str,
         bounds.x,
         bounds.y,
         label->color,
@@ -258,7 +338,7 @@ void eol_component_label_draw(eolComponent *component, eolRect bounds)
     if (label->wordWrap)
     {
       eol_font_draw_text_block_custom(
-        label->buffer,
+        label->buffer->str,
         bounds,
         label->color,
         label->alpha,
@@ -268,7 +348,7 @@ void eol_component_label_draw(eolComponent *component, eolRect bounds)
     else
     {
       eol_font_draw_text_justify_custom(
-        label->buffer,
+        label->buffer->str,
         bounds.x,
         bounds.y,
         label->color,
@@ -304,8 +384,14 @@ void eol_component_make_label(
   eolComponentLabel * label = NULL;
   if (!component)return;
   eol_component_label_new(component);
+  
   label = eol_component_get_label_data(component);
-  label->buffer = strdup(text);
+  if (label == NULL)
+  {
+    return;
+  }
+
+  label->buffer = g_string_new(text);
   if (label->buffer == NULL)
   {
     eol_logger_message(
@@ -314,10 +400,12 @@ void eol_component_make_label(
     eol_component_label_free(component);
     return;
   }
+  
   if ((fontName != NULL)&&(strlen(fontName) > 0))
   {
     label->font = eol_font_load(fontName,fontSize);
   }
+  
   label->fontSize = fontSize;
   label->alpha = alpha;
   eol_vec3d_copy(label->color,color);
@@ -343,6 +431,44 @@ void eol_component_label_new(eolComponent *component)
     return;
   }
   memset(component->componentData,0,sizeof(eolComponentLabel));
+  component->type = eolLabelComponent;
+}
+
+eolComponent *eol_label_new(
+    eolUint        id,
+    eolWord        name,
+    eolRectFloat   rect,
+    eolBool        canHasFocus,
+    char         * text,
+    eolInt         fontSize,
+    char         * fontName,
+    eolVec3D       color,
+    eolFloat       alpha
+  )
+{
+  eolComponent *component = NULL;
+  if (!text)return NULL;
+  component = eol_component_new();
+  if (!component)return NULL;
+  eol_component_make_label(
+    component,
+    text,
+    fontSize,
+    fontName,
+    color,
+    alpha
+  );
+  if (component->componentData == NULL)
+  {
+    eol_component_free(&component);
+    return NULL;
+  }
+  component->id = id;
+  strncpy(component->name,name,EOLWORDLEN);
+  eol_rectf_copy(&component->rect,rect);
+  component->canHasFocus = canHasFocus;
+  component->type = eolLabelComponent;
+  return component;
 }
 /*eol@eof*/
 

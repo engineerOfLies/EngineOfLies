@@ -18,11 +18,7 @@
     along with the EOL game engine.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "eol_font.h"
-#include "eol_sprite.h"
-#include "eol_actor.h"
 #include "eol_types.h"
-#include <glib/glist.h>
 
 /**
  * @purpose This will create the components used for window construction.
@@ -78,80 +74,19 @@ typedef struct eolComponent_S
   eolBool       (*data_changed)(struct eolComponent_S *component);
 }eolComponent;
 
-typedef struct
-{
-  char     * buffer;
-  eolInt     justify;
-  eolBool    wordWrap;
-  eolUint    fontSize;
-  eolVec3D   color;
-  eolFloat   alpha;
-  eolFont  * font;    /**<if defined, it will use the custom font to draw text*/
-}eolComponentLabel;
-
-typedef struct
-{
-  eolWord     input;                    /**<if defined, the input will operate as a hotkey*/
-  eolLine     buttonText;               /**<text to display over button...should it be a label component?*/
-  eolUint     buttonType;               /**<if its an image, or raw text or both*/
-  eolSprite * button[eolButtonStateMax];/**<if defined, it will use these over
-                                            stock button images*/
-}eolComponentButton;
-
-typedef struct
-{
-  char    * buffer;
-  eolInt    bufferLimit; /**<if -1 no limit, otherwise its the maximum character
-                            that will be added to buffer*/
-  eolUint   fontSize;    /**<size of the font to use when displaying the text*/
-  eolFont * font;    /**<if defined, it will use the custom font to draw text*/
-  eolBool   number; /**<if true, limits input to 0-9 - and .*/
-}eolComponentInput;
-
-typedef struct
-{
-  eolActor * actor;
-  eolVec3D   position;
-  eolVec3D   rotation;
-  eolVec3D   scale;
-  eolVec3D   color;
-  eolFloat   alpha;
-}eolComponentActor;
-
-typedef struct
-{
-  eolSprite *image;
-  eolUint    frame;
-  eolBool    scaleToBounds;
-}eolComponentImage;
-
-typedef struct
-{
-  eolSprite *slider;
-  eolSprite *bar;
-  eolBool    vertical;
-  eolFloat   position;
-  eolFloat   oldPosition;
-}eolComponentSlider;
-
-typedef struct
-{
-  eolUint   listCount;
-  eolInt    focusItem;
-  eolUint   listType;
-  eolVec2D  itemBounds; /**<width (x) and height limit of items in the list*/
-  GList   * itemList;   /**<list of eolComponent's*/
-}eolComponentList;
-
 eolComponent * eol_component_new();
 void eol_component_free(eolComponent **component);
 void eol_component_update(eolComponent *component);
 void eol_component_set_focus(eolComponent *component,eolBool focus);
 eolBool eol_component_has_changed(eolComponent *component);
 eolInt eol_component_get_state(eolComponent *component);
+void eol_component_draw(eolComponent *component,eolRect bounds);
 
-void eol_component_make_label(
-    eolComponent * component,
+eolComponent *eol_label_new(
+    eolUint        id,
+    eolWord        name,
+    eolRectFloat   rect,
+    eolBool        canHasFocus,
     char         * text,
     eolInt         fontSize,
     char         * fontName,

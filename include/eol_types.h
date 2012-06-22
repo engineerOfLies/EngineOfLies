@@ -112,10 +112,48 @@ eolRect eol_rect(
   eolUint h
 );
 
+/**
+ * @brief copies rect data from s into d
+ *
+ * @param d pointer to destination rect
+ * @param s source rect
+ */
+void eol_rect_copy(
+    eolRect * d,
+    eolRect   s
+  );
+
 typedef struct
 {
 	eolDouble x,y,w,h;
 }eolRectFloat;
+
+/**
+ * @brief constructs and returns an eolRectFloat
+ * @param x component of the rect
+ * @param y component of the rect
+ * @param w component of the rect
+ * @param h component of the rect
+ */
+eolRectFloat eol_rectf(
+  eolDouble  x,
+  eolDouble  y,
+  eolDouble  w,
+  eolDouble  h
+);
+
+
+/**
+* @brief copies float rect data from s into d
+*
+* @param d pointer to destination rect
+* @param s source rect
+*/
+void eol_rectf_copy(
+    eolRectFloat * d,
+    eolRectFloat   s
+  );
+
 /*
  * The Vector Types
  * Not to be confused with the vector lists from STL

@@ -60,6 +60,40 @@ eolRect eol_rect(
   return r;
 }
 
+eolRectFloat eol_rectf(
+  eolDouble  x,
+  eolDouble  y,
+  eolDouble  w,
+  eolDouble  h
+)
+{
+  eolRectFloat r = {x,y,w,h};
+  return r;
+}
+
+void eol_rectf_copy(
+    eolRectFloat * d,
+    eolRectFloat   s
+  )
+{
+  if (!d)return;
+  d->x = s.x;
+  d->y = s.y;
+  d->w = s.w;
+  d->h = s.h;
+}
+
+void eol_rect_copy(
+    eolRect *d,
+    eolRect s
+  )
+{
+  if (!d)return;
+  d->x = s.x;
+  d->y = s.y;
+  d->w = s.w;
+  d->h = s.h;
+}
 
 /*eol @ eof*/
 
