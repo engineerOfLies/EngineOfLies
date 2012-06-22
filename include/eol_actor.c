@@ -86,5 +86,27 @@ void eol_actor_set_action(
   
 }
 
+eolActor * eol_actor_new()
+{
+  eolActor *actor = NULL;
+  actor = (eolActor *)malloc(sizeof(eolActor));
+  if (actor == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_actor:unable to allocate actor data!\n");
+    return NULL;
+  }
+  memset(actor,0,sizeof(eolActor));
+  return actor;
+}
+
+void eol_actor_free(eolActor **actor)
+{
+  if ((!actor) || (!*actor))return;
+  eol_actor_clear(*actor);
+  free(*actor);
+  *actor = NULL;
+}
 /*eol@eof*/
 

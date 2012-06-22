@@ -52,6 +52,20 @@ void eol_actor_load(eolActor *act, char *filename);
 void eol_actor_clear(eolActor *act);
 
 /**
+ * @brief allocated empty actor data;
+ *
+ * @return a pointer to a valid empty actor or NULL on error
+ */
+eolActor * eol_actor_new();
+
+/**
+ * @brief frees all data pointed to by actor
+ *
+ * @param actor a pointer to an actor pointer.  Make sure data can be freed.
+ */
+void eol_actor_free(eolActor **actor);
+
+/**
  * @brief sets the actor's frame change rate.  this is in float to allow
  * granular speed up and slowdown of an animation
  * Note that actions have their own frame rates that will combine with the

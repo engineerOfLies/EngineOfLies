@@ -173,6 +173,7 @@ typedef eolUI32 eolTime;
 #define eol_dot_product_2D(a,b)      (a.x*b.x+a.y*b.y)
 #define eol_dot_product_2D_p(a,b)     (a->x*b->x+a->y*b->y)
 
+#define eol_vec3d_copy(a,b)  (a.x = b.x,a.y = b.y,a.z = b.z)
 /**
  * @brief Macro to subtract two vectors
  * varient ending in p takes a pointer to eolVect3D instead.

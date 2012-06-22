@@ -155,21 +155,71 @@ void eol_font_delete(eolFont *font)
   memset(font,0,sizeof(eolFont));
 }
 
-void eol_font_draw_text_rj(
-    char   * text,
-    eolInt   x,
-    eolInt   y,
+void eol_font_draw_text_justify_custom(
+    char    * text,
+    eolInt    x,
+    eolInt    y,
     eolVec3D  color,
-    eolFloat alpha,
-    eolUint   size
+    eolFloat  alpha,
+    eolFont * font,
+    eolUint   justify
   )
 {
   eolRect r;
+  eolInt dx;
   if (!eol_font_initialized())return;
+  switch (justify)
+  {
+    case eolJustifyLeft:
+      dx = x;
+      break;
+    case eolJustifyCenter:
+      dx = (x - (r.w/2));
+      break;
+    case eolJustifyRight:
+      dx = (x - r.w);
+      break;
+  }
+  r = eol_font_get_bounds_custom(text,font);
+  eol_font_draw_text_custom(
+    text,
+    dx,
+    y,
+    color,
+    alpha,
+    font
+  );
+}
+
+void eol_font_draw_text_justify(
+    char   * text,
+    eolInt   x,
+    eolInt   y,
+    eolVec3D color,
+    eolFloat alpha,
+    eolUint  size,
+    eolUint  justify
+  )
+{
+  eolRect r;
+  eolInt dx;
+  if (!eol_font_initialized())return;
+  switch (justify)
+  {
+    case eolJustifyLeft:
+      dx = x;
+      break;
+    case eolJustifyCenter:
+      dx = (x - (r.w/2));
+      break;
+    case eolJustifyRight:
+      dx = (x - r.w);
+      break;
+  }
   r = eol_font_get_bounds(text,size);
   eol_font_draw_text(
     text,
-    (x - r.w),
+    dx,
     y,
     color,
     alpha,

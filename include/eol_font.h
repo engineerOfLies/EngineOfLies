@@ -35,6 +35,12 @@ enum eolFontSizes {
 /*below should be one larger than largest font*/
 #define eolFontSizeMax 5
 
+enum eolTextJustify {
+  eolJustifyLeft      = 0,
+  eolJustifyCenter    = 1,
+  eolJustifyRight     = 2
+};
+
 typedef struct
 {
   eolUint    _refCount;
@@ -95,16 +101,27 @@ void eol_font_draw_text(
  * @param color the (r,g,b) color to render the font in
  * @param alpha the translucency to render the font it
  * @param size which of the enumerated sizes to draw the font with
+ * @param justify see enumerations for how it will be justified
  */
-void eol_font_draw_text_rj(
+void eol_font_draw_text_justify(
     char   * text,
     eolInt   x,
     eolInt   y,
     eolVec3D color,
     eolFloat alpha,
-    eolUint  size
+    eolUint  size,
+    eolUint  justify
   );
 
+void eol_font_draw_text_justify_custom(
+    char    * text,
+    eolInt    x,
+    eolInt    y,
+    eolVec3D  color,
+    eolFloat  alpha,
+    eolFont * font,
+    eolUint   justify
+  );
 
 /**
  * @brief Renders text to screen using the default font of the specified size

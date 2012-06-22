@@ -47,12 +47,6 @@ enum eolButtonStates {
   eolButtonPressed    = 2
 };
 
-enum eolTextJustify {
-  eolJustifyLeft      = 0,
-  eolJustifyCenter    = 1,
-  eolJustifyRight     = 2
-};
-
 enum eolListTypes {
   eolListLines  = 0, /**<items are drawn from top to bottom fit within bounding
                          rect*/
@@ -66,7 +60,7 @@ enum eolListTypes {
 /**
   @brief this structure serves as a header for all components
  */
-typedef struct
+typedef struct eolComponent_S
 {
   eolUint       id;
   eolWord       name;
@@ -77,6 +71,11 @@ typedef struct
   eolInt        oldState;
   eolUint       type;
   void        * componentData;
+  void          (*data_free)(struct eolComponent_S *component);
+  void          (*data_draw)(struct eolComponent_S *component,eolRect bounds);
+  void          (*data_update)(struct eolComponent_S *component);
+  eolInt        (*data_get_state)(struct eolComponent_S *component);
+  eolBool       (*data_changed)(struct eolComponent_S *component);
 }eolComponent;
 
 typedef struct
@@ -86,6 +85,7 @@ typedef struct
   eolBool    wordWrap;
   eolUint    fontSize;
   eolVec3D   color;
+  eolFloat   alpha;
   eolFont  * font;    /**<if defined, it will use the custom font to draw text*/
 }eolComponentLabel;
 
@@ -149,7 +149,14 @@ void eol_component_update(eolComponent *component);
 void eol_component_set_focus(eolComponent *component,eolBool focus);
 eolBool eol_component_has_changed(eolComponent *component);
 eolInt eol_component_get_state(eolComponent *component);
-void eol_component_draw(eolComponent *component);
 
+void eol_component_make_label(
+    eolComponent * component,
+    char         * text,
+    eolInt         fontSize,
+    char         * fontName,
+    eolVec3D       color,
+    eolFloat       alpha
+  );
 
 #endif
