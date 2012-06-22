@@ -4,6 +4,7 @@
 #include "eol_input.h"
 #include "eol_font.h"
 #include "eol_actor.h"
+#include "eol_component.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -18,6 +19,7 @@ int main(int argc, char *argv[])
   eolFloat frame = 0;
   eolSprite *sprite = NULL;
   eolActor *actor = NULL;
+  eolComponent *label = NULL;
   for(i = 1;i < argc;i++)
   {
     if(strcmp(argv[i],"-fs")== 0)
@@ -29,20 +31,34 @@ int main(int argc, char *argv[])
   }
   Init_All(argv[0]);
   done = 0;
-  actor = eol_actor_load("models/bruiser.actor");
+  actor = eol_actor_new();
+  if (actor)eol_actor_load(actor,"models/bruiser.actor");
   sprite = eol_sprite_load("images/skeleton.png",128,128);
+  label = eol_label_new(
+    0,
+    "test",
+    eol_rectf(0,0,1,1),
+    eolTrue,
+    "This is text label text",
+    4,
+    NULL,
+    eol_vec3d(1,1,1),
+    1
+  );
+
   do
   {
     eol_input_update();
   	eol_graphics_frame_begin();
   	sprintf(fps,"FPS: %f",eol_graphics_get_FPS());
-    eol_font_draw_text_rj(
+    eol_font_draw_text_justify(
       fps,
       640,
       0,
       eol_vec3d(1,0,0),
       1,
-      2);
+      2,
+      eolJustifyRight);
 
   	eol_sprite_draw(sprite,(eolInt)frame,100,100);
   
@@ -62,6 +78,8 @@ int main(int argc, char *argv[])
       eol_vec3d(rot/360,1,1),
       1,
       3);
+
+    eol_component_draw(label,eol_rect(100,20,0,0));
 
 /*TODO: make text work in 3D
       eol_font_draw_text_3D(
