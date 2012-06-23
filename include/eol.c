@@ -8,6 +8,7 @@
 #include "eol_armature.h"
 #include "eol_loader.h"
 #include "eol_model.h"
+#include "eol_window.h"
 
 eolUint             _eol_major_version = 0;
 eolUint             _eol_minor_version = 1;
@@ -18,6 +19,7 @@ void eol_get_version(eolUint *major,eolUint *minor)
 	if (minor != NULL)*minor = _eol_minor_version;
 }
 
+/*TODO: need to check dependencies and either automaticalli include them or report error*/
 void eol_init(eolUint components)
 {
   eol_logger_init();
@@ -51,6 +53,11 @@ void eol_init(eolUint components)
       	eol_armature_load_config();
       	eol_armature_init();
       }
+    }
+    if (components & EOL_WINDOW)
+    {
+      eol_window_config();
+      eol_window_init();
     }
   }
   if (components & EOL_INPUT)

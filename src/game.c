@@ -4,7 +4,7 @@
 #include "eol_input.h"
 #include "eol_font.h"
 #include "eol_actor.h"
-#include "eol_component.h"
+#include "eol_window.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -19,7 +19,6 @@ int main(int argc, char *argv[])
   eolFloat frame = 0;
   eolSprite *sprite = NULL;
   eolActor *actor = NULL;
-  eolComponent *label = NULL;
   for(i = 1;i < argc;i++)
   {
     if(strcmp(argv[i],"-fs")== 0)
@@ -34,17 +33,6 @@ int main(int argc, char *argv[])
   actor = eol_actor_new();
   if (actor)eol_actor_load(actor,"models/bruiser.actor");
   sprite = eol_sprite_load("images/skeleton.png",128,128);
-  label = eol_label_new(
-    0,
-    "test",
-    eol_rectf(0,0,1,1),
-    eolTrue,
-    "This is text label text",
-    4,
-    NULL,
-    eol_vec3d(1,1,1),
-    1
-  );
 
   do
   {
@@ -70,7 +58,7 @@ int main(int argc, char *argv[])
       eol_vec3d(1,1,1),
       1
     );
-
+    eol_window_draw_all();
     eol_font_draw_text(
       "TESTING",
       300,
@@ -78,20 +66,6 @@ int main(int argc, char *argv[])
       eol_vec3d(rot/360,1,1),
       1,
       3);
-
-    eol_component_draw(label,eol_rect(100,20,0,0));
-
-/*TODO: make text work in 3D
-      eol_font_draw_text_3D(
-      "ROTATING 3D TEXT",
-      eol_vec3d(0,2,-10),
-      eol_vec3d(-90,0,rot),
-      eol_vec3d(1,1,1),
-      eol_vec3d(1,1,1),
-      1,
-      3
-    );      
-*/
     rot = rot + 0.25;
     if (rot > 360)rot -= 360;
     eol_graphics_frame_end();

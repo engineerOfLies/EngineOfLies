@@ -14,11 +14,14 @@ void *eol_resource_manager_load_resource(eolResourceManager *manager,char *filen
   {
     return NULL;
   }
-  element = eol_resource_find_element_by_filename(manager,filename);
-  if (element != NULL)
+  if (manager->_data_unique == eolFalse)
   {
-    element->refCount++;
-    return eol_resource_get_data_by_header(element);
+    element = eol_resource_find_element_by_filename(manager,filename);
+    if (element != NULL)
+    {
+      element->refCount++;
+      return eol_resource_get_data_by_header(element);
+    }
   }
   element = eol_resource_new_element(manager);
   if (element == NULL)
@@ -74,6 +77,7 @@ eolResourceManager * eol_resource_manager_init(
     eolLine managerName,
     eolUint max,
     eolUint dataSize,
+    eolBool dataUnique,
     void    (*data_delete)(void *data),
     eolBool (*data_load)(char *filename,void *data)
   )
@@ -87,6 +91,7 @@ eolResourceManager * eol_resource_manager_init(
   strncpy(manager->name,managerName,EOLLINELEN);
   manager->_data_count = 0;
   manager->_data_max = max;
+  manager->_data_unique = dataUnique;
   manager->_data_size = dataSize + sizeof(eolResourceHeader);
   manager->_data_list = malloc(manager->_data_size * max);
   manager->data_delete = data_delete;
@@ -190,11 +195,13 @@ void * eol_resource_new_element(eolResourceManager *manager)
       manager->name);
     return NULL;
   }
+  /*TODO: be smarter about resource reclaiming*/
   for (i = 0 ; i < manager->_data_max;i++)
   {
     element = (eolResourceHeader *)&manager->_data_list[(i * manager->_data_size)];
     if (element->refCount == 0)
     {
+      eol_resource_delete_element(manager,element);
       memset(element,0,manager->_data_size);
       element->index = i;
       element->refCount = 1;

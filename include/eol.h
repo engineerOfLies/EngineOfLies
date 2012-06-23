@@ -28,6 +28,7 @@ enum eol_components {
 	EOL_ARMATURE  = 16,
 	EOL_INPUT     = 32,
 	EOL_MODEL     = 64,
+	EOL_WINDOW    = 128,
 	EOL_ALL       = 0xFFFF
 };
 

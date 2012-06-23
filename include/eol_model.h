@@ -22,7 +22,6 @@
 #include "eol_mesh.h"
 #include "eol_armature.h"
 #include "eol_sprite.h"
-#include "eol_resource.h"
 
 /**
  * @purpose an eolModel type contains all the possible graphics and animation

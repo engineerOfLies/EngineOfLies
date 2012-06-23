@@ -1,6 +1,7 @@
 #include "eol_model.h"
 #include "eol_logger.h"
 #include "eol_loader.h"
+#include "eol_resource.h"
 
 /*local global variables*/
 
@@ -21,6 +22,7 @@ _eol_model_manager = eol_resource_manager_init(
     "eol_model_manager",
     _eol_model_max,
     sizeof(eolModel),
+    eolFalse,
     eol_model_delete,
     eol_model_load_data_from_file
     );
@@ -56,14 +58,9 @@ eolModel *eol_model_load(
   }
   model =
     (eolModel *)eol_resource_manager_load_resource(_eol_model_manager,filename);
-  if (model != NULL)
-  {
-    fprintf(stdout,"model loaded %s\n",model->name);
-  }
-  else
-    fprintf(stdout,"model failed to load\n");
   return model;
 }
+
 void eol_model_delete(void *modelData)
 {
   eolModel *model;
@@ -117,7 +114,6 @@ void eol_model_close()
   eol_logger_message(
       EOL_LOG_INFO,
       "eol_model:closed\n");
-
 }
 
 eolBool eol_model_load_data_from_file(char * filename,void *data)

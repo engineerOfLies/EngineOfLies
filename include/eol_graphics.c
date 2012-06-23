@@ -50,7 +50,10 @@ eolFloat            _eol_graphics_FPS = 0;   /*calculated Frames per second*/
 
 /*local function prototypes*/
 void eol_graphics_setup_resize_callbacks();
+void eol_graphics_exit(void);
 
+
+/*function definitions*/
 void eol_graphics_load_config()
 {
 	/*TODO handle config file stuff*/
@@ -235,6 +238,7 @@ void eol_graphics_init()
 
   
   _eolGraphicsInitialized = eolTrue;
+  atexit(eol_graphics_exit);
   setup_default_lighting();
   eol_logger_message(
       EOL_LOG_INFO,
@@ -399,9 +403,15 @@ void eol_graphics_put_pixel(SDL_Surface *surface, eolUint x, eolUint y, eolUint 
  * */
 void eol_graphics_exit(void)
 {
+  eol_logger_message(
+    EOL_LOG_INFO,
+    "eol_graphics: closing\n");
   _eolGraphicsInitialized = eolFalse;
   g_list_foreach(_eol_resize_callbacks, (GFunc)free, NULL);
   g_list_free(_eol_resize_callbacks);
+  eol_logger_message(
+    EOL_LOG_INFO,
+    "eol_graphics: closed\n");
 }
 
 void eol_graphics_register_resize(void (*callback)(eolGraphicsView info))

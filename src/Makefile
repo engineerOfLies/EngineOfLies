@@ -35,7 +35,7 @@ DOXYGEN = doxygen
 #
 
 $(PROJECT): $(OBJ)
-	$(CC) $(OBJ) $(LFLAGS) $(EOL_LDFLAGS) $(SDL_LDFLAGS)
+	$(CC) $(OBJ) $(LFLAGS) $(EOL_LDFLAGS) $(SDL_LDFLAGS) $(GLIB_LDFLAGS)
 docs:
 	$(DOXYGEN) doxygen.cfg
   
@@ -62,5 +62,5 @@ include makefile.dep
 #
 
 .c.o:
-	$(CC) $(CFLAGS) $(EOL_CFLAGS) $(SDL_CFLAGS) -c $<
+	$(CC) $(CFLAGS) $(EOL_CFLAGS) $(SDL_CFLAGS) $(GLIB_CFLAGS) -c $<
 

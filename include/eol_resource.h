@@ -32,6 +32,7 @@ typedef struct
   eolUint   _data_count;
   eolUint   _data_max;
   eolUint   _data_size;
+  eolBool   _data_unique;
   char *    _data_list;   /**<character buffer of data*/
   void (*data_delete)(void *data);
   eolBool (*data_load)(char *filename,void *data);
@@ -51,10 +52,18 @@ eolResourceManager * eol_resource_manager_init(
     eolLine managerName,
     eolUint max,
     eolUint dataSize,
+    eolBool dataUnique,
     void    (*data_delete)(void *data),
     eolBool (*data_load)(char *filename,void *data)
     );
-    
+
+/**
+ * @brief returns a pointer to a new allocated element or NULL on error
+ *
+ * @param manager the resource manager to get an element from
+ *
+ * @return a pointer to the data or NULL on error
+ */
 void * eol_resource_new_element(eolResourceManager *manager);
 
 void eol_resource_free_element(eolResourceManager *manager,void **data);

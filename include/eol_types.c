@@ -1,5 +1,5 @@
 /*
-    Copyright 2012 Donald Kehoe
+    Copyright 2012 EngineerOfLies
     This file is part of the Engine of Lies game engine library
 
     The Engine of Lies (EOL) is free software: you can redistribute it and/or modify
