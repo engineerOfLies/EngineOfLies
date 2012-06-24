@@ -412,7 +412,6 @@ void eol_sprite_draw_transformed(
   glRotatef(rotation, 0.0f, 0.0f, 1.0f);
   glScalef(scaleX,scaleY,1);
   glTranslatef(sprite->x3D *  0.5f,sprite->y3D *  0.5f,0.0f);
-  glTranslatef(sprite->x3D * -0.5f,sprite->y3D * -0.5f,0.0f);
   glBegin( GL_QUADS );
   
   glTexCoord2f(left,top);

@@ -10,6 +10,8 @@
 
 void Init_All(const char *argv);
 
+void MakeTestWindow();
+
 int main(int argc, char *argv[])
 {
   int done;
@@ -33,11 +35,13 @@ int main(int argc, char *argv[])
   actor = eol_actor_new();
   if (actor)eol_actor_load(actor,"models/bruiser.actor");
   sprite = eol_sprite_load("images/skeleton.png",128,128);
-
+  MakeTestWindow();
   do
   {
     eol_input_update();
   	eol_graphics_frame_begin();
+    eol_window_draw_all();
+    
   	sprintf(fps,"FPS: %f",eol_graphics_get_FPS());
     eol_font_draw_text_justify(
       fps,
@@ -58,7 +62,7 @@ int main(int argc, char *argv[])
       eol_vec3d(1,1,1),
       1
     );
-    eol_window_draw_all();
+
     eol_font_draw_text(
       "TESTING",
       300,
@@ -84,5 +88,26 @@ void Init_All(const char *argv)
 	eol_init(EOL_ALL);
 }
 
+void MakeTestWindow()
+{
+  eolWindow *win = eol_window_new();
+  if (!win)
+  {
+    fprintf(stdout,"OH NO IT FAILED TO CREATE!\n");
+    return;
+  }
+  strncpy(win->name,"window",EOLLINELEN);
+  win->id = 1;
+  eol_rect_copy(&win->rect,eol_rect(32,32,640 - 64,480 - 64));
+  win->canHasFocus = eolTrue;
+  win->drawGeneric = eolTrue;
+  win->componentCount = 0;
+  win->components = NULL;
+  win->customData = NULL;
+  win->custom_delete = NULL;
+  win->draw = NULL;
+  win->update = NULL;
+  
+}
 /*eol @ eof*/
 
