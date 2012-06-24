@@ -21,7 +21,7 @@ GLIB_CFLAGS = `pkg-config --cflags glib-2.0`
 GLIB_LDFLAGS = `pkg-config --libs glib-2.0`
 SDL_CFLAGS = `sdl-config --cflags`
 SDL_LDFLAGS = `sdl-config --libs` -lSDL_image -lSDL_ttf -lSDL_mixer -lSDL_net -lGLU -lz -lphysfs -lglib-2.0
-EOL_CFLAGS = -I../include
+EOL_CFLAGS = -I../include 
 EOL_LDFLAGS = ../lib/libeol.a
 LFLAGS = -g  -o ../$(PROJECT) -lphysfs -lyaml
 CFLAGS = -g -Wall -pedantic -std=gnu99 -fgnu89-inline -Wno-unknown-pragmas 
