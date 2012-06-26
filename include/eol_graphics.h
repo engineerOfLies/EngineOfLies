@@ -232,5 +232,10 @@ eolFloat eol_graphics_get_FPS();
  */
 void eol_graphics_get_view(eolGraphicsView *view);
 
+/**
+ * @brief retrieves the current graphics frame time index
+ */
+eolUint eol_graphics_get_now();
+
 #endif
 

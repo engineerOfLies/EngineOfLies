@@ -47,7 +47,7 @@ SDL_Surface       * _eol_videobuffer = NULL;
 SDL_PixelFormat   * _eol_pixelFormat = NULL; 
 GList             * _eol_resize_callbacks = NULL;
 eolFloat            _eol_graphics_FPS = 0;   /*calculated Frames per second*/
-
+eolUint             _eol_graphics_NOW = 0;
 /*local function prototypes*/
 void eol_graphics_setup_resize_callbacks();
 void eol_graphics_exit(void);
@@ -347,21 +347,25 @@ void eol_graphics_frame_end()
 {
   eolUint Then;
   eolUint delay;
-  static eolUint NOW = 0;
 
   glPopMatrix();
   SDL_GL_SwapBuffers(); 
   eol_frame_delay(_eolGraphicsConfig.frameDelay);
-  Then = NOW;
-  NOW = SDL_GetTicks();
+  Then = _eol_graphics_NOW;
+  _eol_graphics_NOW = SDL_GetTicks();
   if(_eolGraphicsConfig.trackFPS)
   {
-    delay = NOW - Then;
+    delay = _eol_graphics_NOW - Then;
     if (delay != 0)
     {
       _eol_graphics_FPS = 1000.0 / delay;
     }
   }
+}
+
+eolUint eol_graphics_get_now()
+{
+  return _eol_graphics_NOW;
 }
 
 eolUint eol_graphics_get_pixel(SDL_Surface *surface, eolUint x, eolUint y)

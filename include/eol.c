@@ -4,6 +4,7 @@
 #include "eol_font.h"
 #include "eol_sprite.h"
 #include "eol_input.h"
+#include "eol_mouse.h"
 #include "eol_mesh.h"
 #include "eol_armature.h"
 #include "eol_loader.h"
@@ -62,7 +63,9 @@ void eol_init(eolUint components)
   }
   if (components & EOL_INPUT)
   {
-  	eol_input_load_config();
+    eol_mouse_config();
+    eol_mouse_init();
+    eol_input_load_config();
     eol_input_init();
   }
 }

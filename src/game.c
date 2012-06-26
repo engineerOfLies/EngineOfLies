@@ -6,6 +6,7 @@
 #include "eol_actor.h"
 #include "eol_window.h"
 #include "eol_component.h"
+#include "eol_mouse.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -37,9 +38,11 @@ int main(int argc, char *argv[])
   if (actor)eol_actor_load(actor,"models/bruiser.actor");
   sprite = eol_sprite_load("images/skeleton.png",128,128);
   MakeTestWindow();
+  eol_mouse_show();
   do
   {
     eol_input_update();
+    eol_mouse_update();
   	eol_graphics_frame_begin();
     eol_window_draw_all();
     
@@ -73,6 +76,7 @@ int main(int argc, char *argv[])
       3);
     rot = rot + 0.25;
     if (rot > 360)rot -= 360;
+    eol_mouse_draw();
     eol_graphics_frame_end();
   	if(frame >= 14.0)frame = 2.0;
   	else frame+=0.3;
