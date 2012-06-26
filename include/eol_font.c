@@ -204,6 +204,7 @@ void eol_font_draw_text_justify(
   eolRect r;
   eolInt dx;
   if (!eol_font_initialized())return;
+  r = eol_font_get_bounds(text,size);
   switch (justify)
   {
     case eolJustifyLeft:
@@ -216,7 +217,6 @@ void eol_font_draw_text_justify(
       dx = (x - r.w);
       break;
   }
-  r = eol_font_get_bounds(text,size);
   eol_font_draw_text(
     text,
     dx,

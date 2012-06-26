@@ -47,6 +47,7 @@ void eol_window_init()
     }
   }
   _eol_window_initialized = eolTrue;
+  eol_component_config();
 }
 
 eolBool eol_window_initialized()
@@ -101,6 +102,7 @@ void eol_window_close()
 void eol_window_draw_all()
 {
   GList *l = NULL;
+  GList *c = NULL;
   eolWindow *win;
   if (!eol_window_initialized())return;
   for (l = _eol_window_stack;l != NULL; l = l->next)
@@ -111,11 +113,40 @@ void eol_window_draw_all()
     {
       eol_window_draw_generic(win);
     }
-    if (win->draw == NULL)continue;
-    win->draw(win);
+    if (win->draw != NULL)
+    {
+      win->draw(win);
+    }
+    for (c = win->components;c != NULL;c = c->next)
+    {
+      if (c->data == NULL)continue;
+      eol_component_draw((eolComponent *)c->data,win->rect);
+    }
   }
 }
-void eol_window_update_all();
+void eol_window_update_all()
+{
+  GList *l = NULL;
+  GList *c = NULL;
+  eolWindow *win;
+  if (!eol_window_initialized())return;
+  for (l = _eol_window_stack;l != NULL; l = l->next)
+  {
+    win = (eolWindow*)l->data;
+    if (win == NULL)continue;
+    if (win->update == NULL)continue;
+    /*update all components*/
+    for (c = win->components;c != NULL; c= c->next)
+    {
+      if (c->data != NULL)
+      {
+        eol_component_update(c->data);
+      }
+    }
+    /*call update for window*/
+    win->update(win);
+  }
+}
 
 eolWindow *eol_window_new()
 {
@@ -292,4 +323,20 @@ void eol_window_draw_generic(eolWindow *win)
                     (win->rect.y + win->rect.h));
   }
 }
+
+void eol_window_add_component(eolWindow *win,eolComponent *comp)
+{
+  if ((win == NULL)||(comp == NULL)||(!eol_window_initialized()))
+  {
+    return;
+  }
+  win->components = g_list_append(win->components,comp);
+  if (win->components == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_window:unable to add new component!\n");
+  }
+}
+
 /*eol@eof*/

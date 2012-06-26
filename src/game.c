@@ -5,6 +5,7 @@
 #include "eol_font.h"
 #include "eol_actor.h"
 #include "eol_window.h"
+#include "eol_component.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -91,6 +92,7 @@ void Init_All(const char *argv)
 void MakeTestWindow()
 {
   eolWindow *win = eol_window_new();
+  eolComponent *comp = NULL;
   if (!win)
   {
     fprintf(stdout,"OH NO IT FAILED TO CREATE!\n");
@@ -107,7 +109,33 @@ void MakeTestWindow()
   win->custom_delete = NULL;
   win->draw = NULL;
   win->update = NULL;
-  
+  comp = eol_label_new(
+    0,
+    "main_label",
+    eol_rectf(0.25,0.1,1,1),
+    eolTrue,
+    "This is a test label",
+    3,
+    NULL,
+    eol_vec3d(1,1,1),
+    1
+  );
+  eol_window_add_component(win,comp);
+  comp = eol_button_new(
+    1,
+    "test_button",
+    eol_rectf(0.7,0.8,1,1),
+    eolTrue,
+    "Test Button",
+    0,
+    2,
+    NULL,
+    NULL,
+    NULL
+  );
+  eol_window_add_component(win,comp);
 }
+
+
 /*eol @ eof*/
 

@@ -284,15 +284,15 @@ typedef eolUI32 eolTime;
  * varient ending in p takes a pointer to eolVect3D instead.
  * Varients ending with 2D only operate on the x an y components of vectors
  *
+ * @param v eolVect3D output
  * @param a eolFloat x component
  * @param b eolFloat y component
  * @param c eolFloat z componenta (only in 3D version)
- * @param v eolVect3D output
  */
-#define eol_vector_set_3D(a, b, c, v)  (v.x=(a), v.y=(b), v.z=(c))
-#define eol_vector_set_3D_p(a, b, c, v)  (v->x=(a), v->y=(b), v->z=(c))
-#define eol_vector_set_2D(a, b, v)  (v.x=(a), v.y=(b))
-#define eol_vector_set_2D_p(a, b, v)  (v->x=(a), v->y=(b))
+#define eol_vector_set_3D(v, a, b, c)  (v.x=(a), v.y=(b), v.z=(c))
+#define eol_vector_set_3D_p(v, a, b, c)  (v->x=(a), v->y=(b), v->z=(c))
+#define eol_vector_set_2D(v, a, b)  (v.x=(a), v.y=(b))
+#define eol_vector_set_2D_p(v, a, b)  (v->x=(a), v->y=(b))
 
 /**
  * @brief normalizes the vector passed.  does nothing for a zero length vector.

@@ -1,6 +1,6 @@
 eol.o: eol.c eol.h eol_types.h eol_opengl.h eol_logger.h eol_graphics.h \
  eol_font.h eol_sprite.h eol_input.h eol_mesh.h eol_armature.h \
- eol_matrix.h eol_loader.h eol_model.h
+ eol_matrix.h eol_loader.h eol_model.h eol_window.h eol_component.h
 eol_actor.o: eol_actor.c eol_actor.h eol_model.h eol_types.h eol_opengl.h \
  eol_mesh.h eol_sprite.h eol_graphics.h eol_armature.h eol_matrix.h \
  eol_logger.h
@@ -32,5 +32,6 @@ eol_resource.o: eol_resource.c eol_resource.h eol_types.h eol_opengl.h \
 eol_sprite.o: eol_sprite.c eol_sprite.h eol_graphics.h eol_types.h \
  eol_opengl.h eol_logger.h eol_loader.h
 eol_types.o: eol_types.c eol_types.h eol_opengl.h
-eol_window.o: eol_window.c eol_window.h eol_types.h eol_component.h \
- eol_resource.h eol_logger.h eol_config.h
+eol_window.o: eol_window.c eol_window.h eol_types.h eol_opengl.h \
+ eol_component.h eol_sprite.h eol_graphics.h eol_resource.h eol_logger.h \
+ eol_config.h

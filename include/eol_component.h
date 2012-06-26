@@ -37,6 +37,11 @@ enum eolComponentTypes {
   eolListComponent   = 7
 };
 
+enum eolButtonTypes {
+  eolButtonStock  = 0,
+  eolButtonText   = 1,
+  eolButtonCustom = 2
+};
 enum eolButtonStates {
   eolButtonIdle       = 0,
   eolButtonHighlight  = 1,
@@ -69,10 +74,13 @@ typedef struct eolComponent_S
   void        * componentData;
   void          (*data_free)(struct eolComponent_S *component);
   void          (*data_draw)(struct eolComponent_S *component,eolRect bounds);
-  void          (*data_update)(struct eolComponent_S *component);
+  eolBool       (*data_update)(struct eolComponent_S *component);
   eolInt        (*data_get_state)(struct eolComponent_S *component);
   eolBool       (*data_changed)(struct eolComponent_S *component);
 }eolComponent;
+
+/*@brief loads default component assets.*/
+void eol_component_config();
 
 eolComponent * eol_component_new();
 void eol_component_free(eolComponent **component);
@@ -81,6 +89,14 @@ void eol_component_set_focus(eolComponent *component,eolBool focus);
 eolBool eol_component_has_changed(eolComponent *component);
 eolInt eol_component_get_state(eolComponent *component);
 void eol_component_draw(eolComponent *component,eolRect bounds);
+
+/**
+ * @brief checks if a component has changed since last frame
+ *
+ * @param component the component to check
+ * @return eolTrue if the component has changed, eolFalse otherwise
+ */
+eolBool eol_component_changed(eolComponent *component);
 
 eolComponent *eol_label_new(
     eolUint        id,
@@ -92,6 +108,19 @@ eolComponent *eol_label_new(
     char         * fontName,
     eolVec3D       color,
     eolFloat       alpha
+  );
+
+eolComponent *eol_button_new(
+    eolUint        id,
+    eolWord        name,
+    eolRectFloat   rect,
+    eolBool        canHasFocus,
+    char         * buttonText,
+    eolInt         buttonType,
+    eolInt         buttonHotkey,
+    char         * buttonFileUp,
+    char         * buttonFileHigh,
+    char         * buttonFileDown
   );
 
 #endif

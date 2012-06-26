@@ -20,7 +20,10 @@ typedef struct
 
 typedef struct
 {
-  eolWord     input;                    /**<if defined, the input will operate as a hotkey*/
+  eolUint     input;                    /**<if defined, the input will operate as a hotkey*/
+  eolInt      justify;
+  eolUint     fontSize;
+  eolFloat    alpha;
   eolLine     buttonText;               /**<text to display over button...should it be a label component?*/
   eolUint     buttonType;               /**<if its an image, or raw text or both*/
   eolSprite * button[eolButtonStateMax];/**<if defined, it will use these over
@@ -73,6 +76,8 @@ typedef struct
 }eolComponentList;
 
 /*local global variables*/
+eolSprite * _eol_component_stock_button[3] = {NULL,NULL,NULL};
+eolVec3D    _eol_component_button_color[3];
 
 /*local function prototypes*/
 void eol_component_button_new(eolComponent *component);
@@ -106,6 +111,16 @@ void eol_component_make_label(
   );
 
 /*definitions*/
+void eol_component_config()
+{
+  /*TODO: load from config file*/
+  _eol_component_stock_button[0] = eol_sprite_load("images/UI/btn.png",-1,-1);
+  _eol_component_stock_button[1] = eol_sprite_load("images/UI/btn_high.png",-1,-1);
+  _eol_component_stock_button[2] = eol_sprite_load("images/UI/btn_hit.png",-1,-1);
+  eol_vector_set_3D(_eol_component_button_color[0],0.8,0.8,0.8);
+  eol_vector_set_3D(_eol_component_button_color[1],1,1,0);
+  eol_vector_set_3D(_eol_component_button_color[2],0.6,0.6,0.6);
+}
 
 eolComponent * eol_component_new()
 {
@@ -132,8 +147,29 @@ void eol_component_free(eolComponent **component)
   free(*component);
   *component = NULL;
 }
-void eol_component_update(eolComponent *component);
-void eol_component_set_focus(eolComponent *component,eolBool focus);
+
+void eol_component_update(eolComponent *component)
+{
+  if (!component)return;
+  if (component->data_update != NULL)
+  {
+    component->data_update(component);
+  }
+}
+
+eolBool eol_component_changed(eolComponent *component)
+{
+  if (!component)return eolFalse;
+  if (component->data_changed == NULL)return eolFalse;
+  return component->data_changed(component);
+}
+
+void eol_component_set_focus(eolComponent *component,eolBool focus)
+{
+  if (!component)return;
+  if (!component->canHasFocus)return;
+  component->hasFocus = focus;
+}
 eolBool eol_component_has_changed(eolComponent *component);
 eolInt eol_component_get_state(eolComponent *component);
 
@@ -413,6 +449,101 @@ void eol_component_make_label(
   component->data_draw = eol_component_label_draw;
 }
 
+eolBool eol_component_button_update(eolComponent *component)
+{
+  return eolFalse;
+}
+
+void eol_component_button_draw(eolComponent *component,eolRect bounds)
+{
+  eolRect r;
+  eolComponentButton *button = NULL;
+  eolSprite *img = NULL;
+  eolInt x,y;
+  button = eol_component_get_button_data(component);
+  x = bounds.x;
+  y = bounds.y;
+  if (button == NULL)return;
+  if ((component->state >= 0) &&
+    (component->state < eolButtonStateMax))
+  {
+    img = button->button[component->state];
+
+    if (img != NULL)
+    {
+      r = eol_font_get_bounds(
+        button->buttonText,
+        button->fontSize
+      );
+      eol_sprite_draw(img,
+                      0,
+                      bounds.x,
+                      bounds.y);
+      x = bounds.x + (img->frameWidth/2);
+      y = bounds.y + (img->frameHeight/2) - (r.h*0.7);
+    }
+    eol_font_draw_text_justify(
+      button->buttonText,
+      x,
+      y,
+      _eol_component_button_color[component->state],
+      button->alpha,
+      button->fontSize,
+      button->justify
+    );
+  }
+}
+
+void eol_component_make_button(
+    eolComponent * component,
+    char         * buttonText,
+    eolUint        buttonType,
+    eolInt         buttonHotkey,
+    eolLine        buttonUpFile,
+    eolLine        buttonHighFile,
+    eolLine        buttonDownFile
+  )
+{
+  eolComponentButton * button = NULL;
+  if (!component)return;
+  eol_component_button_new(component);
+
+  button = eol_component_get_button_data(component);
+  if (button == NULL)
+  {
+    return;
+  }
+  button->input = buttonHotkey;
+  strncpy(button->buttonText,buttonText,EOLLINELEN);
+  button->buttonType = buttonType;
+  switch(buttonType)
+  {
+    case eolButtonCustom:
+      button->button[eolButtonIdle] = eol_sprite_load(buttonUpFile,-1,-1);
+      button->button[eolButtonHighlight] = eol_sprite_load(buttonHighFile,-1,-1);
+      button->button[eolButtonPressed] = eol_sprite_load(buttonDownFile,-1,-1);
+      button->justify = eolJustifyCenter;
+      break;
+    case eolButtonText:
+      button->button[eolButtonIdle] = NULL;
+      button->button[eolButtonHighlight] = NULL;
+      button->button[eolButtonPressed] = NULL;
+      button->justify = eolJustifyLeft;
+      break;
+    case eolButtonStock:
+      button->button[eolButtonIdle] = _eol_component_stock_button[eolButtonIdle];
+      button->button[eolButtonHighlight] = _eol_component_stock_button[eolButtonHighlight];
+      button->button[eolButtonPressed] = _eol_component_stock_button[eolButtonPressed];
+      button->justify = eolJustifyCenter;
+      break;
+  }
+  button->alpha = 1;
+  button->fontSize = 3;
+  component->data_update = eol_component_button_update;
+  component->data_free = eol_component_button_free;
+  component->data_draw = eol_component_button_draw;
+}
+
 void eol_component_label_new(eolComponent *component)
 {
   if (component->componentData != NULL)
@@ -432,6 +563,27 @@ void eol_component_label_new(eolComponent *component)
   }
   memset(component->componentData,0,sizeof(eolComponentLabel));
   component->type = eolLabelComponent;
+}
+
+void eol_component_button_new(eolComponent *component)
+{
+  if (component->componentData != NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_component:tried to make a button out of an existing component\n");
+    return;
+  }
+  component->componentData = malloc(sizeof(eolComponentButton));
+  if (component->componentData == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_actor: failed to allocate data for new button\n");
+    return;
+  }
+  memset(component->componentData,0,sizeof(eolComponentButton));
+  component->type = eolButtonComponent;
 }
 
 eolComponent *eol_label_new(
@@ -470,5 +622,44 @@ eolComponent *eol_label_new(
   component->type = eolLabelComponent;
   return component;
 }
+
+eolComponent *eol_button_new(
+    eolUint        id,
+    eolWord        name,
+    eolRectFloat   rect,
+    eolBool        canHasFocus,
+    char         * buttonText,
+    eolInt         buttonType,
+    eolInt         buttonHotkey,
+    char         * buttonFileUp,
+    char         * buttonFileHigh,
+    char         * buttonFileDown
+  )
+{
+  eolComponent *component = NULL;
+  component = eol_component_new();
+  if (!component)return NULL;
+  eol_component_make_button(
+    component,
+    buttonText,
+    buttonType,
+    buttonHotkey,
+    buttonFileUp,
+    buttonFileHigh,
+    buttonFileDown
+  );
+  if (component->componentData == NULL)
+  {
+    eol_component_free(&component);
+    return NULL;
+  }
+  component->id = id;
+  strncpy(component->name,name,EOLWORDLEN);
+  eol_rectf_copy(&component->rect,rect);
+  component->canHasFocus = canHasFocus;
+  component->type = eolButtonComponent;
+  return component;
+}
+
 /*eol@eof*/
 

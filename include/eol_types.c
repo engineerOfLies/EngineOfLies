@@ -26,7 +26,7 @@ eolBool eol_equals(eolDouble a, eolDouble b)
 eolVec3D eol_vec3d(eolDouble x, eolDouble y, eolDouble z)
 {
 	eolVec3D vec;
-  eol_vector_set_3D(x, y, z, vec);
+  eol_vector_set_3D(vec,x, y, z);
 	return vec;
 }
 

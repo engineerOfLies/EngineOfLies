@@ -59,29 +59,29 @@ void eol_logger_fatal(char *msg,...)
 
 void eol_logger_message(eolLogLevel level,char *msg,...)
 {
-	va_list ap;
-	if (_eol_logger_file == NULL)
+  va_list ap;
+  if (level >= EOL_LOG_MAX)
   {
-  	fprintf(stderr,"eol_logger: no log file found!\n");
-  	fprintf(stderr,"eol_logger: message: %s\n",msg);
+    fprintf(stderr,"eol_logger: unable to write at log level %i\n",level);
+    fprintf(stderr,"eol_logger: message: %s\n",msg);
     return;
   }
-	if (level >= EOL_LOG_MAX)
-  {
-  	fprintf(stderr,"eol_logger: unable to write at log level %i\n",level);
-  	fprintf(stderr,"eol_logger: message: %s\n",msg);
-  	return;
-  }
-//  if (level < _eol_log_threshold)return;
-  va_start(ap,msg);
-  vfprintf(_eol_logger_file,msg,ap);
-  va_end(ap);
+  //  if (level < _eol_log_threshold)return;
   if (_eol_logger_stdout_echo == eolTrue)
   {
     va_start(ap,msg);
-  	vfprintf(stdout,msg,ap);
+    vfprintf(stdout,msg,ap);
     va_end(ap);
   }
+  if (_eol_logger_file == NULL)
+  {
+    fprintf(stderr,"eol_logger: no log file found!\n");
+    fprintf(stderr,"eol_logger: message: %s\n",msg);
+    return;
+  }
+  va_start(ap,msg);
+  vfprintf(_eol_logger_file,msg,ap);
+  va_end(ap);
 }
 
 void eol_logger_init()

@@ -18,6 +18,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with the EOL game engine.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "eol_types.h"
+#include "eol_component.h"
 #include <glib/glist.h>
 
 typedef struct eolWindow_S
@@ -47,5 +48,6 @@ void eol_window_update_all();
 
 eolWindow *eol_window_new();
 void eol_window_free(eolWindow **win);
+void eol_window_add_component(eolWindow *win,eolComponent *comp);
 
 #endif
