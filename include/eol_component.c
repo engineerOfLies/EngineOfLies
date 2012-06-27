@@ -11,7 +11,7 @@
 typedef struct
 {
   GString  * buffer;
-  eolInt     justify;
+  eolUint    justify;
   eolBool    wordWrap;
   eolUint    fontSize;
   eolVec3D   color;
@@ -105,6 +105,7 @@ void eol_component_image_free(eolComponent *component);
 void eol_component_make_label(
     eolComponent * component,
     char         * text,
+    eolUint        justify,
     eolInt         fontSize,
     char         * fontName,
     eolVec3D       color,
@@ -121,6 +122,12 @@ void eol_component_config()
   eol_vector_set_3D(_eol_component_button_color[0],0.8,0.8,0.8);
   eol_vector_set_3D(_eol_component_button_color[1],1,1,0);
   eol_vector_set_3D(_eol_component_button_color[2],0.6,0.6,0.6);
+}
+
+void eol_button_get_stock_size(eolUint *w, eolUint *h)
+{
+  if (w)*w = _eol_component_stock_button[0]->frameWidth;
+  if (h)*h = _eol_component_stock_button[0]->frameHeight;
 }
 
 eolComponent * eol_component_new()
@@ -413,6 +420,7 @@ void eol_component_draw(eolComponent *component,eolRect bounds)
 void eol_component_make_label(
     eolComponent * component,
     char         * text,
+    eolUint        justify,
     eolInt         fontSize,
     char         * fontName,
     eolVec3D       color,
@@ -451,6 +459,7 @@ void eol_component_make_label(
   }
   component->bounds.w = r.w;
   component->bounds.h = r.h;
+  label->justify = justify;
   label->fontSize = fontSize;
   label->alpha = alpha;
   eol_vec3d_copy(label->color,color);
@@ -651,6 +660,7 @@ eolComponent *eol_label_new(
     eolRect        bounds,
     eolBool        canHasFocus,
     char         * text,
+    eolUint        justify,
     eolInt         fontSize,
     char         * fontName,
     eolVec3D       color,
@@ -664,6 +674,7 @@ eolComponent *eol_label_new(
   eol_component_make_label(
     component,
     text,
+    justify,
     fontSize,
     fontName,
     color,
@@ -684,6 +695,32 @@ eolComponent *eol_label_new(
   return component;
 }
 
+eolComponent *eol_button_stock_new(
+    eolUint        id,
+    eolWord        name,
+    eolRectFloat   rect,
+    eolRect        bounds,
+    char         * buttonText,
+    eolInt         buttonHotkey,
+    eolBool        center
+  )
+{
+  return eol_button_new(
+    id,
+    name,
+    rect,
+    bounds,
+    eolTrue,
+    buttonText,
+    eolButtonStock,
+    buttonHotkey,
+    center,
+    NULL,
+    NULL,
+    NULL
+  );
+}
+
 eolComponent *eol_button_new(
     eolUint        id,
     eolWord        name,
@@ -693,6 +730,7 @@ eolComponent *eol_button_new(
     char         * buttonText,
     eolInt         buttonType,
     eolInt         buttonHotkey,
+    eolBool        center,
     char         * buttonFileUp,
     char         * buttonFileHigh,
     char         * buttonFileDown
@@ -722,6 +760,19 @@ eolComponent *eol_button_new(
   component->type = eolButtonComponent;
   component->bounds.x = bounds.x + (bounds.w * rect.x);
   component->bounds.y = bounds.y + (bounds.h * rect.y);
+  if (center)
+  {
+    component->bounds.x -= component->bounds.w/2;
+    component->bounds.y -= component->bounds.h/2;
+    if (bounds.w != 0)
+    {
+      component->rect.x -= (component->bounds.w/(float)bounds.w)/2;
+    }
+    if (bounds.h != 0)
+    {
+      component->rect.y -= (component->bounds.h/(float)bounds.h)/2;
+    }
+  }
   return component;
 }
 

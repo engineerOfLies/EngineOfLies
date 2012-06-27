@@ -199,10 +199,6 @@ void eol_window_delete(void *window)
     {
       win->custom_delete(win->customData);
     }
-    else
-    {
-      free (win->customData);
-    }
   }
   if (win->components != NULL)
   {
@@ -215,6 +211,10 @@ void eol_window_delete(void *window)
     }
     g_list_free(win->components);
     win->components = NULL;
+  }
+  if (win->callbacks != NULL)
+  {
+    free(win->callbacks);
   }
   _eol_window_stack = g_list_remove(_eol_window_stack,win);
   memset(win, 0, sizeof(eolWindow));
@@ -362,4 +362,29 @@ eolComponent *eol_window_get_component_by_id(eolWindow *win,eolUint id)
   }
   return NULL;
 }
+
+void eol_window_allocat_callbacks(eolWindow *win,eolUint count)
+{
+  if (!win)return;
+  if (win->callbacks != NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_window:attempted to re-allocated window callbacks for window %s\n",
+      win->name);
+    return;
+  }
+  win->callbacks = (eolWindowCallback*)malloc(sizeof(eolWindowCallback)*count);
+  if (win->callbacks == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_window:cannot allocate callbacks for window %s\n",
+      win->name);
+    return;
+  }
+  memset(win->callbacks,0,sizeof(eolWindowCallback)*count);
+  win->callbackCount = count;
+}
+
 /*eol@eof*/

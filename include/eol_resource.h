@@ -66,8 +66,17 @@ eolResourceManager * eol_resource_manager_init(
  */
 void * eol_resource_new_element(eolResourceManager *manager);
 
+/**
+ * @brief reduces the reference count to the element passed in.  if data in the
+ *        manager is unique. it will invoke delete on it.
+ *
+ * @param manager the resource manager where the element belongs
+ * @param data a pointer to the element pointer.  The element pointer will be
+ *             set to NULL upon completion.
+ *
+ */
 void eol_resource_free_element(eolResourceManager *manager,void **data);
-    
+
 void eol_resource_manager_free(eolResourceManager **manager);
 
 /**

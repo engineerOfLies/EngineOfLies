@@ -7,8 +7,17 @@
 #include "eol_window.h"
 #include "eol_component.h"
 #include "eol_mouse.h"
+#include "eol_dialog.h"
 #include <string.h>
 #include <stdio.h>
+
+eolSprite *sprite = NULL;
+eolActor *actor = NULL;
+typedef struct
+{
+  eolFloat frame;
+  eolFloat rot;
+}TestData;
 
 void Init_All(const char *argv);
 
@@ -18,11 +27,7 @@ int main(int argc, char *argv[])
 {
   int done;
   int i;
-  float rot = 0;
   eolLine fps;
-  eolFloat frame = 0;
-  eolSprite *sprite = NULL;
-  eolActor *actor = NULL;
   for(i = 1;i < argc;i++)
   {
     if(strcmp(argv[i],"-fs")== 0)
@@ -44,10 +49,10 @@ int main(int argc, char *argv[])
     eol_input_update();
     eol_mouse_update();
     eol_window_update_all();
-  	eol_graphics_frame_begin();
+    eol_graphics_frame_begin();
     eol_window_draw_all();
-    
-  	sprintf(fps,"FPS: %f",eol_graphics_get_FPS());
+
+    sprintf(fps,"FPS: %f",eol_graphics_get_FPS());
     eol_font_draw_text_justify(
       fps,
       640,
@@ -57,41 +62,41 @@ int main(int argc, char *argv[])
       2,
       eolJustifyRight);
 
-  	eol_sprite_draw(sprite,(eolInt)frame,100,100);
-  
-    eol_actor_draw(
-      actor,
-      eol_vec3d(0,0,-10),
-      eol_vec3d(-90,0,rot),
-      eol_vec3d(1,1,1),
-      eol_vec3d(1,1,1),
-      1
-    );
-
-    eol_font_draw_text(
-      "TESTING",
-      300,
-      100,
-      eol_vec3d(rot/360,1,1),
-      1,
-      3);
-    rot = rot + 0.25;
-    if (rot > 360)rot -= 360;
     eol_mouse_draw();
     eol_graphics_frame_end();
-  	if(frame >= 14.0)frame = 2.0;
-  	else frame+=0.3;
+
     if((eol_input_quit_check()) ||
-      (eol_input_is_key_pressed(SDLK_ESCAPE)))done = 1;
+      (eol_input_is_key_pressed(SDLK_ESCAPE)))
+    {
+      eol_dialog_quit();
+    }
   }while(!done);
-  	fprintf(stdout,"Main Loop exited\n");
   exit(0);
   return 0;
 }
 
 void Init_All(const char *argv)
 {
-	eol_init(EOL_ALL);
+  eol_init(EOL_ALL);
+}
+
+void TestWindowDraw(eolWindow *win)
+{
+  TestData *data = (TestData *)win->customData;
+  eol_sprite_draw(sprite,(eolInt)data->frame,100,100);
+
+  eol_actor_draw(
+    actor,
+    eol_vec3d(0,0,-10),
+    eol_vec3d(-90,0,data->rot),
+    eol_vec3d(1,1,1),
+    eol_vec3d(1,1,1),
+    1
+  );
+  data->rot = data->rot + 0.25;
+  if (data->rot > 360)data->rot -= 360;
+  if(data->frame >= 14.0)data->frame = 2.0;
+  else data->frame+=0.3;
 }
 
 void TestWindowUpdate(eolWindow *win,GList *updates)
@@ -137,6 +142,9 @@ void MakeTestWindow()
   win->custom_delete = NULL;
   win->draw = NULL;
   win->update = TestWindowUpdate;
+  win->draw = TestWindowDraw;
+  win->customData = malloc(sizeof(TestData));
+  memset(win->customData,0,sizeof(TestData));
   comp = eol_label_new(
     0,
     "main_label",
@@ -144,28 +152,23 @@ void MakeTestWindow()
     win->rect,
     eolTrue,
     "This is a test label",
+    eolJustifyLeft,
     3,
     NULL,
     eol_vec3d(1,1,1),
     1
   );
   eol_window_add_component(win,comp);
-  comp = eol_button_new(
+  comp = eol_button_stock_new(
     1,
     "test_button",
     eol_rectf(0.7,0.8,1,1),
     win->rect,
-    eolTrue,
     "Test Button",
     0,
-    2,
-    NULL,
-    NULL,
-    NULL
+    eolFalse
   );
   eol_window_add_component(win,comp);
 }
 
-
 /*eol @ eof*/
-

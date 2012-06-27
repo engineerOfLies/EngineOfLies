@@ -101,6 +101,8 @@ eolBool eol_component_changed(eolComponent *component);
 
 void eol_label_set_text(eolComponent *comp,char *text);
 
+void eol_button_get_stock_size(eolUint *w, eolUint *h);
+
 eolComponent *eol_label_new(
     eolUint        id,
     eolWord        name,
@@ -108,6 +110,7 @@ eolComponent *eol_label_new(
     eolRect        bounds,
     eolBool        canHasFocus,
     char         * text,
+    eolUint        justify,
     eolInt         fontSize,
     char         * fontName,
     eolVec3D       color,
@@ -123,9 +126,20 @@ eolComponent *eol_button_new(
     char         * buttonText,
     eolInt         buttonType,
     eolInt         buttonHotkey,
+    eolBool        center,
     char         * buttonFileUp,
     char         * buttonFileHigh,
     char         * buttonFileDown
+  );
+
+eolComponent *eol_button_stock_new(
+    eolUint        id,
+    eolWord        name,
+    eolRectFloat   rect,
+    eolRect        bounds,
+    char         * buttonText,
+    eolInt         buttonHotkey,
+    eolBool        center
   );
 
 #endif

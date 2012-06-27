@@ -469,5 +469,10 @@ eolFloat eol_graphics_get_FPS()
   return _eol_graphics_FPS;
 }
 
+void eol_graphics_get_size(eolUint * w, eolUint * h)
+{
+  if (w != NULL)*w = _eolGraphicsConfig.graphicsView.xRes;
+  if (h != NULL)*h = _eolGraphicsConfig.graphicsView.yRes;
+}
 /* eol @ eof*/
 

@@ -224,6 +224,13 @@ void eol_resource_free_element(eolResourceManager *manager,void **data)
   element = (eolResourceHeader *)(*data);
   element--;
   element->refCount--;
+  if (manager->_data_unique)
+  {
+    if (manager->data_delete != NULL)
+    {
+      manager->data_delete(*data);
+    }
+  }
   *data = NULL;
 }
 
