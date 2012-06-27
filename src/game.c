@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
   {
     eol_input_update();
     eol_mouse_update();
+    eol_window_update_all();
   	eol_graphics_frame_begin();
     eol_window_draw_all();
     
@@ -93,6 +94,29 @@ void Init_All(const char *argv)
 	eol_init(EOL_ALL);
 }
 
+void TestWindowUpdate(eolWindow *win,GList *updates)
+{
+  GList *c;
+  eolComponent *comp = NULL;
+  eolComponent *labelComp = NULL;
+  if ((win == NULL)||(updates == NULL))return;
+  
+  for (c = updates;c != NULL;c = c->next)
+  {
+    if (c->data == NULL)continue;
+    comp = (eolComponent *)c->data;
+    labelComp = eol_window_get_component_by_id(win,0);
+    switch (comp->id)
+    {
+      case 0:
+        break;
+      case 1:
+        eol_label_set_text(labelComp,"button 1 was changed");
+        break;
+    }
+  }
+}
+
 void MakeTestWindow()
 {
   eolWindow *win = eol_window_new();
@@ -112,11 +136,12 @@ void MakeTestWindow()
   win->customData = NULL;
   win->custom_delete = NULL;
   win->draw = NULL;
-  win->update = NULL;
+  win->update = TestWindowUpdate;
   comp = eol_label_new(
     0,
     "main_label",
     eol_rectf(0.25,0.1,1,1),
+    win->rect,
     eolTrue,
     "This is a test label",
     3,
@@ -129,6 +154,7 @@ void MakeTestWindow()
     1,
     "test_button",
     eol_rectf(0.7,0.8,1,1),
+    win->rect,
     eolTrue,
     "Test Button",
     0,

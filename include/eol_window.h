@@ -34,7 +34,7 @@ typedef struct eolWindow_S
   void    * customData;
   void      (*custom_delete)(void *data);
   void      (*draw)(struct eolWindow_S *self);
-  int       (*update)(struct eolWindow_S *self);
+  void      (*update)(struct eolWindow_S *self,GList *updates);
 }eolWindow;
 
 void eol_window_init();
@@ -49,5 +49,6 @@ void eol_window_update_all();
 eolWindow *eol_window_new();
 void eol_window_free(eolWindow **win);
 void eol_window_add_component(eolWindow *win,eolComponent *comp);
+eolComponent *eol_window_get_component_by_id(eolWindow *win,eolUint id);
 
 #endif

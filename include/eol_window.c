@@ -128,6 +128,7 @@ void eol_window_update_all()
 {
   GList *l = NULL;
   GList *c = NULL;
+  GList *update = NULL;
   eolWindow *win;
   if (!eol_window_initialized())return;
   for (l = _eol_window_stack;l != NULL; l = l->next)
@@ -140,11 +141,18 @@ void eol_window_update_all()
     {
       if (c->data != NULL)
       {
-        eol_component_update(c->data);
+        if (eol_component_update(c->data))
+        {
+          update = g_list_append(update,c->data);
+        }
       }
     }
     /*call update for window*/
-    win->update(win);
+    win->update(win,update);
+    if (update != NULL)
+    {
+      g_list_free(update);
+    }
   }
 }
 
@@ -339,4 +347,19 @@ void eol_window_add_component(eolWindow *win,eolComponent *comp)
   }
 }
 
+eolComponent *eol_window_get_component_by_id(eolWindow *win,eolUint id)
+{
+  GList *c = NULL;
+  eolComponent *comp;
+  if (!win)return NULL;
+  for (c = win->components;c != NULL;c = c->next)
+  {
+    if (c->data != NULL)
+    {
+      comp = (eolComponent *)c->data;
+      if (comp->id == id)return comp;
+    }
+  }
+  return NULL;
+}
 /*eol@eof*/

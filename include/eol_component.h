@@ -47,6 +47,7 @@ enum eolButtonStates {
   eolButtonHighlight  = 1,
   eolButtonPressed    = 2
 };
+#define eolButtonStateMax 4
 
 enum eolListTypes {
   eolListLines  = 0, /**<items are drawn from top to bottom fit within bounding
@@ -56,7 +57,6 @@ enum eolListTypes {
   eolListDock   = 2  /**<items are drawn left to right.  fit within bounding rect*/
 };
 
-#define eolButtonStateMax 3
 
 /**
   @brief this structure serves as a header for all components
@@ -66,6 +66,7 @@ typedef struct eolComponent_S
   eolUint       id;
   eolWord       name;
   eolRectFloat  rect;
+  eolRect       bounds;
   eolBool       canHasFocus;    /**<I apologize for the lolcat reference*/
   eolBool       hasFocus;
   eolInt        state;
@@ -84,7 +85,7 @@ void eol_component_config();
 
 eolComponent * eol_component_new();
 void eol_component_free(eolComponent **component);
-void eol_component_update(eolComponent *component);
+eolBool eol_component_update(eolComponent *component);
 void eol_component_set_focus(eolComponent *component,eolBool focus);
 eolBool eol_component_has_changed(eolComponent *component);
 eolInt eol_component_get_state(eolComponent *component);
@@ -98,10 +99,13 @@ void eol_component_draw(eolComponent *component,eolRect bounds);
  */
 eolBool eol_component_changed(eolComponent *component);
 
+void eol_label_set_text(eolComponent *comp,char *text);
+
 eolComponent *eol_label_new(
     eolUint        id,
     eolWord        name,
     eolRectFloat   rect,
+    eolRect        bounds,
     eolBool        canHasFocus,
     char         * text,
     eolInt         fontSize,
@@ -114,6 +118,7 @@ eolComponent *eol_button_new(
     eolUint        id,
     eolWord        name,
     eolRectFloat   rect,
+    eolRect        bounds,
     eolBool        canHasFocus,
     char         * buttonText,
     eolInt         buttonType,
