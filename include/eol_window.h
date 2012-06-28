@@ -59,4 +59,6 @@ void eol_window_add_component(eolWindow *win,eolComponent *comp);
 eolComponent *eol_window_get_component_by_id(eolWindow *win,eolUint id);
 void eol_window_allocat_callbacks(eolWindow *win,eolUint count);
 
+eolFloat eol_window_get_relative_position(eolInt position,eolUint range);
+
 #endif

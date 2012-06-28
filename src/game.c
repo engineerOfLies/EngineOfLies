@@ -8,6 +8,7 @@
 #include "eol_component.h"
 #include "eol_mouse.h"
 #include "eol_dialog.h"
+#include "eol_drawshapes.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -93,6 +94,9 @@ void TestWindowDraw(eolWindow *win)
     eol_vec3d(1,1,1),
     1
   );
+
+  eol_draw_solid_rect(eol_rect(20,20,40,200),eol_vec3d(0,1,1),0.4);
+
   data->rot = data->rot + 0.25;
   if (data->rot > 360)data->rot -= 360;
   if(data->frame >= 14.0)data->frame = 2.0;
@@ -116,7 +120,11 @@ void TestWindowUpdate(eolWindow *win,GList *updates)
       case 0:
         break;
       case 1:
-        eol_label_set_text(labelComp,"button 1 was changed");
+        eol_dialog_text_block("DIALOG BOX",
+                              "this is a whole lotta dialog to write out into a large window.  This window needs to be able to expand to accomidate a lot of text, but perhaps should have absolute limits based on the screen dimensions.",
+                              "Done",
+                              NULL,
+                              NULL);
         break;
     }
   }
@@ -124,6 +132,7 @@ void TestWindowUpdate(eolWindow *win,GList *updates)
 
 void MakeTestWindow()
 {
+  eolFloat lineHeight;
   eolWindow *win = eol_window_new();
   eolComponent *comp = NULL;
   if (!win)
@@ -135,6 +144,7 @@ void MakeTestWindow()
   win->id = 1;
   eol_rect_copy(&win->rect,eol_rect(32,32,640 - 64,480 - 64));
   win->canHasFocus = eolTrue;
+  win->hasFocus = eolTrue;
   win->drawGeneric = eolTrue;
   win->componentCount = 0;
   win->components = NULL;
@@ -153,6 +163,7 @@ void MakeTestWindow()
     eolTrue,
     "This is a test label",
     eolJustifyLeft,
+    eolFalse,
     3,
     NULL,
     eol_vec3d(1,1,1),
@@ -167,6 +178,16 @@ void MakeTestWindow()
     "Test Button",
     0,
     eolFalse
+  );
+  eol_window_add_component(win,comp);
+  lineHeight = eol_font_get_text_height_average(3);
+  lineHeight += 4;
+  comp = eol_line_entry_new(
+    2,
+    "test_entry",
+    eol_rectf(0.1,0.85,0.5,lineHeight/win->rect.h),
+    win->rect,
+    ""
   );
   eol_window_add_component(win,comp);
 }

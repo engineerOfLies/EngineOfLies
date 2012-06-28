@@ -30,7 +30,7 @@ enum eolComponentTypes {
   eolNullComponent   = 0,  /**<this type is set by default*/
   eolLabelComponent  = 1,
   eolButtonComponent = 2,
-  eolInputComponent  = 3,
+  eolEntryComponent  = 3,
   eolSliderComponent = 4,
   eolImageComponent  = 5,
   eolActorComponent  = 6,
@@ -111,6 +111,7 @@ eolComponent *eol_label_new(
     eolBool        canHasFocus,
     char         * text,
     eolUint        justify,
+    eolBool        wordWrap,
     eolInt         fontSize,
     char         * fontName,
     eolVec3D       color,
@@ -122,7 +123,6 @@ eolComponent *eol_button_new(
     eolWord        name,
     eolRectFloat   rect,
     eolRect        bounds,
-    eolBool        canHasFocus,
     char         * buttonText,
     eolInt         buttonType,
     eolInt         buttonHotkey,
@@ -141,5 +141,34 @@ eolComponent *eol_button_stock_new(
     eolInt         buttonHotkey,
     eolBool        center
   );
+
+void eol_entry_delete_char(eolComponent *component);
+void eol_entry_append_char(eolComponent *component,
+                           char          newchar);
+
+eolComponent *eol_entry_new(
+    eolUint       id,
+    eolWord       name,
+    eolRectFloat  rect,
+    eolRect       bounds,
+    char        * output,
+    eolInt        outputLimit,
+    eolUint       justify,
+    eolBool       wordWrap,
+    eolUint       fontSize,
+    eolLine       fontName,
+    eolBool       number,
+    eolVec3D      color,
+    eolFloat      alpha,
+    eolVec3D      bgcolor
+);
+
+eolComponent *eol_line_entry_new(
+    eolUint       id,
+    eolWord       name,
+    eolRectFloat  rect,
+    eolRect       bounds,
+    eolLine       output
+);
 
 #endif

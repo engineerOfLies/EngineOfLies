@@ -4,6 +4,8 @@
 #include "eol_sprite.h"
 #include "eol_actor.h"
 #include "eol_mouse.h"
+#include "eol_drawshapes.h"
+#include "eol_input.h"
 #include <glib/glist.h>
 #include <glib/gstring.h>
 
@@ -33,13 +35,18 @@ typedef struct
 
 typedef struct
 {
-  char    * buffer;
+  GString * buffer;
   eolInt    bufferLimit; /**<if -1 no limit, otherwise its the maximum character
   that will be added to buffer*/
+  eolUint   justify;
+  eolBool   wordWrap;
   eolUint   fontSize;    /**<size of the font to use when displaying the text*/
   eolFont * font;    /**<if defined, it will use the custom font to draw text*/
   eolBool   number; /**<if true, limits input to 0-9 - and .*/
-}eolComponentInput;
+  eolVec3D  color;
+  eolVec3D  bgcolor;
+  eolFloat  alpha;
+}eolComponentEntry;
 
 typedef struct
 {
@@ -84,10 +91,14 @@ eolVec3D    _eol_component_button_color[3];
 void eol_component_button_new(eolComponent *component);
 void eol_component_label_new(eolComponent *component);
 void eol_component_label_free(eolComponent *component);
+void eol_component_entry_new(eolComponent *component);
+
+eolBool eol_component_has_changed(eolComponent *component);
+eolInt eol_component_get_state(eolComponent *component);
 
 void eol_component_textinput_new(eolComponent *component);
 void eol_component_textinput_get_text(eolComponent *component,char *text);
-eolComponentInput *eol_component_textinput_get_component(eolComponent *component);
+eolComponentEntry *eol_component_textinput_get_component(eolComponent *component);
 
 void eol_component_actor_new(eolComponent *component);
 void eol_component_actor_load(eolComponent *component,char * filename);
@@ -96,7 +107,7 @@ eolComponentButton *eol_component_get_button_data(eolComponent *component);
 
 void eol_component_button_free(eolComponent *component);
 void eol_component_label_free(eolComponent *component);
-void eol_component_textinput_free(eolComponent *component);
+void eol_component_entry_free(eolComponent *component);
 void eol_component_actor_free(eolComponent *component);
 void eol_component_slider_free(eolComponent *component);
 void eol_component_list_free(eolComponent *component);
@@ -107,6 +118,7 @@ void eol_component_make_label(
     char         * text,
     eolUint        justify,
     eolInt         fontSize,
+    eolBool        wordWrap,
     char         * fontName,
     eolVec3D       color,
     eolFloat       alpha
@@ -179,8 +191,6 @@ void eol_component_set_focus(eolComponent *component,eolBool focus)
   if (!component->canHasFocus)return;
   component->hasFocus = focus;
 }
-eolBool eol_component_has_changed(eolComponent *component);
-eolInt eol_component_get_state(eolComponent *component);
 
 eolComponentButton *eol_component_get_button_data(eolComponent *component)
 {
@@ -215,15 +225,15 @@ eolComponentLabel *eol_component_get_label_data(eolComponent *component)
   return (eolComponentLabel*)component->componentData;
 }
 
-eolComponentInput *eol_component_get_input_data(eolComponent *component)
+eolComponentEntry *eol_component_get_entry_data(eolComponent *component)
 {
   if ((!component)||
     (!component->componentData)||
-    (component->type != eolInputComponent))
+    (component->type != eolEntryComponent))
   {
     return NULL;
   }
-  return (eolComponentInput*)component->componentData;
+  return (eolComponentEntry*)component->componentData;
 }
 
 eolComponentImage *eol_component_get_image_data(eolComponent *component)
@@ -289,9 +299,9 @@ void eol_component_label_free(eolComponent *component)
   component->componentData = NULL;
 }
 
-void eol_component_textinput_free(eolComponent *component)
+void eol_component_entry_free(eolComponent *component)
 {
-  eolComponentInput *input = eol_component_get_input_data(component);
+  eolComponentEntry *input = eol_component_get_entry_data(component);
   if (input == NULL)return;
   if (input->buffer != NULL)free(input->buffer);
   if (input->font != NULL)eol_font_free(&input->font);
@@ -345,6 +355,73 @@ void eol_component_image_free(eolComponent *component)
   component->componentData = NULL;
 }
 
+void eol_component_entry_draw(eolComponent *component, eolRect bounds)
+{
+  eolRect r;
+  eolComponentEntry *entry = eol_component_get_entry_data(component);
+  if (entry == NULL)return;
+  r.x = bounds.x - 1;
+  r.y = bounds.y - 1;
+  r.w = bounds.w + 2;
+  r.h = bounds.h + 2;
+  eol_draw_solid_rect(r,eol_vec3d(1,1,1),1);
+  eol_draw_solid_rect(bounds,entry->bgcolor,1);
+  if (entry->buffer->len <= 0)return;
+  if (entry->font == NULL)
+  {
+    if (entry->wordWrap)
+    {
+      eol_font_draw_text_block(
+      entry->buffer->str,
+      bounds.x,
+      bounds.y,
+      bounds.w,
+      0,
+      entry->color,
+      entry->alpha,
+      entry->fontSize
+      );
+    }
+    else
+    {
+      eol_font_draw_text_justify(
+        entry->buffer->str,
+        bounds.x,
+        bounds.y,
+        entry->color,
+        entry->alpha,
+        entry->fontSize,
+        entry->justify
+      );
+    }
+  }
+  else
+  {
+    if (entry->wordWrap)
+    {
+      eol_font_draw_text_block_custom(
+        entry->buffer->str,
+        bounds,
+        entry->color,
+        entry->alpha,
+        entry->font
+      );
+    }
+    else
+    {
+      eol_font_draw_text_justify_custom(
+        entry->buffer->str,
+        bounds.x,
+        bounds.y,
+        entry->color,
+        entry->alpha,
+        entry->font,
+        entry->justify
+      );
+    }
+  }
+}
+
 void eol_component_label_draw(eolComponent *component, eolRect bounds)
 {
   eolComponentLabel *label = eol_component_get_label_data(component);
@@ -359,7 +436,7 @@ void eol_component_label_draw(eolComponent *component, eolRect bounds)
       bounds.x,
       bounds.y,
       bounds.w,
-      bounds.h,
+      0,
       label->color,
       label->alpha,
       label->fontSize
@@ -417,11 +494,150 @@ void eol_component_draw(eolComponent *component,eolRect bounds)
   component->data_draw(component,drawRect);
 }
 
+void eol_entry_delete_char(eolComponent *component)
+{
+  eolComponentEntry *entry;
+  if (!component)return;
+  entry = eol_component_get_entry_data(component);
+  if (entry == NULL)return;
+  if (entry->buffer->len <= 0)return;
+  entry->buffer = g_string_erase(entry->buffer,(entry->buffer->len - 1),1);
+  if (entry->buffer == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_component:failed to delete a character in entry\n");
+  }
+}
+
+void eol_entry_append_char(eolComponent *component,
+                           char          newchar)
+{
+  eolComponentEntry *entry;
+  entry = eol_component_get_entry_data(component);
+  if (entry == NULL)return;
+  if (entry->buffer->len >= entry->bufferLimit)return;
+  entry->buffer = g_string_append_c(entry->buffer,newchar);
+}
+
+eolBool eol_component_entry_update(eolComponent *component)
+{
+  eolUI8 key;
+  char let;
+  eolComponentEntry *entry;
+  
+  if (!component)return eolFalse;
+  entry = eol_component_get_entry_data(component);
+  if (entry == NULL)return eolFalse;
+  if (eol_input_is_key_released(SDLK_BACKSPACE))
+  {
+    eol_entry_delete_char(component);
+    return eolFalse;
+  }
+  if (eol_input_is_key_released(SDLK_PERIOD))
+  {
+    eol_entry_append_char(component,'.');
+    return eolFalse;
+  }
+  if (eol_input_is_key_released(SDLK_MINUS))
+  {
+    eol_entry_append_char(component,'-');
+    return eolFalse;
+  }
+  for (key = SDLK_0;key <= SDLK_9;key++)
+  {
+    if (eol_input_is_key_released(key))
+    {
+      let = key - SDLK_0 + '0';
+      eol_entry_append_char(component,let);
+      return eolFalse;
+    }
+  }
+  if (entry->number)return eolFalse;
+  if (eol_input_is_key_released(SDLK_SPACE))
+  {
+    eol_entry_append_char(component,' ');
+    return eolFalse;
+  }
+  if (eol_input_is_key_released(SDLK_COMMA))
+  {
+    eol_entry_append_char(component,',');
+    return eolFalse;
+  }
+  if (eol_input_is_key_released(SDLK_COLON))
+  {
+    eol_entry_append_char(component,':');
+    return eolFalse;
+  }
+  for (key = SDLK_a;key <= SDLK_z;key++)
+  {
+    if (eol_input_is_key_released(key))
+    {
+      if (eol_input_is_input_down("LShift") ||
+          eol_input_is_input_down("RShift"))
+      {
+        let = key - SDLK_a + 'A';
+      }
+      else
+      {
+        let = key - SDLK_a + 'a';
+      }
+      eol_entry_append_char(component,let);
+      return eolFalse;
+    }
+  }
+  return eolFalse;
+}
+
+void eol_component_make_entry(
+    eolComponent * component,
+    char         * output,
+    eolUint        outputLimit,
+    eolUint        justify,
+    eolUint        fontSize,
+    eolBool        wordWrap,
+    eolLine        fontName,
+    eolVec3D       color,
+    eolFloat       alpha,
+    eolVec3D       bgcolor
+  )
+{
+  eolComponentEntry * entry = NULL;
+  if (!component)return;
+  eol_component_entry_new(component);
+  entry = eol_component_get_entry_data(component);
+  if (entry == NULL)
+  {
+    return;
+  }
+ 
+  entry->buffer = g_string_new(output);
+  if (entry->buffer == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_component:Failed to duplicate string for new entry\n");
+    eol_component_entry_free(component);
+    return;
+  }
+  entry->bufferLimit = outputLimit;
+  entry->justify = justify;
+  entry->fontSize = fontSize;
+  entry->alpha = alpha;
+  entry->wordWrap = wordWrap;
+  eol_vec3d_copy(entry->color,color);
+  component->data_free = eol_component_entry_free;
+  component->data_draw = eol_component_entry_draw;
+  component->data_update = eol_component_entry_update;
+}
+
+
 void eol_component_make_label(
     eolComponent * component,
     char         * text,
     eolUint        justify,
     eolInt         fontSize,
+    eolBool        wordWrap,
     char         * fontName,
     eolVec3D       color,
     eolFloat       alpha
@@ -462,6 +678,7 @@ void eol_component_make_label(
   label->justify = justify;
   label->fontSize = fontSize;
   label->alpha = alpha;
+  label->wordWrap = wordWrap;
   eol_vec3d_copy(label->color,color);
   component->data_free = eol_component_label_free;
   component->data_draw = eol_component_label_draw;
@@ -471,6 +688,7 @@ eolBool eol_component_button_update(eolComponent *component)
 {
   eolVec2D v;
   eolInt x,y;
+  if (!component)return eolFalse;
   component->oldState = component->state;
   eol_mouse_get_position(&x,&y);
   v.x = x;
@@ -599,6 +817,27 @@ void eol_component_make_button(
   component->data_draw = eol_component_button_draw;
 }
 
+void eol_component_entry_new(eolComponent *component)
+{
+  if (component->componentData != NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_component:tried to make a label out of an existing component\n");
+    return;
+  }
+  component->componentData = malloc(sizeof(eolComponentEntry));
+  if (component->componentData == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_actor: failed to allocate data for new label\n");
+    return;
+  }
+  memset(component->componentData,0,sizeof(eolComponentEntry));
+  component->type = eolEntryComponent;
+}
+
 void eol_component_label_new(eolComponent *component)
 {
   if (component->componentData != NULL)
@@ -661,6 +900,7 @@ eolComponent *eol_label_new(
     eolBool        canHasFocus,
     char         * text,
     eolUint        justify,
+    eolBool        wordWrap,
     eolInt         fontSize,
     char         * fontName,
     eolVec3D       color,
@@ -676,6 +916,7 @@ eolComponent *eol_label_new(
     text,
     justify,
     fontSize,
+    wordWrap,
     fontName,
     color,
     alpha
@@ -710,7 +951,6 @@ eolComponent *eol_button_stock_new(
     name,
     rect,
     bounds,
-    eolTrue,
     buttonText,
     eolButtonStock,
     buttonHotkey,
@@ -726,7 +966,6 @@ eolComponent *eol_button_new(
     eolWord        name,
     eolRectFloat   rect,
     eolRect        bounds,
-    eolBool        canHasFocus,
     char         * buttonText,
     eolInt         buttonType,
     eolInt         buttonHotkey,
@@ -756,7 +995,7 @@ eolComponent *eol_button_new(
   component->id = id;
   strncpy(component->name,name,EOLWORDLEN);
   eol_rectf_copy(&component->rect,rect);
-  component->canHasFocus = canHasFocus;
+  component->canHasFocus = eolTrue;
   component->type = eolButtonComponent;
   component->bounds.x = bounds.x + (bounds.w * rect.x);
   component->bounds.y = bounds.y + (bounds.h * rect.y);
@@ -773,6 +1012,84 @@ eolComponent *eol_button_new(
       component->rect.y -= (component->bounds.h/(float)bounds.h)/2;
     }
   }
+  return component;
+}
+
+eolComponent *eol_line_entry_new(
+    eolUint       id,
+    eolWord       name,
+    eolRectFloat  rect,
+    eolRect       bounds,
+    eolLine       output
+)
+{
+  return eol_entry_new(
+    id,
+    name,
+    rect,
+    bounds,
+    output,
+    EOLLINELEN,
+    eolJustifyLeft,
+    eolFalse,
+    3,
+    "",
+    eolFalse,
+    eol_vec3d(0,1,0),
+    1,
+    eol_vec3d(0.1,0.1,0.1)
+  );
+}
+
+
+eolComponent *eol_entry_new(
+    eolUint       id,
+    eolWord       name,
+    eolRectFloat  rect,
+    eolRect       bounds,
+    char        * output,
+    eolInt        outputLimit,
+    eolUint       justify,
+    eolBool       wordWrap,
+    eolUint       fontSize,
+    eolLine       fontName,
+    eolBool       number,
+    eolVec3D      color,
+    eolFloat      alpha,
+    eolVec3D      bgcolor
+)
+{
+  eolComponent *component = NULL;
+  component = eol_component_new();
+  if (!component)return NULL;
+  eol_component_make_entry(
+    component,
+    output,
+    outputLimit,
+    justify,
+    fontSize,
+    wordWrap,
+    fontName,
+    color,
+    alpha,
+    bgcolor
+  );
+  if (component->componentData == NULL)
+  {
+    eol_component_free(&component);
+    return NULL;
+  }
+
+  component->id = id;
+  strncpy(component->name,name,EOLWORDLEN);
+  eol_rectf_copy(&component->rect,rect);
+  component->canHasFocus = eolTrue;
+  component->type = eolEntryComponent;
+  component->bounds.w = bounds.w;
+  component->bounds.h = bounds.h;
+  component->bounds.x = bounds.x + (bounds.w * rect.x);
+  component->bounds.y = bounds.y + (bounds.h * rect.y);
+  
   return component;
 }
 

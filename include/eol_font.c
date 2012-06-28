@@ -648,10 +648,29 @@ eolRect eol_font_get_block_bounds_custom(
       r.w = tw;
     }
   }while(1);
-  r.h = drawheight + h;
+  r.h = drawheight + th;
   return r;
 }
 
+eolUint eol_font_get_text_height_average(eolUint fontsize)
+{
+  eolRect r;
+  r = eol_font_get_bounds(
+    "gL",
+    fontsize
+  );
+  return r.h;
+}
+
+eolUint eol_font_get_text_height_average_custom(eolFont *font)
+{
+  eolRect r;
+  r = eol_font_get_bounds_custom(
+    "gL",
+    font
+  );
+  return r.h;
+}
 
 /*eol@eof*/
 

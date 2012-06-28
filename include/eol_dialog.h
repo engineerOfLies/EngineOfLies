@@ -24,6 +24,17 @@
  */
 
 /**
+  * @brief pops up a text dialog box with an "OK"
+  *
+  * @param question the text to show in the dialog box
+  */
+void eol_dialog_text_block(eolLine title,
+                           char   *text,
+                           eolWord okText,
+                           void    *data,
+                           eolWindowCallback onOK);
+
+/**
  * @brief pops up a yes / no window dialog.
  *
  * @param question the text to show in the dialog box

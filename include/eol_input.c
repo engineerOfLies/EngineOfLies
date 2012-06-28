@@ -100,6 +100,7 @@ eolInt eol_input_parse(char *type, char *input)
     if(strcmp(input,"DOWNARROW")==0)return SDLK_DOWN;
     if(strcmp(input,"LEFTARROW")==0)return SDLK_LEFT;
     if(strcmp(input,"RIGHTARROW")==0)return SDLK_RIGHT;
+    if(strcmp(input,"BACKSPACE")==0)return SDLK_BACKSPACE;
   }
   if(strcmp(type,"mod")==0)
   {
@@ -294,6 +295,28 @@ eolBool eol_input_quit_check()
       return eolTrue;
     }
   }
+  return eolFalse;
+}
+
+eolInput *eol_input_get_by_name(char *input)
+{
+  int i;
+  for (i = 0;i < _num_inputs;i++)
+  {
+    if (strncmp(input,_input_list[i].name,EOLLINELEN) == 0)
+    {
+      return &_input_list[i];
+    }
+  }
+  return NULL;
+}
+
+eolBool eol_input_is_input_down(char *inputName)
+{
+  eolInput *input = NULL;
+  input = eol_input_get_by_name(inputName);
+  if (input == NULL)return eolFalse;
+  if (input->value != 0)return eolTrue;
   return eolFalse;
 }
 /*eol@eof*/
