@@ -11,12 +11,11 @@ eol_armature.o: eol_armature.c eol_armature.h eol_mesh.h eol_types.h \
 eol_component.o: eol_component.c eol_component.h eol_types.h eol_opengl.h \
  eol_logger.h eol_font.h eol_sprite.h eol_graphics.h eol_actor.h \
  eol_model.h eol_mesh.h eol_armature.h eol_matrix.h eol_mouse.h \
- eol_drawshapes.h eol_input.h
+ eol_draw.h eol_input.h
 eol_config.o: eol_config.c eol_config.h eol_types.h eol_opengl.h
 eol_dialog.o: eol_dialog.c eol_dialog.h eol_window.h eol_types.h \
  eol_opengl.h eol_component.h eol_logger.h eol_graphics.h eol_font.h
-eol_drawshapes.o: eol_drawshapes.c eol_drawshapes.h eol_types.h \
- eol_opengl.h eol_graphics.h
+eol_draw.o: eol_draw.c eol_draw.h eol_types.h eol_opengl.h eol_graphics.h
 eol_font.o: eol_font.c eol_font.h eol_types.h eol_opengl.h eol_logger.h \
  eol_graphics.h
 eol_graphics.o: eol_graphics.c eol_graphics.h eol_types.h eol_opengl.h \
@@ -35,6 +34,9 @@ eol_model.o: eol_model.c eol_model.h eol_types.h eol_opengl.h eol_mesh.h \
 eol_mouse.o: eol_mouse.c eol_mouse.h eol_types.h eol_opengl.h \
  eol_sprite.h eol_graphics.h
 eol_opengl.o: eol_opengl.c eol_opengl.h
+eol_particle.o: eol_particle.c eol_particle.h eol_types.h eol_opengl.h \
+ eol_actor.h eol_model.h eol_mesh.h eol_sprite.h eol_graphics.h \
+ eol_armature.h eol_matrix.h eol_draw.h
 eol_resource.o: eol_resource.c eol_resource.h eol_types.h eol_opengl.h \
  eol_logger.h
 eol_sprite.o: eol_sprite.c eol_sprite.h eol_graphics.h eol_types.h \

@@ -108,5 +108,12 @@ void eol_actor_free(eolActor **actor)
   free(*actor);
   *actor = NULL;
 }
+
+eolBool eol_actor_next_frame(eolActor * act)
+{
+  /*TODO: this*/
+  return eolTrue;
+}
+
 /*eol@eof*/
 

@@ -8,7 +8,8 @@
 #include "eol_component.h"
 #include "eol_mouse.h"
 #include "eol_dialog.h"
-#include "eol_drawshapes.h"
+#include "eol_draw.h"
+#include "eol_particle.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -49,6 +50,7 @@ int main(int argc, char *argv[])
   {
     eol_input_update();
     eol_mouse_update();
+    eol_particle_update_all();
     eol_window_update_all();
     eol_graphics_frame_begin();
     eol_window_draw_all();
@@ -97,6 +99,7 @@ void TestWindowDraw(eolWindow *win)
 
   eol_draw_solid_rect(eol_rect(20,20,40,200),eol_vec3d(0,1,1),0.4);
 
+  eol_particle_draw_all();
   data->rot = data->rot + 0.25;
   if (data->rot > 360)data->rot -= 360;
   if(data->frame >= 14.0)data->frame = 2.0;
@@ -105,6 +108,7 @@ void TestWindowDraw(eolWindow *win)
 
 void TestWindowUpdate(eolWindow *win,GList *updates)
 {
+  int i;
   GList *c;
   eolComponent *comp = NULL;
   eolComponent *labelComp = NULL;
@@ -120,11 +124,21 @@ void TestWindowUpdate(eolWindow *win,GList *updates)
       case 0:
         break;
       case 1:
-        eol_dialog_text_block("DIALOG BOX",
+/*        eol_dialog_text_block("DIALOG BOX",
                               "this is a whole lotta dialog to write out into a large window.  This window needs to be able to expand to accomidate a lot of text, but perhaps should have absolute limits based on the screen dimensions.",
                               "Done",
                               NULL,
-                              NULL);
+                              NULL);*/
+        for (i = 0; i < 100; i ++)
+        {
+        eol_particle_make_point(eol_vec3d(crandom()*0.1,0,-10),
+                                eol_vec3d(crandom()*0.1,crandom()*0.1 + 0.1,crandom()*0.1),
+                                eol_vec3d(0,-0.009,0) ,
+                                10,
+                                eol_vec3d(0,1,random()),
+                                random(),
+                                100);
+        }
         break;
     }
   }

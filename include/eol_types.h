@@ -63,6 +63,9 @@ enum eolBoolEnum {
 typedef GLfloat  eolFloat;
 typedef GLdouble eolDouble;
 
+#define random()  ((rand () & 0x7fff) / ((eolFloat)0x7fff))
+#define crandom() (2.0 * (random() - 0.5))
+
 /**
  * @brief Determines if the two floats are effectively equal within the
  * thresholds of floating point accuracry
@@ -182,6 +185,68 @@ eolVec3D eol_vec3d(eolDouble x, eolDouble y, eolDouble z);
   Time Handling
 */
 typedef eolUI32 eolTime;
+
+/*
+  3d orientation
+*/
+
+typedef struct
+{
+  eolVec3D position;
+  eolVec3D scale;
+  eolVec3D rotation;
+  eolVec3D color;
+  eolFloat alpha;
+}eolOrientation;
+
+void eol_orientation_add(eolOrientation * out,
+                         eolOrientation   in1,
+                         eolOrientation   in2);
+
+/*
+  3d trails.
+*/
+typedef struct
+{
+  eolUint         maxLen;
+  eolUint         len;
+  eolOrientation *trail;
+  eolOrientation *head;
+  eolOrientation *tail;
+}eolTrail;
+
+/**
+ * @brief allocated trail data for the trail provided
+ *        does not allocate the structure itself, just the data used by it.
+ * @param trail a pointer to a trail struct.  if NULL, nothing happens
+ * @param maxLen how large a trail is allocated.
+ */
+void eol_trail_new(eolTrail *trail,eolUint maxLen);
+
+/**
+ * @brief frees allocated trail data.  resets the trail struct to zero
+ *        does not free the trail structure iself, just the data allocated within it.
+ * @param trail a pointer to a trail struct.  if NULL, it does nothing
+ */
+void eol_trail_free(eolTrail *trail);
+
+/**
+ * @brief adds a new orientation to the head of the trail, pushing all others back.
+ *
+ * @param trail the trail to add an orientation to
+ * @param orientation the new orientation to add.
+ */
+void eol_trail_append(eolTrail *trail,eolOrientation orientation);
+
+/**
+* @brief retrieves the orientation n spots behind the head.
+*
+* @param trail the trail to search through
+* @param n how many positions behind head to retrieve.  if n is beyond maxLen, it will fail
+* @param ori output paramater.  Must provide a valid orientation pointer or function does nothing
+* @return eolTrue if it found the nth orientation or eolFalse on error.
+*/
+eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
 
 /**
  * basic operations

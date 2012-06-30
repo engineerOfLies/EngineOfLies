@@ -4,7 +4,7 @@
 #include "eol_sprite.h"
 #include "eol_actor.h"
 #include "eol_mouse.h"
-#include "eol_drawshapes.h"
+#include "eol_draw.h"
 #include "eol_input.h"
 #include <glib/glist.h>
 #include <glib/gstring.h>

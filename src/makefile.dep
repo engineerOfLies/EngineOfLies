@@ -6,4 +6,4 @@ game.o: game.c ../include/eol.h ../include/eol_types.h \
  ../include/eol_matrix.h ../include/eol_window.h \
  ../include/eol_component.h ../include/eol_component.h \
  ../include/eol_mouse.h ../include/eol_dialog.h ../include/eol_window.h \
- ../include/eol_drawshapes.h
+ ../include/eol_draw.h ../include/eol_particle.h ../include/eol_actor.h

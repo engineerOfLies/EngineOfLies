@@ -21,15 +21,16 @@ along with the EOL game engine.  If not, see <http://www.gnu.org/licenses/>.
 #include "eol_types.h"
 
 enum eol_components {
-	EOL_GRAPHICS  = 1,
-	EOL_FONT      = 2,
-	EOL_SPRITE    = 4,
-	EOL_MESH      = 8,
-	EOL_ARMATURE  = 16,
-	EOL_INPUT     = 32,
-	EOL_MODEL     = 64,
-	EOL_WINDOW    = 128,
-	EOL_ALL       = 0xFFFF
+  EOL_GRAPHICS  = 1,
+  EOL_FONT      = 2,
+  EOL_SPRITE    = 4,
+  EOL_MESH      = 8,
+  EOL_ARMATURE  = 16,
+  EOL_INPUT     = 32,
+  EOL_MODEL     = 64,
+  EOL_PARTICLE  = 128,
+  EOL_WINDOW    = 256,
+  EOL_ALL       = 0xFFFF
 };
 
 /**

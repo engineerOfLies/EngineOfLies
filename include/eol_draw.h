@@ -19,6 +19,28 @@
 */
 #include "eol_types.h"
 
+void eol_draw_trail(eolTrail * trail,
+                    eolFloat   radius,
+                    eolBool    fade,
+                    eolBool    taper);
+
+void eol_draw_dot_3D(eolVec3D point,
+                     eolFloat radius,
+                     eolVec3D color,
+                     eolFloat alpha);
+
+void eol_draw_line_3D(eolVec3D p1,
+                      eolVec3D p2,
+                      eolFloat radius,
+                      eolVec3D color,
+                      eolFloat alpha);
+
+void eol_draw_tri_3D(eolVec3D p1,
+                     eolVec3D p2,
+                     eolVec3D p3,
+                     eolVec3D color,
+                     eolFloat alpha);
+
 /**
  * @brief draws a rectangle on the screen in 2D space
  * @param rect the defined rectangle to draw
