@@ -64,28 +64,6 @@ void eol_actor_set_frame_rate(
   act->frameRate = rate;
 }
 
-void eol_actor_set_action(
-    eolActor * act,
-    eolWord    aname
-  )
-{
-  eolAction *action;
-  if (!act)return;
-  action = eol_model_get_action(
-      act->model,
-      aname
-  );
-  if (!action)
-  {
-    eol_logger_message(
-      EOL_LOG_WARN,
-      "eol_actor:cannot set action for actor %s\n",
-      act->name);
-    return;
-  }
-  
-}
-
 eolActor * eol_actor_new()
 {
   eolActor *actor = NULL;
@@ -109,11 +87,76 @@ void eol_actor_free(eolActor **actor)
   *actor = NULL;
 }
 
-eolBool eol_actor_next_frame(eolActor * act)
+void eol_actor_set_action(
+    eolActor * act,
+    eolWord    actionName
+  )
 {
-  /*TODO: this*/
-  return eolTrue;
+  eolAction *action;
+  if (!act)return;
+  if (!act->model)return;
+  if (strlen(actionName) <= 0)return;
+  action = eol_model_get_action(act->model,actionName);
+  if (action == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_actor: model %s does not have action %s\n",
+      act->model->name,actionName);
+    return;
+  }
+  act->action = action;
+  strncpy(act->actionName,actionName,EOLWORDLEN);
+  act->frame = action->begin;
+  act->frameRate = action->frameRate;
+  act->frameDirection = 1;
 }
 
+eolBool eol_actor_next_frame(eolActor * act)
+{
+  if (!act)return eolFalse;
+  if (!act->model)return eolFalse;
+  if (!act->action)return eolFalse;
+  act->frame = act->frame + (act->frameRate * act->frameDirection);
+  if (act->frame > act->action->end)
+  {
+    switch(act->action->type)
+    {
+      case eolActionLoop:
+        act->frame = act->action->begin;
+        return eolFalse;
+      case eolActionPass:
+        act->frame = act->action->end;
+        return eolTrue;
+      case eolActionOsci:
+        act->frame = act->action->end;
+        act->frameDirection = -1;
+        return eolFalse;
+    }
+  }
+  if (act->frame < act->action->begin)
+  {
+    switch(act->action->type)
+    {
+      case eolActionLoop:
+        act->frame = act->action->begin;
+        return eolFalse;
+      case eolActionPass:
+        act->frame = act->action->begin;
+        return eolFalse;
+      case eolActionOsci:
+        act->frame = act->action->begin;
+        act->frameDirection = 1;
+        return eolTrue;
+    }
+  }
+  return eolFalse;
+}
+
+eolFloat eol_actor_get_frame(eolActor *act)
+{
+  if (!act)return 0;
+  return act->frame;
+}
 /*eol@eof*/
 

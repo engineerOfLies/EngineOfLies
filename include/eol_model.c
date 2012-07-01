@@ -116,23 +116,130 @@ void eol_model_close()
       "eol_model:closed\n");
 }
 
+eolUint eol_model_load_action_count(eolFile *file)
+{
+  eolUint count = 0;
+  eolLine buf;
+  if ((!file) || (!file->file))return 0;
+  rewind(file->file);
+  while(fscanf(file->file, "%s", buf) != EOF)
+  {
+    if(strcmp(buf,"action:") == 0)
+    {
+      count++;
+      continue;
+    }
+  }
+  return count;
+}
+
 eolBool eol_model_load_data_from_file(char * filename,void *data)
 {
+  eolInt actionIndex = -1;
+  eolUint actionCount = 0;
+  eolWord tempWord;
   eolLine buf;
   eolFile *file;
   eolModel *model;
   eolInt temp;
   eolInt sw = -1,sh = -1;
-  file = eol_loader_read_file(filename);
-
-  if (file == NULL)
-    return eolFalse;
   if (data == NULL)
     return eolFalse;
-    
+  
+  file = eol_loader_read_file(filename);
+  if (file == NULL)
+    return eolFalse;
+  
   model = (eolModel *)data;
+  
+  actionCount = eol_model_load_action_count(file);
+  if (actionCount > 0)
+  {
+    model->_actionList = (eolAction *)malloc(sizeof(eolAction)*actionCount);
+    if (model->_actionList == NULL)
+    {
+      eol_logger_message(
+        EOL_LOG_ERROR,
+        "eol_model:unable to allocate action list for model\n");
+        eol_loader_close_file(&file);
+        return eolFalse;
+    }
+    memset(model->_actionList,0,sizeof(eolAction)*actionCount);
+    model->numActions = actionCount;
+  }
+  
+  rewind(file->file);
+  actionIndex = -1;
   while(fscanf(file->file, "%s", buf) != EOF)
   {
+    if(strcmp(buf,"action:") == 0)
+    {
+      actionIndex++;
+      if ((actionIndex >= model->numActions)||
+          (actionIndex < 0))
+      {
+        eol_logger_message(EOL_LOG_ERROR,"eol_model:over/under seeking in action list\n");
+        continue;
+      }
+      fscanf(file->file, "%s",model->_actionList[actionIndex].name);
+      continue;
+    }
+    if(strcmp(buf,"action_type:") == 0)
+    {
+      if ((actionIndex >= model->numActions)||
+        (actionIndex < 0))
+      {
+        eol_logger_message(EOL_LOG_ERROR,"eol_model:over/under seeking in action list\n");
+        continue;
+      }
+      fscanf(file->file, "%s",tempWord);
+      if (strncmp(tempWord,"loop",EOLWORDLEN) == 0)
+      {
+        model->_actionList[actionIndex].type = eolActionLoop;
+      }
+      if (strncmp(tempWord,"pass",EOLWORDLEN) == 0)
+      {
+        model->_actionList[actionIndex].type = eolActionPass;
+      }
+      if (strncmp(tempWord,"osci",EOLWORDLEN) == 0)
+      {
+        model->_actionList[actionIndex].type = eolActionOsci;
+      }
+      continue;
+    }
+    if(strcmp(buf,"action_framerate:") == 0)
+    {
+      if ((actionIndex >= model->numActions)||
+        (actionIndex < 0))
+      {
+        eol_logger_message(EOL_LOG_ERROR,"eol_model:over/under seeking in action list\n");
+        continue;
+      }
+      fscanf(file->file, "%f",&model->_actionList[actionIndex].frameRate);
+      continue;
+    }
+    if(strcmp(buf,"action_begin:") == 0)
+    {
+      if ((actionIndex >= model->numActions)||
+        (actionIndex < 0))
+      {
+        eol_logger_message(EOL_LOG_ERROR,"eol_model:over/under seeking in action list\n");
+        continue;
+      }
+      fscanf(file->file, "%ui",&model->_actionList[actionIndex].begin);
+      continue;
+    }
+    if(strcmp(buf,"action_end:") == 0)
+    {
+      if ((actionIndex >= model->numActions)||
+        (actionIndex < 0))
+      {
+        eol_logger_message(EOL_LOG_ERROR,"eol_model:over/under seeking in action list\n");
+        continue;
+      }
+      fscanf(file->file, "%ui",&model->_actionList[actionIndex].end);
+      continue;
+    }
     if(strcmp(buf,"model:") == 0)
     {
       fscanf(file->file, "%s",model->name);
