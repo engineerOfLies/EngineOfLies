@@ -11,15 +11,8 @@ eol.o: eol.c eol.h eol_types.h eol_opengl.h /usr/include/SDL/SDL.h \
   /usr/include/SDL/SDL_mouse.h /usr/include/SDL/SDL_video.h \
   /usr/include/SDL/SDL_joystick.h /usr/include/SDL/SDL_quit.h \
   /usr/include/SDL/SDL_loadso.h /usr/include/SDL/SDL_timer.h \
-  /usr/include/SDL/SDL_version.h eol_logger.h eol_graphics.h eol_font.h \
-  /usr/include/SDL/SDL_ttf.h eol_sprite.h /usr/include/SDL/SDL_image.h \
-  eol_input.h eol_mesh.h eol_armature.h eol_matrix.h eol_loader.h \
-  eol_model.h eol_window.h /usr/include/glib-2.0/glib/glist.h \
+  eol_component.h /usr/include/glib-2.0/glib/glist.h \
   /usr/include/glib-2.0/glib/gmem.h /usr/include/glib-2.0/glib/gtypes.h \
-  /usr/lib/i386-linux-gnu/glib-2.0/include/glibconfig.h \
-  /usr/include/glib-2.0/glib/gmacros.h \
-  /usr/include/glib-2.0/glib/gversionmacros.h
-eol_actor.o: eol_actor.c eol_actor.h eol_model.h eol_types.h eol_opengl.h \
   /usr/include/SDL/SDL.h /usr/include/SDL/SDL_main.h \
   /usr/include/SDL/SDL_stdinc.h /usr/include/SDL/SDL_config.h \
   /usr/include/SDL/SDL_platform.h /usr/include/SDL/begin_code.h \
@@ -67,9 +60,9 @@ eol_component.o: eol_component.c eol_component.h eol_types.h eol_opengl.h \
   /usr/include/SDL/SDL_timer.h /usr/include/SDL/SDL_version.h \
   eol_logger.h eol_font.h /usr/include/SDL/SDL_ttf.h eol_sprite.h \
   eol_graphics.h /usr/include/SDL/SDL_image.h eol_actor.h eol_model.h \
-  eol_mesh.h eol_armature.h eol_matrix.h \
-  /usr/include/glib-2.0/glib/glist.h /usr/include/glib-2.0/glib/gmem.h \
-  /usr/include/glib-2.0/glib/gtypes.h \
+  eol_mesh.h eol_armature.h eol_matrix.h eol_mouse.h eol_draw.h \
+  eol_input.h /usr/include/glib-2.0/glib/glist.h \
+  /usr/include/glib-2.0/glib/gmem.h /usr/include/glib-2.0/glib/gtypes.h \
   /usr/lib/i386-linux-gnu/glib-2.0/include/glibconfig.h \
   /usr/include/glib-2.0/glib/gmacros.h \
   /usr/include/glib-2.0/glib/gversionmacros.h \
@@ -162,6 +155,41 @@ eol_config.o: eol_config.c eol_config.h eol_types.h eol_opengl.h \
   /usr/include/glib-2.0/glib/deprecated/gmain.h \
   /usr/include/glib-2.0/glib/deprecated/grel.h \
   /usr/include/glib-2.0/glib/deprecated/gthread.h
+eol_dialog.o: eol_dialog.c eol_dialog.h eol_window.h eol_types.h \
+  eol_opengl.h /usr/include/SDL/SDL.h /usr/include/SDL/SDL_main.h \
+  /usr/include/SDL/SDL_stdinc.h /usr/include/SDL/SDL_config.h \
+  /usr/include/SDL/SDL_platform.h /usr/include/SDL/begin_code.h \
+  /usr/include/SDL/close_code.h /usr/include/SDL/SDL_audio.h \
+  /usr/include/SDL/SDL_error.h /usr/include/SDL/SDL_endian.h \
+  /usr/include/SDL/SDL_mutex.h /usr/include/SDL/SDL_thread.h \
+  /usr/include/SDL/SDL_rwops.h /usr/include/SDL/SDL_cdrom.h \
+  /usr/include/SDL/SDL_cpuinfo.h /usr/include/SDL/SDL_events.h \
+  /usr/include/SDL/SDL_active.h /usr/include/SDL/SDL_keyboard.h \
+  /usr/include/SDL/SDL_keysym.h /usr/include/SDL/SDL_mouse.h \
+  /usr/include/SDL/SDL_video.h /usr/include/SDL/SDL_joystick.h \
+  /usr/include/SDL/SDL_quit.h /usr/include/SDL/SDL_loadso.h \
+  /usr/include/SDL/SDL_timer.h /usr/include/SDL/SDL_version.h \
+  eol_component.h /usr/include/glib-2.0/glib/glist.h \
+  /usr/include/glib-2.0/glib/gmem.h /usr/include/glib-2.0/glib/gtypes.h \
+  /usr/lib/i386-linux-gnu/glib-2.0/include/glibconfig.h \
+  /usr/include/glib-2.0/glib/gmacros.h \
+  /usr/include/glib-2.0/glib/gversionmacros.h eol_logger.h \
+  eol_graphics.h eol_font.h /usr/include/SDL/SDL_ttf.h
+eol_draw.o: eol_draw.c eol_draw.h eol_types.h eol_opengl.h \
+  /usr/include/SDL/SDL.h /usr/include/SDL/SDL_main.h \
+  /usr/include/SDL/SDL_stdinc.h /usr/include/SDL/SDL_config.h \
+  /usr/include/SDL/SDL_platform.h /usr/include/SDL/begin_code.h \
+  /usr/include/SDL/close_code.h /usr/include/SDL/SDL_audio.h \
+  /usr/include/SDL/SDL_error.h /usr/include/SDL/SDL_endian.h \
+  /usr/include/SDL/SDL_mutex.h /usr/include/SDL/SDL_thread.h \
+  /usr/include/SDL/SDL_rwops.h /usr/include/SDL/SDL_cdrom.h \
+  /usr/include/SDL/SDL_cpuinfo.h /usr/include/SDL/SDL_events.h \
+  /usr/include/SDL/SDL_active.h /usr/include/SDL/SDL_keyboard.h \
+  /usr/include/SDL/SDL_keysym.h /usr/include/SDL/SDL_mouse.h \
+  /usr/include/SDL/SDL_video.h /usr/include/SDL/SDL_joystick.h \
+  /usr/include/SDL/SDL_quit.h /usr/include/SDL/SDL_loadso.h \
+  /usr/include/SDL/SDL_timer.h /usr/include/SDL/SDL_version.h \
+  eol_graphics.h
 eol_font.o: eol_font.c eol_font.h eol_types.h eol_opengl.h \
   /usr/include/SDL/SDL.h /usr/include/SDL/SDL_main.h \
   /usr/include/SDL/SDL_stdinc.h /usr/include/SDL/SDL_config.h \
@@ -290,7 +318,39 @@ eol_model.o: eol_model.c eol_model.h eol_types.h eol_opengl.h \
   /usr/include/SDL/SDL_timer.h /usr/include/SDL/SDL_version.h eol_mesh.h \
   eol_sprite.h eol_graphics.h /usr/include/SDL/SDL_image.h \
   eol_armature.h eol_matrix.h eol_logger.h eol_loader.h eol_resource.h
+eol_mouse.o: eol_mouse.c eol_mouse.h eol_types.h eol_opengl.h \
+  /usr/include/SDL/SDL.h /usr/include/SDL/SDL_main.h \
+  /usr/include/SDL/SDL_stdinc.h /usr/include/SDL/SDL_config.h \
+  /usr/include/SDL/SDL_platform.h /usr/include/SDL/begin_code.h \
+  /usr/include/SDL/close_code.h /usr/include/SDL/SDL_audio.h \
+  /usr/include/SDL/SDL_error.h /usr/include/SDL/SDL_endian.h \
+  /usr/include/SDL/SDL_mutex.h /usr/include/SDL/SDL_thread.h \
+  /usr/include/SDL/SDL_rwops.h /usr/include/SDL/SDL_cdrom.h \
+  /usr/include/SDL/SDL_cpuinfo.h /usr/include/SDL/SDL_events.h \
+  /usr/include/SDL/SDL_active.h /usr/include/SDL/SDL_keyboard.h \
+  /usr/include/SDL/SDL_keysym.h /usr/include/SDL/SDL_mouse.h \
+  /usr/include/SDL/SDL_video.h /usr/include/SDL/SDL_joystick.h \
+  /usr/include/SDL/SDL_quit.h /usr/include/SDL/SDL_loadso.h \
+  /usr/include/SDL/SDL_timer.h /usr/include/SDL/SDL_version.h \
+  eol_sprite.h eol_graphics.h /usr/include/SDL/SDL_image.h
 eol_opengl.o: eol_opengl.c eol_opengl.h
+eol_particle.o: eol_particle.c eol_particle.h eol_types.h eol_opengl.h \
+  /usr/include/SDL/SDL.h /usr/include/SDL/SDL_main.h \
+  /usr/include/SDL/SDL_stdinc.h /usr/include/SDL/SDL_config.h \
+  /usr/include/SDL/SDL_platform.h /usr/include/SDL/begin_code.h \
+  /usr/include/SDL/close_code.h /usr/include/SDL/SDL_audio.h \
+  /usr/include/SDL/SDL_error.h /usr/include/SDL/SDL_endian.h \
+  /usr/include/SDL/SDL_mutex.h /usr/include/SDL/SDL_thread.h \
+  /usr/include/SDL/SDL_rwops.h /usr/include/SDL/SDL_cdrom.h \
+  /usr/include/SDL/SDL_cpuinfo.h /usr/include/SDL/SDL_events.h \
+  /usr/include/SDL/SDL_active.h /usr/include/SDL/SDL_keyboard.h \
+  /usr/include/SDL/SDL_keysym.h /usr/include/SDL/SDL_mouse.h \
+  /usr/include/SDL/SDL_video.h /usr/include/SDL/SDL_joystick.h \
+  /usr/include/SDL/SDL_quit.h /usr/include/SDL/SDL_loadso.h \
+  /usr/include/SDL/SDL_timer.h /usr/include/SDL/SDL_version.h \
+  eol_actor.h eol_model.h eol_mesh.h eol_sprite.h eol_graphics.h \
+  /usr/include/SDL/SDL_image.h eol_armature.h eol_matrix.h eol_draw.h \
+  eol_logger.h
 eol_resource.o: eol_resource.c eol_resource.h eol_types.h eol_opengl.h \
   /usr/include/SDL/SDL.h /usr/include/SDL/SDL_main.h \
   /usr/include/SDL/SDL_stdinc.h /usr/include/SDL/SDL_config.h \
@@ -349,13 +409,13 @@ eol_window.o: eol_window.c eol_window.h eol_types.h eol_opengl.h \
   /usr/include/SDL/SDL_video.h /usr/include/SDL/SDL_joystick.h \
   /usr/include/SDL/SDL_quit.h /usr/include/SDL/SDL_loadso.h \
   /usr/include/SDL/SDL_timer.h /usr/include/SDL/SDL_version.h \
-  /usr/include/glib-2.0/glib/glist.h /usr/include/glib-2.0/glib/gmem.h \
-  /usr/include/glib-2.0/glib/gtypes.h \
+  eol_component.h /usr/include/glib-2.0/glib/glist.h \
+  /usr/include/glib-2.0/glib/gmem.h /usr/include/glib-2.0/glib/gtypes.h \
   /usr/lib/i386-linux-gnu/glib-2.0/include/glibconfig.h \
   /usr/include/glib-2.0/glib/gmacros.h \
   /usr/include/glib-2.0/glib/gversionmacros.h eol_sprite.h \
-  eol_graphics.h /usr/include/SDL/SDL_image.h eol_component.h \
-  eol_resource.h eol_logger.h eol_config.h /usr/include/glib-2.0/glib.h \
+  eol_graphics.h /usr/include/SDL/SDL_image.h eol_resource.h \
+  eol_logger.h eol_config.h /usr/include/glib-2.0/glib.h \
   /usr/include/glib-2.0/glib/galloca.h \
   /usr/include/glib-2.0/glib/garray.h \
   /usr/include/glib-2.0/glib/gasyncqueue.h \

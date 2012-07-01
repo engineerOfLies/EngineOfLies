@@ -293,6 +293,9 @@ void eol_font_draw_text_3D_block_custom(
     eolFont *font
   );
 
+eolUint eol_font_get_text_height_average(eolUint fontsize);
+
+eolUint eol_font_get_text_height_average_custom(eolFont *font);
 
 #endif
 

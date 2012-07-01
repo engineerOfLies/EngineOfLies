@@ -4,10 +4,12 @@
 #include "eol_font.h"
 #include "eol_sprite.h"
 #include "eol_input.h"
+#include "eol_mouse.h"
 #include "eol_mesh.h"
 #include "eol_armature.h"
 #include "eol_loader.h"
 #include "eol_model.h"
+#include "eol_particle.h"
 #include "eol_window.h"
 
 eolUint             _eol_major_version = 0;
@@ -54,6 +56,11 @@ void eol_init(eolUint components)
       	eol_armature_init();
       }
     }
+    if (components & EOL_PARTICLE)
+    {
+      eol_particle_config();
+      eol_particle_init();
+    }
     if (components & EOL_WINDOW)
     {
       eol_window_config();
@@ -62,7 +69,9 @@ void eol_init(eolUint components)
   }
   if (components & EOL_INPUT)
   {
-  	eol_input_load_config();
+    eol_mouse_config();
+    eol_mouse_init();
+    eol_input_load_config();
     eol_input_init();
   }
 }

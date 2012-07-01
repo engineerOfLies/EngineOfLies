@@ -18,22 +18,30 @@ You should have received a copy of the GNU Lesser General Public License
 along with the EOL game engine.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "eol_types.h"
+#include "eol_component.h"
 #include <glib/glist.h>
+
+typedef void (*eolWindowCallback)(void *data);
 
 typedef struct eolWindow_S
 {
-  eolLine   name;
-  eolUint   id;
-  eolRect   rect;
-  eolBool   canHasFocus;
-  eolBool   hasFocus;
-  eolBool   drawGeneric;
-  eolUint   componentCount;
-  GList   * components;
-  void    * customData;
-  void      (*custom_delete)(void *data);
-  void      (*draw)(struct eolWindow_S *self);
-  int       (*update)(struct eolWindow_S *self);
+  eolLine             name;          /**<name of the window*/
+  eolUint             id;            /**<number ID of the window*/
+  eolRect             rect;          /**<rectangle bounds of the window*/
+  eolBool             canHasFocus;   /**<if the window can receive focus*/
+  eolBool             hasFocus;      /**<if the window HAS focus*/
+  eolBool             drawGeneric;   /**<if the window uses the stock draw*/
+  eolUint             componentCount;/**<how many components this window has*/
+  GList             * components;    /**<list of window components*/
+  eolWindowCallback * callbacks;     /**<callback functions*/
+  eolUint             callbackCount; /**<number of callbacks allocated*/
+  void              * customData;    /**<window specific data*/
+  void                (*custom_delete)(void *data);
+                      /**<function to call to delete the custom data*/
+  void                (*draw)(struct eolWindow_S *self);
+                      /**<custom window draw function*/
+  void                (*update)(struct eolWindow_S *self,GList *updates);
+                      /**<function to handle updates*/
 }eolWindow;
 
 void eol_window_init();
@@ -47,5 +55,10 @@ void eol_window_update_all();
 
 eolWindow *eol_window_new();
 void eol_window_free(eolWindow **win);
+void eol_window_add_component(eolWindow *win,eolComponent *comp);
+eolComponent *eol_window_get_component_by_id(eolWindow *win,eolUint id);
+void eol_window_allocat_callbacks(eolWindow *win,eolUint count);
+
+eolFloat eol_window_get_relative_position(eolInt position,eolUint range);
 
 #endif

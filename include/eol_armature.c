@@ -694,8 +694,11 @@ void eol_armature_close()
   {
     eol_armature_delete(&_eol_armature_list[i]);
   }
-  free(_eol_armature_list);
-  _eol_armature_list = NULL;
+  if (_eol_armature_list != NULL)
+  {
+    free(_eol_armature_list);
+    _eol_armature_list = NULL;
+  }
   _eol_armature_initialized = eolFalse;
   eol_logger_message(
     EOL_LOG_INFO,

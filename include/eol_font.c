@@ -204,6 +204,7 @@ void eol_font_draw_text_justify(
   eolRect r;
   eolInt dx;
   if (!eol_font_initialized())return;
+  r = eol_font_get_bounds(text,size);
   switch (justify)
   {
     case eolJustifyLeft:
@@ -216,7 +217,6 @@ void eol_font_draw_text_justify(
       dx = (x - r.w);
       break;
   }
-  r = eol_font_get_bounds(text,size);
   eol_font_draw_text(
     text,
     dx,
@@ -648,10 +648,29 @@ eolRect eol_font_get_block_bounds_custom(
       r.w = tw;
     }
   }while(1);
-  r.h = drawheight + h;
+  r.h = drawheight + th;
   return r;
 }
 
+eolUint eol_font_get_text_height_average(eolUint fontsize)
+{
+  eolRect r;
+  r = eol_font_get_bounds(
+    "gL",
+    fontsize
+  );
+  return r.h;
+}
+
+eolUint eol_font_get_text_height_average_custom(eolFont *font)
+{
+  eolRect r;
+  r = eol_font_get_bounds_custom(
+    "gL",
+    font
+  );
+  return r.h;
+}
 
 /*eol@eof*/
 

@@ -105,6 +105,13 @@ eolSprite *eol_sprite_load(
   Uint8 r,g,b,a;
   /*first see if the sprite is already in memory*/
   eolSprite *newSprite = NULL;
+  if ((!filename) || (strlen(filename) <= 0))
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_sprite:cannot load a sprite of empty filename.\n");
+    return NULL;
+  }
   newSprite = eol_sprite_get_loaded_by_filename(filename);
   if (newSprite != NULL)
   {

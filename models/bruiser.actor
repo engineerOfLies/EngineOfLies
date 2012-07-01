@@ -1,4 +1,0 @@
-actor: test_actor
-mesh: models/bruiser/model.obj
-skin: models/bruiser/skin1.png
-arm: models/bruiser/model.obj

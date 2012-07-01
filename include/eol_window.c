@@ -47,6 +47,7 @@ void eol_window_init()
     }
   }
   _eol_window_initialized = eolTrue;
+  eol_component_config();
 }
 
 eolBool eol_window_initialized()
@@ -101,6 +102,7 @@ void eol_window_close()
 void eol_window_draw_all()
 {
   GList *l = NULL;
+  GList *c = NULL;
   eolWindow *win;
   if (!eol_window_initialized())return;
   for (l = _eol_window_stack;l != NULL; l = l->next)
@@ -111,11 +113,50 @@ void eol_window_draw_all()
     {
       eol_window_draw_generic(win);
     }
-    if (win->draw == NULL)continue;
-    win->draw(win);
+    if (win->draw != NULL)
+    {
+      win->draw(win);
+    }
+    for (c = win->components;c != NULL;c = c->next)
+    {
+      if (c->data == NULL)continue;
+      eol_component_draw((eolComponent *)c->data,win->rect);
+    }
   }
 }
-void eol_window_update_all();
+void eol_window_update_all()
+{
+  GList *l = NULL;
+  GList *c = NULL;
+  GList *update = NULL;
+  eolWindow *win;
+  if (!eol_window_initialized())return;
+  l = g_list_last(_eol_window_stack);
+  if (l != NULL)
+  {
+    win = (eolWindow*)l->data;
+    if ((win != NULL)&&(win->update != NULL))
+    {
+      /*update all components*/
+      for (c = win->components;c != NULL; c= c->next)
+      {
+        if (c->data != NULL)
+        {
+          if (eol_component_update(c->data))
+          {
+            update = g_list_append(update,c->data);
+          }
+        }
+      }
+    }
+    /*call update for window*/
+    win->update(win,update);
+    if (update != NULL)
+    {
+      g_list_free(update);
+    }
+  }
+}
 
 eolWindow *eol_window_new()
 {
@@ -160,10 +201,6 @@ void eol_window_delete(void *window)
     {
       win->custom_delete(win->customData);
     }
-    else
-    {
-      free (win->customData);
-    }
   }
   if (win->components != NULL)
   {
@@ -176,6 +213,10 @@ void eol_window_delete(void *window)
     }
     g_list_free(win->components);
     win->components = NULL;
+  }
+  if (win->callbacks != NULL)
+  {
+    free(win->callbacks);
   }
   _eol_window_stack = g_list_remove(_eol_window_stack,win);
   memset(win, 0, sizeof(eolWindow));
@@ -292,4 +333,66 @@ void eol_window_draw_generic(eolWindow *win)
                     (win->rect.y + win->rect.h));
   }
 }
+
+void eol_window_add_component(eolWindow *win,eolComponent *comp)
+{
+  if ((win == NULL)||(comp == NULL)||(!eol_window_initialized()))
+  {
+    return;
+  }
+  win->components = g_list_append(win->components,comp);
+  if (win->components == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_window:unable to add new component!\n");
+  }
+}
+
+eolComponent *eol_window_get_component_by_id(eolWindow *win,eolUint id)
+{
+  GList *c = NULL;
+  eolComponent *comp;
+  if (!win)return NULL;
+  for (c = win->components;c != NULL;c = c->next)
+  {
+    if (c->data != NULL)
+    {
+      comp = (eolComponent *)c->data;
+      if (comp->id == id)return comp;
+    }
+  }
+  return NULL;
+}
+
+void eol_window_allocat_callbacks(eolWindow *win,eolUint count)
+{
+  if (!win)return;
+  if (win->callbacks != NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_window:attempted to re-allocated window callbacks for window %s\n",
+      win->name);
+    return;
+  }
+  win->callbacks = (eolWindowCallback*)malloc(sizeof(eolWindowCallback)*count);
+  if (win->callbacks == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_window:cannot allocate callbacks for window %s\n",
+      win->name);
+    return;
+  }
+  memset(win->callbacks,0,sizeof(eolWindowCallback)*count);
+  win->callbackCount = count;
+}
+
+eolFloat eol_window_get_relative_position(eolInt position,eolUint range)
+{
+  if (range == 0)return 0;
+  return (eolFloat)position/(eolFloat)range;
+}
+
 /*eol@eof*/

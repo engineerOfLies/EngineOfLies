@@ -232,5 +232,17 @@ eolFloat eol_graphics_get_FPS();
  */
 void eol_graphics_get_view(eolGraphicsView *view);
 
+/**
+ * @brief retrieves the current graphics frame time index
+ */
+eolUint eol_graphics_get_now();
+
+/**
+ * @brief retrieves the current graphics frame time index
+ * @param w the output width of the view screen
+ * @param h the output height of the view screen
+ */
+void eol_graphics_get_size(eolUint * w, eolUint * h);
+
 #endif
 
