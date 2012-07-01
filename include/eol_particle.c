@@ -136,7 +136,11 @@ void eol_particle_update(eolParticle *part)
   eol_orientation_add(&part->ori,
                       part->ori,
                       part->vector);
-  eol_trail_append(&part->trail,part->ori);
+  if ((part->type == eolParticleTrail) ||
+      (part->drawTrail == eolTrue))
+  {
+    eol_trail_append(&part->trail,part->ori);
+  }
   eol_actor_next_frame(part->actor);
 }
 

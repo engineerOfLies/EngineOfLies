@@ -32,7 +32,7 @@ typedef struct
   eolModel  * model;
   eolWord     actionName;
   eolAction * action;
-  eolUint     frame;
+  eolFloat    frame;
   eolFloat    frameRate;
   eolInt      frameDirection;
 }eolActor;
@@ -102,6 +102,9 @@ void eol_actor_set_action(
  *
  * @param act the actor to animate
  * @return eolTrue if the action has reached the end, false otherwise.
+ * looping never returns false
+ * pass returns true after a single pass
+ * oscillate returns true after a single pass forward and back.
  */
 eolBool eol_actor_next_frame(eolActor * act);
 

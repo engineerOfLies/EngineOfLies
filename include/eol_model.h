@@ -102,56 +102,6 @@ void eol_model_free(
 );
 
 /**
- * @brief sets the model's frame change rate.  this is in float to allow
- * granular speed up and slowdown of an animation
- * Note that actions have their own frame rates that will combine with the
- * model frame rate to determine the final change in frames.
- *
- * @param model the model whose frame rate will change
- * @param rate the amount of change.  Note that a rate of 0 means the model
- * will not animate
- */
-void eol_model_set_frame_rate(
-    eolModel *model,
-    eolFloat rate
-  );
-  
-/**
- * @brief set the model to the begining of the specified action
- *
- * @param model the model to modify
- * @param action the name of the action to set it to.
- *        If name is not found, nothing changes.
- */
-void eol_model_set_action(
-    eolModel * model,
-    eolWord    action
-  );
-
-/**
- * @brief steps an model to the next frame in an action.  lets caller know if
- *        if the action has reached the end.
- * if the model was already at the end, it will...
- *        if type is loop: set the frame back to the beginning.
- *        if type is osci: sets the animation direction to -1
- *        if type is pass: frame is not changed
- *
- * @param model the model to animate
- * @return eolTrue if the action has reached the end, false otherwise.
- */
-eolBool eol_model_next_frame(eolModel * model);
-
-/**
- * @brief retrieve the current frame of an model
- *
- * @param model the model to retrieve the frame from
- *
- * @return a floating point representing the frame.  Note that when drawing,
- *         it will snap to the floor.
- */
-eolFloat eol_model_get_frame(eolModel *model);
-
-/**
  * @brief draw the model under the current conditions
  *
  * @param model pointer to the model to draw
