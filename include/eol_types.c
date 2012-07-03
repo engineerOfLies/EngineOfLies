@@ -35,6 +35,25 @@ eolFloat eol_vec3d_magnitude (eolVec3D V)
   return sqrt (V.x * V.x + V.y * V.y + V.z * V.z);
 }
 
+eolFloat eol_vec3d_magnatude_squared(eolVec3D V)
+{
+  return (V.x * V.x + V.y * V.y + V.z * V.z);
+}
+
+eolBool  eol_vec3d_magnatude_less_than(eolVec3D V,eolFloat size)
+{
+  return (eol_vec3d_magnatude_squared(V) < (size * size));
+}
+
+eolBool eol_distance_between_less_than(eolVec3D p1,eolVec3D p2,eolFloat size)
+{
+  return eol_vec3d_magnatude_less_than(eol_vec3d(p1.x - p2.x,
+                                                 p1.y - p2.y,
+                                                 p1.z - p2.z),
+                                       size);
+}
+
+
 void eol_vec3d_normalize (eolVec3D *V)
 {
   eolFloat M = eol_vec3d_magnitude (*V);

@@ -38,6 +38,7 @@ void eol_draw_dot_3D(eolVec3D point,
 {
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
+  glDisable(GL_FOG);
   glColor4f(color.x,color.y,color.z,alpha);
   glPushMatrix();
   glEnable(GL_POINT_SMOOTH);
@@ -45,6 +46,7 @@ void eol_draw_dot_3D(eolVec3D point,
   glBegin( GL_POINTS );
   glVertex3f(point.x,point.y,point.z);
   glEnd( );
+  glEnable(GL_FOG);
   glPopMatrix();
   glColor4f(1,1,1,1);
   glDisable(GL_BLEND);

@@ -263,22 +263,29 @@ eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
  * 3D Vector Math
  * These macros handle most of the common operations for vector math.
  */
+
+#define eol_vec3d_into_array(ar,vec)   (ar[0] = vec.x,ar[1] = vec.y,ar[2] = vec.z)
+#define eol_vec2d_into_array(ar,vec)   (ar[0] = vec.x,ar[1] = vec.y)
+
 /**
  * @brief Macro to get the crossproduct from a vector.
- * varients ending in p takes a pointer to eolVect3D instead.
- * Varients ending with 2D only operate on the x an y components of vectors
  *
  * @param a eolVect3D component of the dot product
  * @param b eolVect3D component of the dot product
  *
  * @return the calculated dot product
  */
-#define eol_dot_product_3D(a,b)      (a.x*b.x+a.y*b.y+a.z*b.z)
-#define eol_dot_product_3D_p(a,b)     (a->x*b->x+a->y*b->y+a->z*b->z)
-#define eol_dot_product_2D(a,b)      (a.x*b.x+a.y*b.y)
-#define eol_dot_product_2D_p(a,b)     (a->x*b->x+a->y*b->y)
+#define eol_vec3d_dot_product(a,b)      (a.x*b.x+a.y*b.y+a.z*b.z)
+#define eol_vec2d_dot_product(a,b)      (a.x*b.x+a.y*b.y)
 
+/**
+ * @brief copies the data from one vector into another
+ *
+ * @param a the destination vector
+ * @param b the source vector
+ */
 #define eol_vec3d_copy(a,b)  (a.x = b.x,a.y = b.y,a.z = b.z)
+
 /**
  * @brief Macro to subtract two vectors
  * varient ending in p takes a pointer to eolVect3D instead.
@@ -356,10 +363,9 @@ eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
  * @param b eolFloat y component
  * @param c eolFloat z componenta (only in 3D version)
  */
+#define eol_vec3d_set(v, a, b, c)  (v.x=(a), v.y=(b), v.z=(c))
 #define eol_vector_set_3D(v, a, b, c)  (v.x=(a), v.y=(b), v.z=(c))
-#define eol_vector_set_3D_p(v, a, b, c)  (v->x=(a), v->y=(b), v->z=(c))
 #define eol_vector_set_2D(v, a, b)  (v.x=(a), v.y=(b))
-#define eol_vector_set_2D_p(v, a, b)  (v->x=(a), v->y=(b))
 
 /**
  * @brief normalizes the vector passed.  does nothing for a zero length vector.
@@ -367,8 +373,34 @@ eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
  * @param v pointer to the vector to be normalized.
  */
 void eol_vector_normalize(eolVec3D *v);
-eolFloat eol_vec3d_magnitude (eolVec3D V);
+eolFloat eol_vec3d_magnitude(eolVec3D V);
 void eol_vec3d_normalize (eolVec3D *V);
+
+/**
+ * @brief returns the magnitude squared, which is faster than getting the magnitude
+ * which would involve taking the square root of a floating point number.
+ * @param V the vector to get the magnitude for
+ * @return the square of the magnitude of V
+ */
+eolFloat eol_vec3d_magnitude_squared(eolVec3D V);
+
+/**
+ * @brief checks if the magnitude of V is less than size.  It does this without
+ * doing square roots, which are costly.  It will still do floating point multiplication
+ * @param V the vector to check
+ * @param size the magnitude to check against
+ * @return eolTrue if the magnitude of V is less than size or eolFalse otherwise
+ */
+eolBool  eol_vec3d_magnitude_less_than(eolVec3D V,eolFloat size);
+
+/**
+ * @brief checks if the distance between the two points provided is less than size.
+ * @param p1 one point for the distance check
+ * @param p2 another point for the distance check
+ * @param size the value to check against
+ * @return eolTrue if the distance between P1 and P2 is less than size, false otherwise
+ */
+eolBool eol_distance_between_less_than(eolVec3D p1,eolVec3D p2,eolFloat size);
 
 #endif
 

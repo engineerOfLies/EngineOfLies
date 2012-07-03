@@ -87,7 +87,35 @@ void eol_resource_manager_free(eolResourceManager **manager);
  */
 void eol_resource_manager_clean(eolResourceManager *manager);
 
+/**
+ * @brief Allocated and loads a resource from file.  Calls the manager's data load
+ * function pointer.
+ * @param manager to load a resource for
+ * @param filename the file to load the resource from
+ * @return a pointer to the allocated and loaded resource or NULL on error
+ */
 void *eol_resource_manager_load_resource(eolResourceManager *manager,char *filename);
+
+/**
+ * @brief returns the index of the element passed.
+ * @param manager the resource manager to check
+ * @param data the resource data pointer to check
+ * @return the unsigned integer index of the element, or -1 on error
+ */
+eolInt eol_resource_element_get_index(eolResourceManager *manager,void *element);
+
+/**
+ * @brief iterates through the resource list
+ *
+ * @param manager the resource manager to iterate through
+ * @param data the position to iterate from.  If passed NULL, it will
+ * iterate through the list from the beginning.
+ * 
+ * @return a pointer to the next element in the resource manager or NULL if
+ * there are no more elements.
+ */
+void * eol_resource_get_next_data(eolResourceManager *manager,void *data);
+
 
 #endif
 
