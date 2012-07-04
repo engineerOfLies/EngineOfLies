@@ -129,9 +129,9 @@ eolLight *eol_light_new()
   }
   light->lightIndex = index;
   /*default sane light parameters*/
-  light->constantAttenuation = 0.001f;
-  light->linearAttenuation = 0.02f;
-  light->QuadraticAttenuation = 0.000002f;
+  light->constantAttenuation = 0.0001f;
+  light->linearAttenuation = 0.002f;
+  light->QuadraticAttenuation = 0.0000002f;
   light->on = eolTrue;
   eol_light_enable(light,eolTrue);
   return light;
@@ -290,13 +290,13 @@ void eol_lighting_setup_rep_plot()
   light = eol_light_area_new();
   if (!light)return;
   eol_light_set_color(light,eol_vec3d(1,0.7,0.7));
-  eol_light_move(light,eol_vec3d(-4,1,1));
+  eol_light_move(light,eol_vec3d(-8,4,1));
   eol_light_update(light);
   
   light = eol_light_area_new();
   if (!light)return;
   eol_light_set_color(light,eol_vec3d(0.7,0.7,1));
-  eol_light_move(light,eol_vec3d(4,-1,1));
+  eol_light_move(light,eol_vec3d(8,-4,1));
   eol_light_update(light);
 }
 

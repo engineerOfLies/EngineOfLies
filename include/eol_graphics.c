@@ -412,13 +412,13 @@ void eol_graphics_exit(void)
 
 void eol_graphics_register_resize(void (*callback)(eolGraphicsView info))
 {
-	if ((callback == NULL) ||
-		 (_eolGraphicsInitialized == eolFalse))
+  eolGraphicsCallback *newCallback = NULL;
+  if ((callback == NULL) ||
+    (_eolGraphicsInitialized == eolFalse))
   {
-  	return;
+    return;
   }
-  eolGraphicsCallback *newCallback = 
-    (eolGraphicsCallback *)malloc(sizeof(eolGraphicsCallback));
+  newCallback = (eolGraphicsCallback *)malloc(sizeof(eolGraphicsCallback));
     newCallback->callback = callback;
   _eol_resize_callbacks = g_list_append(_eol_resize_callbacks,(void *)newCallback);
   callback(_eolGraphicsConfig.graphicsView);
