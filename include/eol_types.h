@@ -19,7 +19,7 @@
 */
 
 #include "eol_opengl.h"
-#include <chipmunk/chipmunk_types.h>
+#include <chipmunk/chipmunk.h>
 #include <SDL.h>
 
 /**

@@ -5,8 +5,30 @@
 
 # Compiled Dynamic libraries
 *.so
+*.so.1
 
 # Compiled Static libraries
 *.lai
 *.la
 *.a
+
+#generated files
+*.dep
+*.log
+
+#archived files
+*.zip
+*.tar
+*.gz
+
+#ignored files
+*.ignore
+
+#binary assets
+*.png
+*.ttf
+*.wav
+*.ogg
+*.mp3
+*.bmp
+

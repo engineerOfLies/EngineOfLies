@@ -82,6 +82,7 @@ typedef struct
   eolUint      spawnCount;   /**<the size of loaded spawn list*/
   eolSpawn     spawnList;    /**<the loaded spawn candidates*/
   eolBool      updateSpace;  /**<its possible to update all, near or only active layer*/
+  cpSpace    * space;        /**<the collision space for this layer*/
 }eolLevelLayer;
 
 typedef struct
