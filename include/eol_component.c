@@ -484,9 +484,9 @@ void eol_component_label_draw(eolComponent *component, eolRect bounds)
 
 void eol_component_draw(eolComponent *component,eolRect bounds)
 {
+  eolRect drawRect;
   if (!component)return;
   if (component->data_draw == NULL)return;
-  eolRect drawRect;
   drawRect.x = bounds.x + (bounds.w * component->rect.x);
   drawRect.y = bounds.y + (bounds.h * component->rect.y);
   drawRect.w = (bounds.w * component->rect.w);

@@ -1,9 +1,11 @@
 #include "eol_resource.h"
 #include "eol_logger.h"
+#include <assert.h>
 
 void eol_resource_delete_element(eolResourceManager *manager,eolResourceHeader *element);
 eolResourceHeader * eol_resource_find_element_by_filename(eolResourceManager *manager,char *filename);
 void *eol_resource_get_data_by_header(eolResourceHeader *resource);
+eolResourceHeader * eol_resource_get_next_element(eolResourceManager *manager,eolResourceHeader *element);
 
 
 void *eol_resource_manager_load_resource(eolResourceManager *manager,char *filename)
@@ -110,6 +112,17 @@ eolResourceManager * eol_resource_manager_init(
   return manager;
 }
 
+void * eol_resource_get_next_data(eolResourceManager *manager,void *data)
+{
+  eolResourceHeader *header = NULL;
+  if (data != NULL)
+  {
+    header = (eolResourceHeader *)data;
+    header--;
+  }
+  return (void *)eol_resource_get_next_element(manager,header);
+}
+
 eolResourceHeader * eol_resource_get_next_element(eolResourceManager *manager,eolResourceHeader *element)
 {
   if (manager == NULL)
@@ -205,6 +218,7 @@ void * eol_resource_new_element(eolResourceManager *manager)
       memset(element,0,manager->_data_size);
       element->index = i;
       element->refCount = 1;
+      element++;/*the data, not the header*/
       return element;
     }
   }
@@ -287,5 +301,45 @@ void *eol_resource_get_data_by_header(eolResourceHeader *resource)
   if (!resource)return NULL;
   return (void *)&resource[1];
 }
+
+eolInt eol_resource_element_get_index(eolResourceManager *manager,void *element)
+{
+  eolResourceHeader *header;
+  if (!manager)
+  {
+    eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_resource:passed a NULL manager\n");
+
+    return -1;
+  }
+  if (!element)
+  {
+    eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_resource:passed a NULL element\n");
+    return -1;
+  }
+  header = (eolResourceHeader *)element;
+  header--;
+  /*range verification*/
+  if (header < (eolResourceHeader *)&manager->_data_list[0])
+  {
+    eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_resource:under seeking in data list\n");
+    assert(0);
+    return -1;
+  }
+  if (header >= (eolResourceHeader *)&manager->_data_list[manager->_data_max])
+  {
+    eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_resource:over seeking in data list\n");
+    return -1;
+  }
+  return header->index;
+}
+
 /*eol@eof*/
 

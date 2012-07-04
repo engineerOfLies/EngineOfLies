@@ -632,8 +632,8 @@ void eol_armature_free(eolArmature **arm)
 
 void eol_armature_delete(eolArmature *arm)
 {
-  if (!arm)return;
   int i;
+  if (!arm)return;
   for (i = 0; i < arm->boneCount;i++)
   {
     if (arm->_bones[i].children != NULL)

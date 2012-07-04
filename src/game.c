@@ -10,6 +10,7 @@
 #include "eol_dialog.h"
 #include "eol_draw.h"
 #include "eol_particle.h"
+#include "eol_lighting.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -50,6 +51,7 @@ int main(int argc, char *argv[])
   sprite = eol_sprite_load("images/skeleton.png",128,128);
   MakeTestWindow();
   eol_mouse_show();
+  eol_lighting_setup_rep_plot();
   do
   {
     eol_input_update();
@@ -139,9 +141,9 @@ void TestWindowUpdate(eolWindow *win,GList *updates)
         eol_particle_make_point(eol_vec3d(crandom()*0.1,0,-10),
                                 eol_vec3d(crandom()*0.1,crandom()*0.1 + 0.1,crandom()*0.1),
                                 eol_vec3d(0,-0.009,0) ,
-                                10,
+                                5,
                                 eol_vec3d(0,1,random()),
-                                random(),
+                                1,
                                 100);
         }
         break;

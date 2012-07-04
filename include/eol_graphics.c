@@ -48,9 +48,13 @@ SDL_PixelFormat   * _eol_pixelFormat = NULL;
 GList             * _eol_resize_callbacks = NULL;
 eolFloat            _eol_graphics_FPS = 0;   /*calculated Frames per second*/
 eolUint             _eol_graphics_NOW = 0;
+
 /*local function prototypes*/
 void eol_graphics_setup_resize_callbacks();
 void eol_graphics_exit(void);
+void eol_resize_graphics(eolUint w, eolUint h, eolBool fs);
+int  eol_register_resize_callback(void (*callback)(eolGraphicsView view));
+void eol_save_screen_shot(const char *file);
 
 
 /*function definitions*/
@@ -79,24 +83,16 @@ void eol_graphics_load_config()
   #endif
 }
 
-void setup_default_lighting()
+void setup_default_fog()
 {
 
-	float fogcolor[] = {0.75,0.50,4,1};
-glLightf(GL_LIGHT0,GL_CONSTANT_ATTENUATION, 0.0f);
-glLightf(GL_LIGHT0,GL_LINEAR_ATTENUATION, 0.02f);
-glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION, 0.000002f);
-glLightf(GL_LIGHT1,GL_CONSTANT_ATTENUATION, 0.001f);
-glLightf(GL_LIGHT1,GL_LINEAR_ATTENUATION, 0.02f);
-glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION, 0.000002f);
-glEnable(GL_LIGHT0);
-glEnable(GL_LIGHT1);
+float fogcolor[] = {0.75,0.50,4,1};
 glEnable(GL_FOG);
 glFogfv(GL_FOG_COLOR,fogcolor);
 glFogi(GL_FOG_MODE, GL_EXP);
 glFogf(GL_FOG_DENSITY, 0.001f);
 glFogf(GL_FOG_START, 1.0f);
-glFogf(GL_FOG_END, 2000.0f);
+glFogf(GL_FOG_END, 200.0f);
 }
 
 
@@ -239,7 +235,7 @@ void eol_graphics_init()
   
   _eolGraphicsInitialized = eolTrue;
   atexit(eol_graphics_exit);
-  setup_default_lighting();
+  setup_default_fog();
   eol_logger_message(
       EOL_LOG_INFO,
       "eol_graphics: initialized\n"
@@ -251,10 +247,6 @@ eolBool eol_graphics_initialized()
 {
 	return _eolGraphicsInitialized;
 }
-
-void eol_resize_graphics(eolUint w, eolUint h, eolBool fs);
-int	 eol_register_resize_callback(void (*callback)(eolGraphicsView view));
-void eol_save_screen_shot(const char *file);
 
 eolUint eol_index_color(eolUint color)
 {
@@ -420,13 +412,13 @@ void eol_graphics_exit(void)
 
 void eol_graphics_register_resize(void (*callback)(eolGraphicsView info))
 {
-	if ((callback == NULL) ||
-		 (_eolGraphicsInitialized == eolFalse))
+  eolGraphicsCallback *newCallback = NULL;
+  if ((callback == NULL) ||
+    (_eolGraphicsInitialized == eolFalse))
   {
-  	return;
+    return;
   }
-  eolGraphicsCallback *newCallback = 
-    (eolGraphicsCallback *)malloc(sizeof(eolGraphicsCallback));
+  newCallback = (eolGraphicsCallback *)malloc(sizeof(eolGraphicsCallback));
     newCallback->callback = callback;
   _eol_resize_callbacks = g_list_append(_eol_resize_callbacks,(void *)newCallback);
   callback(_eolGraphicsConfig.graphicsView);

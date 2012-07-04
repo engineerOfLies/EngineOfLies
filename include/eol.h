@@ -24,12 +24,13 @@ enum eol_components {
   EOL_GRAPHICS  = 1,
   EOL_FONT      = 2,
   EOL_SPRITE    = 4,
-  EOL_MESH      = 8,
-  EOL_ARMATURE  = 16,
-  EOL_INPUT     = 32,
-  EOL_MODEL     = 64,
-  EOL_PARTICLE  = 128,
-  EOL_WINDOW    = 256,
+  EOL_LIGHTING  = 8,
+  EOL_MESH      = 16,
+  EOL_ARMATURE  = 32,
+  EOL_INPUT     = 64,
+  EOL_MODEL     = 128,
+  EOL_PARTICLE  = 256,
+  EOL_WINDOW    = 512,
   EOL_ALL       = 0xFFFF
 };
 
