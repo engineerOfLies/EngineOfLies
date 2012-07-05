@@ -54,7 +54,7 @@ void eol_config_destroy(eolConfig *config);
  */
 void eol_config_dump(char* filename, GNode* data);
 
-// it would be nice to be able to access your library like this:
+/* it would be nice to be able to access your library like this: */
 
 
 eolInt eol_config_get_int_by_tag(

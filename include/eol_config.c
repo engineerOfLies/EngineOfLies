@@ -22,13 +22,14 @@ void eol_config_init()
 
 void eol_config_deinit(void)
 {
-    // NOP for now
+    /* NOP for now */
 }
 
 eolConfig *eol_config_load(char* filename)
 {
     yaml_parser_t parser;
     yaml_event_t event;
+    FILE *input;
     eolConfig *config = malloc(sizeof(eolConfig));
     strcpy(config->filename, filename);
     config->_node = g_node_new(filename);
@@ -40,7 +41,7 @@ eolConfig *eol_config_load(char* filename)
         fputs("ERROR: Failed to initialize yaml parser", stderr);
         return NULL;
     }
-    FILE *input = fopen(filename, "r");
+    input = fopen(filename, "r");
     if(input == NULL) {
         fprintf(stderr, "ERROR, Can't open config file %s", filename );
         return NULL;
@@ -71,7 +72,7 @@ void eol_config_parse_tier(yaml_parser_t *parser, GNode *cfg)
 {
     GNode *last_leaf = cfg;
     yaml_event_t event;
-    // First element must be a variable, or we'll change states to SEQ
+    /* First element must be a variable, or we'll change states to SEQ */
     int state = VAR;
     do {
         yaml_event_delete(&event);
@@ -79,13 +80,13 @@ void eol_config_parse_tier(yaml_parser_t *parser, GNode *cfg)
         switch(event.type) {
         case YAML_SCALAR_EVENT:
             if (state == VAR) {
-                // new variable, create a new element
+                /* new variable, create a new element */
                 last_leaf = g_node_append(cfg, g_node_new(g_strdup((gchar*) event.data.scalar.value)));
             } else {
-                // state is VAL or SEQ
+                /* state is VAL or SEQ */
                 g_node_append_data(last_leaf, g_strdup((gchar*) event.data.scalar.value));
             }
-            state ^= VAL; // Toggles VAR/VAL, avoids touching SEQ
+            state ^= VAL; /* Toggles VAR/VAL, avoids touching SEQ */
             break;
         case YAML_SEQUENCE_START_EVENT:
             state = SEQ;
@@ -99,7 +100,7 @@ void eol_config_parse_tier(yaml_parser_t *parser, GNode *cfg)
             break;
         case YAML_MAPPING_END_EVENT:
         case YAML_STREAM_END_EVENT:
-            // terminate the while loop, see below
+            /* terminate the while loop, see below */
             break;
         default:
             fprintf(stderr, "ERROR: unhandled YAML event %d\n", event.type);
@@ -117,7 +118,7 @@ void eol_config_parse_tier(yaml_parser_t *parser, GNode *cfg)
 
 void eol_config_dump(char* filename, GNode* data)
 {
-    // NOP
+    /* NOP */
 }
 
 
@@ -128,7 +129,7 @@ eolInt eol_config_get_int_by_tag( eolConfig *conf, eolLine tag)
 		return (eolInt) gndata->data;
 	} else {
 		printf("Config tag %s not found in %s\n", tag, conf->filename);
-		return NULL;
+		return (eolInt) NULL;
 	}
 }
 /*
