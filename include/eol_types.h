@@ -88,16 +88,19 @@ eolBool eol_equals(eolDouble a, eolDouble b);
  */
 typedef char eolWord[16];
 #define EOLWORDLEN   16
+#define eol_word_cmp(a,b) (strncmp(a,b,EOLWORDLEN))
 /**
  * @brief 128 character buffer used for statements
  */
 typedef char eolLine[128];
 #define EOLLINELEN   128
+#define eol_line_cmp(a,b) (strncmp(a,b,EOLLINELEN))
 /**
  * @brief 512 character buffer used for text blocks
  */
 typedef char eolText[512];
 #define EOLTEXTLEN   512
+#define eol_text_cmp(a,b) (strncmp(a,b,EOLTEXTLEN))
 
 typedef SDL_Rect eolRect;
 
