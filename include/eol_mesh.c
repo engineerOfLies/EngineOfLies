@@ -483,7 +483,10 @@ void eol_mesh_get_groups(eolMesh *model, FILE *file)
       continue;
     }
   }
-//  eol_mesh_normalize_group_weights(model);
+/*
+  TODO: fix the deformation so this makes sense
+eol_mesh_normalize_group_weights(model);
+*/
 }
 
 eolGroup * eol_mesh_get_group_by_name(char *name,eolMesh *model)

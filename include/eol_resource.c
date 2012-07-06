@@ -2,6 +2,12 @@
 #include "eol_logger.h"
 #include <assert.h>
 
+/*TODO make loading a resource a threaded option.  Ie: for non-critical resources
+  it can be loaded in a separate thread*/
+
+/*local variables*/
+
+/*local function prototypes*/
 void eol_resource_delete_element(eolResourceManager *manager,eolResourceHeader *element);
 eolResourceHeader * eol_resource_find_element_by_filename(eolResourceManager *manager,char *filename);
 void *eol_resource_get_data_by_header(eolResourceHeader *resource);

@@ -21,7 +21,7 @@
 #include "eol_types.h"
 #include "eol_model.h"
 #include "eol_sprite.h"
-#include <glib/ghash.h>
+#include "eol_spawn.h"
 
 /**
  * @purpose To provide a handler for the generic featured common to all 2D game levels.
@@ -30,19 +30,13 @@
  * layered levels
  */
 
-typedef struct
-{
-  eolWord type;
-  GHashTable *keys;
-}eolSpawn;
-
 /**
  * @brief function pointer prototype used to spawn the entities for the level
  * the application will receive a name and a hash.  The hash is keyed on the name
  * of keys (such as position) and a value string (such as "0.3 0.5, 7.4").
  * The function will be called by the level when the level is created
  */
-void (*eolSpawnGeneric)(eolSpawn *spawn);
+typedef void (*eolSpawnGeneric)(eolSpawn *spawn);
 
 typedef struct
 {
@@ -57,6 +51,7 @@ typedef struct
 typedef struct
 {
   eolOrientation   ori;
+  eolLine          modelFile;
   eolModel       * model;
 }eolBackground;
 
@@ -83,6 +78,7 @@ typedef struct
   eolSpawn     spawnList;    /**<the loaded spawn candidates*/
   eolBool      updateSpace;  /**<its possible to update all, near or only active layer*/
   cpSpace    * space;        /**<the collision space for this layer*/
+  eolMesh    * clipMesh;
 }eolLevelLayer;
 
 typedef struct
@@ -91,5 +87,50 @@ typedef struct
   eolUint         layerCount; /**<how many layers the level contains*/
   eolLevelLayer * layers;     /**<the allocated list of level layers*/
 }eolLevel;
+
+void eol_level_init();
+void eol_level_config();
+void eol_level_clear();
+
+/**
+ * @brief allocates an empty level struct and returns a pointer to it.
+ * @return  a pointer to an allocated, but empty level, or NULL on error.
+ */
+eolLevel *eol_level_new();
+
+/**
+ * @brief allocates and loads a level from file.
+ * This function will not load any of the assets referred to by the level, such as background images
+ * It will merely load the data from the file specified.  A call to eol_level_setup is needed
+ * to load the assets and spawn the entities
+ * @param filename the name of the level file to load
+ * @return a pointer to the loaded level from file.
+ */
+eolLevel *eol_level_load(char *filename);
+
+/**
+ * @brief frees the level passed and sets the pointer to it to NULL
+ * @param level a pointer to a level pointer
+ */
+void eol_level_free(eolLevel **level);
+
+/**
+ * @brief sets up a loaded level for use. Including spawning all entities
+ * @param level the level to set up
+ */
+void eol_level_setup(eolLevel *level);
+
+/**
+ * @brief steps through an iteration of game time.  Calls collision updates.
+ */
+void eol_level_update(eolLevel *level);
+
+/**
+ * @brief registers the generic entity spawn function with the level system.
+ * only one can be registered at a time
+ * @param spawnGeneric a pointer to a function to call when spawning entities
+ */
+void eol_level_register_spawn_generic(eolSpawnGeneric spawnGeneric);
+
 
 #endif

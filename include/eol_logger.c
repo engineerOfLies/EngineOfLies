@@ -66,7 +66,7 @@ void eol_logger_message(eolLogLevel level,char *msg,...)
     fprintf(stderr,"eol_logger: message: %s\n",msg);
     return;
   }
-  //  if (level < _eol_log_threshold)return;
+  if (level < _eol_log_threshold)return;
   if (_eol_logger_stdout_echo == eolTrue)
   {
     va_start(ap,msg);
