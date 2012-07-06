@@ -20,6 +20,15 @@
 
 #include "eol_types.h"
 #include <glib.h>
+#include <yaml.h>
+
+
+typedef struct
+{
+  eolLine   filename;
+  eolUint   elementCount;
+  GNode   * _node;
+}eolConfig;
 
 /* Variable, Value, Sequence (vector) */
 enum eolConfigState { VAR, VAL, SEQ };
@@ -31,11 +40,13 @@ enum eolConfigState { VAR, VAL, SEQ };
 void eol_config_init();
 
 /**
- * @brief loads a configuration file into a glib N-ary tree
+ * @brief loads a configuration file into a eolConfig struct
  *
- * @return a glib GNode pointer with the config structure
+ * @return a eolConfig pointer with the config structure
  */
-GNode* eol_config_load(char* filename);
+eolConfig *eol_config_load(char* filename);
+
+void eol_config_destroy(eolConfig *config);
 
 /**
  * @brief writes config from a GNode object into a file
@@ -43,13 +54,8 @@ GNode* eol_config_load(char* filename);
  */
 void eol_config_dump(char* filename, GNode* data);
 
-/*it would be nice to be able to access your library like this:
-typedef struct
-{
-  eolLine   filename;
-  eolUint   elementCount;
-  GNode   * _node;
-}eolConfig;
+// it would be nice to be able to access your library like this:
+
 
 eolInt eol_config_get_int_by_tag(
     eolConfig *conf,
@@ -71,7 +77,6 @@ GList * eol_config_get_list_by_tag(
     eolConfig * conf,
     eolLine     tag
   );
-*/
 
 #endif
 
