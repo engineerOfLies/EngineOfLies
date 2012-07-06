@@ -75,7 +75,11 @@ eolRect eol_rect(
   eolUint h
 )
 {
-  eolRect r = {x,y,w,h};
+  eolRect r;
+  r.x = x;
+  r.y = y;
+  r.w = w;
+  r.h = h;
   return r;
 }
 
@@ -86,7 +90,11 @@ eolRectFloat eol_rectf(
   eolDouble  h
 )
 {
-  eolRectFloat r = {x,y,w,h};
+  eolRectFloat r;
+  r.x = x;
+  r.y = y;
+  r.w = w;
+  r.h = h;
   return r;
 }
 
