@@ -25,6 +25,88 @@ void eol_spawn_free(eolSpawn *spawn)
   memset(spawn, 0, sizeof(eolSpawn));
 }
 
+void eol_spawn_delete_key(eolSpawn *spawn,eolWord key)
+{
+  GString *keyString;
+  if (!spawn)return;
+  if (spawn->keys == NULL)return;
+  keyString = g_string_new_len(key,EOLWORDLEN);
+  g_hash_table_remove(spawn->keys,keyString);
+  g_string_free(keyString,eolTrue);
+}
+
+void eol_spawn_key_list_move_up(eolSpawn *spawn,eolWord key,eolUint n)
+{
+  GString *keyString = NULL;
+  GList *list = NULL;
+  GList *mover;
+  GList *prev;
+  GString *data;
+  if (n == 0)return;
+  if (!spawn)return;
+  if (spawn->keys == NULL)return;
+  keyString = g_string_new_len(key,EOLWORDLEN);
+  list = g_hash_table_lookup(spawn->keys,keyString);
+  if (list)
+  {
+    mover = g_list_nth(list,n);
+    if (mover != NULL)
+    {
+      prev = mover->prev;
+      data = mover->data;
+      mover = g_list_delete_link(list,mover);
+      if (mover)
+      {
+        list = g_list_insert_before(list,prev,data);
+      }
+    }
+  }
+  g_string_free(keyString,eolTrue);
+}
+
+void eol_spawn_delete_key_list_item(eolSpawn *spawn,eolWord key,eolUint n)
+{
+  GString *keyString = NULL;
+  GList *list = NULL;
+  GList *dead;
+  GString *lData = NULL;
+  if (!spawn)return;
+  if (spawn->keys == NULL)return;
+  keyString = g_string_new_len(key,EOLWORDLEN);
+  list = g_hash_table_lookup(spawn->keys,keyString);
+  if (list)
+  {
+    lData = g_list_nth_data(list,n);
+    if (lData != NULL)
+    {
+      dead = g_list_remove(list,lData);
+      g_string_free(lData,eolTrue);
+      if (dead)g_list_free(dead);
+    }
+  }
+  g_string_free(keyString,eolTrue);
+}
+
+void eol_spawn_delete_key_list(eolSpawn *spawn,eolWord key)
+{
+  GString *keyString = NULL;
+  GList *list = NULL;
+  GList *l = NULL;
+  if (!spawn)return;
+  if (spawn->keys == NULL)return;
+  keyString = g_string_new_len(key,EOLWORDLEN);
+  list = g_hash_table_lookup(spawn->keys,keyString);
+  if (list)
+  {
+    for (l = list;l != NULL; l = l->next)
+    {
+      g_string_free(l->data,eolTrue);
+    }
+    g_list_free(list);
+  }
+  g_string_free(keyString,eolTrue);
+}
+
 void eol_spawn_add_key(eolSpawn *spawn,eolWord key,eolLine value)
 {
   GString *keyString;
@@ -38,6 +120,7 @@ void eol_spawn_add_key(eolSpawn *spawn,eolWord key,eolLine value)
       eol_logger_message(
         EOL_LOG_ERROR,
         "eol_spawn: failed too allocated spawn key map\n");
+      return;
     }
   }
   keyString = g_string_new_len(key,EOLWORDLEN);
@@ -49,6 +132,37 @@ void eol_spawn_add_key(eolSpawn *spawn,eolWord key,eolLine value)
   else
   {
     g_hash_table_insert(spawn->keys,keyString,valueString);
+  }
+}
+
+void eol_spawn_add_key_list(eolSpawn *spawn,eolWord key,eolLine value)
+{
+  GString *keyString;
+  GString *valueString;
+  GList *list;
+  if (!spawn)return;
+  if (spawn->keys == NULL)
+  {
+    spawn->keys = g_hash_table_new_full(g_str_hash,g_str_equal,g_free,g_free);
+    if (spawn->keys == NULL)
+    {
+      eol_logger_message(
+        EOL_LOG_ERROR,
+        "eol_spawn: failed too allocated spawn key map\n");
+      return;
+    }
+  }
+  keyString = g_string_new_len(key,EOLWORDLEN);
+  valueString = g_string_new_len(key,EOLLINELEN);
+  list = g_hash_table_lookup(spawn->keys,keyString);
+  if (list == NULL)
+  {
+    list = g_list_append(list,valueString);
+    g_hash_table_insert(spawn->keys,keyString,list);
+  }
+  else
+  {
+    list = g_list_append(list,valueString);
   }
 }
 

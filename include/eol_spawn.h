@@ -26,6 +26,7 @@
  * by a game when a level is created
  * It is not a resource and is not managed like one.  It can ne be allocated with malloc
  * or declared and used as any other variable.
+ * Note that deleting and adding keys is slow.  It should only be used in startup and editing.
  */
 typedef struct
 {
@@ -56,6 +57,29 @@ void eol_spawn_free(eolSpawn *spawn);
 void eol_spawn_add_key(eolSpawn *spawn,eolWord key,eolLine value);
 
 /**
+ * @brief adds a key to the spawn keys where the key is a list.  If the key already
+ * exists, it will add to the list instead of replacing the key.
+ * @param spawn the spawn to add the key too.  If NULL, does nothing
+ * @param key the key to add
+ * @param value the value to add
+ */
+void eol_spawn_add_key_list(eolSpawn *spawn,eolWord key,eolLine value);
+
+/**
+ * @brief deletes the key from the spawn keys.
+ * @param spawn the spawn to delete the key from
+ * @param key the key to be deleted
+ */
+void eol_spawn_delete_key(eolSpawn *spawn,eolWord key);
+
+/**
+* @brief deletes the key from the spawn keys.
+* @param spawn the spawn to delete the key from
+* @param key the key to be deleted.  Must point to a list
+*/
+void eol_spawn_delete_key_list(eolSpawn *spawn,eolWord key);
+
+/**
  * @brief checks to see if the key is present on spawn
  * @param spawn the spawn to checl, if NULL returns eolFalse
  * @param key the key to check for
@@ -72,6 +96,8 @@ eolBool eol_spawn_has_key(eolSpawn *spawn, eolWord key);
  */
 eolBool eol_spawn_get_key_uint(eolUint *out, eolSpawn *spawn,eolWord key);
 eolBool eol_spawn_get_key_int(eolInt *out, eolSpawn *spawn,eolWord key);
+
+eolBool eol_spawn_get_key_float(eolFloat *out, eolSpawn *spawn,eolWord key);
 
 eolBool eol_spawn_get_key_vec3D(eolVec3D *out, eolSpawn *spawn,eolWord key);
 eolBool eol_spawn_get_key_vec2D(eolVec2D *out, eolSpawn *spawn,eolWord key);
