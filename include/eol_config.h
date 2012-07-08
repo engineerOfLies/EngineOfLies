@@ -25,13 +25,13 @@
 
 typedef struct
 {
-  eolLine   filename;
-  eolUint   elementCount;
-  GNode   * _node;
+  eolLine     filename;
+  eolUint     elementCount;
+  GHashTable  * _node;
 }eolConfig;
 
 /* Variable, Value, Sequence (vector) */
-enum eolConfigState { VAR, VAL, SEQ };
+enum eolConfigState { KEY, VAL, SEQ };
 
 
 /**
@@ -49,12 +49,12 @@ eolConfig *eol_config_load(char* filename);
 void eol_config_destroy(eolConfig *config);
 
 /**
- * @brief writes config from a GNode object into a file
+ * @brief writes config from a hash object into a file
  *
  */
-void eol_config_dump(char* filename, GNode* data);
+void eol_config_dump(char* filename, GHashTable* data);
 
-// it would be nice to be able to access your library like this:
+/* it would be nice to be able to access your library like this: */
 
 
 eolInt eol_config_get_int_by_tag(
