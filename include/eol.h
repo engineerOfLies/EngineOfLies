@@ -31,6 +31,7 @@ enum eol_components {
   EOL_MODEL     = 128,
   EOL_PARTICLE  = 256,
   EOL_WINDOW    = 512,
+  EOL_LEVEL     = 1024,
   EOL_ALL       = 0xFFFF
 };
 

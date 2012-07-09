@@ -33,6 +33,7 @@ typedef struct
   eolUint   _data_max;
   eolUint   _data_size;
   eolBool   _data_unique;
+  eolUint   _data_id_pool;/**<increments with every allocated resource.*/
   char *    _data_list;   /**<character buffer of data*/
   void (*data_delete)(void *data);
   eolBool (*data_load)(char *filename,void *data);
@@ -44,6 +45,8 @@ typedef struct
   eolLine filename;
   eolUint refCount;
   eolUint index;
+  eolUint id;       /**<unique identifier.  In case of a memory re-use it can be
+                        compared with expected for validity*/
 }eolResourceHeader;
 
 eolResourceManager *eol_resource_manager_new();
@@ -88,6 +91,14 @@ void eol_resource_manager_free(eolResourceManager **manager);
 void eol_resource_manager_clean(eolResourceManager *manager);
 
 /**
+* @brief delete ALL allocated resources.
+*        a delete function must be set.
+*
+* @param manager the resource manager to be cleared.
+*/
+void eol_resource_manager_clear(eolResourceManager *manager);
+
+/**
  * @brief Allocated and loads a resource from file.  Calls the manager's data load
  * function pointer.
  * @param manager to load a resource for
@@ -105,6 +116,14 @@ void *eol_resource_manager_load_resource(eolResourceManager *manager,char *filen
 eolInt eol_resource_element_get_index(eolResourceManager *manager,void *element);
 
 /**
+* @brief returns the index of the element passed.
+* @param manager the resource manager to check
+* @param data the resource data pointer to check
+* @return the unsigned integer id of the element, or -1 on error
+*/
+eolInt eol_resource_element_get_id(eolResourceManager *manager,void *element);
+
+/**
  * @brief iterates through the resource list
  *
  * @param manager the resource manager to iterate through
@@ -116,6 +135,15 @@ eolInt eol_resource_element_get_index(eolResourceManager *manager,void *element)
  */
 void * eol_resource_get_next_data(eolResourceManager *manager,void *data);
 
+/**
+ * @brief confirms that the resource pointed at by element is the one expected based
+ * on the id.
+ * @param manager the resource manager for which this element is a member
+ * @param element the element in question
+ * @param id the expected id of the element
+ * @return eolTrue if the id's match or eolFalse on error or mismatch.
+ */
+eolBool eol_resource_element_id_valid(eolResourceManager *manager,void *element,eolUint id);
 
 #endif
 

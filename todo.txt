@@ -1,9 +1,11 @@
 Engine Components to make:
 eol
   The core of the library.  All of EOL can initialized through it.
+  - this an ongoing effort as new components are added
   
 eol_types
   Common types library.  unified across all component libraries (SDL, OpenGL, Chipmunk)
+  
   
 eol_logger
   Generic logging to file, terminal / in game console

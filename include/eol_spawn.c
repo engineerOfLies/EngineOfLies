@@ -1,6 +1,30 @@
 #include "eol_spawn.h"
 #include "eol_logger.h"
-#include "glib/gstring.h"
+#include <glib/gstring.h>
+
+void eol_g_string_free(GString *string)
+{
+  g_string_free(string,eolTrue);
+}
+
+eolBool eol_spawn_setup(eolSpawn *spawn)
+{
+  if (!spawn)return eolFalse;
+  if (spawn->keys != NULL)return eolFalse;
+  spawn->keys =
+  g_hash_table_new_full(g_str_hash,
+                        g_str_equal,
+                        (GDestroyNotify)eol_g_string_free,
+                        (GDestroyNotify)eol_g_string_free);
+  if (spawn->keys == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_spawn: failed too allocated spawn key map\n");
+    return eolFalse;
+  }
+  return eolTrue;
+}
 
 eolSpawn * eol_spawn_new()
 {
@@ -14,7 +38,20 @@ eolSpawn * eol_spawn_new()
     return NULL;
   }
   memset(spawn,0,sizeof(eolSpawn));
+  if (eol_spawn_setup(spawn) == eolFalse)
+  {
+    free(spawn);
+    return NULL;
+  }
   return spawn;
+}
+
+void eol_spawn_delete(eolSpawn **spawn)
+{
+  if ((!spawn) || (!*spawn))return;
+  eol_spawn_free(*spawn);
+  free(*spawn);
+  *spawn = NULL;
 }
 
 void eol_spawn_free(eolSpawn *spawn)
@@ -112,17 +149,7 @@ void eol_spawn_add_key(eolSpawn *spawn,eolWord key,eolLine value)
   GString *keyString;
   GString *valueString;
   if (!spawn)return;
-  if (spawn->keys == NULL)
-  {
-    spawn->keys = g_hash_table_new_full(g_str_hash,g_str_equal,g_free,g_free);
-    if (spawn->keys == NULL)
-    {
-      eol_logger_message(
-        EOL_LOG_ERROR,
-        "eol_spawn: failed too allocated spawn key map\n");
-      return;
-    }
-  }
+  if (spawn->keys == NULL)return;
   keyString = g_string_new_len(key,EOLWORDLEN);
   valueString = g_string_new_len(key,EOLLINELEN);
   if (g_hash_table_lookup(spawn->keys,keyString) != NULL)
@@ -141,17 +168,7 @@ void eol_spawn_add_key_list(eolSpawn *spawn,eolWord key,eolLine value)
   GString *valueString;
   GList *list;
   if (!spawn)return;
-  if (spawn->keys == NULL)
-  {
-    spawn->keys = g_hash_table_new_full(g_str_hash,g_str_equal,g_free,g_free);
-    if (spawn->keys == NULL)
-    {
-      eol_logger_message(
-        EOL_LOG_ERROR,
-        "eol_spawn: failed too allocated spawn key map\n");
-      return;
-    }
-  }
+  if (!spawn->keys)return;
   keyString = g_string_new_len(key,EOLWORDLEN);
   valueString = g_string_new_len(key,EOLLINELEN);
   list = g_hash_table_lookup(spawn->keys,keyString);

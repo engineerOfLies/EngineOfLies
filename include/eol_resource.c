@@ -254,6 +254,40 @@ void eol_resource_free_element(eolResourceManager *manager,void **data)
   *data = NULL;
 }
 
+void eol_resource_manager_clear(eolResourceManager *manager)
+{
+  eolResourceHeader *element = NULL;
+  int i = 0;
+  if (manager == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_resource:passed a NULL manager\n");
+    return;
+  }
+  if (manager->_initialized == eolFalse)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_resource:manager %s uninitialized\n",
+      manager->name);
+    return;
+  }
+  if (manager->data_delete == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_resource:manager %s had no delete function\n",
+      manager->name);
+    return;
+  }
+  for (i = 0 ; i < manager->_data_max;i++)
+  {
+    element = (eolResourceHeader *)&manager->_data_list[(i * manager->_data_size)];
+    manager->data_delete(&element[1]);
+  }
+}
+
 void eol_resource_manager_clean(eolResourceManager *manager)
 {
   eolResourceHeader *element = NULL;
@@ -306,6 +340,51 @@ void *eol_resource_get_data_by_header(eolResourceHeader *resource)
 {
   if (!resource)return NULL;
   return (void *)&resource[1];
+}
+
+eolBool eol_resource_element_id_valid(eolResourceManager *manager,void *element,eolUint id)
+{
+  if (eol_resource_element_get_id(manager,element) == id)return eolTrue;
+  return eolFalse;
+}
+
+eolInt eol_resource_element_get_id(eolResourceManager *manager,void *element)
+{
+  eolResourceHeader *header;
+  if (!manager)
+  {
+    eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_resource:passed a NULL manager\n");
+
+    return -1;
+  }
+  if (!element)
+  {
+    eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_resource:passed a NULL element\n");
+    return -1;
+  }
+  header = (eolResourceHeader *)element;
+  header--;
+  /*range verification*/
+  if (header < (eolResourceHeader *)&manager->_data_list[0])
+  {
+    eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_resource:under seeking in data list\n");
+    assert(0);
+    return -1;
+  }
+  if (header >= (eolResourceHeader *)&manager->_data_list[manager->_data_max])
+  {
+    eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_resource:over seeking in data list\n");
+    return -1;
+  }
+  return header->id;
 }
 
 eolInt eol_resource_element_get_index(eolResourceManager *manager,void *element)

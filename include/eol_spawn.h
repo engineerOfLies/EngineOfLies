@@ -42,6 +42,20 @@ typedef struct
 eolSpawn * eol_spawn_new();
 
 /**
+ * @brief sets up a previously allocated eolSpawn.  Allocated internal memory.
+ * @param spawn a pointer to the address of the spawn to be set up
+ * @return eolTrue on success or eolFalse if it has already been set up or error.
+ */
+eolBool eol_spawn_setup(eolSpawn *spawn);
+
+/**
+* @brief frees up internally allocated memory, including the Spawn itself.
+* @param spawn a pointer to a pointer to the spawn to be deleted.  After call 
+* the pointer will be set to NULL
+*/
+void eol_spawn_delete(eolSpawn **spawn);
+
+/**
  * @brief frees up internally allocated memory, but does not free the eolSpawn itself.
  * after a call to this, it can be freed with free();
  * @param spawn pointer to the spawn to be cleared.

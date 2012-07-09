@@ -44,7 +44,7 @@ typedef struct
   eolUint     height;
   eolUint     tileWidth;
   eolUint     tileHeight;
-  eolSprite * tileset;
+  eolSprite * tileSet;
   eolUint   * map;
 }eolTileMap;
 
@@ -65,6 +65,7 @@ typedef struct
 
   eolFloat     alpha;        /**<translucency to apply to all layer assets.  by setting it to 0, you turn off
                                  rendering for the layer*/
+  eolBool      updateSpace;  /**<its possible to update all, near or only active layer*/
   eolRectFloat bounds;       /**<absolute bounds in model space for the layer*/
   eolBool      usesClipMesh; /**<if true, the layer will build collision data from clip mesh*/
   eolBool      usesTileMap;  /**<if true, the layer will build collision data from tile map*/
@@ -72,13 +73,13 @@ typedef struct
   eolLine      clipMeshFile; /**<the file to load for a clip mask*/
   eolLine      tileSet;      /**<the group of tiles to use,  Generally a sprite where each cell is a tile*/
   
-  eolTileMap   tileMap;      /**<the loaded tile map*/
   
-  eolUint      spawnCount;   /**<the size of loaded spawn list*/
-  eolSpawn     spawnList;    /**<the loaded spawn candidates*/
-  eolBool      updateSpace;  /**<its possible to update all, near or only active layer*/
+  /*allocated data that needs to be cleaned up*/
+  eolTileMap   tileMap;      /**<the loaded tile map*/
+  GList      * spawnList;    /**<the loaded spawn candidates*/
+  GList      * backgrounds;  /**<a list of background display models.*/
   cpSpace    * space;        /**<the collision space for this layer*/
-  eolMesh    * clipMesh;
+  eolMesh    * clipMesh;     /**<the collision mask as mesh data*/
 }eolLevelLayer;
 
 typedef struct
@@ -88,9 +89,23 @@ typedef struct
   eolLevelLayer * layers;     /**<the allocated list of level layers*/
 }eolLevel;
 
+
+/**
+* @brief frees all loaded level data.
+*/
 void eol_level_init();
+
+/**
+* @brief loads config for level system from file or sets up defaults.
+*/
 void eol_level_config();
+
+/**
+ * @brief frees all loaded level data.
+ */
 void eol_level_clear();
+
+eolBool eol_level_initialized();
 
 /**
  * @brief allocates an empty level struct and returns a pointer to it.

@@ -35,7 +35,7 @@ DOXYGEN = doxygen
 #
 
 $(PROJECT): $(OBJ)
-	$(CC) $(OBJ) $(LFLAGS) $(EOL_LDFLAGS) $(SDL_LDFLAGS) $(GLIB_LDFLAGS)
+	$(CC) $(OBJ) $(LFLAGS) $(EOL_LDFLAGS) $(SDL_LDFLAGS) $(GLIB_LDFLAGS) libchipmunk.a
 docs:
 	$(DOXYGEN) doxygen.cfg
   
