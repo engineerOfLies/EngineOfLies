@@ -11,6 +11,8 @@ eolLevel * _eol_level_current = NULL;
 eolUint    _eol_level_max_layers = 1;
 eolUint    _eol_level_max = 0; /**<maximum number of levels that can be loaded
                                    at a time, ie: buffered*/
+eolSpawnGeneric _eol_level_spawn_generic = NULL;
+
 
 
 /*local function prototypes*/
@@ -81,6 +83,16 @@ void eol_level_close()
       EOL_LOG_INFO,
       "eol_level:closed\n"
   );
+}
+
+void eol_level_free(eolLevel **level)
+{
+  if (!eol_level_initialized())return;
+  if (_eol_level_current == *level)
+  {
+    _eol_level_current = NULL;
+  }
+  eol_resource_free_element(_eol_level_manager,(void **)level);
 }
 
 void eol_level_delete_layer(eolLevelLayer * level)
@@ -183,5 +195,11 @@ void eol_level_draw_layer_bounds(eolLevelLayer *layer)
   eol_orientation_clear(&ori);
   eol_draw_rect_3D(layer->bounds,ori);
 }
+
+void eol_level_register_spawn_generic(eolSpawnGeneric spawnGeneric)
+{
+  _eol_level_spawn_generic = spawnGeneric;
+}
+
 
 /*eol@eof*/

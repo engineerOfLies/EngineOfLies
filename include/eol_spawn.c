@@ -6,6 +6,27 @@ void eol_g_string_free(GString *string)
 {
   g_string_free(string,eolTrue);
 }
+/*
+TODO:  need to actually store type information in the hash before this can work
+void eol_spawn_copy(eolSpawn *out, eolSpawn in)
+{
+  GHashTableIter *iter = NULL;
+  GString *key,*value;
+  if (!out)return eolFalse;
+  if (out->keys != NULL)
+  {
+    eol_spawn_free(out);
+  }
+  if (out->keys == NULL)
+  {
+    if (eol_spawn_setup(out) == eolFalse)return;
+  }
+  g_hash_table_iter_init(iter,in.keys);
+  while(g_hash_table_iter_next(iter,key,value))
+  {
+    g_hash_table_insert(spawn->keys,g_strdup(key),g_strdub(value));
+  }
+}*/
 
 eolBool eol_spawn_setup(eolSpawn *spawn)
 {

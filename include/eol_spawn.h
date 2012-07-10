@@ -129,6 +129,12 @@ eolBool eol_spawn_get_key_text(eolText out, eolSpawn *spawn,eolWord key);
  */
 eolBool eol_spawn_get_key_list(GList **out, eolSpawn *spawn,eolWord key);
 
-
+/**
+ * @brief copies the data from one spawn to another;
+ *
+ * @param out a pointer to a previously setup spawn that will receive a copy of in's data
+ * @param in the spawn that will copied.
+ */
+void eol_spawn_copy(eolSpawn *out, eolSpawn in);
 
 #endif
