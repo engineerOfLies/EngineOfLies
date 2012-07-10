@@ -122,6 +122,16 @@ void eol_rect_copy(
   d->h = s.h;
 }
 
+void eol_orientation_clear(eolOrientation *out)
+{
+  if (!out)return;
+  eol_vec3d_set(out->position,0,0,0);
+  eol_vec3d_set(out->rotation,0,0,0);
+  eol_vec3d_set(out->scale,1,1,1);
+  eol_vec3d_set(out->color,0,0,0);
+  out->alpha = 1;
+}
+
 void eol_orientation_add(eolOrientation * out,
                          eolOrientation   in1,
                          eolOrientation   in2)

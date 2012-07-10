@@ -1,3 +1,4 @@
+#include "eol_draw.h"
 #include "eol_level.h"
 #include "eol_logger.h"
 #include "eol_resource.h"
@@ -133,6 +134,54 @@ void eol_level_delete(void *data)
 eolBool eol_level_load_data_from_file(char * filename,void *data)
 {
   return eolTrue;
+}
+
+void eol_level_draw_background(eolBackground * back)
+{
+  if (!back)return;
+  if (!back->model)return;
+  eol_model_draw(
+    back->model,
+    back->ori.position,
+    back->ori.rotation,
+    back->ori.scale,
+    back->ori.color,
+    back->ori.alpha,
+    0
+  );
+}
+
+void eol_level_draw_layer_backgrounds(eolLevelLayer *layer)
+{
+  GList *b;
+  if (!layer)return;
+  for (b = layer->backgrounds; b != NULL; b= b->next)
+  {
+    eol_level_draw_background((eolBackground *)b->data);
+  }
+}
+
+void eol_level_draw_layer_clipmask(eolLevelLayer *layer)
+{
+  if (!layer)return;
+  eol_mesh_draw(
+    layer->clipMesh,
+    layer->clipMaskOri.position,
+    layer->clipMaskOri.rotation,
+    layer->clipMaskOri.scale,
+    layer->clipMaskOri.color,
+    layer->clipMaskOri.alpha,
+    NULL
+  );
+
+}
+
+void eol_level_draw_layer_bounds(eolLevelLayer *layer)
+{
+  eolOrientation ori;
+  if (!layer)return;
+  eol_orientation_clear(&ori);
+  eol_draw_rect_3D(layer->bounds,ori);
 }
 
 /*eol@eof*/

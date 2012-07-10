@@ -49,4 +49,6 @@ void eol_draw_tri_3D(eolVec3D p1,
  */
 void eol_draw_solid_rect(eolRect rect,eolVec3D color,eolFloat alpha);
 
+void eol_draw_rect_3D(eolRectFloat rect, eolOrientation ori);
+
 #endif

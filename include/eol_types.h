@@ -206,6 +206,12 @@ void eol_orientation_add(eolOrientation * out,
                          eolOrientation   in1,
                          eolOrientation   in2);
 
+/**
+ * @brief sets the passed orientation to a default set up.
+ * sets alpha and scale to 1, all else to zero
+ */
+void eol_orientation_clear(eolOrientation *out);
+
 /*
   3d trails.
 */

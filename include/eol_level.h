@@ -73,7 +73,7 @@ typedef struct
   eolLine      clipMeshFile; /**<the file to load for a clip mask*/
   eolLine      tileSet;      /**<the group of tiles to use,  Generally a sprite where each cell is a tile*/
   
-  
+  eolOrientation clipMaskOri;/**<offset for where the clipmask is set in 3D space*/
   /*allocated data that needs to be cleaned up*/
   eolTileMap   tileMap;      /**<the loaded tile map*/
   GList      * spawnList;    /**<the loaded spawn candidates*/
