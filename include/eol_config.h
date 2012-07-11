@@ -28,7 +28,7 @@ typedef struct
   eolLine     filename;
   eolUint     elementCount;
   GHashTable  * _node;
-}eolConfig;
+} eolConfig;
 
 /* Variable, Value, Sequence (vector) */
 enum eolConfigState { KEY, VAL, SEQ };
@@ -58,25 +58,25 @@ void eol_config_dump(char* filename, GHashTable* data);
 
 
 eolInt eol_config_get_int_by_tag(
-    eolConfig *conf,
-    eolLine    tag
-  );
+  eolConfig *conf,
+  eolLine    tag
+);
 
 void eol_config_get_line_by_tag(
-    eolLine     output,
-    eolConfig * conf,
-    eolLine     tag
-  );
+  eolLine     output,
+  eolConfig * conf,
+  eolLine     tag
+);
 
 eolUint eol_config_get_list_count_by_tag(
-    eolConfig * conf,
-    eolLine     tag
-  );
+  eolConfig * conf,
+  eolLine     tag
+);
 
 GList * eol_config_get_list_by_tag(
-    eolConfig * conf,
-    eolLine     tag
-  );
+  eolConfig * conf,
+  eolLine     tag
+);
 
 #endif
 
