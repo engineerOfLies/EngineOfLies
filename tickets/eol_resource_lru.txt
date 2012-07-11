@@ -1,0 +1,8 @@
+Resource manager should operate like a LRU pool.
+
+Add a tag to the resource header that indicates the last time a resource was handed over to the manager.
+When filling requests for NEW elements it should purge and hand over the oldest touched element slot.
+When a file is requested, check unreferenced elements in case a slot can be saved from deletion.
+
+
+assigned: engineerOfLies
