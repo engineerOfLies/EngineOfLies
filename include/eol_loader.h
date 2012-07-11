@@ -24,9 +24,9 @@
 
 typedef struct
 {
-	FILE        * file;
-	char        * _buffer;
-	size_t        size;
+  FILE        * file;
+  char        * _buffer;
+  size_t        size;
   PHYSFS_File * _PSfile;
 }eolFile;
 

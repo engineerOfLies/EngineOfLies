@@ -1,0 +1,5 @@
+Have eol_config load from PhysFS
+
+Ultimately any in game configurations should be obscured from player access.
+Please use the PhysFS functions to get the text data from file.  eol_loader wraps
+calls to setting up the buffer space, but it may require direct calls to the physfs api.

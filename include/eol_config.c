@@ -31,10 +31,14 @@ eolConfig *eol_config_load(char* filename)
   yaml_event_t event;
   FILE *input;
   eolConfig *config = malloc(sizeof(eolConfig));
+  /*NOTE: strcpy is not safe. use strncpy or preferably, since its an eolLine,
+    use eol_line_cpy(dst,src)*/
   strcpy(config->filename, filename);
+  /*NOTE: is the & necessary? not sure*/
   config->_node = g_hash_table_new(&g_str_hash, &g_str_equal);
   if(config->_node == NULL)
-    {
+    {/* NOTE: Really? extra indent? and you yelled at me for using this comment style*/
+      /*use the logger, I made a ticket for this.*/
       fputs("ERROR: Unable to allocate GHash for config", stderr);
       return NULL;
     }
@@ -80,6 +84,7 @@ void eol_config_parse_tier(yaml_parser_t *parser, GHashTable *cfg)
   int state = KEY;
   do
     {
+      /*NOTE: is this being used ininitialized?*/
       yaml_event_delete(&event);
       yaml_parser_parse(parser, &event);
       switch(event.type)
@@ -88,7 +93,7 @@ void eol_config_parse_tier(yaml_parser_t *parser, GHashTable *cfg)
           if (state == KEY)
             {
               /* new key, hold on to it until we get a value as well */
-              last_key = (g_strdup((gchar*) event.data.scalar.value));
+              last_key = g_strdup((gchar*) event.data.scalar.value);
             }
           else
             {
@@ -142,6 +147,7 @@ void eol_config_print(GHashTable* data)
 {
 }
 
+/*NOTE: the acessor functions should probably return eolBool for fail/success.  My Bad.*/
 eolInt eol_config_get_int_by_tag( eolConfig *conf, eolLine tag)
 {
   gchar *data;
@@ -154,6 +160,7 @@ eolInt eol_config_get_int_by_tag( eolConfig *conf, eolLine tag)
   else
     {
       printf("Config tag %s not found in %s\n", tag, conf->filename);
+      /*NOTE: returning 0 is simpler...*/
       return (eolInt) NULL;
     }
 }
@@ -172,7 +179,6 @@ void eol_config_get_line_by_tag( eolLine output,  eolConfig *conf, eolLine tag)
       printf("Config tag %s not found in %s\n", tag, conf->filename);
       return;
     }
-
 }
 /*
 void eol_config_get_line_by_tag(
