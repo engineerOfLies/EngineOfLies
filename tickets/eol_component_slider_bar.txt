@@ -1,0 +1,6 @@
+Add support for slider / status bar components
+
+Sliders and status bars are similar, so grouping into one ticket.  A slider is
+an input type where the player can slide a selection from 0 to 1.
+
+assigned:

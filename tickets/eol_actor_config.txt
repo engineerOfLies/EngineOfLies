@@ -1,0 +1,5 @@
+Have eol_actor use eol_config
+
+actor system is loading the information directly.  It should use the config system
+
+assigned:

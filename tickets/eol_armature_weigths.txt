@@ -1,0 +1,7 @@
+Add support for vertex weights in bone deformation.
+
+At the moment, all deformation works off of the vertices at rest.  It needs to
+take into account all changes to a vertex.  Perhaps change the way we organize
+the data instead of bones referencing vertices, have vertices list the bones.
+
+assigned:

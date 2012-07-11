@@ -1,0 +1,5 @@
+Add support for bone groups to armature and deformations
+
+its possible to export bone group information from blender, we should support this
+
+assigned: engineerOfLies

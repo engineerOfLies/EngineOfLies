@@ -1,0 +1,9 @@
+Create the entity system.
+
+Entities are the foundation for every game object.
+Entities are a resource that is unique (cannot be re-assigned by resource manager)
+Entities have a graphical and sound representation
+Entities have a number of function pointers to define custom behavior
+Entities have the option for game specific data packed in with it.
+
+assigned: engineerOfLies

@@ -1,0 +1,7 @@
+Add stock dialog box for inputs
+
+A set of functions to create and support text and number input is needed.  The idea
+is that a popup dialog box prompts the user for either a string or a number.  The
+components already exist.
+
+assigned:

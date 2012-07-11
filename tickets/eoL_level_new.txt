@@ -1,0 +1,10 @@
+Create the level structure
+
+Levels are the generic representation of the game world.  The level system will
+support:
+ - tiles and 3d collision masks.
+ - Drawing through tiles and any 2d/3d asset.
+ - a list of spawn candidates and their configuration and conditions.
+ - loading and saving to a binary file through eol_loader
+
+assigned: engineerOfLies

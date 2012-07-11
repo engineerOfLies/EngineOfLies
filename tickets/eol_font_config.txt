@@ -1,0 +1,3 @@
+eol_font should load config through eol_config
+
+Right now there is no configuration, its hard coded default values.
