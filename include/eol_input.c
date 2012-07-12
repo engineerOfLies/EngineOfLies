@@ -1,4 +1,7 @@
 #include "eol_input.h"
+#ifdef __APPLE__
+#include "fmemopen.h"
+#endif
 #include <SDL.h>
 #include <physfs.h>
 

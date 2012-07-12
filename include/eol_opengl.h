@@ -34,15 +34,18 @@ The Z value of the 2D plane, a range of 0 to 1
 #if defined(_WIN32)
 #include <windows.h>
 #endif
-#ifdef __APPLE__
+#if defined(__APPLE__)
 #include <OpenGL/gl.h>    
 #include <OpenGL/glu.h>
-#endif
+#else
 #include <GL/gl.h>    
 #include <GL/glu.h>
+#endif
 
 #if defined(_WIN32)
 #include <glext.h>
+#elif defined(__APPLE__)
+#include <OpenGL/glext.h>
 #else
 #include <GL/glx.h>
 #include <GL/glxext.h>
@@ -497,6 +500,7 @@ typedef ptrdiff_t GLsizeiptr;
 
 #endif
 
+#ifndef __APPLE__
 typedef void (APIENTRY * PFNGLGENQUERIESPROC) (GLsizei n, GLuint *ids);
 typedef void (APIENTRY * PFNGLDELETEQUERIESPROC) (GLsizei n, const GLuint *ids);
 typedef GLboolean (APIENTRY * PFNGLISQUERYPROC) (GLuint id);
@@ -536,7 +540,7 @@ extern PFNGLMAPBUFFERPROC                         glMapBuffer;
 extern PFNGLUNMAPBUFFERPROC                       glUnmapBuffer;
 extern PFNGLGETBUFFERPARAMETERIVPROC              glGetBufferParameteriv;
 extern PFNGLGETBUFFERPOINTERVPROC                 glGetBufferPointerv;
-
+#endif
 /*
   OpenGL 2.0
 */
@@ -632,6 +636,7 @@ typedef char GLchar;
 
 #endif
 
+#ifndef __APPLE__
 typedef void (APIENTRY * PFNGLBLENDEQUATIONSEPARATEPROC) (GLenum modeRGB, GLenum modeAlpha);
 typedef void (APIENTRY * PFNGLDRAWBUFFERSPROC) (GLsizei n, const GLenum *bufs);
 typedef void (APIENTRY * PFNGLSTENCILOPSEPARATEPROC) (GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
@@ -819,7 +824,7 @@ extern PFNGLVERTEXATTRIB4UBVPROC                  glVertexAttrib4ubv;
 extern PFNGLVERTEXATTRIB4UIVPROC                  glVertexAttrib4uiv;
 extern PFNGLVERTEXATTRIB4USVPROC                  glVertexAttrib4usv;
 extern PFNGLVERTEXATTRIBPOINTERPROC               glVertexAttribPointer;
-
+#endif
 /*
    OpenGL 2.1
 */
@@ -848,6 +853,7 @@ extern PFNGLVERTEXATTRIBPOINTERPROC               glVertexAttribPointer;
 #define GL_SRGB8_ALPHA8                           0x8C43
 #define GL_SRGB_ALPHA                             0x8C42
 
+#ifndef __APPLE__
 typedef void (APIENTRY * PFNGLUNIFORMMATRIX2X3FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
 typedef void (APIENTRY * PFNGLUNIFORMMATRIX3X2FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
 typedef void (APIENTRY * PFNGLUNIFORMMATRIX2X4FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
@@ -861,6 +867,7 @@ extern PFNGLUNIFORMMATRIX2X4FVPROC                glUniformMatrix2x4fv;
 extern PFNGLUNIFORMMATRIX4X2FVPROC                glUniformMatrix4x2fv;
 extern PFNGLUNIFORMMATRIX3X4FVPROC                glUniformMatrix3x4fv;
 extern PFNGLUNIFORMMATRIX4X3FVPROC                glUniformMatrix4x3fv;
+#endif
 
 /**
  * @brief sets up opengl for use on this system.

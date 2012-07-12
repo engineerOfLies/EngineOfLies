@@ -60,6 +60,7 @@ PFNGLSAMPLECOVERAGEPROC                 glSampleCoverage;
 
 #endif
 
+#ifndef __APPLE__
 /* OpenGL 1.4.*/
 PFNGLBLENDFUNCSEPARATEPROC              glBlendFuncSeparate;
 PFNGLMULTIDRAWARRAYSPROC                glMultiDrawArrays;
@@ -223,7 +224,7 @@ PFNGLUNIFORMMATRIX2X4FVPROC             glUniformMatrix2x4fv;
 PFNGLUNIFORMMATRIX4X2FVPROC             glUniformMatrix4x2fv;
 PFNGLUNIFORMMATRIX3X4FVPROC             glUniformMatrix3x4fv;
 PFNGLUNIFORMMATRIX4X3FVPROC             glUniformMatrix4x3fv;
-
+#endif
 
 void eol_opengl_init()
 {
@@ -290,7 +291,8 @@ void eol_opengl_init()
   glCompressedTexSubImage1D   = (PFNGLCOMPRESSEDTEXSUBIMAGE1DPROC)(GetProc("glCompressedTexSubImage1D"));
   glGetCompressedTexImage     = (PFNGLGETCOMPRESSEDTEXIMAGEPROC)(GetProc("glGetCompressedTexImage"));
 #endif
-    
+
+#ifndef __APPLE__
   /* OpenGL 1.4.*/
   glMultiDrawArrays           = (PFNGLMULTIDRAWARRAYSPROC)(GetProc("glMultiDrawArrays"));
   glMultiDrawElements         = (PFNGLMULTIDRAWELEMENTSPROC)(GetProc("glMultiDrawElements"));
@@ -454,7 +456,8 @@ void eol_opengl_init()
   glUniformMatrix4x2fv        = (PFNGLUNIFORMMATRIX4X2FVPROC)(GetProc("glUniformMatrix4x2fv"));
   glUniformMatrix3x4fv        = (PFNGLUNIFORMMATRIX3X4FVPROC)(GetProc("glUniformMatrix3x4fv"));
   glUniformMatrix4x3fv        = (PFNGLUNIFORMMATRIX4X3FVPROC)(GetProc("glUniformMatrix4x3fv"));
-
+#endif
+    
 #undef GetProc
   _eol_opengl_initialized = GL_TRUE;
 }
