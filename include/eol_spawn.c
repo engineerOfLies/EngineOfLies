@@ -1,11 +1,8 @@
 #include "eol_spawn.h"
 #include "eol_logger.h"
+#include "eol_typedpointer.h"
 #include <glib/gstring.h>
 
-void eol_g_string_free(GString *string)
-{
-  g_string_free(string,eolTrue);
-}
 /*
 TODO:  need to actually store type information in the hash before this can work
 void eol_spawn_copy(eolSpawn *out, eolSpawn in)
@@ -36,7 +33,7 @@ eolBool eol_spawn_setup(eolSpawn *spawn)
   g_hash_table_new_full(g_str_hash,
                         g_str_equal,
                         (GDestroyNotify)eol_g_string_free,
-                        (GDestroyNotify)eol_g_string_free);
+                        (GDestroyNotify)eol_type_destroy);
   if (spawn->keys == NULL)
   {
     eol_logger_message(
@@ -168,51 +165,59 @@ void eol_spawn_delete_key_list(eolSpawn *spawn,eolWord key)
 void eol_spawn_add_key(eolSpawn *spawn,eolWord key,eolLine value)
 {
   GString *keyString;
-  GString *valueString;
+  eolTypedPointer *valuePointer;
   if (!spawn)return;
   if (spawn->keys == NULL)return;
   keyString = g_string_new_len(key,EOLWORDLEN);
-  valueString = g_string_new_len(key,EOLLINELEN);
+  valuePointer = eol_type_pointer_new_string(value);
   if (g_hash_table_lookup(spawn->keys,keyString) != NULL)
   {
-    g_hash_table_replace(spawn->keys,keyString,valueString);
+    g_hash_table_replace(spawn->keys,keyString,valuePointer);
   }
   else
   {
-    g_hash_table_insert(spawn->keys,keyString,valueString);
+    g_hash_table_insert(spawn->keys,keyString,valuePointer);
   }
 }
 
 void eol_spawn_add_key_list(eolSpawn *spawn,eolWord key,eolLine value)
 {
   GString *keyString;
-  GString *valueString;
-  GList *list;
+  eolTypedPointer *valueString;
+  eolTypedPointer *list;
   if (!spawn)return;
   if (!spawn->keys)return;
   keyString = g_string_new_len(key,EOLWORDLEN);
-  valueString = g_string_new_len(key,EOLLINELEN);
+  valueString = eol_type_pointer_new_string(value);
   list = g_hash_table_lookup(spawn->keys,keyString);
   if (list == NULL)
   {
-    list = g_list_append(list,valueString);
+    list = eol_type_pointer_new_list();
+    if (!list)
+    {
+      eol_logger_message(
+        EOL_LOG_ERROR,
+        "eol_spawn:failed to append key list\n");
+      return;
+    }
+    eol_type_pointer_list_append(list,valueString);
     g_hash_table_insert(spawn->keys,keyString,list);
   }
   else
   {
-    list = g_list_append(list,valueString);
+    eol_type_pointer_list_append(list,valueString);
   }
 }
 
 GString * eol_spawn_get_key(eolSpawn *spawn, eolWord key)
 {
-  GString *value = NULL;
+  eolTypedPointer *value = NULL;
   GString *keyString = NULL;
   if ((!spawn) || (!spawn->keys))return NULL;
   keyString = g_string_new_len(key,EOLWORDLEN);
   value = g_hash_table_lookup(spawn->keys,keyString);
   g_string_free(keyString,eolTrue);
-  return value;
+  return value->pointerValue;
 }
 
 eolBool eol_spawn_has_key(eolSpawn *spawn, eolWord key)
