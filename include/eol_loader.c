@@ -1,6 +1,8 @@
 #include "eol_loader.h"
 #include "eol_logger.h"
-
+#ifdef __APPLE__
+#include "fmemopen.h"
+#endif
 eolBool _eol_loader_initialized = eolFalse;
 
 eolBool eol_loader_initialized()
