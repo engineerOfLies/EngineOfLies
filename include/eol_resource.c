@@ -36,12 +36,15 @@ void *eol_resource_manager_load_resource(eolResourceManager *manager,char *filen
   {
     return NULL;
   }
-  if (!manager->data_load(filename,eol_resource_get_data_by_header(element)))
+  if (manager->data_load != NULL)
   {
-    eol_resource_delete_element(manager,element);
-    return NULL;
+    if (!manager->data_load(filename,eol_resource_get_data_by_header(element)))
+    {
+      eol_resource_delete_element(manager,element);
+      return NULL;
+    }
   }
-  strncpy(element->filename,filename,EOLLINELEN);
+  eol_line_cpy(element->filename,filename);
   return eol_resource_get_data_by_header(element);
 }
 

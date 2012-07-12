@@ -2,7 +2,6 @@
 #include "eol_opengl.h"
 #include "eol_logger.h"
 #include "eol_loader.h"
-#include "eol_resource.h"
 
 
 /* internal globals. DO NOT EXTERN OUTSIDE OF THIS FILE!*/
@@ -10,7 +9,6 @@ eolUint     _max_sprites = 0;  /*this is going to be configurable*/
 eolSprite * _sprite_list = NULL;
 eolUint     _num_sprites = 0;
 eolBool      _sprite_init = eolFalse;
-eolResourceManager * _eol_sprite_manager = NULL;
 
 eolGraphicsView _graphics_view;
 
