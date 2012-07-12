@@ -18,7 +18,7 @@ void eol_model_init()
   eol_logger_message(
       EOL_LOG_INFO,
       "eol_model:initializing\n");
-_eol_model_manager = eol_resource_manager_init(
+  _eol_model_manager = eol_resource_manager_init(
     "eol_model_manager",
     _eol_model_max,
     sizeof(eolModel),

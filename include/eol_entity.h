@@ -105,5 +105,56 @@ typedef struct
   eolUint    id;
 }eolEntityPointer;
 
+void eol_entity_config();
+void eol_entity_init();
+void eol_entity_clear();
+eolBool eol_entity_initialized();
+void eol_entity_free(eolEntity **ent);
+eolEntity *eol_entity_new();
+
+/**
+ * @brief sync entity states with the collision space.  Update desired forces,
+ * add and remove entities from the space. delete entities marked for death.
+ */
+void eol_entity_presync_all();
+
+/**
+ * @brief sync entity states from the collision space.  Update positions, call
+ * touch functions.
+ */
+void eol_entity_postsync_all();
+
+/**
+ * @brief calls all update functions for entities.
+ */
+void eol_entity_update_all();
+
+/**
+* @brief calls all think functions for entities if they need to think
+*/
+void eol_entity_think_all();
+
+/**
+ * @brief this is the function prototype for a customData delete function
+ * a delete function must be provided if using customData
+ * @Param the function must take a pointer to the custom data.  It should be cast
+ * internally as the customData type.
+ */
+typedef void (*eolEntityCustomDelete)(void *customData);
+
+/**
+ * @brief this function registers the custome delete function with the entity system
+ * note that for ALL entities, there can be only one custom delete.
+ * note that this must be called BEFORE the entity system is initialized
+ * @param a pointer to the function that will be called when deleting custom data.
+ */
+void eol_entity_register_custom_delete(eolEntityCustomDelete delfunc);
+
+/**
+ * @brief this function registers the size of the custom data segment
+ * note that this must be called BEFORE the entity system is initialized
+ * @param customSize this should be the sizeof(YOURDATATYPE)
+ */
+void eol_entity_register_custom_data_size(eolUint customSize);
 
 #endif
