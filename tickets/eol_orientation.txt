@@ -1,0 +1,7 @@
+Make a version of draw functions that take an eolOrientation where appropriate
+
+
+the eolOrientation is a new concept, that could be utilized in a lot of places.
+mainly: mesh, actor, sprite (3d version)
+
+assigned: 

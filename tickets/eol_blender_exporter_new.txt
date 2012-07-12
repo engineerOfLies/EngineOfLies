@@ -1,0 +1,25 @@
+write the blender exporter for mesh and armature data.
+
+Previous iterations of this engine used the blender obj exporter as a base.  That
+is still the best candidate for writing an exporter.
+Additionally we should clean up the names of fields being exported and provide support for:
+
+.meshobj:
+(lets provide counts up front to reduce the need for multiple passes through the file)
+vertex x/y/z
+  group   name
+  weight  %
+texture_vertex x/y/z
+vertex_normal x/y/z
+face v/tv/vn v/tv/vn v/tv/vn
+
+.armobj
+bone
+  parent
+  children
+  matrix
+  group
+
+frame
+  pose
+    matrix

@@ -1,0 +1,7 @@
+eol_graphics should load its set up from config.
+
+right now eol_graphics is hard coded for screen size, depth, et al.  It should
+get all of that information from config file.  It should be hard coded where it
+looks and should fall back on defaults.  lookin system/graphics.conf
+
+assigned:
