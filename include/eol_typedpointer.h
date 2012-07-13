@@ -78,6 +78,12 @@ eolTypedPointer *eol_type_pointer_new_hash();
 
 void eol_type_pointer_list_append(eolTypedPointer *list,eolTypedPointer *item);
 
+void eol_type_pointer_hash_insert(eolTypedPointer *hash,eolWord key,eolTypedPointer *value);
+
+eolTypedPointer *eol_type_pointer_get_hash_value(eolTypedPointer *hash,eolWord key);
+
+eolTypedPointer *eol_type_pointer_get_list_nth(eolTypedPointer *list, eolUint n);
+
 void eol_type_destroy(eolTypedPointer *point);
 
 /**
