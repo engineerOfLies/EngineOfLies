@@ -104,6 +104,19 @@ eolTypedPointer *eol_type_pointer_new_hash()
   return point;
 }
 
+void eol_type_pointer_hash_remove(eolTypedPointer *hash,char *key)
+{
+  GString *keyString;
+  GHashTable*hashtable = NULL;
+  if (!hash)return;
+  if (hash->pointerType != eolTypedPointerHash)return;
+  if (hash->pointerValue == NULL)return;
+  hashtable = (GHashTable*)hash->pointerValue;
+  keyString = g_string_new_len(key,EOLWORDLEN);
+  g_hash_table_remove(hashtable,keyString);
+  g_string_free(keyString,eolTrue);
+}
+
 void eol_type_pointer_hash_insert(eolTypedPointer *hash,char *key,eolTypedPointer *value)
 {
   GString *keyString;
@@ -162,11 +175,37 @@ void eol_type_pointer_list_remove_nth(eolTypedPointer *list, eolUint n)
   if (!list)return;
   if (list->pointerType != eolTypedPointerList)return;
   if (list->pointerValue == NULL)return;
-  link = g_list_nth_data((GList*)list->pointerValue,n);
-  list->pointerValue = (GList*)g_list_remove_link(list->pointerValue,link);
+  link = g_list_nth((GList*)list->pointerValue,n);
+  if (link == NULL)return;
+  list->pointerValue = g_list_remove_link(list->pointerValue,link);
   eol_type_pointer_free((eolTypedPointer**)&link->data);
   g_list_free(link);
 }
 
+void eol_type_pointer_list_move_nth_top(eolTypedPointer *list, eolUint n)
+{
+  GList *link;
+  if (!list)return;
+  if (list->pointerType != eolTypedPointerList)return;
+  if (list->pointerValue == NULL)return;
+  link = g_list_nth((GList*)list->pointerValue,n);
+  if (link == NULL)return;
+  list->pointerValue = g_list_remove_link(list->pointerValue,link);
+  list->pointerValue = g_list_concat(link,list->pointerValue);
+  g_list_free(link);
+}
+
+void eol_type_pointer_list_move_nth_bottom(eolTypedPointer *list, eolUint n)
+{
+  GList *link;
+  if (!list)return;
+  if (list->pointerType != eolTypedPointerList)return;
+  if (list->pointerValue == NULL)return;
+  link = g_list_nth((GList*)list->pointerValue,n);
+  if (link == NULL)return;
+  list->pointerValue = g_list_remove_link(list->pointerValue,link);
+  list->pointerValue = g_list_concat(list->pointerValue,link);
+  g_list_free(link);
+}
 
 /*eol@eof*/

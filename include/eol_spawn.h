@@ -18,7 +18,7 @@
     along with the EOL game engine.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "eol_types.h"
-#include <glib/ghash.h>
+#include "eol_typedpointer.h"
 
 /**
  * @brief the spawn type is used as a descriptor for the level for the entities that
@@ -30,9 +30,9 @@
  */
 typedef struct
 {
-  eolWord type; /**<name of the spawn type, ie: play start*/
+  eolWord type; /**<name of the spawn type, ie: play_start, exit, arrow_trap*/
   eolUint id;   /**<idintifier inuque to the level*/
-  GHashTable *keys;
+  eolTypedPointer *keys; /**<definition of all keys for this spawn*/
 }eolSpawn;
 
 /**
@@ -121,15 +121,7 @@ eolBool eol_spawn_get_key_line(eolLine out, eolSpawn *spawn,eolWord key);
 eolBool eol_spawn_get_key_text(eolText out, eolSpawn *spawn,eolWord key);
 
 /**
- * @brief retrieves the specified spawn key as a glist.  Its up to you to parse the list.
- * @param out a pointer to a pointer to a GList so it can be pointed at the list.
- * @param spawn the spawn candidate to search
- * @param key the keyword to search for.  For instance "alpha"
- * @return eolTrue if the key was found and matched type eolUint, false otherwise.
- */
-eolBool eol_spawn_get_key_list(GList **out, eolSpawn *spawn,eolWord key);
-
-/**
+ *****NOT IMPLEMENTED******
  * @brief copies the data from one spawn to another;
  *
  * @param out a pointer to a previously setup spawn that will receive a copy of in's data

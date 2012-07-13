@@ -22,6 +22,7 @@
 #include "eol_model.h"
 #include "eol_sprite.h"
 #include "eol_spawn.h"
+#include <glib/glist.h>
 
 /**
  * @purpose To provide a handler for the generic featured common to all 2D game levels.
