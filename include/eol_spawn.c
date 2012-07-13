@@ -139,4 +139,28 @@ eolBool eol_spawn_has_key(eolSpawn *spawn, eolWord key)
   return eolTrue;
 }
 
+eolBool eol_spawn_get_key_uint(eolUint *out, eolSpawn *spawn,eolWord key,eolInt *n)
+{
+  eolUint temp;
+  GString *string;
+  eolTypedPointer *value;
+  eolTypedPointer *list;
+  if (!spawn)return eolFalse;
+  if (!out)return eolFalse;
+  if (n != NULL)
+  {
+    list = eol_type_pointer_get_hash_value(spawn->keys,key);
+    value = eol_type_pointer_get_list_nth(list,*n);
+  }
+  else
+  {
+    value = eol_type_pointer_get_hash_value(spawn->keys,key);
+  }
+  if (value == NULL)return eolFalse;
+  if (value->pointerType != eolTypedPointerString)return eolFalse;
+  string = (GString *)value->pointerValue;
+  if (sscanf(string->str,"%ui",&temp) == 0)return eolFalse;
+  *out = temp;
+  return eolTrue;
+}
 /*eol@eof*/

@@ -106,19 +106,20 @@ eolBool eol_spawn_has_key(eolSpawn *spawn, eolWord key);
  * @param out the output parameter.  If null function returns eolFalse immediately
  * @param spawn the spawn candidate to search
  * @param key the keyword to search for.  For instance "alpha"
+ * @param n the nth item if the key maps to a list.  If not NULL key is assumed to be a list
  * @return eolTrue if the key was found and matched type eolUint, false otherwise.
  */
-eolBool eol_spawn_get_key_uint(eolUint *out, eolSpawn *spawn,eolWord key);
-eolBool eol_spawn_get_key_int(eolInt *out, eolSpawn *spawn,eolWord key);
+eolBool eol_spawn_get_key_uint(eolUint *out, eolSpawn *spawn,eolWord key,eolInt *n);
+eolBool eol_spawn_get_key_int(eolInt *out, eolSpawn *spawn,eolWord key,eolInt *n);
 
-eolBool eol_spawn_get_key_float(eolFloat *out, eolSpawn *spawn,eolWord key);
+eolBool eol_spawn_get_key_float(eolFloat *out, eolSpawn *spawn,eolWord key,eolInt *n);
 
-eolBool eol_spawn_get_key_vec3D(eolVec3D *out, eolSpawn *spawn,eolWord key);
-eolBool eol_spawn_get_key_vec2D(eolVec2D *out, eolSpawn *spawn,eolWord key);
+eolBool eol_spawn_get_key_vec3D(eolVec3D *out, eolSpawn *spawn,eolWord key,eolInt *n);
+eolBool eol_spawn_get_key_vec2D(eolVec2D *out, eolSpawn *spawn,eolWord key,eolInt *n);
 
-eolBool eol_spawn_get_key_word(eolWord out, eolSpawn *spawn,eolWord key);
-eolBool eol_spawn_get_key_line(eolLine out, eolSpawn *spawn,eolWord key);
-eolBool eol_spawn_get_key_text(eolText out, eolSpawn *spawn,eolWord key);
+eolBool eol_spawn_get_key_word(eolWord out, eolSpawn *spawn,eolWord key,eolInt *n);
+eolBool eol_spawn_get_key_line(eolLine out, eolSpawn *spawn,eolWord key,eolInt *n);
+eolBool eol_spawn_get_key_text(eolText out, eolSpawn *spawn,eolWord key,eolInt *n);
 
 /**
  *****NOT IMPLEMENTED******
