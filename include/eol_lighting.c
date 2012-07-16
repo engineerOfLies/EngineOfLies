@@ -1,4 +1,5 @@
 #include "eol_lighting.h"
+#include "eol_draw.h"
 #include "eol_logger.h"
 #include "eol_resource.h"
 
@@ -305,6 +306,16 @@ void eol_light_move(eolLight *light,eolVec3D point)
   if (!eol_lighting_initialized())return;
   if (!light)return;
   eol_vec3d_copy(light->position,point);
+}
+
+void eol_light_draw(eolLight *light)
+{
+  if (!eol_lighting_initialized())return;
+  if (!light)return;
+  eol_draw_dot_3D(light->position,
+                  5,
+                  light->colorAmbi,
+                  1);
 }
 
 /*eol@eof*/

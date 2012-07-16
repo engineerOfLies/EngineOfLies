@@ -80,6 +80,13 @@ eolLight *eol_light_area_new();
 eolLight *eol_light_spot_new();
 eolLight *eol_light_ambient_new();
 eolLight *eol_light_directional_new();
+
+/**
+ * @brief Any changes to the lighting struct will not be applied to the rendering light
+ * until this is called.
+ */
+void eol_light_update(eolLight *light);
+
 /**
  * @brief sets up a basic 3 point lighting system useful for most applications
  * use the rep plot when you dont need specific lights, but want to see your 3D
@@ -145,5 +152,10 @@ void eol_light_turn_on(eolLight *light);
 * @param light the light to turn off
 */
 void eol_light_turn_off(eolLight *light);
+
+/**
+ * @brief draws a point at the position of the light in the light's color
+ */
+void eol_light_draw();
 
 #endif
