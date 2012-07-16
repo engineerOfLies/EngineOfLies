@@ -1,5 +1,6 @@
 #include "eol_resource.h"
 #include "eol_logger.h"
+#include "eol_graphics.h"
 #include <assert.h>
 
 /*TODO make loading a resource a threaded option.  Ie: for non-critical resources
@@ -27,6 +28,10 @@ void *eol_resource_manager_load_resource(eolResourceManager *manager,char *filen
     element = eol_resource_find_element_by_filename(manager,filename);
     if (element != NULL)
     {
+      if (element->refCount == 0)
+      {
+        manager->_data_count--;
+      }
       element->refCount++;
       return eol_resource_get_data_by_header(element);
     }
@@ -121,6 +126,12 @@ eolResourceManager * eol_resource_manager_init(
   return manager;
 }
 
+eolUint eol_resource_manager_get_element_count(eolResourceManager *manager)
+{
+  if (!manager)return 0;
+  return manager->_data_count;
+}
+
 void * eol_resource_get_next_data(eolResourceManager *manager,void *data)
 {
   eolResourceHeader *header = NULL;
@@ -201,6 +212,8 @@ eolResourceHeader * eol_resource_find_element_by_filename(eolResourceManager *ma
 void * eol_resource_new_element(eolResourceManager *manager)
 {
   eolResourceHeader *element = NULL;
+  eolResourceHeader *oldest = NULL;
+  eolUint            oldestTime = eol_graphics_get_now() + 1;
   int i = 0;
   if (manager == NULL)
   {
@@ -217,20 +230,36 @@ void * eol_resource_new_element(eolResourceManager *manager)
       manager->name);
     return NULL;
   }
-  /*TODO: be smarter about resource reclaiming*/
+
   for (i = 0 ; i < manager->_data_max;i++)
   {
     element = (eolResourceHeader *)&manager->_data_list[(i * manager->_data_size)];
     if (element->refCount == 0)
     {
-      eol_resource_delete_element(manager,element);
-      memset(element,0,manager->_data_size);
-      element->index = i;
-      element->refCount = 1;
-      element++;/*the data, not the header*/
-      return element;
+      if (element->timeFree < oldestTime)
+      {
+        oldest = element;
+        oldestTime = element->timeFree;
+        if (element->timeFree == 0)
+        {
+          /*cant get older than never used*/
+          break;
+        }
+      }
     }
   }
+  if (oldest != NULL)
+  {
+    element = oldest;
+    eol_resource_delete_element(manager,element);
+    memset(element,0,manager->_data_size);
+    element->index = i;
+    element->refCount = 1;
+    manager->_data_count++;
+    element++;/*the data, not the header*/
+    return element;
+  }
+
   eol_logger_message(
     EOL_LOG_ERROR,
     "eol_resource: manager %s has no room left for new elements!\n",
@@ -247,12 +276,20 @@ void eol_resource_free_element(eolResourceManager *manager,void **data)
   element = (eolResourceHeader *)(*data);
   element--;
   element->refCount--;
+  if (element->refCount == 0)
+  {
+    manager->_data_count--;
+  }
   if (manager->_data_unique)
   {
     if (manager->data_delete != NULL)
     {
       manager->data_delete(*data);
     }
+  }
+  else
+  {
+    element->timeFree = eol_graphics_get_now();
   }
   *data = NULL;
 }
@@ -289,6 +326,7 @@ void eol_resource_manager_clear(eolResourceManager *manager)
     element = (eolResourceHeader *)&manager->_data_list[(i * manager->_data_size)];
     manager->data_delete(&element[1]);
   }
+  manager->_data_count = 0;
 }
 
 void eol_resource_manager_clean(eolResourceManager *manager)

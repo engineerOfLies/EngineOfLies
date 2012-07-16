@@ -30,7 +30,11 @@ int main(int argc, char *argv[])
 {
   int done;
   int i;
+  int dir = 1;
+  float radius = 0.00001;
+  eolVec3D point = {0,0,-5};
   eolLine fps;
+  eolLight *light = NULL;
   for(i = 1;i < argc;i++)
   {
     if(strcmp(argv[i],"-fs")== 0)
@@ -51,15 +55,22 @@ int main(int argc, char *argv[])
   sprite = eol_sprite_load("images/skeleton.png",128,128);
   MakeTestWindow();
   eol_mouse_show();
-  eol_lighting_setup_rep_plot();
+  light = eol_light_area_new();
+  eol_light_set_color(light,eol_vec3d(0.5,0.5,0.5));
+  eol_light_set_radius(light,radius);
+  //  eol_lighting_setup_rep_plot();
   do
   {
+    eol_light_move(light,point);
+    eol_light_update(light);
+
     eol_input_update();
     eol_mouse_update();
     eol_particle_update_all();
     eol_window_update_all();
     eol_graphics_frame_begin();
     eol_window_draw_all();
+    eol_light_draw(light);
 
     sprintf(fps,"FPS: %f",eol_graphics_get_FPS());
     eol_font_draw_text_justify(
@@ -73,6 +84,12 @@ int main(int argc, char *argv[])
 
     eol_mouse_draw();
     eol_graphics_frame_end();
+
+    if (point.x > 5)dir = -1;
+    if (point.x < -5)dir = 1;
+    point.x += dir * 0.01;
+    radius = radius + 0.0001;
+    if (radius > 1)radius = 0;
 
     if((eol_input_quit_check()) ||
       (eol_input_is_key_pressed(SDLK_ESCAPE)))
@@ -97,7 +114,7 @@ void TestWindowDraw(eolWindow *win)
   eol_actor_draw(
     actor,
     eol_vec3d(0,0,-10),
-    eol_vec3d(-90,0,data->rot),
+    eol_vec3d(-90,0,0/*data->rot*/),
     eol_vec3d(1,1,1),
     eol_vec3d(1,1,1),
     1
@@ -211,6 +228,7 @@ void MakeTestWindow()
     ""
   );
   eol_window_add_component(win,comp);
+  
 }
 
 /*eol @ eof*/

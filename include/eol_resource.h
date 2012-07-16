@@ -47,6 +47,7 @@ typedef struct
   eolUint index;
   eolUint id;       /**<unique identifier.  In case of a memory re-use it can be
                         compared with expected for validity*/
+  eolUint timeFree; /**<time when free was called on resource.  Oldest get reclaimed first*/
 }eolResourceHeader;
 
 eolResourceManager *eol_resource_manager_new();
@@ -106,6 +107,13 @@ void eol_resource_manager_clear(eolResourceManager *manager);
  * @return a pointer to the allocated and loaded resource or NULL on error
  */
 void *eol_resource_manager_load_resource(eolResourceManager *manager,char *filename);
+
+/**
+ * @brief Gets the count of active elements in the resource manager.
+ * @param manager to resource manager to check
+ * @return the number of elements in use (ref count > 0)
+ */
+eolUint eol_resource_manager_get_element_count(eolResourceManager *manager);
 
 /**
  * @brief returns the index of the element passed.

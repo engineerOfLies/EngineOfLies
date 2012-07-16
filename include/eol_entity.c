@@ -36,7 +36,6 @@ void eol_entity_init()
     eol_entity_delete,
     eol_entity_load_data_from_file
     );
-
   eol_logger_message(
       EOL_LOG_INFO,
       "eol_entity:initialized\n");
@@ -119,7 +118,8 @@ void eol_entity_delete(void *entityData)
 
 void eol_entity_free(eolEntity **ent)
 {
-
+  if (!eol_entity_initialized())return;
+  eol_resource_free_element(_eol_entity_manager,(void **)ent);
 }
 
 eolEntity *eol_entity_new()
