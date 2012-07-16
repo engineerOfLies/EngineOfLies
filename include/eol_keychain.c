@@ -1,4 +1,4 @@
-#include "eol_typedpointer.h"
+#include "eol_keychain.h"
 #include <glib/gstring.h>
 #include <glib/glist.h>
 #include <glib/ghash.h>
@@ -8,123 +8,188 @@ void eol_g_string_free(GString *string)
   g_string_free(string,eolTrue);
 }
 
-void eol_type_destroy(eolTypedPointer *point)
+void eol_keychain_scalar_free(eolKeychain *scalar)
 {
-  eol_type_pointer_free(&point);
+  if (!scalar)return;
+  if (scalar->keyType != eolKeychainList)return;
+  if (scalar->keyValue == NULL)return;
+  free(scalar->keyValue);
+  scalar->keyValue = NULL;
+}
+void eol_keychain_destroy(eolKeychain *link)
+{
+  eol_keychain_free(&link);
 }
 
-void eol_type_pointer_hash_free(eolTypedPointer *hash)
+void eol_keychain_hash_free(eolKeychain *hash)
 {
   if (!hash)return;
-  if (hash->pointerType != eolTypedPointerHash)return;
-  g_hash_table_destroy(hash->pointerValue);
+  if (hash->keyType != eolKeychainHash)return;
+  g_hash_table_destroy(hash->keyValue);
   free(hash);
 }
 
-void eol_type_pointer_list_free(eolTypedPointer *list)
+void eol_keychain_list_free(eolKeychain *list)
 {
   GList *it = NULL;
   if (!list)return;
-  if (list->pointerType != eolTypedPointerList)return;
-  for (it = list->pointerValue;it != NULL;it = it->next)
+  if (list->keyType != eolKeychainList)return;
+  for (it = list->keyValue;it != NULL;it = it->next)
   {
-    eol_type_destroy(it->data);
+    eol_keychain_destroy(it->data);
   }
   free(list);
 }
 
-void eol_type_pointer_free(eolTypedPointer **point)
+void eol_keychain_free(eolKeychain **link)
 {
-  if (!point)return;
-  if (!*point)return;
-  if ((*point)->pointerValue != NULL)
+  if (!link)return;
+  if (!*link)return;
+  if ((*link)->keyValue != NULL)
   {
-    if ((*point)->pointerFree != NULL)
+    if ((*link)->keyFree != NULL)
     {
-      (*point)->pointerFree((*point)->pointerValue);
+      (*link)->keyFree((*link)->keyValue);
     }
     else
     {
-      free((*point)->pointerValue);
+      free((*link)->keyValue);
     }
   }
-  free(*point);
-  *point = NULL;
+  free(*link);
+  *link = NULL;
 }
 
-eolTypedPointer *eol_type_pointer_new()
+eolKeychain *eol_keychain_new()
 {
-  eolTypedPointer *point = NULL;
-  point = (eolTypedPointer *)malloc(sizeof(eolTypedPointer));
-  if (point == NULL)
+  eolKeychain *link = NULL;
+  link = (eolKeychain *)malloc(sizeof(eolKeychain));
+  if (link == NULL)
   {
     return NULL;
   }
-  memset(point,0,sizeof(eolTypedPointer));
-  return point;
+  memset(link,0,sizeof(eolKeychain));
+  return link;
 }
 
-eolTypedPointer *eol_type_pointer_new_string(char *text)
+eolKeychain *eol_keychain_new_int(eolInt value)
 {
-  eolTypedPointer *point;
-  point = eol_type_pointer_new();
-  if (!point)return NULL;
-  point->pointerType = eolTypedPointerString;
-  point->itemCount = strlen(text);
-  point->pointerFree = (eolTypedPointerFree)eol_g_string_free;
-  point->pointerValue = g_string_new(text);
-  return point;
+  eolInt *cast;
+  eolKeychain *link;
+  link = eol_keychain_new();
+  if (!link)return NULL;
+  link->keyType = eolKeychainInt;
+  link->keyFree = (eolKeychainFree)eol_keychain_scalar_free;
+  link->keyValue = malloc(sizeof(eolInt));
+  if (link->keyValue == NULL)
+  {
+    free (link);
+    return NULL;
+  }
+  cast = (eolInt *)link->keyValue;
+  *cast = value;
+  return link;
 }
 
-eolTypedPointer *eol_type_pointer_new_list()
+eolKeychain *eol_keychain_new_uint(eolUint value)
 {
-  eolTypedPointer *point;
-  point = eol_type_pointer_new();
-  if (!point)return NULL;
-  point->pointerType = eolTypedPointerList;
-  point->itemCount = 0;
-  point->pointerFree = (eolTypedPointerFree)eol_type_pointer_list_free;
-  point->pointerValue = NULL;
-  return point;
+  eolUint *cast;
+  eolKeychain *link;
+  link = eol_keychain_new();
+  if (!link)return NULL;
+  link->keyType = eolKeychainUint;
+  link->keyFree = (eolKeychainFree)eol_keychain_scalar_free;
+  link->keyValue = malloc(sizeof(eolUint));
+  if (link->keyValue == NULL)
+  {
+    free (link);
+    return NULL;
+  }
+  cast = (eolUint *)link->keyValue;
+  *cast = value;
+  return link;
 }
 
-eolTypedPointer *eol_type_pointer_new_hash()
+eolKeychain *eol_keychain_new_float(eolFloat value)
 {
-  eolTypedPointer *point;
-  point = eol_type_pointer_new();
-  if (!point)return NULL;
-  point->pointerType = eolTypedPointerHash;
-  point->itemCount = 0;
-  point->pointerFree = (eolTypedPointerFree)eol_type_pointer_hash_free;
-  point->pointerValue =
+  eolFloat *cast;
+  eolKeychain *link;
+  link = eol_keychain_new();
+  if (!link)return NULL;
+  link->keyType = eolKeychainFloat;
+  link->keyFree = (eolKeychainFree)eol_keychain_scalar_free;
+  link->keyValue = malloc(sizeof(eolFloat));
+  if (link->keyValue == NULL)
+  {
+    free (link);
+    return NULL;
+  }
+  cast = (eolFloat *)link->keyValue;
+  *cast = value;
+  return link;
+}
+
+eolKeychain *eol_keychain_new_string(char *text)
+{
+  eolKeychain *link;
+  link = eol_keychain_new();
+  if (!link)return NULL;
+  link->keyType = eolKeychainString;
+  link->itemCount = strlen(text);
+  link->keyFree = (eolKeychainFree)eol_g_string_free;
+  link->keyValue = g_string_new(text);
+  return link;
+}
+
+eolKeychain *eol_keychain_new_list()
+{
+  eolKeychain *link;
+  link = eol_keychain_new();
+  if (!link)return NULL;
+  link->keyType = eolKeychainList;
+  link->itemCount = 0;
+  link->keyFree = (eolKeychainFree)eol_keychain_list_free;
+  link->keyValue = NULL;
+  return link;
+}
+
+eolKeychain *eol_keychain_new_hash()
+{
+  eolKeychain *link;
+  link = eol_keychain_new();
+  if (!link)return NULL;
+  link->keyType = eolKeychainHash;
+  link->itemCount = 0;
+  link->keyFree = (eolKeychainFree)eol_keychain_hash_free;
+  link->keyValue =
   g_hash_table_new_full(g_str_hash,
                         g_str_equal,
                         (GDestroyNotify)eol_g_string_free,
-                        (GDestroyNotify)eol_type_destroy);
-  return point;
+                        (GDestroyNotify)eol_keychain_destroy);
+  return link;
 }
 
-void eol_type_pointer_hash_remove(eolTypedPointer *hash,char *key)
+void eol_keychain_hash_remove(eolKeychain *hash,char *key)
 {
   GString *keyString;
   GHashTable*hashtable = NULL;
   if (!hash)return;
-  if (hash->pointerType != eolTypedPointerHash)return;
-  if (hash->pointerValue == NULL)return;
-  hashtable = (GHashTable*)hash->pointerValue;
+  if (hash->keyType != eolKeychainHash)return;
+  if (hash->keyValue == NULL)return;
+  hashtable = (GHashTable*)hash->keyValue;
   keyString = g_string_new_len(key,EOLWORDLEN);
   g_hash_table_remove(hashtable,keyString);
   g_string_free(keyString,eolTrue);
 }
 
-void eol_type_pointer_hash_insert(eolTypedPointer *hash,char *key,eolTypedPointer *value)
+void eol_keychain_hash_insert(eolKeychain *hash,char *key,eolKeychain *value)
 {
   GString *keyString;
   GHashTable*hashtable = NULL;
   if (!hash)return;
-  if (hash->pointerType != eolTypedPointerHash)return;
-  if (hash->pointerValue == NULL)return;
-  hashtable = (GHashTable*)hash->pointerValue;
+  if (hash->keyType != eolKeychainHash)return;
+  if (hash->keyValue == NULL)return;
+  hashtable = (GHashTable*)hash->keyValue;
   keyString = g_string_new_len(key,EOLWORDLEN);
   if (g_hash_table_lookup(hashtable,keyString) != NULL)
   {
@@ -138,73 +203,73 @@ void eol_type_pointer_hash_insert(eolTypedPointer *hash,char *key,eolTypedPointe
   g_string_free(keyString,eolTrue);
 }
 
-void eol_type_pointer_list_append(eolTypedPointer *list,eolTypedPointer *item)
+void eol_keychain_list_append(eolKeychain *list,eolKeychain *item)
 {
   if (!list)return;
-  if (list->pointerType != eolTypedPointerList)return;
-  list->pointerValue = g_list_append(list->pointerValue,item);
+  if (list->keyType != eolKeychainList)return;
+  list->keyValue = g_list_append(list->keyValue,item);
   list->itemCount++;
 }
 
-eolTypedPointer *eol_type_pointer_get_hash_value(eolTypedPointer *hash,eolWord key)
+eolKeychain *eol_keychain_get_hash_value(eolKeychain *hash,eolWord key)
 {
-  eolTypedPointer *value;
+  eolKeychain *value;
   GString *keyString;
   GHashTable*hashtable = NULL;
   if (!hash)return NULL;
-  if (hash->pointerType != eolTypedPointerHash)return NULL;
-  if (hash->pointerValue == NULL)return NULL;
-  hashtable = (GHashTable*)hash->pointerValue;
+  if (hash->keyType != eolKeychainHash)return NULL;
+  if (hash->keyValue == NULL)return NULL;
+  hashtable = (GHashTable*)hash->keyValue;
   keyString = g_string_new_len(key,EOLWORDLEN);
   value = g_hash_table_lookup(hashtable,keyString);
   g_string_free(keyString,eolTrue);
   return value;
 }
 
-eolTypedPointer *eol_type_pointer_get_list_nth(eolTypedPointer *list, eolUint n)
+eolKeychain *eol_keychain_get_list_nth(eolKeychain *list, eolUint n)
 {
   if (!list)return NULL;
-  if (list->pointerType != eolTypedPointerList)return NULL;
-  if (list->pointerValue == NULL)return NULL;
-  return g_list_nth_data((GList*)list->pointerValue,n);
+  if (list->keyType != eolKeychainList)return NULL;
+  if (list->keyValue == NULL)return NULL;
+  return g_list_nth_data((GList*)list->keyValue,n);
 }
 
-void eol_type_pointer_list_remove_nth(eolTypedPointer *list, eolUint n)
+void eol_keychain_list_remove_nth(eolKeychain *list, eolUint n)
 {
   GList *link;
   if (!list)return;
-  if (list->pointerType != eolTypedPointerList)return;
-  if (list->pointerValue == NULL)return;
-  link = g_list_nth((GList*)list->pointerValue,n);
+  if (list->keyType != eolKeychainList)return;
+  if (list->keyValue == NULL)return;
+  link = g_list_nth((GList*)list->keyValue,n);
   if (link == NULL)return;
-  list->pointerValue = g_list_remove_link(list->pointerValue,link);
-  eol_type_pointer_free((eolTypedPointer**)&link->data);
+  list->keyValue = g_list_remove_link(list->keyValue,link);
+  eol_keychain_free((eolKeychain**)&link->data);
   g_list_free(link);
 }
 
-void eol_type_pointer_list_move_nth_top(eolTypedPointer *list, eolUint n)
+void eol_keychain_list_move_nth_top(eolKeychain *list, eolUint n)
 {
   GList *link;
   if (!list)return;
-  if (list->pointerType != eolTypedPointerList)return;
-  if (list->pointerValue == NULL)return;
-  link = g_list_nth((GList*)list->pointerValue,n);
+  if (list->keyType != eolKeychainList)return;
+  if (list->keyValue == NULL)return;
+  link = g_list_nth((GList*)list->keyValue,n);
   if (link == NULL)return;
-  list->pointerValue = g_list_remove_link(list->pointerValue,link);
-  list->pointerValue = g_list_concat(link,list->pointerValue);
+  list->keyValue = g_list_remove_link(list->keyValue,link);
+  list->keyValue = g_list_concat(link,list->keyValue);
   g_list_free(link);
 }
 
-void eol_type_pointer_list_move_nth_bottom(eolTypedPointer *list, eolUint n)
+void eol_keychain_list_move_nth_bottom(eolKeychain *list, eolUint n)
 {
   GList *link;
   if (!list)return;
-  if (list->pointerType != eolTypedPointerList)return;
-  if (list->pointerValue == NULL)return;
-  link = g_list_nth((GList*)list->pointerValue,n);
+  if (list->keyType != eolKeychainList)return;
+  if (list->keyValue == NULL)return;
+  link = g_list_nth((GList*)list->keyValue,n);
   if (link == NULL)return;
-  list->pointerValue = g_list_remove_link(list->pointerValue,link);
-  list->pointerValue = g_list_concat(list->pointerValue,link);
+  list->keyValue = g_list_remove_link(list->keyValue,link);
+  list->keyValue = g_list_concat(list->keyValue,link);
   g_list_free(link);
 }
 

@@ -1,5 +1,5 @@
-#ifndef __EOL_TYPED_POINTER__
-#define __EOL_TYPED_POINTER__
+#ifndef __EOL_KEYCHAIN__
+#define __EOL_KEYCHAIN__
 /*
     Copyright 2012 Engineer of Lies
     This file is part of the Engine of Lies game engine library
@@ -27,89 +27,94 @@
  * prior knowledge of its set up.
  */
 
-enum eolTypedPointerTypes {
-  eolTypedPointerVoid,   /**<custom data*/
-  eolTypedPointerString, /**<GString*/
-  eolTypedPointerList,   /**<GList of something*/
-  eolTypedPointerHash,   /**<GHashTable of something*/
-  eolTypedPointerCustom0 /**<for user defined types.  EOL will not use Custom0 or after.*/
+enum eolKeychainTypes {
+  eolKeychainVoid,   /**<custom data*/
+  eolKeychainInt,    /**<eolInt*/
+  eolKeychainUint,   /**<eolUint*/
+  eolKeychainFloat,  /**<eolFloat*/
+  eolKeychainString, /**<GString*/
+  eolKeychainList,   /**<GList of something*/
+  eolKeychainHash,   /**<GHashTable of something*/
+  eolKeychainCustom0 /**<for user defined types.  EOL will not use Custom0 or after.*/
 };
 
-typedef void (*eolTypedPointerFree)(void *data);
+typedef void (*eolKeychainFree)(void *data);
 /**
 * @brief his structure wraps description information for a pointer to a container type
 * it will be used in spawn and config types where we deal with pointers to unknown types.
 */
 typedef struct
 {
-  eolUint pointerType;
+  eolUint keyType;
   eolUint itemCount;  /*in the case of list or hash*/
-  eolTypedPointerFree pointerFree;
-  void *pointerValue;
-}eolTypedPointer;
+  eolKeychainFree keyFree;
+  void *keyValue;
+}eolKeychain;
 
 /**
-* @brief frees the eolTypedPointer and sets the passed in pointer to NULL
+* @brief frees the eolKeychain and sets the passed in pointer to NULL
 * @param a pointer to a pointer to a typed pointer.
 */
-void eol_type_pointer_free(eolTypedPointer **point);
+void eol_keychain_free(eolKeychain **point);
 
 /**
 * @brief destroys the typed pointer passed
 * @param point the pointer to be destroyed
 */
-void eol_type_destroy(eolTypedPointer *point);
+void eol_keychain_destroy(eolKeychain *point);
 
 /**
 * @brief allocates and returns a pointer to an empty typed pointer
-* @return NULL on allocation error or a zero'd out eolTypedPointer
+* @return NULL on allocation error or a zero'd out eolKeychain
 */
-eolTypedPointer *eol_type_pointer_new();
+eolKeychain *eol_keychain_new();
 
 /**
 * @brief allocated and sets up a pointer to a GString filled with the default text
 * @param text starting text.  May be empty
-* @return NULL on allocation error or a set up eolTypedPointer of a GString
+* @return NULL on allocation error or a set up eolKeychain of a GString
 */
-eolTypedPointer *eol_type_pointer_new_string(char *text);
+eolKeychain *eol_keychain_new_string(char *text);
+
+
 
 /**
 * @brief allocated and sets up a pointer to an Empty GList.
-* @return NULL on allocation error or a set up eolTypedPointer of a GList
+* @return NULL on allocation error or a set up eolKeychain of a GList
 */
-eolTypedPointer *eol_type_pointer_new_list();
+eolKeychain *eol_keychain_new_list();
 
 /**
 * @brief allocated and sets up a pointer to an Empty GHash.
-* @return NULL on allocation error or a set up eolTypedPointer of a GHashTable
+* @return NULL on allocation error or a set up eolKeychain of a GHashTable
 */
-eolTypedPointer *eol_type_pointer_new_hash();
+eolKeychain *eol_keychain_new_hash();
 
 /**
-* @brief appends a list item to the eolTypedPointer list value.
+* @brief appends a list item to the eolKeychain list value.
 * if its not a pointer to a list, it will return without doing anything.
 * @param list the typed pointer of a glist
-* @param item the eolTypedPointer to the item to be added to the list.
+* @param item the eolKeychain to the item to be added to the list.
 */
-void eol_type_pointer_list_append(eolTypedPointer *list,eolTypedPointer *item);
+void eol_keychain_list_append(eolKeychain *list,eolKeychain *item);
 
 /**
-* @brief Insert or replace a key in the eolTypedPointer of a hash.
+* @brief Insert or replace a key in the eolKeychain of a hash.
 * if it is not a pointer to a hash it will return without doing anything.
 * @param hash the typed pointer of a ghash
 * @param key the key to be inserted.  Limited to the size of eolWord.
-* @param value the eolTypedPointer to the item to be added to the hash.
+* @param value the eolKeychain to the item to be added to the hash.
 */
-void eol_type_pointer_hash_insert(eolTypedPointer *hash,eolWord key,eolTypedPointer *value);
+void eol_keychain_hash_insert(eolKeychain *hash,eolWord key,eolKeychain *value);
 
 /**
-* @brief Removes a key from the eolTypedPointer of a hash.
+* @brief Removes a key from the eolKeychain of a hash.
 * if it is not a pointer to a hash it will return without doing anything.
-* if found, eol_type_destroy is called on the value.
+* if found, eol_keychain_destroy is called on the value.
 * @param hash the typed pointer of a ghash
 * @param key the key to be removed.  Limited to the size of eolWord.
 */
-void eol_type_pointer_hash_remove(eolTypedPointer *hash,char *key);
+void eol_keychain_hash_remove(eolKeychain *hash,char *key);
 
 /**
  * @brief looks up the key in the hash.
@@ -118,7 +123,7 @@ void eol_type_pointer_hash_remove(eolTypedPointer *hash,char *key);
  * @param key the key to be found.  Limited to the size of eolWord.
  * @return NULL if not a hash, or not found. A typed pointer to the value if found.
  */
-eolTypedPointer *eol_type_pointer_get_hash_value(eolTypedPointer *hash,eolWord key);
+eolKeychain *eol_keychain_get_hash_value(eolKeychain *hash,eolWord key);
 
 /**
 * @brief looks up the nth item in the list
@@ -127,16 +132,16 @@ eolTypedPointer *eol_type_pointer_get_hash_value(eolTypedPointer *hash,eolWord k
 * @param n the index of the item to be found.
 * @return NULL if not a list, or not found. A typed pointer to the value if found.
 */
-eolTypedPointer *eol_type_pointer_get_list_nth(eolTypedPointer *list, eolUint n);
+eolKeychain *eol_keychain_get_list_nth(eolKeychain *list, eolUint n);
 
 /**
  * @brief removed the nth item from the list
  * checks type before any operation
- * calls eol_type_destroy on the item found.
+ * calls eol_keychain_destroy on the item found.
  * @param list the typed pointer of a glist
  * @param n the index of the item to be found and deleted
  */
-void eol_type_pointer_list_remove_nth(eolTypedPointer *list, eolUint n);
+void eol_keychain_list_remove_nth(eolKeychain *list, eolUint n);
 
 /**
 * @brief moves the nth item in the list to the bottom of the list
@@ -144,7 +149,7 @@ void eol_type_pointer_list_remove_nth(eolTypedPointer *list, eolUint n);
 * @param list the typed pointer of a glist
 * @param n the index of the item to be moved
 */
-void eol_type_pointer_list_move_nth_bottom(eolTypedPointer *list, eolUint n);
+void eol_keychain_list_move_nth_bottom(eolKeychain *list, eolUint n);
 
 /**
 * @brief moves the nth item in the list to the top of the list
@@ -152,7 +157,7 @@ void eol_type_pointer_list_move_nth_bottom(eolTypedPointer *list, eolUint n);
 * @param list the typed pointer of a glist
 * @param n the index of the item to be moved
 */
-void eol_type_pointer_list_move_nth_top(eolTypedPointer *list, eolUint n);
+void eol_keychain_list_move_nth_top(eolKeychain *list, eolUint n);
 
 /**
 * @brief convenience function when working with GString types.

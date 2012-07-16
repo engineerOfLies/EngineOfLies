@@ -1,6 +1,5 @@
 #include "eol_spawn.h"
 #include "eol_logger.h"
-#include "eol_typedpointer.h"
 #include <glib/gstring.h>
 
 /*
@@ -13,7 +12,7 @@ eolBool eol_spawn_setup(eolSpawn *spawn)
 {
   if (!spawn)return eolFalse;
   if (spawn->keys != NULL)return eolFalse;
-  spawn->keys = eol_type_pointer_new_hash();
+  spawn->keys = eol_keychain_new_hash();
   if (spawn->keys == NULL)
   {
     eol_logger_message(
@@ -56,7 +55,7 @@ void eol_spawn_free(eolSpawn *spawn)
 {
   if (!spawn)return;
   if (spawn->keys == NULL)return;
-  eol_type_destroy(spawn->keys);
+  eol_keychain_destroy(spawn->keys);
   memset(spawn, 0, sizeof(eolSpawn));
 }
 
@@ -64,78 +63,78 @@ void eol_spawn_delete_key(eolSpawn *spawn,eolWord key)
 {
   if (!spawn)return;
   if (spawn->keys == NULL)return;
-  eol_type_pointer_hash_remove(spawn->keys,key);
+  eol_keychain_hash_remove(spawn->keys,key);
 }
 
 void eol_spawn_key_list_move_to_top(eolSpawn *spawn,eolWord key,eolUint n)
 {
-  eolTypedPointer *list;
+  eolKeychain *list;
   if (!spawn)return;
   if (spawn->keys == NULL)return;
-  list = eol_type_pointer_get_hash_value(spawn->keys,key);
-  eol_type_pointer_list_move_nth_top(list, n);
+  list = eol_keychain_get_hash_value(spawn->keys,key);
+  eol_keychain_list_move_nth_top(list, n);
 }
 
 void eol_spawn_delete_key_list_item(eolSpawn *spawn,eolWord key,eolUint n)
 {
-  eolTypedPointer *list;
+  eolKeychain *list;
   if (!spawn)return;
   if (spawn->keys == NULL)return;
-  list = eol_type_pointer_get_hash_value(spawn->keys,key);
-  eol_type_pointer_list_remove_nth(list,n);
+  list = eol_keychain_get_hash_value(spawn->keys,key);
+  eol_keychain_list_remove_nth(list,n);
 }
 
 void eol_spawn_add_key(eolSpawn *spawn,eolWord key,eolLine value)
 {
-  eolTypedPointer *valuePointer;
+  eolKeychain *valuePointer;
   if (!spawn)return;
   if (spawn->keys == NULL)return;
-  valuePointer = eol_type_pointer_new_string(value);
-  eol_type_pointer_hash_insert(spawn->keys,key,valuePointer);
+  valuePointer = eol_keychain_new_string(value);
+  eol_keychain_hash_insert(spawn->keys,key,valuePointer);
 }
 
 void eol_spawn_add_key_list(eolSpawn *spawn,eolWord key,eolLine value)
 {
-  eolTypedPointer *valuePointer;
-  eolTypedPointer *list;
+  eolKeychain *valuePointer;
+  eolKeychain *list;
   if (!spawn)return;
   if (spawn->keys == NULL)return;
-  valuePointer = eol_type_pointer_new_string(value);
-  list = eol_type_pointer_get_hash_value(spawn->keys,key);
+  valuePointer = eol_keychain_new_string(value);
+  list = eol_keychain_get_hash_value(spawn->keys,key);
   if (!list)
   {
-    list = eol_type_pointer_new_list();
-    eol_type_pointer_hash_insert(spawn->keys,key,list);
+    list = eol_keychain_new_list();
+    eol_keychain_hash_insert(spawn->keys,key,list);
   }
-  eol_type_pointer_list_append(list,valuePointer);
+  eol_keychain_list_append(list,valuePointer);
 }
 
 GString * eol_spawn_get_key(eolSpawn *spawn, eolWord key)
 {
-  eolTypedPointer *value;
+  eolKeychain *value;
   if (!spawn)return NULL;
-  value = eol_type_pointer_get_hash_value(spawn->keys,key);
+  value = eol_keychain_get_hash_value(spawn->keys,key);
   if (value == NULL)return NULL;
-  if (value->pointerType != eolTypedPointerString)return NULL;
-  return (GString *)value->pointerValue;
+  if (value->keyType != eolKeychainString)return NULL;
+  return (GString *)value->keyValue;
 }
 
 GString * eol_spawn_get_key_list_item(eolSpawn *spawn, eolWord key,eolUint n)
 {
-  eolTypedPointer *value;
-  eolTypedPointer *list;
+  eolKeychain *value;
+  eolKeychain *list;
   if (!spawn)return NULL;
-  list = eol_type_pointer_get_hash_value(spawn->keys,key);
-  value = eol_type_pointer_get_list_nth(list,n);
+  list = eol_keychain_get_hash_value(spawn->keys,key);
+  value = eol_keychain_get_list_nth(list,n);
   if (value == NULL)return NULL;
-  if (value->pointerType != eolTypedPointerString)return NULL;
-  return (GString *)value->pointerValue;
+  if (value->keyType != eolKeychainString)return NULL;
+  return (GString *)value->keyValue;
 }
 
 eolBool eol_spawn_has_key(eolSpawn *spawn, eolWord key)
 {
   if (!spawn)return eolFalse;
-  if (eol_type_pointer_get_hash_value(spawn->keys,key) == NULL)return eolFalse;
+  if (eol_keychain_get_hash_value(spawn->keys,key) == NULL)return eolFalse;
   return eolTrue;
 }
 
@@ -143,22 +142,22 @@ eolBool eol_spawn_get_key_uint(eolUint *out, eolSpawn *spawn,eolWord key,eolInt 
 {
   eolUint temp;
   GString *string;
-  eolTypedPointer *value;
-  eolTypedPointer *list;
+  eolKeychain *value;
+  eolKeychain *list;
   if (!spawn)return eolFalse;
   if (!out)return eolFalse;
   if (n != NULL)
   {
-    list = eol_type_pointer_get_hash_value(spawn->keys,key);
-    value = eol_type_pointer_get_list_nth(list,*n);
+    list = eol_keychain_get_hash_value(spawn->keys,key);
+    value = eol_keychain_get_list_nth(list,*n);
   }
   else
   {
-    value = eol_type_pointer_get_hash_value(spawn->keys,key);
+    value = eol_keychain_get_hash_value(spawn->keys,key);
   }
   if (value == NULL)return eolFalse;
-  if (value->pointerType != eolTypedPointerString)return eolFalse;
-  string = (GString *)value->pointerValue;
+  if (value->keyType != eolKeychainString)return eolFalse;
+  string = (GString *)value->keyValue;
   if (sscanf(string->str,"%ui",&temp) == 0)return eolFalse;
   *out = temp;
   return eolTrue;

@@ -18,7 +18,7 @@
     along with the EOL game engine.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "eol_types.h"
-#include "eol_typedpointer.h"
+#include "eol_keychain.h"
 
 /**
  * @brief the spawn type is used as a descriptor for the level for the entities that
@@ -32,7 +32,7 @@ typedef struct
 {
   eolWord type; /**<name of the spawn type, ie: play_start, exit, arrow_trap*/
   eolUint id;   /**<idintifier inuque to the level*/
-  eolTypedPointer *keys; /**<definition of all keys for this spawn*/
+  eolKeychain *keys; /**<definition of all keys for this spawn*/
 }eolSpawn;
 
 /**
