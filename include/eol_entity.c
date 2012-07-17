@@ -468,7 +468,7 @@ void eol_entity_add_to_collision_mask(eolEntity *ent,cpLayers collisionmask)
 void eol_entity_remove_entity_from_collision_mask(eolEntity *ent,cpLayers collisionmask)
 {
   if (!ent)return;
-  ent->collisionMask = ent->collisionMask & !collisionmask;
+  ent->collisionMask = ent->collisionMask & ~collisionmask;
 }
 
 /*eol@eof*/
