@@ -38,6 +38,12 @@ enum eolEntityStates {
   eolEntityDead   = 3   /**<dead entities are deleted after the end of the frame by the entity system*/
 };
 
+enum eolEntityShapes {
+  eolEntityNoShape = 0, /**<until specified, an entity has no shape*/
+  eolEntityCircle  = 1,
+  eolEntityRect    = 2
+};
+
 typedef struct Entity_S
 {
   eolUint           id;         /**<unique entity resource id*/
@@ -53,12 +59,15 @@ typedef struct Entity_S
   eolBool           shown;      /**<if the entity should be drawn*/
   eolBool           physical;   /**<if the entity should be added to physics space*/
   eolUint           state;      /**<see eolEntityState for details*/
-  
+
+  eolUint           shapeType;  /**<see eolEntityShapes for supported shape types*/
   eolRectFloat      boundingBox;/**<bounding box offset from orientation*/
   eolFloat          radius;     /**<for circle based collisions*/
-  cpBody  *body;                /**<links to the physics engine*/
+  eolFloat          mass;       /**<for physics simulation.  default should be about 0.001*/
+  cpBody          * body;       /**<links to the physics engine*/
   cpShape         * shape;      /**<link to physics engine*/
-  cpLayers          layermask;  /**<layes that this entity collides with*/
+  cpSpace         * _space;     /**<pointer to the space this entity is a part of*/
+  cpLayers          collisionMask;/**<collision mask for space.  Not the same as level layer.*/
   
   eolTrail          trail;     /**<the last so many orientations of the entity*/
   eolBool           trackTrail;/**<if the trail should be tracked.*/
@@ -187,4 +196,40 @@ void eol_entity_register_custom_delete(eolEntityCustomDelete delfunc);
  */
 void eol_entity_register_custom_data_size(eolUint customSize);
 
+/**
+ * @brief Adds an entity to a physics space for physics calculations.
+ * automatically sets flags to enable physics for this entity.
+ * Entity must already have a defined body or this will fail.
+ * @param ent the entity to add
+ * @param space the space to add the entity to
+ */
+void eol_entity_add_to_space(eolEntity *ent,cpSpace *space);
+
+/**
+ * @brief Removed the entity from the space that it is a part of.
+ * @param ent the entity to remove.
+ */
+void eol_entity_remove_from_space(eolEntity *ent);
+
+/**
+ * @brief sets up the internal body and shape for the entity so it can be added to a space as a circle
+ * uses ent->radius for making the radius of the circle.
+ * destroys previous shape and body data and must be re-added to the space.
+ * @param ent the entity to become a circle
+ */
+void eol_entity_shape_make_circle(eolEntity *ent);
+
+/**
+ * @brief sets up the internal body and shape for the entity so it can be added to a space as a rect
+ * uses ent->bounds for making the dimensions of the rect.
+ * destroys previous shape and body data and must be re-added to the space.
+ * @param ent the entity to become a rect
+ */
+void eol_entity_shape_make_rect(eolEntity *ent);
+
+void eol_entity_set_collision_mask(eolEntity *ent,cpLayers collisionmask);
+
+void eol_entity_add_to_collision_mask(eolEntity *ent,cpLayers collisionmask);
+
+void eol_entity_remove_entity_from_collision_mask(eolEntity *ent,cpLayers collisionmask);
 #endif

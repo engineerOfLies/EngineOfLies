@@ -111,6 +111,9 @@ void eol_entity_delete(void *entityData)
   }
   it = NULL;
   g_list_free(ent->actorList);
+  /*physics*/
+  cpShapeFree(ent->shape);
+  cpBodyFree(ent->body);
   /*
   TODO: make this happen from the config
   eol_config_free(&ent->config);
@@ -120,12 +123,41 @@ void eol_entity_delete(void *entityData)
 void eol_entity_free(eolEntity **ent)
 {
   if (!eol_entity_initialized())return;
+  eol_entity_remove_from_space(*ent);
   eol_resource_free_element(_eol_entity_manager,(void **)ent);
 }
 
 eolEntity *eol_entity_new()
 {
-  return NULL;
+  eolEntity *ent = NULL;
+  if (!eol_entity_initialized())
+  {
+    eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_entdow:used uninitialized\n");
+    return NULL;
+  }
+  ent = (eolEntity *)eol_resource_new_element(_eol_entity_manager);
+  if (ent == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_entity:failed to get new resource\n");
+    return NULL;
+  }
+  if (_eol_entity_custom_data_size > 0)
+  {
+    ent->customData = (void *)(ent + 1);
+  }
+  /*set some sane defaults:*/
+  ent->self = ent;
+  ent->collisionMask = CP_ALL_LAYERS;
+  eol_orientation_clear(&ent->ori);
+  eol_orientation_clear(&ent->vector);
+  eol_orientation_clear(&ent->accel);
+  ent->shown = eolTrue;
+  ent->id = eol_resource_element_get_id(_eol_entity_manager,ent);
+  return ent;
 }
 
 void eol_entity_register_custom_delete(eolEntityCustomDelete delfunc)
@@ -292,6 +324,151 @@ static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data
     return;
   }
   self->touch(self,other);
+}
+
+/*space stuff*/
+void eol_entity_add_to_space(eolEntity *ent,cpSpace *space)
+{
+  if ((!ent) || (!space))
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_entity:passed NULL data to add_to_space.\n");
+    return;
+  }
+  if (ent->body == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_entity:cannot add a NULL body to a space for entity %s.\n",
+      ent->name);
+    return;
+  }
+  if (ent->shape == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_entity:cannot add a NULL shape to a space for entity %s.\n",
+      ent->name);
+    return;
+  }
+  if (cpSpaceAddBody(space, ent->body) == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_entity:failed to add body to a space for entity %s.\n",
+      ent->name);
+    return;
+  }
+  if (cpSpaceAddShape(space, ent->shape) == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_entity:failed to add shape to a space for entity %s.\n",
+      ent->name);
+    return;
+  }
+  ent->_space = space;
+}
+
+void eol_entity_remove_from_space(eolEntity *ent)
+{
+  if (!ent)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_entity:passed NULL data to remove_from_space.\n");
+    return;
+  }
+  if (ent->_space == NULL)
+  {
+    return;
+  }
+  if (ent->body == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_entity:entity does not have a body!\n");
+    return;
+  }
+  cpSpaceRemoveBody(ent->_space, ent->body);
+}
+
+void eol_entity_shape_make_circle(eolEntity *ent)
+{
+  if (!ent)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_entity:passed NULL data to shape make circle.\n");
+    return;
+  }
+  eol_entity_remove_from_space(ent);
+  if (ent->body == NULL)
+  {
+    ent->body = cpBodyNew(ent->mass, INFINITY);
+    if (ent->body == NULL)
+    {
+      eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_entity:failed to create a new body for physics entity.\n");
+      return;
+    }
+  }
+  if (ent->shape != NULL)
+  {
+    cpShapeFree(ent->shape);
+  }
+  ent->shape = cpCircleShapeNew(ent->body, ent->radius, cpvzero);
+  cpShapeSetLayers(ent->shape, ent->collisionMask);
+}
+
+void eol_entity_shape_make_rect(eolEntity *ent)
+{
+  if (!ent)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_entity:passed NULL data to shape make circle.\n");
+    return;
+  }
+  eol_entity_remove_from_space(ent);
+  if (ent->body == NULL)
+  {
+    ent->body = cpBodyNew(ent->mass, INFINITY);
+    if (ent->body == NULL)
+    {
+      eol_logger_message(
+        EOL_LOG_ERROR,
+        "eol_entity:failed to create a new body for physics entity.\n");
+      return;
+    }
+  }
+  if (ent->shape != NULL)
+  {
+    cpShapeFree(ent->shape);
+  }
+  ent->shape = cpBoxShapeNew(ent->body, ent->boundingBox.w, ent->boundingBox.h);
+  cpShapeSetLayers(ent->shape, ent->collisionMask);
+}
+
+/*collision masks*/
+void eol_entity_set_collision_mask(eolEntity *ent,cpLayers collisionmask)
+{
+  if (!ent)return;
+  ent->collisionMask = collisionmask;
+}
+
+void eol_entity_add_to_collision_mask(eolEntity *ent,cpLayers collisionmask)
+{
+  if (!ent)return;
+  ent->collisionMask |= collisionmask;
+}
+
+void eol_entity_remove_entity_from_collision_mask(eolEntity *ent,cpLayers collisionmask)
+{
+  if (!ent)return;
+  ent->collisionMask = ent->collisionMask & !collisionmask;
 }
 
 /*eol@eof*/
