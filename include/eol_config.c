@@ -1,4 +1,5 @@
 #include "eol_config.h"
+#include "eol_logger.h"
 #include <glib.h>
 #include <yaml.h>
 
@@ -14,10 +15,10 @@ void eol_config_parse_tier(yaml_parser_t *parser, GHashTable *cfg);
 
 void eol_config_init()
 {
-  fprintf(stdout,"eol_config: initializing\n");
+  eol_logger_message( EOL_LOG_INFO, "eol_config: initializing\n");
   _eol_config_initialized = eolTrue;
   atexit(eol_config_deinit);
-  fprintf(stdout,"eol_config: initialized\n");
+  eol_logger_message( EOL_LOG_INFO, "eol_config: initialized\n");
 }
 
 void eol_config_deinit(void)
@@ -35,18 +36,18 @@ eolConfig *eol_config_load(char* filename)
   if(config->_node == NULL)
     {
       /*use the logger, I made a ticket for this.*/
-      fputs("ERROR: Unable to allocate GHash for config", stderr);
+      eol_logger_message( EOL_LOG_ERROR, "Unable to allocate GHash for config");
       return NULL;
     }
   if(!yaml_parser_initialize(&parser))
     {
-      fputs("ERROR: Failed to initialize yaml parser", stderr);
+      eol_logger_message( EOL_LOG_ERROR, "Failed to initialize yaml parser");
       return NULL;
     }
   input = fopen(filename, "r");
   if(input == NULL)
     {
-      fprintf(stderr, "ERROR, Can't open config file %s", filename );
+      eol_logger_message( EOL_LOG_ERROR, "Can't open config file %s", filename );
       return NULL;
     }
 
@@ -88,7 +89,7 @@ void eol_config_parse_tier(yaml_parser_t *parser, GHashTable *cfg)
             {
               /* state is VAL or SEQ */
               /* TODO data type logic should go here */
-              printf("DEBUG: adding key -> value (%s -> %s)\n", last_key, event.data.scalar.value);
+              eol_logger_message( EOL_LOG_INFO, "adding key -> value (%s -> %s)\n", last_key, event.data.scalar.value);
               g_hash_table_insert(cfg, last_key, g_strdup((gchar*) event.data.scalar.value));
             }
           state ^= VAL; /* Toggles KEY/VAL, avoids touching SEQ */
@@ -112,11 +113,11 @@ void eol_config_parse_tier(yaml_parser_t *parser, GHashTable *cfg)
           /* terminate the while loop, see below */
           break;
         default:
-          fprintf(stderr, "ERROR: unhandled YAML event %d\n", event.type);
+          eol_logger_message( EOL_LOG_WARN, "unhandled YAML event %d\n", event.type);
         }
       if(parser->error != YAML_NO_ERROR)
         {
-          fprintf(stderr, "ERROR: yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n",
+          eol_logger_message( EOL_LOG_ERROR, "yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n",
                   parser->error, parser->context, parser->problem, parser->problem_mark.line,
                   parser->problem_mark.column);
           return;
@@ -150,7 +151,7 @@ eolBool eol_config_get_int_by_tag(eolInt *output, eolConfig *conf, eolLine tag)
     }
   else
     {
-      printf("Config tag %s not found in %s\n", tag, conf->filename);
+      eol_logger_message( EOL_LOG_WARN,"Config tag %s not found in %s\n", tag, conf->filename);
       return eolFalse;
     }
 }
@@ -169,7 +170,7 @@ eolBool eol_config_get_line_by_tag( eolLine output,  eolConfig *conf, eolLine ta
     }
   else
     {
-      printf("Config tag %s not found in %s\n", tag, conf->filename);
+      eol_logger_message( EOL_LOG_WARN, "Config tag %s not found in %s\n", tag, conf->filename);
       return eolFalse;
     }
 }
