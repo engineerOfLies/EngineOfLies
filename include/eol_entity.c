@@ -15,6 +15,7 @@ eolEntityCustomDelete _eol_entity_custom_delete = NULL;
 void eol_entity_close();
 void eol_entity_delete(void *entityData);
 eolBool eol_entity_load_data_from_file(char * filename,void *data);
+static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data);
 
 /*function definitions*/
 void eol_entity_config()
@@ -147,6 +148,150 @@ void eol_entity_register_custom_data_size(eolUint customSize)
                        return;
   }
   _eol_entity_custom_data_size = customSize;
+}
+
+/*sync with physics system*/
+
+void eol_entity_postsync(eolEntity * ent)
+{
+  cpVect p;
+  if (!ent)return;
+  /*sync with the physics body*/
+  if (ent->body == NULL)return;
+  p = cpBodyGetPos(ent->body);
+  ent->ori.position.x = p.x;
+  ent->ori.position.y = p.y;
+  cpBodyEachArbiter(ent->body, (cpBodyArbiterIteratorFunc)eol_entity_handle_touch, ent);
+}
+
+void eol_entity_presync(eolEntity *ent)
+{
+  if (!ent)return;
+  eol_orientation_add(&ent->vector,
+                      ent->vector,
+                      ent->accel);
+  eol_orientation_add(&ent->ori,
+                      ent->ori,
+                      ent->vector);
+  if (ent->trackTrail)
+  {
+    eol_trail_append(&ent->trail,ent->ori);
+  }
+
+  cpBodySetVel(ent->body, cpv(ent->vector.position.x,ent->vector.position.y));
+  if (cpvlengthsq(cpv(ent->vector.position.x,ent->vector.position.y)))
+  {
+    cpBodyActivate(ent->body);
+  }
+}
+
+void eol_entity_presync_all()
+{
+  eolEntity *ent = NULL;
+  if (!eol_entity_initialized())return;
+  if (!eol_entity_initialized())return;
+  while ((ent = eol_resource_get_next_data(_eol_entity_manager,ent)) != NULL)
+  {
+    eol_entity_presync(ent);
+  }
+}
+
+void eol_entity_postsync_all()
+{
+  eolEntity *ent = NULL;
+  if (!eol_entity_initialized())return;
+  if (!eol_entity_initialized())return;
+  while ((ent = eol_resource_get_next_data(_eol_entity_manager,ent)) != NULL)
+  {
+    eol_entity_postsync(ent);
+  }
+}
+
+void eol_entity_update_all()
+{
+  eolEntity *ent = NULL;
+  if (!eol_entity_initialized())return;
+  while ((ent = eol_resource_get_next_data(_eol_entity_manager,ent)) != NULL)
+  {
+    if (ent->update != NULL)
+    {
+      ent->update(ent);
+    }
+  }
+}
+
+void eol_entity_think_all()
+{
+  eolUint now;
+  eolEntity *ent = NULL;
+  if (!eol_entity_initialized())return;
+  now = eol_graphics_get_now();
+  while ((ent = eol_resource_get_next_data(_eol_entity_manager,ent)) != NULL)
+  {
+    if (ent->think != NULL)
+    {
+      if ((ent->thinkRate == -1) ||
+          (ent->thinkNext > now))
+      {
+        ent->think(ent);
+        if (ent->thinkRate != -1)
+        {
+          ent->thinkNext += ent->thinkRate;
+        }
+      }
+    }
+  }
+}
+
+/*physics sync*/
+static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data)
+{
+  eolEntity *self = (eolEntity *)data;
+  eolEntity *other = NULL;
+  cpBody *a,*b;
+  if (self == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,"Given bad pointer to self in HandleEntityTouch.\n");
+    return;
+  }
+  if (self->touch == NULL)
+  {
+    /*no need to do any more work here*/
+    return;
+  }
+  cpArbiterGetBodies(arbiter, &a, &b);
+  if ((a == NULL)||(b == NULL))
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "Arbiter returned bad participants!\n");
+    return;
+  }
+  if (a->data == (void *)self)
+  {
+    if (b->data == NULL)
+    {
+      return;
+    }
+    other = (eolEntity *)b->data;
+  }
+  else if (b->data == self)
+  {
+    if (a->data == NULL)
+    {
+      return;
+    }
+    other = (eolEntity *)a->data;
+  }
+  else
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "neither body attached to this arbiter is self!\n");
+    return;
+  }
+  self->touch(self,other);
 }
 
 /*eol@eof*/

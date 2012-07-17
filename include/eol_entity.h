@@ -56,10 +56,12 @@ typedef struct Entity_S
   
   eolRectFloat      boundingBox;/**<bounding box offset from orientation*/
   eolFloat          radius;     /**<for circle based collisions*/
+  cpBody  *body;                /**<links to the physics engine*/
   cpShape         * shape;      /**<link to physics engine*/
   cpLayers          layermask;  /**<layes that this entity collides with*/
   
   eolTrail          trail;     /**<the last so many orientations of the entity*/
+  eolBool           trackTrail;/**<if the trail should be tracked.*/
   eolBool           drawTrail; /**<if the trail should be drawn*/
   eolOrientation    ori;       /**<orientation now*/
   eolOrientation    vector;    /**<orientation change vector*/
@@ -68,12 +70,16 @@ typedef struct Entity_S
   GList           * actorList; /**<general use will have only 1 actor, but its possible to have
                                    composite entities*/
 
+  eolBool           grounded; /**<set true by the physics pass if the entity is touching the ground*/
+  eolBool           wallTouch;/**<set true by the physics pass if the entity is touching a wall*/
+
   /*function pointers*/
   /**<the custom draw function, if defined will override standard draw function*/
   void (*draw)(struct Entity_S * self);
   /**<the think function is used for AI and input handling.  Should be called every frame for player.*/
   void (*think)(struct Entity_S * self);
   eolInt            thinkRate;/**<how often, in milliseconds, think is called.*/
+  eolUint           thinkNext;/**<the next time this entity should think*/
 
   /**<update function is used for maintenance for things like positional update and frame animation.
       called every frame*/
@@ -105,11 +111,35 @@ typedef struct
   eolUint    id;
 }eolEntityPointer;
 
+/**
+ * @brief configure entity system from file or defaults
+ */
 void eol_entity_config();
+
+/**
+* @brief sets up entity system based on defaults
+*/
 void eol_entity_init();
+
+/**
+* @brief deleted loaded entity data resetting system back to startup
+*/
 void eol_entity_clear();
+
+/**
+* @brief returns initialization status of entity system
+*/
 eolBool eol_entity_initialized();
+
+/**
+* @brief Frees the entity passed.  Sets pointer to NULL
+* @param ent a pointer to an entity pointer.
+*/
 void eol_entity_free(eolEntity **ent);
+
+/**
+* @brief Get a newly allocated freshly initialized entity.
+*/
 eolEntity *eol_entity_new();
 
 /**
