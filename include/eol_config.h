@@ -54,27 +54,27 @@ void eol_config_destroy(eolConfig *config);
  */
 void eol_config_dump(char* filename, GHashTable* data);
 
-/* it would be nice to be able to access your library like this: */
-
-
-eolInt eol_config_get_int_by_tag(
+eolBool eol_config_get_int_by_tag(
+  eolInt    *output,
   eolConfig *conf,
   eolLine    tag
 );
 
-void eol_config_get_line_by_tag(
+eolBool eol_config_get_line_by_tag(
   eolLine     output,
   eolConfig * conf,
   eolLine     tag
 );
 
-eolUint eol_config_get_list_count_by_tag(
-  eolConfig * conf,
+eolBool eol_config_get_list_count_by_tag(
+  eolUint    *output,
+  eolConfig  *conf,
   eolLine     tag
 );
 
-GList * eol_config_get_list_by_tag(
-  eolConfig * conf,
+eolBool eol_config_get_list_by_tag(
+  GList      *output,
+  eolConfig  *conf,
   eolLine     tag
 );
 

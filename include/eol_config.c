@@ -31,13 +31,10 @@ eolConfig *eol_config_load(char* filename)
   yaml_event_t event;
   FILE *input;
   eolConfig *config = malloc(sizeof(eolConfig));
-  /*NOTE: strcpy is not safe. use strncpy or preferably, since its an eolLine,
-    use eol_line_cpy(dst,src)*/
-  strcpy(config->filename, filename);
-  /*NOTE: is the & necessary? not sure*/
+  eol_line_cpy(config->filename, filename);
   config->_node = g_hash_table_new(&g_str_hash, &g_str_equal);
   if(config->_node == NULL)
-    {/* NOTE: Really? extra indent? and you yelled at me for using this comment style*/
+    {
       /*use the logger, I made a ticket for this.*/
       fputs("ERROR: Unable to allocate GHash for config", stderr);
       return NULL;
@@ -57,7 +54,7 @@ eolConfig *eol_config_load(char* filename)
   eol_config_parse_tier(&parser, config->_node);
   if(parser.error != YAML_NO_ERROR)
     {
-      fprintf(stderr, "ERROR: yaml_error_type_e %d: %s %s at (line: %d, col: %d)\n",
+      fprintf(stderr, "ERROR: yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n",
               parser.error, parser.context, parser.problem, parser.problem_mark.line,
               parser.problem_mark.column);
       return NULL;
@@ -127,7 +124,7 @@ void eol_config_parse_tier(yaml_parser_t *parser, GHashTable *cfg)
         }
       if(parser->error != YAML_NO_ERROR)
         {
-          fprintf(stderr, "ERROR: yaml_error_type_e %d: %s %s at (line: %d, col: %d)\n",
+          fprintf(stderr, "ERROR: yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n",
                   parser->error, parser->context, parser->problem, parser->problem_mark.line,
                   parser->problem_mark.column);
           return;
@@ -148,36 +145,41 @@ void eol_config_print(GHashTable* data)
 }
 
 /*NOTE: the acessor functions should probably return eolBool for fail/success.  My Bad.*/
-eolInt eol_config_get_int_by_tag( eolConfig *conf, eolLine tag)
+eolBool eol_config_get_int_by_tag(eolInt *output, eolConfig *conf, eolLine tag)
 {
   gchar *data;
-  if(NULL == conf->_node) return (eolInt) NULL;
+  g_return_val_if_fail(conf->_node, eolFalse);
+	g_return_val_if_fail(output, eolFalse);
+
   data = g_hash_table_lookup(conf->_node, tag);
-  if(data != NULL)
+  if(data)
     {
-      return (eolInt) atoi(data);
+      *output = (eolInt) atoi(data);
+			return eolTrue;
     }
   else
     {
       printf("Config tag %s not found in %s\n", tag, conf->filename);
-      /*NOTE: returning 0 is simpler...*/
-      return (eolInt) NULL;
+      return eolFalse;
     }
 }
 
-void eol_config_get_line_by_tag( eolLine output,  eolConfig *conf, eolLine tag)
+eolBool eol_config_get_line_by_tag( eolLine output,  eolConfig *conf, eolLine tag)
 {
   gchar *data;
-  if(NULL == conf->_node) return;
+	g_return_val_if_fail(conf->_node, eolFalse);
+	g_return_val_if_fail(output, eolFalse);
+
   data = g_hash_table_lookup(conf->_node, tag);
-  if(data != NULL)
+  if(data)
     {
       g_strlcpy(output, data, sizeof(eolLine));
+			return eolTrue;
     }
   else
     {
       printf("Config tag %s not found in %s\n", tag, conf->filename);
-      return;
+      return eolFalse;
     }
 }
 /*
