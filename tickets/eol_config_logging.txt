@@ -4,3 +4,4 @@ Currently it is using direct calls to printf and fprintf.
 It should call eol_logger_message instead.
 
 assigned: mjmeehan
+done 7/17
