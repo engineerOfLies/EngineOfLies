@@ -28,7 +28,6 @@ void eol_config_deinit(void)
 eolConfig *eol_config_load(char* filename)
 {
   yaml_parser_t parser;
-  yaml_event_t event;
   FILE *input;
   eolConfig *config = malloc(sizeof(eolConfig));
   eol_line_cpy(config->filename, filename);
@@ -50,19 +49,12 @@ eolConfig *eol_config_load(char* filename)
       fprintf(stderr, "ERROR, Can't open config file %s", filename );
       return NULL;
     }
-  yaml_parser_set_input_file(&parser, input);
-  eol_config_parse_tier(&parser, config->_node);
-  if(parser.error != YAML_NO_ERROR)
-    {
-      fprintf(stderr, "ERROR: yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n",
-              parser.error, parser.context, parser.problem, parser.problem_mark.line,
-              parser.problem_mark.column);
-      return NULL;
-    }
-  if(event.type != YAML_STREAM_END_EVENT)
-    yaml_event_delete(&event);
-  yaml_parser_delete(&parser);
 
+  yaml_parser_set_input_file(&parser, input);
+
+  eol_config_parse_tier(&parser, config->_node);
+
+  yaml_parser_delete(&parser);
   fclose(input);
   return config;
 }
@@ -81,8 +73,8 @@ void eol_config_parse_tier(yaml_parser_t *parser, GHashTable *cfg)
   int state = KEY;
   do
     {
-      /*NOTE: is this being used ininitialized?*/
-      yaml_event_delete(&event);
+			/* NOTE: using this initialized :-/ */
+			yaml_event_delete(&event);
       yaml_parser_parse(parser, &event);
       switch(event.type)
         {
@@ -144,7 +136,6 @@ void eol_config_print(GHashTable* data)
 {
 }
 
-/*NOTE: the acessor functions should probably return eolBool for fail/success.  My Bad.*/
 eolBool eol_config_get_int_by_tag(eolInt *output, eolConfig *conf, eolLine tag)
 {
   gchar *data;
