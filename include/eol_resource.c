@@ -140,7 +140,7 @@ void * eol_resource_get_next_data(eolResourceManager *manager,void *data)
     header = (eolResourceHeader *)data;
     header--;
   }
-  return (void *)eol_resource_get_next_element(manager,header);
+  return eol_resource_get_data_by_header(eol_resource_get_next_element(manager,header));
 }
 
 eolResourceHeader * eol_resource_get_next_element(eolResourceManager *manager,eolResourceHeader *element)
@@ -213,6 +213,7 @@ void * eol_resource_new_element(eolResourceManager *manager)
 {
   eolResourceHeader *element = NULL;
   eolResourceHeader *oldest = NULL;
+  eolUint            oldestIndex = 0;
   eolUint            oldestTime = eol_graphics_get_now() + 1;
   int i = 0;
   if (manager == NULL)
@@ -240,6 +241,7 @@ void * eol_resource_new_element(eolResourceManager *manager)
       {
         oldest = element;
         oldestTime = element->timeFree;
+        oldestIndex = i;
         if (element->timeFree == 0)
         {
           /*cant get older than never used*/
@@ -252,12 +254,10 @@ void * eol_resource_new_element(eolResourceManager *manager)
   {
     element = oldest;
     eol_resource_delete_element(manager,element);
-    memset(element,0,manager->_data_size);
-    element->index = i;
+    element->index = oldestIndex;
     element->refCount = 1;
     manager->_data_count++;
-    element++;/*the data, not the header*/
-    return element;
+    return eol_resource_get_data_by_header(element);
   }
 
   eol_logger_message(
