@@ -3,4 +3,4 @@ eol_loader should provide wrappers for using file operations
 fmemopen does not work well on all target systems.  We should wrap the physfs calls
 with out eolFile class to make working with files cleaner across all operating systems.
 
-assigned:
+assigned: RabTom
