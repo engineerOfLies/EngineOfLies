@@ -1,6 +1,5 @@
 #include "eol_spawn.h"
 #include "eol_logger.h"
-#include <glib/gstring.h>
 
 /*
 TODO:  need to actually store type information in the hash before this can work
