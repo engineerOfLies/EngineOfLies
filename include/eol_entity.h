@@ -44,6 +44,15 @@ enum eolEntityShapes {
   eolEntityRect    = 2
 };
 
+enum eolEntityDrawModes {
+  eolEntityDrawBounds    = 0,
+  eolEntityDrawWireframe = 1,
+  eolEntityDrawMesh      = 2,
+  eolEntityDrawTextured  = 3,
+  eolEntityDrawLighting  = 4,
+  eolEntityDrawShaded    = 5
+};
+
 typedef struct Entity_S
 {
   eolUint           id;         /**<unique entity resource id*/
@@ -172,6 +181,11 @@ void eol_entity_update_all();
 * @brief calls all think functions for entities if they need to think
 */
 void eol_entity_think_all();
+
+/**
+ * @brief draws all entities in the current context.
+ */
+void eol_entity_draw_all();
 
 /**
  * @brief this is the function prototype for a customData delete function

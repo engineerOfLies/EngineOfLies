@@ -1,6 +1,7 @@
 #include "eol_entity.h"
 #include "eol_logger.h"
 #include "eol_actor.h"
+#include "eol_draw.h"
 #include "eol_resource.h"
 
 /*local global variables*/
@@ -10,6 +11,7 @@ eolResourceManager  * _eol_entity_manager = NULL;
 eolEntity           * _eol_entity_list = NULL;
 eolUint               _eol_entity_max = 0;
 eolEntityCustomDelete _eol_entity_custom_delete = NULL;
+eolUint               _eol_entity_draw_mode = 0;
 
 /*local function prototypes*/
 void eol_entity_close();
@@ -22,6 +24,7 @@ void eol_entity_config()
 {
   /*TODO: load from config*/
   _eol_entity_max = 1024;
+  _eol_entity_draw_mode = eolEntityDrawLighting;
 }
 
 void eol_entity_init()
@@ -274,6 +277,51 @@ void eol_entity_think_all()
     }
   }
 }
+
+void eol_entity_draw_box(eolEntity *ent)
+{
+  eolRectFloat rect;
+  if (!ent)return;
+  rect.x = ent->boundingBox.w* -0.5;
+  rect.y = ent->boundingBox.h* -0.5;
+  rect.w = ent->boundingBox.w;
+  rect.h = ent->boundingBox.h;
+  eol_draw_rect_3D(rect, ent->ori);
+}
+
+void eol_entity_draw_textured(eolEntity *ent)
+{
+  GList *list;
+  if (!ent)return;
+  for (list = ent->actorList;list != NULL;list = list->next)
+  {
+    eol_actor_draw((eolActor *)list->data,
+                   ent->ori.position,
+                   ent->ori.rotation,
+                   ent->ori.scale,
+                   ent->ori.color,
+                   ent->ori.alpha);
+  }
+}
+
+void eol_entity_draw(eolEntity *ent)
+{
+  if (!ent)return;
+  if (ent->shown == eolFalse)return;
+  /*NOTE: may end up drawing other effects...*/
+  if (ent->ori.alpha == 0.0f)return;
+}
+
+void eol_entity_draw_all()
+{
+  eolEntity *ent = NULL;
+  if (!eol_entity_initialized())return;
+  while ((ent = eol_resource_get_next_data(_eol_entity_manager,ent)) != NULL)
+  {
+    eol_entity_draw(ent);
+  }
+}
+
 
 /*physics sync*/
 static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data)

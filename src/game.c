@@ -11,6 +11,7 @@
 #include <eol_draw.h>
 #include <eol_particle.h>
 #include <eol_lighting.h>
+#include <eol_camera.h>
 #include <string.h>
 #include <stdio.h>
 
@@ -45,6 +46,8 @@ int main(int argc, char *argv[])
     }
   }
   Init_All(argv[0]);
+  eol_camera_config();
+  eol_camera_init();
   done = 0;
   actor = eol_actor_new();
   if (actor)
@@ -111,19 +114,25 @@ void TestWindowDraw(eolWindow *win)
   TestData *data = (TestData *)win->customData;
   eol_sprite_draw(sprite,(eolInt)data->frame,100,100);
 
+  glPushMatrix();
+
+  eol_camera_setup();
+
   eol_actor_draw(
     actor,
-    eol_vec3d(0,0,-10),
+    eol_vec3d(0,0,0),
     eol_vec3d(-90,0,0/*data->rot*/),
     eol_vec3d(1,1,1),
     eol_vec3d(1,1,1),
     1
   );
 
-  eol_draw_solid_rect(eol_rect(20,20,40,200),eol_vec3d(0,1,1),0.4);
-
   eol_actor_next_frame(actor);
   eol_particle_draw_all();
+
+  glPopMatrix();
+  eol_draw_solid_rect(eol_rect(20,20,40,200),eol_vec3d(0,1,1),0.4);
+  
   data->rot = data->rot + 0.25;
   if (data->rot > 360)data->rot -= 360;
   if(data->frame >= 14.0)data->frame = 2.0;

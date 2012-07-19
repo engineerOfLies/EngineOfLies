@@ -214,6 +214,7 @@ void eol_graphics_init()
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   /*view angle, aspect ratio, near clip distance, far clip distance*/
+  /*TODO: put near/far clip in graphics view config*/
   gluPerspective( 40, (eolDouble)x / (eolDouble)y, .01, 2000.0f);
   glMatrixMode( GL_MODELVIEW );
   glLoadIdentity();
@@ -240,7 +241,6 @@ void eol_graphics_init()
       EOL_LOG_INFO,
       "eol_graphics: initialized\n"
   );
-  
 }
 
 eolBool eol_graphics_initialized()

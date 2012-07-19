@@ -18,6 +18,11 @@
     along with the EOL game engine.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * this is a stub.  Once the physics has been more fleshed out, it will either be
+ * replaced or removed.
+ */
+
 typedef struct
 {
   eolVec3D pointOfImpact; /**<point of collision*/
