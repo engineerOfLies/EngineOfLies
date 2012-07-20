@@ -13,7 +13,7 @@ void eol_resource_delete_element(eolResourceManager *manager,eolResourceHeader *
 eolResourceHeader * eol_resource_find_element_by_filename(eolResourceManager *manager,char *filename);
 void *eol_resource_get_data_by_header(eolResourceHeader *resource);
 eolResourceHeader * eol_resource_get_next_element(eolResourceManager *manager,eolResourceHeader *element);
-
+eolBool eol_resource_validate_header_range(eolResourceManager *manager,eolResourceHeader *element);
 
 void *eol_resource_manager_load_resource(eolResourceManager *manager,char *filename)
 {
@@ -98,6 +98,8 @@ eolResourceManager * eol_resource_manager_init(
     eolBool (*data_load)(char *filename,void *data)
   )
 {
+  int i;
+  eolResourceHeader * element = NULL;
   eolResourceManager *manager = NULL;
   manager = eol_resource_manager_new();
   if (manager == NULL)
@@ -106,6 +108,7 @@ eolResourceManager * eol_resource_manager_init(
   }
   strncpy(manager->name,managerName,EOLLINELEN);
   manager->_data_count = 0;
+  manager->_data_id_pool = 0;
   manager->_data_max = max;
   manager->_data_unique = dataUnique;
   manager->_data_size = dataSize + sizeof(eolResourceHeader);
@@ -122,6 +125,11 @@ eolResourceManager * eol_resource_manager_init(
     return NULL;    
   }
   memset(manager->_data_list,0,manager->_data_size * max);
+  for (i = 0 ; i < manager->_data_max;i++)
+  {
+    element = (eolResourceHeader *)&manager->_data_list[(i * manager->_data_size)];
+    element->index = i;
+  }
   manager->_initialized = eolTrue;
   return manager;
 }
@@ -145,6 +153,7 @@ void * eol_resource_get_next_data(eolResourceManager *manager,void *data)
 
 eolResourceHeader * eol_resource_get_next_element(eolResourceManager *manager,eolResourceHeader *element)
 {
+  int index = 0;
   if (manager == NULL)
   {
     eol_logger_message(
@@ -162,19 +171,19 @@ eolResourceHeader * eol_resource_get_next_element(eolResourceManager *manager,eo
   }
   if (element == NULL)
   {
-    element = (eolResourceHeader *)&manager->_data_list[0];
+    index = 0;
   }
   else
   {
-    element = element + manager->_data_size;
+    index = element->index + 1;
   }
-  while (element < (eolResourceHeader *)&manager->_data_list[(manager->_data_max * manager->_data_size)])
+  for ( ; index < manager->_data_max;index++)
   {
+    element = (eolResourceHeader *)&manager->_data_list[(index * manager->_data_size)];
     if (element->refCount > 0)
     {
       return element;
     }
-    element = element + manager->_data_size;
   }
   return NULL;
 }
@@ -410,19 +419,8 @@ eolInt eol_resource_element_get_id(eolResourceManager *manager,void *element)
   header = (eolResourceHeader *)element;
   header--;
   /*range verification*/
-  if (header < (eolResourceHeader *)&manager->_data_list[0])
+  if (!eol_resource_validate_header_range(manager,header))
   {
-    eol_logger_message(
-      EOL_LOG_INFO,
-      "eol_resource:under seeking in data list\n");
-    assert(0);
-    return -1;
-  }
-  if (header >= (eolResourceHeader *)&manager->_data_list[manager->_data_max])
-  {
-    eol_logger_message(
-      EOL_LOG_INFO,
-      "eol_resource:over seeking in data list\n");
     return -1;
   }
   return header->id;
@@ -449,23 +447,32 @@ eolInt eol_resource_element_get_index(eolResourceManager *manager,void *element)
   header = (eolResourceHeader *)element;
   header--;
   /*range verification*/
-  if (header < (eolResourceHeader *)&manager->_data_list[0])
+  if (!eol_resource_validate_header_range(manager,header))
   {
-    eol_logger_message(
-      EOL_LOG_INFO,
-      "eol_resource:under seeking in data list\n");
-    assert(0);
-    return -1;
-  }
-  if (header >= (eolResourceHeader *)&manager->_data_list[manager->_data_max])
-  {
-    eol_logger_message(
-      EOL_LOG_INFO,
-      "eol_resource:over seeking in data list\n");
     return -1;
   }
   return header->index;
 }
 
+eolBool eol_resource_validate_header_range(eolResourceManager *manager,eolResourceHeader *element)
+{
+  if (!manager)return eolFalse;
+  if (!element)return eolFalse;
+  if ((void *)element < (void *)manager->_data_list)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_resource: underseeking in data list.\n");
+    return eolFalse;
+  }
+  if ((void *)element > (void *)&manager->_data_list[manager->_data_max * manager->_data_size])
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_resource: overseeking in data list.\n");
+    return eolFalse;
+  }
+  return eolTrue;
+}
 /*eol@eof*/
 
