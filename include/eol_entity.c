@@ -4,14 +4,18 @@
 #include "eol_draw.h"
 #include "eol_resource.h"
 
+/*local data types*/
+typedef void (*eolEntityDrawType)(eolEntity *ent);
+
 /*local global variables*/
 eolUint               _eol_entity_custom_data_size = 0;
 eolBool               _eol_entity_initialized = eolFalse;
 eolResourceManager  * _eol_entity_manager = NULL;
 eolEntity           * _eol_entity_list = NULL;
-eolUint               _eol_entity_max = 0;
+eolUint               _eol_entity_max = 1024;
 eolEntityCustomDelete _eol_entity_custom_delete = NULL;
 eolUint               _eol_entity_draw_mode = 0;
+eolEntityDrawType     _eol_entity_draw_func = NULL; /*we bring the func*/
 
 /*local function prototypes*/
 void eol_entity_close();
@@ -19,12 +23,39 @@ void eol_entity_delete(void *entityData);
 eolBool eol_entity_load_data_from_file(char * filename,void *data);
 static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data);
 
+void eol_entity_draw_textured(eolEntity *ent);
+void eol_entity_draw_box(eolEntity *ent);
+
+
 /*function definitions*/
 void eol_entity_config()
 {
   /*TODO: load from config*/
   _eol_entity_max = 1024;
   _eol_entity_draw_mode = eolEntityDrawLighting;
+
+  /*TODO support these draw modes*/
+  switch(_eol_entity_draw_mode)
+  {
+    case eolEntityDrawBounds:
+      _eol_entity_draw_func = eol_entity_draw_box;
+      break;
+    case eolEntityDrawWireframe:
+      _eol_entity_draw_func = eol_entity_draw_box;
+      break;
+    case eolEntityDrawMesh:
+      _eol_entity_draw_func = eol_entity_draw_textured;
+      break;
+    case eolEntityDrawTextured:
+      _eol_entity_draw_func = eol_entity_draw_textured;
+      break;
+    case eolEntityDrawLighting:
+      _eol_entity_draw_func = eol_entity_draw_textured;
+      break;
+    case eolEntityDrawShaded:
+      _eol_entity_draw_func = eol_entity_draw_textured;
+      break;
+  }
 }
 
 void eol_entity_init()
@@ -35,7 +66,7 @@ void eol_entity_init()
   _eol_entity_manager = eol_resource_manager_init(
     "eol_entity_manager",
     _eol_entity_max,
-    sizeof(eolEntity) + _eol_entity_custom_data_size,
+    sizeof(eolEntity)/* + _eol_entity_custom_data_size*/,
     eolTrue,
     eol_entity_delete,
     eol_entity_load_data_from_file
@@ -99,10 +130,13 @@ void eol_entity_delete(void *entityData)
   {
     _eol_entity_custom_delete(ent->customData);
   }
-  for (it = ent->children; it != NULL; it = it->next)
+  if (ent->children != NULL)
   {
-    /*data should be pointing to an eolEntityPointer*/
-    if (it->data != NULL)free(it->data);
+    for (it = ent->children; it != NULL; it = it->next)
+    {
+      /*data should be pointing to an eolEntityPointer*/
+      if (it->data != NULL)free(it->data);
+    }
   }
   if (ent->shape)cpShapeFree(ent->shape);
   for (it = ent->actorList; it != NULL; it = it->next)
@@ -114,6 +148,8 @@ void eol_entity_delete(void *entityData)
   }
   it = NULL;
   g_list_free(ent->actorList);
+  ent->actor = NULL;
+  ent->actorList = NULL;
   /*physics*/
   cpShapeFree(ent->shape);
   cpBodyFree(ent->body);
@@ -148,16 +184,15 @@ eolEntity *eol_entity_new()
       "eol_entity:failed to get new resource\n");
     return NULL;
   }
+  /*
   if (_eol_entity_custom_data_size > 0)
   {
     ent->customData = (void *)(ent + 1);
-  }
+  }*/
   /*set some sane defaults:*/
   ent->self = ent;
   ent->collisionMask = CP_ALL_LAYERS;
   eol_orientation_clear(&ent->ori);
-  eol_orientation_clear(&ent->vector);
-  eol_orientation_clear(&ent->accel);
   ent->shown = eolTrue;
   ent->id = eol_resource_element_get_id(_eol_entity_manager,ent);
   return ent;
@@ -213,10 +248,13 @@ void eol_entity_presync(eolEntity *ent)
     eol_trail_append(&ent->trail,ent->ori);
   }
 
-  cpBodySetVel(ent->body, cpv(ent->vector.position.x,ent->vector.position.y));
-  if (cpvlengthsq(cpv(ent->vector.position.x,ent->vector.position.y)))
+  if (ent->body != NULL)
   {
-    cpBodyActivate(ent->body);
+    cpBodySetVel(ent->body, cpv(ent->vector.position.x,ent->vector.position.y));
+    if (cpvlengthsq(cpv(ent->vector.position.x,ent->vector.position.y)))
+    {
+      cpBodyActivate(ent->body);
+    }
   }
 }
 
@@ -295,21 +333,40 @@ void eol_entity_draw_textured(eolEntity *ent)
   if (!ent)return;
   for (list = ent->actorList;list != NULL;list = list->next)
   {
-    eol_actor_draw((eolActor *)list->data,
-                   ent->ori.position,
-                   ent->ori.rotation,
-                   ent->ori.scale,
-                   ent->ori.color,
-                   ent->ori.alpha);
+    if (list->data != NULL)
+    {
+      eol_actor_draw((eolActor *)list->data,
+                    ent->ori.position,
+                    ent->ori.rotation,
+                    ent->ori.scale,
+                    ent->ori.color,
+                    ent->ori.alpha);
+    }
   }
 }
 
 void eol_entity_draw(eolEntity *ent)
 {
   if (!ent)return;
-  if (ent->shown == eolFalse)return;
+  if (ent->shown == eolFalse)
+  {
+    fprintf(stdout,"skipping draw re: not shown\n");
+    return;
+  }
   /*NOTE: may end up drawing other effects...*/
-  if (ent->ori.alpha == 0.0f)return;
+  if (ent->ori.alpha == 0.0f)
+  {
+    fprintf(stdout,"skipping draw re: 0 alpha\n");
+    return;
+  }
+  if (_eol_entity_draw_func != NULL)
+  {
+    _eol_entity_draw_func(ent);
+  }
+  else
+  {
+    eol_entity_draw_textured(ent);
+  }
 }
 
 void eol_entity_draw_all()
@@ -517,6 +574,17 @@ void eol_entity_remove_entity_from_collision_mask(eolEntity *ent,cpLayers collis
 {
   if (!ent)return;
   ent->collisionMask = ent->collisionMask & ~collisionmask;
+}
+
+/*entity data*/
+void eol_entity_add_actor(eolEntity *ent,eolActor *act)
+{
+  if ((!ent)||(!act))return;
+  ent->actorList = g_list_append(ent->actorList,act);
+  if (ent->actor == NULL)
+  {
+    ent->actor = act;
+  }
 }
 
 /*eol@eof*/

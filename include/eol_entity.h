@@ -20,6 +20,7 @@
 
 #include "eol_spawn.h"
 #include "eol_trace.h"
+#include "eol_actor.h"
 #include "eol_config.h"
 #include "eol_types.h"
 #include <glib/glist.h>
@@ -85,6 +86,7 @@ typedef struct Entity_S
   eolOrientation    vector;    /**<orientation change vector*/
   eolOrientation    accel;     /**<orientation change vector change vector*/
 
+  eolActor        * actor;     /**<most common use case is only have 1 actor, this will point to first*/
   GList           * actorList; /**<general use will have only 1 actor, but its possible to have
                                    composite entities*/
 
@@ -246,4 +248,7 @@ void eol_entity_set_collision_mask(eolEntity *ent,cpLayers collisionmask);
 void eol_entity_add_to_collision_mask(eolEntity *ent,cpLayers collisionmask);
 
 void eol_entity_remove_entity_from_collision_mask(eolEntity *ent,cpLayers collisionmask);
+
+void eol_entity_add_actor(eolEntity *ent,eolActor *act);
+
 #endif

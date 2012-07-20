@@ -293,10 +293,10 @@ eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
 /**
  * @brief copies the data from one vector into another
  *
- * @param a the destination vector
- * @param b the source vector
+ * @param dst the destination vector
+ * @param src the source vector
  */
-#define eol_vec3d_copy(a,b)  (a.x = b.x,a.y = b.y,a.z = b.z)
+#define eol_vec3d_copy(dst,src)  (dst.x = src.x,dst.y = src.y,dst.z = src.z)
 
 /**
  * @brief Macro to subtract two vectors

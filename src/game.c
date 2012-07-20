@@ -1,17 +1,17 @@
+#include "test_entity.h"
+
 #include <eol.h>
 #include <eol_graphics.h>
 #include <eol_sprite.h>
 #include <eol_input.h>
 #include <eol_font.h>
-#include <eol_actor.h>
 #include <eol_window.h>
-#include <eol_component.h>
 #include <eol_mouse.h>
 #include <eol_dialog.h>
-#include <eol_draw.h>
 #include <eol_particle.h>
 #include <eol_lighting.h>
 #include <eol_camera.h>
+#include <eol_entity.h>
 #include <string.h>
 #include <stdio.h>
 
@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
   eol_light_set_color(light,eol_vec3d(0.5,0.5,0.5));
   eol_light_set_radius(light,radius);
   //  eol_lighting_setup_rep_plot();
+  srandom(SDL_GetTicks());
   do
   {
     eol_light_move(light,point);
@@ -69,6 +70,12 @@ int main(int argc, char *argv[])
 
     eol_input_update();
     eol_mouse_update();
+    eol_entity_presync_all();
+    /*TODO: run physics... right here*/
+    eol_entity_postsync_all();
+    eol_entity_think_all();
+    eol_entity_update_all();
+    
     eol_particle_update_all();
     eol_window_update_all();
     eol_graphics_frame_begin();
@@ -107,6 +114,8 @@ int main(int argc, char *argv[])
 void Init_All(const char *argv)
 {
   eol_init(EOL_ALL);
+  eol_entity_config();
+  eol_entity_init();
 }
 
 void TestWindowDraw(eolWindow *win)
@@ -118,20 +127,20 @@ void TestWindowDraw(eolWindow *win)
 
   eol_camera_setup();
 
+  eol_entity_draw_all();
   eol_actor_draw(
     actor,
     eol_vec3d(0,0,0),
     eol_vec3d(-90,0,0/*data->rot*/),
+    eol_vec3d(.5,.5,.5),
     eol_vec3d(1,1,1),
-    eol_vec3d(1,1,1),
-    1
+    0.5
   );
 
   eol_actor_next_frame(actor);
   eol_particle_draw_all();
 
   glPopMatrix();
-  eol_draw_solid_rect(eol_rect(20,20,40,200),eol_vec3d(0,1,1),0.4);
   
   data->rot = data->rot + 0.25;
   if (data->rot > 360)data->rot -= 360;
@@ -157,14 +166,9 @@ void TestWindowUpdate(eolWindow *win,GList *updates)
       case 0:
         break;
       case 1:
-/*        eol_dialog_text_block("DIALOG BOX",
-                              "this is a whole lotta dialog to write out into a large window.  This window needs to be able to expand to accomidate a lot of text, but perhaps should have absolute limits based on the screen dimensions.",
-                              "Done",
-                              NULL,
-                              NULL);*/
         for (i = 0; i < 100; i ++)
         {
-        eol_particle_make_point(eol_vec3d(crandom()*0.1,0,-10),
+        eol_particle_make_point(eol_vec3d(crandom()*0.1,0,0),
                                 eol_vec3d(crandom()*0.1,crandom()*0.1 + 0.1,crandom()*0.1),
                                 eol_vec3d(0,-0.009,0) ,
                                 5,
@@ -172,6 +176,9 @@ void TestWindowUpdate(eolWindow *win,GList *updates)
                                 1,
                                 100);
         }
+        break;
+      case 3:
+        spawnTestEnt(eol_vec3d(crandom() * 3,crandom() * 3,0));
         break;
     }
   }
@@ -217,16 +224,18 @@ void MakeTestWindow()
     1
   );
   eol_window_add_component(win,comp);
+  
   comp = eol_button_stock_new(
     1,
     "test_button",
     eol_rectf(0.7,0.8,1,1),
     win->rect,
-    "Test Button",
+    "Test Particle",
     0,
     eolFalse
   );
   eol_window_add_component(win,comp);
+  
   lineHeight = eol_font_get_text_height_average(3);
   lineHeight += 4;
   comp = eol_line_entry_new(
@@ -237,7 +246,18 @@ void MakeTestWindow()
     ""
   );
   eol_window_add_component(win,comp);
-  
+
+  comp = eol_button_stock_new(
+    3,
+    "test_button2",
+    eol_rectf(0.2,0.8,1,1),
+    win->rect,
+    "Test Entity",
+    0,
+    eolFalse
+  );
+  eol_window_add_component(win,comp);
+
 }
 
 /*eol @ eof*/
