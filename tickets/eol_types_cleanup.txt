@@ -1,0 +1,7 @@
+Need to clean up eol_types.c & h
+
+A lot of eol_types was written before the formatting was settles upon.  It should be unified.
+
+assigned:
+estimate:
+completed:
