@@ -1,0 +1,12 @@
+Rework how lighting syncs to gl lights.
+
+Since GL lights are limited, we should have the eolLights assign to the gl light
+on a per-render-frame basis.  So if we only have the option for 8 GL lights, that
+becomes a limit of how many lights can be active in one view.  Lights outside the
+camera view need not be active.
+
+This will be dependand on eol_camera_view_check.txt
+
+assigned:
+estimate:
+completed:

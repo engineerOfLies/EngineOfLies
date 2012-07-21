@@ -1,0 +1,10 @@
+Add a function to camera to check if something is in view frame.
+
+As an efficiency feature we should have a way to determine if an object is in
+the camera view or not.  This way we can limit what needs to be rendered for:
+
+- complex particles (meshes and sprites)
+- actors
+- lights - limited number of lights anyway, might as well make the most of them.
+
+assigned: 
