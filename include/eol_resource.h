@@ -1,5 +1,5 @@
-#ifndef __EOL_FONT__
-#define __EOL_FONT__
+#ifndef __EOL_RESOURCE__
+#define __EOL_RESOURCE__
 /*
     Copyright 2012 Engineer of Lies
     This file is part of the Engine of Lies game engine library
