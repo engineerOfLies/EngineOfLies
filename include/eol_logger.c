@@ -63,8 +63,6 @@ void eol_logger_message(eolLogLevel level,char *msg,...)
   if (level >= EOL_LOG_MAX)
   {
     fprintf(stderr,"eol_logger: unable to write at log level %i\n",level);
-    fprintf(stderr,"eol_logger: message: %s\n",msg);
-    return;
   }
   if (level < _eol_log_threshold)return;
   if (_eol_logger_stdout_echo == eolTrue)
