@@ -215,6 +215,7 @@ void eol_orientation_add(eolOrientation * out,
  */
 void eol_orientation_clear(eolOrientation *out);
 
+void eol_orientation_copy(eolOrientation *dst,eolOrientation src);
 /*
   3d trails.
 */
@@ -376,8 +377,7 @@ eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
  * @param c eolFloat z componenta (only in 3D version)
  */
 #define eol_vec3d_set(v, a, b, c)  (v.x=(a), v.y=(b), v.z=(c))
-#define eol_vector_set_3D(v, a, b, c)  (v.x=(a), v.y=(b), v.z=(c))
-#define eol_vector_set_2D(v, a, b)  (v.x=(a), v.y=(b))
+#define eol_vec2d_set(v, a, b)  (v.x=(a), v.y=(b))
 
 /**
  * @brief normalizes the vector passed.  does nothing for a zero length vector.

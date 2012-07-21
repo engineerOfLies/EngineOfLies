@@ -26,7 +26,7 @@ eolBool eol_equals(eolDouble a, eolDouble b)
 eolVec3D eol_vec3d(eolDouble x, eolDouble y, eolDouble z)
 {
 	eolVec3D vec;
-  eol_vector_set_3D(vec,x, y, z);
+  eol_vec3d_set(vec,x, y, z);
 	return vec;
 }
 
@@ -120,6 +120,16 @@ void eol_rect_copy(
   d->y = s.y;
   d->w = s.w;
   d->h = s.h;
+}
+
+void eol_orientation_copy(eolOrientation *dst,eolOrientation src)
+{
+  if (!dst)return;
+  eol_vec3d_copy(dst->position,src.position);
+  eol_vec3d_copy(dst->rotation,src.rotation);
+  eol_vec3d_copy(dst->scale,src.scale);
+  eol_vec3d_copy(dst->color,src.color);
+  dst->alpha = src.alpha;
 }
 
 void eol_orientation_clear(eolOrientation *out)

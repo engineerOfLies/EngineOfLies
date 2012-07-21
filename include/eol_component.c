@@ -131,9 +131,9 @@ void eol_component_config()
   _eol_component_stock_button[0] = eol_sprite_load("images/UI/btn.png",-1,-1);
   _eol_component_stock_button[1] = eol_sprite_load("images/UI/btn_high.png",-1,-1);
   _eol_component_stock_button[2] = eol_sprite_load("images/UI/btn_hit.png",-1,-1);
-  eol_vector_set_3D(_eol_component_button_color[0],0.8,0.8,0.8);
-  eol_vector_set_3D(_eol_component_button_color[1],1,1,0);
-  eol_vector_set_3D(_eol_component_button_color[2],0.6,0.6,0.6);
+  eol_vec3d_set(_eol_component_button_color[0],0.8,0.8,0.8);
+  eol_vec3d_set(_eol_component_button_color[1],1,1,0);
+  eol_vec3d_set(_eol_component_button_color[2],0.6,0.6,0.6);
 }
 
 void eol_button_get_stock_size(eolUint *w, eolUint *h)

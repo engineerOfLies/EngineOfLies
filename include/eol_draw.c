@@ -102,6 +102,7 @@ void eol_draw_tri_3D(eolVec3D p1,
   glEnable(GL_DEPTH_TEST);
 }
 
+
 void eol_draw_rect_3D(eolRectFloat rect, eolOrientation ori)
 {
   glDisable(GL_DEPTH_TEST);
@@ -119,9 +120,16 @@ void eol_draw_rect_3D(eolRectFloat rect, eolOrientation ori)
   
   
   glBegin( GL_LINES );
+
   glVertex3f(rect.x,rect.y,0);
   glVertex3f(rect.x + rect.w,rect.y,0);
+  
+  glVertex3f(rect.x + rect.w,rect.y,0);
   glVertex3f(rect.x + rect.w,rect.y + rect.h,0);
+
+  glVertex3f(rect.x + rect.w,rect.y + rect.h,0);
+  glVertex3f(rect.x,rect.y + rect.h,0);
+
   glVertex3f(rect.x,rect.y + rect.h,0);
   glVertex3f(rect.x,rect.y,0);
   glEnd( );

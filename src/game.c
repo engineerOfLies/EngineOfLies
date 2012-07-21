@@ -250,7 +250,7 @@ void MakeTestWindow()
   comp = eol_button_stock_new(
     3,
     "test_button2",
-    eol_rectf(0.2,0.8,1,1),
+    eol_rectf(0.1,0.7,1,1),
     win->rect,
     "Test Entity",
     0,

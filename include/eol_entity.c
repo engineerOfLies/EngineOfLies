@@ -33,7 +33,6 @@ void eol_entity_config()
   /*TODO: load from config*/
   _eol_entity_max = 1024;
   _eol_entity_draw_mode = eolEntityDrawLighting;
-
   /*TODO support these draw modes*/
   switch(_eol_entity_draw_mode)
   {
@@ -319,12 +318,15 @@ void eol_entity_think_all()
 void eol_entity_draw_box(eolEntity *ent)
 {
   eolRectFloat rect;
+  eolOrientation ori;
   if (!ent)return;
   rect.x = ent->boundingBox.w* -0.5;
   rect.y = ent->boundingBox.h* -0.5;
   rect.w = ent->boundingBox.w;
   rect.h = ent->boundingBox.h;
-  eol_draw_rect_3D(rect, ent->ori);
+  eol_orientation_copy(&ori,ent->ori);
+  eol_vector_clear_3D(ori.rotation);
+  eol_draw_rect_3D(rect, ori);
 }
 
 void eol_entity_draw_textured(eolEntity *ent)

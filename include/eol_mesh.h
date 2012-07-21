@@ -20,6 +20,15 @@
 #include "eol_types.h"
 #include "eol_sprite.h"
 
+enum eolMeshDrawModes {
+  eolMeshDrawWireframe = 1,
+  eolMeshDrawMesh      = 2,
+  eolMeshDrawSmooth    = 3,
+  eolMeshDrawTextured  = 4,
+  eolMeshDrawLighting  = 5,
+  eolMeshDrawShaded    = 6
+};
+
 /**
  * vertex in 2D space.  Used in texture space.
  */

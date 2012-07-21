@@ -194,7 +194,7 @@ eolParticle * eol_particle_new()
   {
     if (_eol_particle_list[i].lifetime == 0)
     {
-      eol_vector_set_3D(_eol_particle_list[i].ori.scale,1,1,1);
+      eol_vec3d_set(_eol_particle_list[i].ori.scale,1,1,1);
       return &_eol_particle_list[i];
     }
   }
