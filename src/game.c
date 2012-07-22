@@ -17,6 +17,10 @@
 
 eolSprite *sprite = NULL;
 eolActor *actor = NULL;
+eolMesh *level = NULL;
+eolSprite *levelskin = NULL;
+eolMesh *levelclip = NULL;
+
 typedef struct
 {
   eolFloat frame;
@@ -78,6 +82,8 @@ int main(int argc, char *argv[])
     
     eol_particle_update_all();
     eol_window_update_all();
+    
+    
     eol_graphics_frame_begin();
     eol_window_draw_all();
     eol_light_draw(light);
@@ -126,7 +132,14 @@ void TestWindowDraw(eolWindow *win)
   glPushMatrix();
 
   eol_camera_setup();
-
+  eol_mesh_draw(level,
+                eol_vec3d(0,0,0),
+                eol_vec3d(0,0,0),
+                eol_vec3d(1,1,1),
+                eol_vec3d(1,1,1),
+                1,
+                levelskin);
+                
   eol_entity_draw_all();
   eol_actor_draw(
     actor,
@@ -199,7 +212,7 @@ void MakeTestWindow()
   eol_rect_copy(&win->rect,eol_rect(32,32,640 - 64,480 - 64));
   win->canHasFocus = eolTrue;
   win->hasFocus = eolTrue;
-  win->drawGeneric = eolTrue;
+  win->drawGeneric = eolFalse;
   win->componentCount = 0;
   win->components = NULL;
   win->customData = NULL;
@@ -258,6 +271,8 @@ void MakeTestWindow()
   );
   eol_window_add_component(win,comp);
 
+  level = eol_mesh_load("models/levelmesh/testlevel.obj");
+  levelskin = eol_sprite_load("models/levelmesh/testlevel.png",-1,-1);
 }
 
 /*eol @ eof*/
