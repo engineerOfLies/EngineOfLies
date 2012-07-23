@@ -9,6 +9,7 @@ eolResourceManager * _eol_level_manager = NULL;
 eolLevel * _eol_level_list = NULL;
 eolLevel * _eol_level_current = NULL;
 eolUint    _eol_level_max_layers = 1;
+eolUint    _eol_level_layer_draw_range = 0;
 eolUint    _eol_level_max = 0; /**<maximum number of levels that can be loaded
                                    at a time, ie: buffered*/
 eolSpawnGeneric _eol_level_spawn_generic = NULL;
@@ -53,6 +54,12 @@ void eol_level_config()
   /*TODO: load from config*/
   _eol_level_max_layers = 3;
   _eol_level_max = 10;
+  _eol_level_layer_draw_range = 1;
+}
+
+void eol_level_register_spawn_generic(eolSpawnGeneric spawnGeneric)
+{
+  _eol_level_spawn_generic = spawnGeneric;
 }
 
 void eol_level_clear()
@@ -131,15 +138,15 @@ void eol_level_delete_layer(eolLevelLayer * level)
 
 void eol_level_delete(void *data)
 {
-  int i;
   eolLevel *level;
+  GList *l = NULL;
   if (!data)return;
   level = (eolLevel *)data;
-  for (i = 0; i < level->layerCount;i++)
+  for (l = level->layers; l != NULL;l = l->next)
   {
-    eol_level_delete_layer(&level->layers[i]);
+    eol_level_delete_layer(l->data);
   }
-  free(level->layers);
+  g_list_free(level->layers);
   memset(level,0,sizeof(eolLevel));
 }
 
@@ -147,6 +154,65 @@ eolBool eol_level_load_data_from_file(char * filename,void *data)
 {
   return eolTrue;
 }
+
+eolLevelLayer *eol_level_add_layer(eolLevel *level)
+{
+  eolLevelLayer *layer = NULL;
+  if (!level)return NULL;
+  layer = (eolLevelLayer*)malloc(sizeof(eolLevelLayer));
+  if (layer == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_level:failed to allocated a layer for level %s\n",
+      level->idName);
+    return NULL;
+  }
+  memset(layer,0,sizeof(eolLevelLayer));
+  level->layers = g_list_append(level->layers,layer);
+  level->layerCount++;
+  return layer;
+}
+
+eolBackground *eol_level_add_background_to_layer(eolLevelLayer *layer)
+{
+  eolBackground *back;
+  if (!layer)return NULL;
+  back = (eolBackground*)malloc(sizeof(eolBackground));
+  if (back == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_level:failed to allocated a background for layer %s\n",
+      layer->idName);
+    return NULL;
+  }
+  layer->backgrounds = g_list_append(layer->backgrounds,back);
+  return back;
+}
+
+eolLevel *eol_level_new()
+{
+  eolLevel *level = NULL;
+  if (!eol_level_initialized())
+  {
+    eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_entdow:used uninitialized\n");
+    return NULL;
+  }
+  level = (eolLevel *)eol_resource_new_element(_eol_level_manager);
+  if (level == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_level:failed to get new resource\n");
+    return NULL;
+  }
+  return level;
+}
+
+/*DRAWING*/
 
 void eol_level_draw_background(eolBackground * back)
 {
@@ -176,14 +242,13 @@ void eol_level_draw_layer_backgrounds(eolLevelLayer *layer)
 void eol_level_draw_layer_clipmask(eolLevelLayer *layer)
 {
   if (!layer)return;
-  eol_mesh_draw(
+  eol_mesh_draw_wire(
     layer->clipMesh,
     layer->clipMaskOri.position,
     layer->clipMaskOri.rotation,
     layer->clipMaskOri.scale,
     layer->clipMaskOri.color,
-    layer->clipMaskOri.alpha,
-    NULL
+    layer->clipMaskOri.alpha
   );
 
 }
@@ -196,10 +261,60 @@ void eol_level_draw_layer_bounds(eolLevelLayer *layer)
   eol_draw_rect_3D(layer->bounds,ori);
 }
 
-void eol_level_register_spawn_generic(eolSpawnGeneric spawnGeneric)
+void eol_level_draw(eolLevel *level)
 {
-  _eol_level_spawn_generic = spawnGeneric;
+  int i;
+  GList *layerNode = NULL;
+  eolLevelLayer *layer = NULL;
+  float alpha = 1;
+  if (!level)return;
+  if (!level->layers)return;
+  i = level->active - _eol_level_layer_draw_range;
+  if (i < 0)i = 0;
+  layerNode = g_list_nth(level->layers,i);
+  for (;(layerNode != NULL) && (i < level->active + _eol_level_layer_draw_range);
+        layerNode = layerNode->next,i++)
+  {
+    if (layerNode->data == NULL)continue;
+    if (i >= level->active)alpha = 0.25;
+    layer = (eolLevelLayer *)layerNode->data;
+    layer->alpha = alpha;
+    eol_level_draw_layer_backgrounds(layer);
+  }
 }
 
+void eol_level_draw_clip(eolLevel *level)
+{
+  eolLevelLayer *layer;
+  if (!level)return;
+  if (!level->layers)return;
+  if ((level->active < 0) || (level->active > level->layerCount))return;
+  layer = g_list_nth_data(level->layers,level->active);
+  eol_level_draw_layer_bounds(layer);
+  eol_level_draw_layer_clipmask(layer);
+}
+
+void eol_level_set_active_layer(eolLevel *level, eolUint layer)
+{
+  if (!level)return;
+  if (!level->layers)return;
+  if (layer >= level->layerCount)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_level:cannot set active layer %i for level %s\n",
+      layer,
+      level->idName);
+    return;
+  }
+  level->active = layer;
+}
+
+void eol_level_set_current_level(eolLevel *level)
+{
+  if (!level)return;
+  if (!level->layers)return;
+  _eol_level_current = level;
+}
 
 /*eol@eof*/

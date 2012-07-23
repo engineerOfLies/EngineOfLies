@@ -12,7 +12,6 @@
 #include "eol_model.h"
 #include "eol_particle.h"
 #include "eol_window.h"
-#include "eol_level.h"
 
 eolUint             _eol_major_version = 0;
 eolUint             _eol_minor_version = 1;
@@ -74,11 +73,6 @@ void eol_init(eolUint components)
     {
       eol_window_config();
       eol_window_init();
-    }
-    if (components & EOL_LEVEL)
-    {
-      eol_level_config();
-      eol_level_init();
     }
   }
   if (components & EOL_INPUT)

@@ -1,8 +1,7 @@
 #include "test_entity.h"
+#include "test_level.h"
 
 #include <eol.h>
-#include <eol_graphics.h>
-#include <eol_sprite.h>
 #include <eol_input.h>
 #include <eol_font.h>
 #include <eol_window.h>
@@ -67,6 +66,7 @@ int main(int argc, char *argv[])
   eol_light_set_radius(light,radius);
   //  eol_lighting_setup_rep_plot();
   srandom(SDL_GetTicks());
+  CreateTestLevel();
   do
   {
     eol_light_move(light,point);
@@ -122,6 +122,8 @@ void Init_All(const char *argv)
   eol_init(EOL_ALL);
   eol_entity_config();
   eol_entity_init();
+  eol_level_config();
+  eol_level_init();
 }
 
 void TestWindowDraw(eolWindow *win)
@@ -131,13 +133,6 @@ void TestWindowDraw(eolWindow *win)
   glPushMatrix();
 
   eol_camera_setup();
-  eol_mesh_draw_wire(level,
-                eol_vec3d(0,0,0),
-                eol_vec3d(0,0,0),
-                eol_vec3d(1,1,1),
-                eol_vec3d(1,1,1),
-                1
-                );
                 
   eol_entity_draw_all();
   eol_actor_draw_wire(
@@ -271,8 +266,6 @@ void MakeTestWindow()
   );
   eol_window_add_component(win,comp);
 
-  level = eol_mesh_load("models/levelmesh/testlevel_mask.obj");
-  levelskin = eol_sprite_load("models/levelmesh/testlevel.png",-1,-1);
 }
 
 /*eol @ eof*/

@@ -87,7 +87,8 @@ typedef struct
 {
   eolWord         idName;     /**<unique level name.  Searchable, should be part of the filename*/
   eolUint         layerCount; /**<how many layers the level contains*/
-  eolLevelLayer * layers;     /**<the allocated list of level layers*/
+  eolUint         active;     /**<the layer that is active*/
+  GList         * layers;     /**<the allocated list of level layers*/
 }eolLevel;
 
 
@@ -113,6 +114,22 @@ eolBool eol_level_initialized();
  * @return  a pointer to an allocated, but empty level, or NULL on error.
  */
 eolLevel *eol_level_new();
+
+/**
+ * @brief allocated an empty level layer, adds it to the level in question and returns a pointer
+ * to the newly created layer.
+ * @param level the level to add a layer to.
+ * @return  a pointer to an allocated, but empty layer, or NULL on error.
+ */
+eolLevelLayer *eol_level_add_layer(eolLevel *level);
+
+/**
+ * @brief allocated an empty background, adds it to the layer in question and returns a pointer
+ * to the newly created background.
+ * @param layer the layer to add a background to.
+ * @return a pointer to an allocated, but empty layer, or NULL on error.
+ */
+eolBackground *eol_level_add_background_to_layer(eolLevelLayer *layer);
 
 /**
  * @brief allocates and loads a level from file.
@@ -148,6 +165,29 @@ void eol_level_update(eolLevel *level);
  */
 void eol_level_register_spawn_generic(eolSpawnGeneric spawnGeneric);
 
+/**
+ * @brief draws the level focused on the active layer.
+ * @param level the level to draw.
+ */
+void eol_level_draw(eolLevel *level);
 
+/**
+ * @brief draws the active layer's clip mask and level bounds
+ * @param level the level to draw.
+ */
+void eol_level_draw_clip(eolLevel *level);
+
+/**
+ * @brief sets which layer in the level has the focus and gets updated.
+ * @param level the level to set
+ * @param layer layer number for the level to make active
+ */
+void eol_level_set_active_layer(eolLevel *level, eolUint layer);
+
+/**
+ * @brief sets the passed in level as the active level for rendering and updating.
+ * @param level to the level to make active
+ */
+void eol_level_set_current_level(eolLevel *level);
 
 #endif
