@@ -123,6 +123,27 @@ void eol_model_draw(
   );
 
 /**
+ * @brief draw the model under the current conditions
+ *
+ * @param model pointer to the model to draw
+ * @param position the place to draw the model
+ * @param rotation how the model is rotated
+ * @param scale how the model is scaled
+ * @param color color shifting of the model (1,1,1) is no change.
+ * @param alpha the tranlucency of the model 0 is clear, 1 is opaque
+ * @param frame the frame to draw this model at
+ */
+void eol_model_draw_wire(
+    eolModel *model,
+    eolVec3D position,
+    eolVec3D rotation,
+    eolVec3D scale,
+    eolVec3D color,
+    eolFloat alpha,
+    eolUint  frame
+  );
+
+/**
  * @brief searches for the model's action by name
  *
  * @param model the model to search

@@ -98,5 +98,14 @@ void eol_mat4_print(
     eolMat4 mat
   );
 
+/**
+ * @brief Uses matrix multiplication to rotate the input vector about the rotation.
+ *
+ * @param out output.  Pointer to where the result will be stored.
+ * @param rot the rotation vector
+ * @param in  the input vector, the vector to be rotated.
+ */
+void eol_matrix_rotate_vec3d(eolVec3D *out,eolVec3D rot,eolVec3D in);
+
 #endif
 

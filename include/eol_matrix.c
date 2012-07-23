@@ -35,6 +35,7 @@ void eol_mat4_mult_vert(
 {
   eolFloat x,y,z;
   eolFloat ox,oy,oz;
+  if (!out)return;
   x=vec.x;
   y=vec.y;
   z=vec.z;
@@ -130,6 +131,37 @@ void eol_mat4_copy(
 	if (d == s)return;
   memcpy(d,s,sizeof(eolMat4));
 }
+
+void eol_matrix_rotate_vec3d(eolVec3D *out,eolVec3D rot,eolVec3D in)
+{
+  eolMat4 rotmatrix;
+  if (!out)return;
+  rotmatrix[0][0]=rot.x * EOL_DEGTORAD;
+  rotmatrix[1][0]=1.0f;
+  rotmatrix[2][0]=0.0f;
+  rotmatrix[3][0]=0.0f;
+
+  rotmatrix[0][1]=rot.y * EOL_DEGTORAD;
+  rotmatrix[1][1]=0.0f;
+  rotmatrix[2][1]=1.0f;
+  rotmatrix[3][1]=0.0f;
+
+  rotmatrix[0][2]=rot.z * EOL_DEGTORAD;
+  rotmatrix[1][2]=0.0f;
+  rotmatrix[2][2]=0.0f;
+  rotmatrix[3][2]=1.0f;
+
+  rotmatrix[0][3]=0.0f;
+  rotmatrix[1][3]=0.0f;
+  rotmatrix[2][3]=0.0f;
+  rotmatrix[3][3]=0.0f;
+  eol_mat4_mult_vert(
+    out,
+    rotmatrix,
+    in
+  );
+}
+
 
 /*eol@eof*/
 

@@ -1,4 +1,5 @@
 #include "eol_mesh.h"
+#include "eol_matrix.h"
 #include "eol_logger.h"
 #include "eol_loader.h"
 #include <glib/glist.h>
@@ -730,5 +731,81 @@ void eol_mesh_draw(
   glDepthFunc(GL_LESS);
   glPopMatrix();
 }
+
+void eol_mesh_draw_wire(
+    eolMesh *mesh,
+    eolVec3D position,
+    eolVec3D rotation,
+    eolVec3D scale,
+    eolVec3D color,
+    eolFloat alpha
+  )
+{
+  int i;
+  eolFace* triangle;
+  float trans[4];
+
+  if (mesh == NULL)
+  {
+    return;
+  }
+  glPushMatrix();
+  trans[3] = alpha;
+  trans[0] = color.x;
+  trans[1] = color.y;
+  trans[2] = color.z;
+
+  glColorMaterial(GL_FRONT,GL_DIFFUSE);
+  glEnable(GL_NORMALIZE);
+  glEnable(GL_COLOR_MATERIAL);
+  glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_BLEND);
+
+  glDepthFunc(GL_LEQUAL);
+
+  glMaterialfv(GL_FRONT,GL_DIFFUSE,trans);
+
+  glTranslatef(position.x,position.y,position.z);
+  glRotatef(rotation.x, 1.0f, 0.0f, 0.0f);
+  glRotatef(rotation.y, 0.0f, 1.0f, 0.0f);
+  glRotatef(rotation.z, 0.0f, 0.0f, 1.0f);
+  glScalef(scale.x,scale.y,scale.z);
+
+  glColor3f(color.x,color.y,color.z);
+  glBegin(GL_LINES);
+  for (i = 0; i < mesh->_numFaces; i++)
+  {
+    triangle = &mesh->_faces[i];
+
+    glVertex3f(mesh->_vertices[triangle->vertices[0]].x,
+               mesh->_vertices[triangle->vertices[0]].y,
+               mesh->_vertices[triangle->vertices[0]].z);
+    glVertex3f(mesh->_vertices[triangle->vertices[1]].x,
+               mesh->_vertices[triangle->vertices[1]].y,
+               mesh->_vertices[triangle->vertices[1]].z);
+
+    glVertex3f(mesh->_vertices[triangle->vertices[1]].x,
+               mesh->_vertices[triangle->vertices[1]].y,
+               mesh->_vertices[triangle->vertices[1]].z);
+    glVertex3f(mesh->_vertices[triangle->vertices[2]].x,
+               mesh->_vertices[triangle->vertices[2]].y,
+               mesh->_vertices[triangle->vertices[2]].z);
+
+    glVertex3f(mesh->_vertices[triangle->vertices[2]].x,
+               mesh->_vertices[triangle->vertices[2]].y,
+               mesh->_vertices[triangle->vertices[2]].z);
+    glVertex3f(mesh->_vertices[triangle->vertices[0]].x,
+               mesh->_vertices[triangle->vertices[0]].y,
+               mesh->_vertices[triangle->vertices[0]].z);
+  }
+  glEnd();
+
+  glDisable(GL_COLOR_MATERIAL);
+  glDisable(GL_BLEND);
+  glDisable(GL_NORMALIZE);
+  glDepthFunc(GL_LESS);
+  glPopMatrix();
+}
+
 /*eol@eof*/
 

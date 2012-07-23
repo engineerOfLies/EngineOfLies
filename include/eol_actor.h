@@ -137,5 +137,14 @@ void eol_actor_draw(
     eolFloat alpha
   );
 
+void eol_actor_draw_wire(
+    eolActor *act,
+    eolVec3D position,
+    eolVec3D rotation,
+    eolVec3D scale,
+    eolVec3D color,
+    eolFloat alpha
+  );
+
 #endif
 

@@ -48,6 +48,27 @@ void eol_actor_draw(
   );
 }
 
+void eol_actor_draw_wire(
+    eolActor *act,
+    eolVec3D position,
+    eolVec3D rotation,
+    eolVec3D scale,
+    eolVec3D color,
+    eolFloat alpha
+  )
+{
+  if (!act)return;
+  eol_model_draw_wire(
+    act->model,
+    position,
+    rotation,
+    scale,
+    color,
+    alpha,
+    act->frame
+  );
+}
+
 void eol_actor_set_frame_rate(
     eolActor *act,
     eolFloat rate

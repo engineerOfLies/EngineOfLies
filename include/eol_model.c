@@ -361,7 +361,7 @@ void eol_model_draw(
     {
       eol_armature_deform_mesh(model->_arm, model->_mesh,frame);
     }
-  	eol_mesh_draw(
+    eol_mesh_draw(
         model->_mesh,
         position,
         rotation,
@@ -369,7 +369,79 @@ void eol_model_draw(
         color,
         alpha,
         model->_skin
-      );    
+      );
+  }
+  if (model->_sprite != NULL)
+  {
+    if (model->_sprite_3D)
+    {
+      eol_sprite_draw_transformed_3d(
+        model->_sprite,
+        frame,
+        position,
+        scale,
+        rotation,
+        color,
+        alpha
+      );
+    }
+    else
+    {
+      eol_sprite_draw_transformed(
+        model->_sprite,
+        frame,
+        position.x,
+        position.y,
+        scale.x,
+        scale.y,
+        rotation.z,
+        eolFalse,
+        eolFalse,
+        color,
+        alpha
+      );
+    }
+  }
+}
+
+void eol_model_draw_wire(
+    eolModel *model,
+    eolVec3D position,
+    eolVec3D rotation,
+    eolVec3D scale,
+    eolVec3D color,
+    eolFloat alpha,
+    eolUint  frame
+  )
+{
+  if (!model)return;
+  if (alpha == 0)
+  {
+    /*cannot draw a clear model, so don't waste the math*/
+    return;
+  }
+  if ((scale.x == 0) &&
+      (scale.y == 0) &&
+      (scale.z == 0))
+  {
+    /*cannot draw a zero scaled model*/
+    return;
+  }
+  /*TODO: check to see if the model is on camera...*/
+  if (model->_mesh != NULL)
+  {
+    if (model->_arm != NULL)
+    {
+      eol_armature_deform_mesh(model->_arm, model->_mesh,frame);
+    }
+    eol_mesh_draw_wire(
+        model->_mesh,
+        position,
+        rotation,
+        scale,
+        color,
+        alpha
+      );
   }
   if (model->_sprite != NULL)
   {

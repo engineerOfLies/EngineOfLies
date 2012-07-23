@@ -155,6 +155,26 @@ void eol_mesh_draw(
   );
 
 /**
+ * @brief draws the provided mesh to the active draw buffer.
+ *
+ * @param mesh the mesh to draw
+ * @param position the x,y,z position to draw it at
+ * @param rotation the x,y,z rotation
+ * @param scale    the x,y,z scaling factor (1,1,1 is no scaling)
+ * @param color    the r,g,b color shifting factor.  (1,1,1 is no color shift)
+ * @param alpha    the transparency to draw it with (1 is opaque, 0 is no
+ * drawing)
+ */
+void eol_mesh_draw_wire(
+    eolMesh *mesh,
+    eolVec3D position,
+    eolVec3D rotation,
+    eolVec3D scale,
+    eolVec3D color,
+    eolFloat alpha
+  );
+
+/**
  * @brief searches the mesh provided for the vertex group by the name.
  *
  * @param name the name to search for.

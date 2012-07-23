@@ -127,21 +127,20 @@ void Init_All(const char *argv)
 void TestWindowDraw(eolWindow *win)
 {
   TestData *data = (TestData *)win->customData;
-  eol_sprite_draw(sprite,(eolInt)data->frame,100,100);
 
   glPushMatrix();
 
   eol_camera_setup();
-  eol_mesh_draw(level,
+  eol_mesh_draw_wire(level,
                 eol_vec3d(0,0,0),
                 eol_vec3d(0,0,0),
                 eol_vec3d(1,1,1),
                 eol_vec3d(1,1,1),
-                1,
-                levelskin);
+                1
+                );
                 
   eol_entity_draw_all();
-  eol_actor_draw(
+  eol_actor_draw_wire(
     actor,
     eol_vec3d(0,0,0),
     eol_vec3d(-90,0,0/*data->rot*/),
@@ -154,6 +153,7 @@ void TestWindowDraw(eolWindow *win)
   eol_particle_draw_all();
 
   glPopMatrix();
+  eol_sprite_draw(sprite,(eolInt)data->frame,100,100);
   
   data->rot = data->rot + 0.25;
   if (data->rot > 360)data->rot -= 360;
@@ -271,7 +271,7 @@ void MakeTestWindow()
   );
   eol_window_add_component(win,comp);
 
-  level = eol_mesh_load("models/levelmesh/testlevel.obj");
+  level = eol_mesh_load("models/levelmesh/testlevel_mask.obj");
   levelskin = eol_sprite_load("models/levelmesh/testlevel.png",-1,-1);
 }
 

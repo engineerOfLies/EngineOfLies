@@ -24,6 +24,7 @@ eolBool eol_entity_load_data_from_file(char * filename,void *data);
 static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data);
 
 void eol_entity_draw_textured(eolEntity *ent);
+void eol_entity_draw_wire(eolEntity *ent);
 void eol_entity_draw_box(eolEntity *ent);
 
 
@@ -32,7 +33,7 @@ void eol_entity_config()
 {
   /*TODO: load from config*/
   _eol_entity_max = 1024;
-  _eol_entity_draw_mode = eolEntityDrawLighting;
+  _eol_entity_draw_mode = eolEntityDrawWireframe;
   /*TODO support these draw modes*/
   switch(_eol_entity_draw_mode)
   {
@@ -40,7 +41,7 @@ void eol_entity_config()
       _eol_entity_draw_func = eol_entity_draw_box;
       break;
     case eolEntityDrawWireframe:
-      _eol_entity_draw_func = eol_entity_draw_box;
+      _eol_entity_draw_func = eol_entity_draw_wire;
       break;
     case eolEntityDrawMesh:
       _eol_entity_draw_func = eol_entity_draw_textured;
@@ -327,6 +328,24 @@ void eol_entity_draw_box(eolEntity *ent)
   eol_orientation_copy(&ori,ent->ori);
   eol_vector_clear_3D(ori.rotation);
   eol_draw_rect_3D(rect, ori);
+}
+
+void eol_entity_draw_wire(eolEntity *ent)
+{
+  GList *list;
+  if (!ent)return;
+  for (list = ent->actorList;list != NULL;list = list->next)
+  {
+    if (list->data != NULL)
+    {
+      eol_actor_draw_wire((eolActor *)list->data,
+                     ent->ori.position,
+                     ent->ori.rotation,
+                     ent->ori.scale,
+                     ent->ori.color,
+                     ent->ori.alpha);
+    }
+  }
 }
 
 void eol_entity_draw_textured(eolEntity *ent)
