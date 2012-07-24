@@ -98,6 +98,21 @@ eolRectFloat eol_rectf(
   return r;
 }
 
+void eol_rectf_set(
+    eolRectFloat * d,
+    eolFloat       x,
+    eolFloat       y,
+    eolFloat       w,
+    eolFloat       h
+)
+{
+  if (!d)return;
+  d->x = x;
+  d->y = y;
+  d->w = w;
+  d->h = h;
+}
+
 void eol_rectf_copy(
     eolRectFloat * d,
     eolRectFloat   s
@@ -138,7 +153,7 @@ void eol_orientation_clear(eolOrientation *out)
   eol_vec3d_set(out->position,0,0,0);
   eol_vec3d_set(out->rotation,0,0,0);
   eol_vec3d_set(out->scale,1,1,1);
-  eol_vec3d_set(out->color,0,0,0);
+  eol_vec3d_set(out->color,1,1,1);
   out->alpha = 1;
 }
 

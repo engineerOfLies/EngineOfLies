@@ -688,7 +688,7 @@ void eol_armature_close()
   int i;
   eol_logger_message(
     EOL_LOG_INFO,
-    "eol_armature: closing down\n"
+    "eol_armature: closing\n"
     );
   for (i = 0;i < _eol_armature_max;i++)
   {

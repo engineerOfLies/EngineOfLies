@@ -163,6 +163,14 @@ void eol_rectf_copy(
     eolRectFloat   s
   );
 
+void eol_rectf_set(
+    eolRectFloat * d,
+    eolFloat       x,
+    eolFloat       y,
+    eolFloat       w,
+    eolFloat       h
+  );
+
 /*
  * The Vector Types
  * Not to be confused with the vector lists from STL

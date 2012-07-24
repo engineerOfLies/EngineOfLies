@@ -10,6 +10,7 @@ eolLevel * _eol_level_list = NULL;
 eolLevel * _eol_level_current = NULL;
 eolUint    _eol_level_max_layers = 1;
 eolUint    _eol_level_layer_draw_range = 0;
+eolUint    _eol_level_draw_mode = 0;
 eolUint    _eol_level_max = 0; /**<maximum number of levels that can be loaded
                                    at a time, ie: buffered*/
 eolSpawnGeneric _eol_level_spawn_generic = NULL;
@@ -55,6 +56,7 @@ void eol_level_config()
   _eol_level_max_layers = 3;
   _eol_level_max = 10;
   _eol_level_layer_draw_range = 1;
+  _eol_level_draw_mode = eolLevelDrawClip;
 }
 
 void eol_level_register_spawn_generic(eolSpawnGeneric spawnGeneric)
@@ -212,7 +214,24 @@ eolLevel *eol_level_new()
   return level;
 }
 
-/*DRAWING*/
+/*
+  *** DRAWING ***
+*/
+
+void eol_level_draw_current()
+{
+  if (!eol_level_initialized())return;
+  if (_eol_level_current == NULL)return;
+  switch (_eol_level_draw_mode)
+  {
+    case eolLevelDrawFull:
+      eol_level_draw(_eol_level_current);
+      break;
+    case eolLevelDrawClip:
+      eol_level_draw_clip(_eol_level_current);
+      break;
+  }
+}
 
 void eol_level_draw_background(eolBackground * back)
 {
@@ -288,8 +307,16 @@ void eol_level_draw_clip(eolLevel *level)
   eolLevelLayer *layer;
   if (!level)return;
   if (!level->layers)return;
-  if ((level->active < 0) || (level->active > level->layerCount))return;
   layer = g_list_nth_data(level->layers,level->active);
+  if (layer == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "cannot get layer %n for level %s\n",
+      level->active,
+      level->idName);
+    return;
+  }
   eol_level_draw_layer_bounds(layer);
   eol_level_draw_layer_clipmask(layer);
 }

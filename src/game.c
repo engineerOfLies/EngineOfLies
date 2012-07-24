@@ -11,6 +11,7 @@
 #include <eol_lighting.h>
 #include <eol_camera.h>
 #include <eol_entity.h>
+#include <eol_level.h>
 #include <string.h>
 #include <stdio.h>
 
@@ -64,7 +65,7 @@ int main(int argc, char *argv[])
   light = eol_light_area_new();
   eol_light_set_color(light,eol_vec3d(0.5,0.5,0.5));
   eol_light_set_radius(light,radius);
-  //  eol_lighting_setup_rep_plot();
+  eol_lighting_setup_rep_plot();
   srandom(SDL_GetTicks());
   CreateTestLevel();
   do
@@ -133,8 +134,11 @@ void TestWindowDraw(eolWindow *win)
   glPushMatrix();
 
   eol_camera_setup();
-                
+
+  eol_level_draw_current();
+  
   eol_entity_draw_all();
+
   eol_actor_draw_wire(
     actor,
     eol_vec3d(0,0,0),

@@ -31,6 +31,12 @@
  * layered levels
  */
 
+enum eolLevelDrawModes {
+  eolLevelDrawClip,
+  eolLevelDrawMesh,
+  eolLevelDrawFull
+};
+
 /**
  * @brief function pointer prototype used to spawn the entities for the level
  * the application will receive a name and a hash.  The hash is keyed on the name
@@ -164,6 +170,11 @@ void eol_level_update(eolLevel *level);
  * @param spawnGeneric a pointer to a function to call when spawning entities
  */
 void eol_level_register_spawn_generic(eolSpawnGeneric spawnGeneric);
+
+/**
+* @brief draws the current level.
+*/
+void eol_level_draw_current();
 
 /**
  * @brief draws the level focused on the active layer.
