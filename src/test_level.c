@@ -25,8 +25,12 @@ void CreateTestLevel()
 
   back->model = eol_model_load("models/testlevel.actor");
   layer->clipMesh = eol_mesh_load("models/levelmesh/testlevel_mask.obj");
+  if (layer->clipMesh != NULL)
+  {
+    eol_level_add_mask_to_space(layer);
+  }
   eol_orientation_clear(&layer->clipMaskOri);
-  
+
   eol_rectf_set(&layer->bounds, -5, -5, 10, 10);
 
   eol_level_set_active_layer(level, 0);

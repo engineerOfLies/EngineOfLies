@@ -22,6 +22,7 @@
 #include "eol_model.h"
 #include "eol_sprite.h"
 #include "eol_spawn.h"
+#include "eol_entity.h"
 #include <glib/glist.h>
 
 /**
@@ -31,6 +32,9 @@
  * layered levels
  */
 
+enum eolLevelClipLayers {
+  eolLevelClipLevel = 1
+};
 enum eolLevelDrawModes {
   eolLevelDrawClip,
   eolLevelDrawMesh,
@@ -87,6 +91,7 @@ typedef struct
   GList      * backgrounds;  /**<a list of background display models.*/
   cpSpace    * space;        /**<the collision space for this layer*/
   eolMesh    * clipMesh;     /**<the collision mask as mesh data*/
+  GList      * entities;     /**<entites that have been added to the layer*/
 }eolLevelLayer;
 
 typedef struct
@@ -200,5 +205,27 @@ void eol_level_set_active_layer(eolLevel *level, eolUint layer);
  * @param level to the level to make active
  */
 void eol_level_set_current_level(eolLevel *level);
+
+/**
+ * @brief runs the physics simulation for the active layer.
+ * Runs pre and post sync for entities
+ */
+void eol_level_update_active();
+
+void eol_level_add_mask_to_space(eolLevelLayer *layer);
+
+/*
+  *** ENTITY ***
+*/
+
+/**
+ * @brief adds and entity's body and shape to the layer space for physics.
+ * The entity should have the body and shape defined previously.
+ * @param layer the layer of the level to add the player to.
+ * @param ent the entity to be adde
+ */
+void eol_level_add_entity_to_layer(eolLevelLayer *layer, eolEntity *ent);
+
+void eol_level_add_entity_to_active_layer(eolEntity *ent);
 
 #endif

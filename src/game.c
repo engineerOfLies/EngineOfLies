@@ -75,16 +75,15 @@ int main(int argc, char *argv[])
 
     eol_input_update();
     eol_mouse_update();
-    eol_entity_presync_all();
-    /*TODO: run physics... right here*/
-    eol_entity_postsync_all();
+
+    eol_level_update_active();
+
     eol_entity_think_all();
     eol_entity_update_all();
-    
+
     eol_particle_update_all();
     eol_window_update_all();
-    
-    
+
     eol_graphics_frame_begin();
     eol_window_draw_all();
     eol_light_draw(light);

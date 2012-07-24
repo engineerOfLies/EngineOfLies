@@ -1,5 +1,5 @@
-#include "eol_draw.h"
 #include "eol_level.h"
+#include "eol_draw.h"
 #include "eol_logger.h"
 #include "eol_resource.h"
 
@@ -122,7 +122,7 @@ void eol_level_delete_layer(eolLevelLayer * level)
   }
   s = NULL;
   g_list_free(level->spawnList);
-
+  g_list_free(level->entities);/*just free our pointers to em, they can delete themselves*/
   for (s = level->backgrounds; s != NULL; s = s->next)
   {
     if (s->data == NULL)continue;
@@ -171,6 +171,20 @@ eolLevelLayer *eol_level_add_layer(eolLevel *level)
     return NULL;
   }
   memset(layer,0,sizeof(eolLevelLayer));
+
+  layer->space = cpSpaceNew();
+  if (layer->space == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "Unable to create a physics space for new layer in level %s!\n",
+      level->idName);
+    eol_level_delete_layer(layer);
+    return NULL;
+  }
+  layer->space->iterations = 10;/*NOTE: make configurable*/
+  layer->space->sleepTimeThreshold = 999999;
+  
   level->layers = g_list_append(level->layers,layer);
   level->layerCount++;
   return layer;
@@ -342,6 +356,115 @@ void eol_level_set_current_level(eolLevel *level)
   if (!level)return;
   if (!level->layers)return;
   _eol_level_current = level;
+}
+
+/*
+ *** physics ***
+*/
+
+cpShape *eol_level_add_segment_to_space(eolFloat sx,
+                                        eolFloat sy,
+                                        eolFloat ex,
+                                        eolFloat ey,
+                                        cpSpace *space)
+{
+  cpShape *shape;
+  float friction = 0.1;
+  if(space == NULL)return NULL;
+  shape = cpSegmentShapeNew(cpSpaceGetStaticBody(space), cpv(sx,sy), cpv(ex,ey), 0.0);
+  if (sx == ex)
+  {
+    friction = 0;
+  }
+  if(shape != NULL)
+  {
+    shape->e = 0;
+    shape->u = friction;
+    shape->collision_type = eolLevelClipLevel;
+    cpShapeSetLayers (shape, eolLevelClipLevel);
+    cpSpaceAddStaticShape(space, shape);
+  }
+  return shape;
+}
+
+void eol_level_add_triangle_to_space(cpSpace *space,eolFace *face,eolMesh *mask)
+{
+  if ((!space)||(!face)||(!mask))return;
+  /*TODO dont add duplicate edges to the space*/
+  eol_level_add_segment_to_space(mask->_vertices[face->vertices[0]].x,
+                                 mask->_vertices[face->vertices[0]].y,
+                                 mask->_vertices[face->vertices[1]].x,
+                                 mask->_vertices[face->vertices[1]].y,
+                                 space);
+
+  eol_level_add_segment_to_space(mask->_vertices[face->vertices[1]].x,
+                                 mask->_vertices[face->vertices[1]].y,
+                                 mask->_vertices[face->vertices[2]].x,
+                                 mask->_vertices[face->vertices[2]].y,
+                                 space);
+
+  eol_level_add_segment_to_space(mask->_vertices[face->vertices[2]].x,
+                                 mask->_vertices[face->vertices[2]].y,
+                                 mask->_vertices[face->vertices[1]].x,
+                                 mask->_vertices[face->vertices[1]].y,
+                                 space);
+  /*TODO see if I need to catch these and free em up later.*/
+}
+
+void eol_level_add_mask_to_space(eolLevelLayer *layer)
+{
+  int i;
+  if (!layer)return;
+  if ((!layer->space)||(!layer->clipMesh))
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "cannot add clipmesh to space %s: missing data\n",
+      layer->idName);
+    return;
+  }
+  for (i = 0; i < layer->clipMesh->_numFaces;i++)
+  {
+    eol_level_add_triangle_to_space(layer->space,
+                                    &layer->clipMesh->_faces[i],
+                                    layer->clipMesh);
+  }
+}
+
+void eol_level_update_active()
+{
+  eol_level_update(_eol_level_current);
+}
+
+void eol_level_update(eolLevel *level)
+{
+  eolLevelLayer *layer = NULL;
+  if (!level)return;
+  layer = g_list_nth_data(level->layers,level->active);
+  if (layer == NULL)return;
+  /*presync*/
+  eol_entity_presync_all();
+
+  cpSpaceStep(layer->space,0.01);/*TODO: make configurable*/
+
+  /*post sync*/
+  eol_entity_postsync_all();
+}
+
+void eol_level_add_entity_to_active_layer(eolEntity *ent)
+{
+  if (!_eol_level_current)return;
+  eol_level_add_entity_to_layer(g_list_nth_data(_eol_level_current->layers,
+                                                _eol_level_current->active),
+                                ent);
+}
+
+void eol_level_add_entity_to_layer(eolLevelLayer *layer, eolEntity *ent)
+{
+  if ((!layer) || (!ent))return;
+  eol_entity_add_to_space(ent,layer->space);
+  if (ent->_space != layer->space)return;
+  layer->entities = g_list_append(layer->entities,ent);
 }
 
 /*eol@eof*/

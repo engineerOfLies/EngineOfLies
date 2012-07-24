@@ -1,4 +1,5 @@
 #include <eol_entity.h>
+#include <eol_level.h>
 #include <eol_actor.h>
 #include <eol_logger.h>
 
@@ -34,12 +35,13 @@ void spawnTestEnt(eolVec3D position)
   self->think = testEntThink;
   eol_vec3d_set(self->ori.scale,0.4,0.4,0.4);
   eol_vec3d_set(self->ori.color,1,1,0.4);
-  
+  self->vector.position.y = crandom() * 0.01;
   self->vector.rotation.z = crandom();
   self->vector.rotation.y = crandom();
   self->vector.rotation.x = crandom();
 
   eol_vec3d_copy(self->ori.position,position);
+  eol_level_add_entity_to_active_layer(self);
   eol_logger_message(
     EOL_LOG_INFO,
     "spawned test entity\n");
