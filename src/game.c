@@ -15,8 +15,6 @@
 #include <string.h>
 #include <stdio.h>
 
-eolSprite *sprite = NULL;
-eolActor *actor = NULL;
 eolMesh *level = NULL;
 eolSprite *levelskin = NULL;
 eolMesh *levelclip = NULL;
@@ -53,13 +51,6 @@ int main(int argc, char *argv[])
   eol_camera_config();
   eol_camera_init();
   done = 0;
-  actor = eol_actor_new();
-  if (actor)
-  {
-    eol_actor_load(actor,"models/bruiser.actor");
-    eol_actor_set_action(actor,"idle");
-  }
-  sprite = eol_sprite_load("images/skeleton.png",128,128);
   MakeTestWindow();
   eol_mouse_show();
   light = eol_light_area_new();
@@ -138,20 +129,9 @@ void TestWindowDraw(eolWindow *win)
   
   eol_entity_draw_all();
 
-  eol_actor_draw_wire(
-    actor,
-    eol_vec3d(0,0,0),
-    eol_vec3d(-90,0,0/*data->rot*/),
-    eol_vec3d(.5,.5,.5),
-    eol_vec3d(1,1,1),
-    0.5
-  );
-
-  eol_actor_next_frame(actor);
   eol_particle_draw_all();
 
   glPopMatrix();
-  eol_sprite_draw(sprite,(eolInt)data->frame,100,100);
   
   data->rot = data->rot + 0.25;
   if (data->rot > 360)data->rot -= 360;
@@ -189,7 +169,7 @@ void TestWindowUpdate(eolWindow *win,GList *updates)
         }
         break;
       case 3:
-        spawnTestEnt(eol_vec3d(crandom() * 3,crandom() * 3,0));
+        spawnTestEnt(eol_vec3d(0,0,0));
         break;
     }
   }
@@ -207,7 +187,7 @@ void MakeTestWindow()
   }
   strncpy(win->name,"window",EOLLINELEN);
   win->id = 1;
-  eol_rect_copy(&win->rect,eol_rect(32,32,640 - 64,480 - 64));
+  eol_rect_copy(&win->rect,eol_rect(0,0,640,480));
   win->canHasFocus = eolTrue;
   win->hasFocus = eolTrue;
   win->drawGeneric = eolFalse;
@@ -223,15 +203,15 @@ void MakeTestWindow()
   comp = eol_label_new(
     0,
     "main_label",
-    eol_rectf(0.25,0.1,1,1),
+    eol_rectf(0.05,0.05,1,1),
     win->rect,
     eolTrue,
-    "This is a test label",
+    "Test Bed for Engine Of Lies",
     eolJustifyLeft,
     eolFalse,
     3,
     NULL,
-    eol_vec3d(1,1,1),
+    eol_vec3d(0.2,1,0.2),
     1
   );
   eol_window_add_component(win,comp);

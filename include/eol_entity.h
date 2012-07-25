@@ -54,6 +54,11 @@ enum eolEntityDrawModes {
   eolEntityDrawShaded    = 5
 };
 
+enum eolEntityClipLayers {
+  eolEntityClipLevel = 1
+};
+
+
 typedef struct Entity_S
 {
   eolUint           id;         /**<unique entity resource id*/

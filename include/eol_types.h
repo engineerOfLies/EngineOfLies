@@ -31,6 +31,8 @@
 /* the threshold for floating point accuracy*/
 #define EOL_EPSILON   1e-6f
 
+#define EOL_2PI 6.283185308
+
 /* conversion factor for converting from radians to degrees*/
 #define EOL_RADTODEG  57.295779513082
 
@@ -195,6 +197,13 @@ typedef struct
  */
 eolVec3D eol_vec3d(eolDouble x, eolDouble y, eolDouble z);
 
+
+/**
+ * @brief sets the outvector to a unit vector pointing at the angle specified
+ * @param out output.  Vector will be set to a unit vector rotated by radians
+ * @param radians specify the angle of the vector to be set.
+ */
+void eol_vec3d_set_angle_by_radians(eolVec3D *out,eolFloat radians);
 /*
   Time Handling
 */

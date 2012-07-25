@@ -53,6 +53,12 @@ eolBool eol_distance_between_less_than(eolVec3D p1,eolVec3D p2,eolFloat size)
                                        size);
 }
 
+void eol_vec3d_set_angle_by_radians(eolVec3D *out,eolFloat radians)
+{
+  if(!out)return;
+  out->x = cos(radians);
+  out->y = sin(radians);
+}
 
 void eol_vec3d_normalize (eolVec3D *V)
 {

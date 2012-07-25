@@ -272,6 +272,7 @@ void eol_mesh_get_mesh_from_object_file(eolMesh * model, FILE* file)
   int  numtexcoords = 0;
   int  numfaces = 0;
   char buf[128];
+  eolVec3D bounds = {0,0,0};
   float x,y,z;
 
   if (file == NULL)
@@ -295,6 +296,9 @@ void eol_mesh_get_mesh_from_object_file(eolMesh * model, FILE* file)
             model->_vertices[numvertices].x = x;
             model->_vertices[numvertices].y = y;
             model->_vertices[numvertices].z = z;
+            if (fabs(x) > bounds.x)bounds.x = fabs(x);
+            if (fabs(y) > bounds.x)bounds.y = fabs(y);
+            if (fabs(z) > bounds.x)bounds.z = fabs(z);
             numvertices++;
             break;
           case 'n':
@@ -353,6 +357,7 @@ void eol_mesh_get_mesh_from_object_file(eolMesh * model, FILE* file)
         break;
     }
   }
+  eol_vec3d_copy(model->bounds,bounds);
 }
 
 void eol_mesh_get_groups(eolMesh *model, FILE *file)
@@ -696,9 +701,14 @@ void eol_mesh_draw(
 
   glColor3f(color.x,color.y,color.z);
 
-  glUseProgram(_eol_mesh_shader_program);
-
-  glUniform1i(glGetUniformLocation(_eol_mesh_shader_program, "colorMap"), 0);
+  if (glUseProgram != NULL)
+  {
+    glUseProgram(_eol_mesh_shader_program);
+    if ((glUniform1i != NULL) && (glGetUniformLocation != NULL))
+    {
+      glUniform1i(glGetUniformLocation(_eol_mesh_shader_program, "colorMap"), 0);
+    }
+  }
   
   glBegin(GL_TRIANGLES);
   for (i = 0; i < mesh->_numFaces; i++)

@@ -33,7 +33,7 @@ void eol_entity_config()
 {
   /*TODO: load from config*/
   _eol_entity_max = 1024;
-  _eol_entity_draw_mode = eolEntityDrawWireframe;
+  _eol_entity_draw_mode = eolEntityDrawLighting;
   /*TODO support these draw modes*/
   switch(_eol_entity_draw_mode)
   {
@@ -138,7 +138,6 @@ void eol_entity_delete(void *entityData)
       if (it->data != NULL)free(it->data);
     }
   }
-  if (ent->shape)cpShapeFree(ent->shape);
   for (it = ent->actorList; it != NULL; it = it->next)
   {
     if (it->data)
@@ -151,8 +150,8 @@ void eol_entity_delete(void *entityData)
   ent->actor = NULL;
   ent->actorList = NULL;
   /*physics*/
-  cpShapeFree(ent->shape);
-  cpBodyFree(ent->body);
+  if (ent->body)cpBodyFree(ent->body);
+  if (ent->shape)cpShapeFree(ent->shape);
   /*
   TODO: make this happen from the config
   eol_config_free(&ent->config);
@@ -237,12 +236,12 @@ void eol_entity_postsync(eolEntity * ent)
 void eol_entity_presync(eolEntity *ent)
 {
   if (!ent)return;
-  eol_orientation_add(&ent->vector,
-                      ent->vector,
-                      ent->accel);
   eol_orientation_add(&ent->ori,
                       ent->ori,
                       ent->vector);
+  eol_orientation_add(&ent->vector,
+                      ent->vector,
+                      ent->accel);
   if (ent->trackTrail)
   {
     eol_trail_append(&ent->trail,ent->ori);
@@ -250,18 +249,15 @@ void eol_entity_presync(eolEntity *ent)
 
   if (ent->body != NULL)
   {
+    cpBodySetPos(ent->body, cpv(ent->ori.position.x,ent->ori.position.y));
     cpBodySetVel(ent->body, cpv(ent->vector.position.x,ent->vector.position.y));
-    if (cpvlengthsq(cpv(ent->vector.position.x,ent->vector.position.y)))
-    {
-      cpBodyActivate(ent->body);
-    }
+    cpBodyActivate(ent->body);
   }
 }
 
 void eol_entity_presync_all()
 {
   eolEntity *ent = NULL;
-  if (!eol_entity_initialized())return;
   if (!eol_entity_initialized())return;
   while ((ent = eol_resource_get_next_data(_eol_entity_manager,ent)) != NULL)
   {
@@ -321,13 +317,30 @@ void eol_entity_draw_box(eolEntity *ent)
   eolRectFloat rect;
   eolOrientation ori;
   if (!ent)return;
-  rect.x = ent->boundingBox.w* -0.5;
-  rect.y = ent->boundingBox.h* -0.5;
-  rect.w = ent->boundingBox.w;
-  rect.h = ent->boundingBox.h;
-  eol_orientation_copy(&ori,ent->ori);
-  eol_vector_clear_3D(ori.rotation);
-  eol_draw_rect_3D(rect, ori);
+  switch (ent->shapeType)
+  {
+    case eolEntityRect:
+      rect.x = ent->boundingBox.w* -0.5;
+      rect.y = ent->boundingBox.h* -0.5;
+      rect.w = ent->boundingBox.w;
+      rect.h = ent->boundingBox.h;
+      eol_orientation_copy(&ori,ent->ori);
+      eol_vector_clear_3D(ori.rotation);
+      eol_draw_rect_3D(rect, ori);
+      break;
+    case eolEntityCircle:
+      eol_draw_cirlce_3D(ent->ori.position,
+                        ent->radius,
+                        32,
+                        ent->ori.color,
+                        ent->ori.alpha);
+      break;
+    default:
+      eol_draw_dot_3D(ent->ori.position,
+                      ent->radius,
+                      ent->ori.color,
+                      ent->ori.alpha);
+  }
 }
 
 void eol_entity_draw_wire(eolEntity *ent)
@@ -517,6 +530,7 @@ void eol_entity_remove_from_space(eolEntity *ent)
       "eol_entity:entity does not have a body!\n");
     return;
   }
+  cpSpaceRemoveShape(ent->_space, ent->shape);
   cpSpaceRemoveBody(ent->_space, ent->body);
 }
 
@@ -530,6 +544,10 @@ void eol_entity_shape_make_circle(eolEntity *ent)
     return;
   }
   eol_entity_remove_from_space(ent);
+  if (ent->shape != NULL)
+  {
+    cpShapeFree(ent->shape);
+  }
   if (ent->body == NULL)
   {
     ent->body = cpBodyNew(ent->mass, INFINITY);
@@ -541,10 +559,7 @@ void eol_entity_shape_make_circle(eolEntity *ent)
       return;
     }
   }
-  if (ent->shape != NULL)
-  {
-    cpShapeFree(ent->shape);
-  }
+  ent->shapeType = eolEntityCircle;
   ent->shape = cpCircleShapeNew(ent->body, ent->radius, cpvzero);
   cpShapeSetLayers(ent->shape, ent->collisionMask);
 }
@@ -574,6 +589,7 @@ void eol_entity_shape_make_rect(eolEntity *ent)
   {
     cpShapeFree(ent->shape);
   }
+  ent->shapeType = eolEntityRect;
   ent->shape = cpBoxShapeNew(ent->body, ent->boundingBox.w, ent->boundingBox.h);
   cpShapeSetLayers(ent->shape, ent->collisionMask);
 }

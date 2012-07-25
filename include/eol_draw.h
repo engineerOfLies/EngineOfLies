@@ -29,6 +29,12 @@ void eol_draw_dot_3D(eolVec3D point,
                      eolVec3D color,
                      eolFloat alpha);
 
+void eol_draw_cirlce_3D(eolVec3D point,
+                        eolFloat radius,
+                        eolUint  segments,
+                        eolVec3D color,
+                        eolFloat alpha);
+
 void eol_draw_line_3D(eolVec3D p1,
                       eolVec3D p2,
                       eolFloat radius,

@@ -32,9 +32,6 @@
  * layered levels
  */
 
-enum eolLevelClipLayers {
-  eolLevelClipLevel = 1
-};
 enum eolLevelDrawModes {
   eolLevelDrawClip,
   eolLevelDrawMesh,

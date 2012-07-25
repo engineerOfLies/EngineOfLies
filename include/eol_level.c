@@ -107,8 +107,7 @@ void eol_level_free(eolLevel **level)
 void eol_level_delete_layer(eolLevelLayer * level)
 {
   eolBackground *b = NULL;
-  GList *s;
-
+  GList *s,*e;
   if (!level)return;
   
   eol_sprite_free(&level->tileMap.tileSet);
@@ -122,7 +121,6 @@ void eol_level_delete_layer(eolLevelLayer * level)
   }
   s = NULL;
   g_list_free(level->spawnList);
-  g_list_free(level->entities);/*just free our pointers to em, they can delete themselves*/
   for (s = level->backgrounds; s != NULL; s = s->next)
   {
     if (s->data == NULL)continue;
@@ -133,8 +131,11 @@ void eol_level_delete_layer(eolLevelLayer * level)
   s = NULL;
   g_list_free(level->backgrounds);
 
-  /*TODO: need to make sure I dont have to handle entities added to this space
-  separately.*/
+  for (e = level->entities;e != NULL;e = e->next)
+  {
+    eol_entity_remove_from_space(e->data);
+  }
+  g_list_free(level->entities);/*just free our pointers to em, they can delete themselves*/
   if (level->space != NULL)cpSpaceFree(level->space);
 }
 
@@ -380,8 +381,8 @@ cpShape *eol_level_add_segment_to_space(eolFloat sx,
   {
     shape->e = 0;
     shape->u = friction;
-    shape->collision_type = eolLevelClipLevel;
-    cpShapeSetLayers (shape, eolLevelClipLevel);
+    shape->collision_type = eolEntityClipLevel;
+    cpShapeSetLayers (shape, eolEntityClipLevel);
     cpSpaceAddStaticShape(space, shape);
   }
   return shape;
@@ -467,4 +468,18 @@ void eol_level_add_entity_to_layer(eolLevelLayer *layer, eolEntity *ent)
   layer->entities = g_list_append(layer->entities,ent);
 }
 
+void eol_level_remove_entity_from_layer(eolLevelLayer *layer, eolEntity *ent)
+{
+  if ((!layer) || (!ent))return;
+  layer->entities = g_list_remove(layer->entities,ent);
+  eol_entity_remove_from_space(ent);
+}
+
+void eol_level_remove_entity_from_active_layer(eolEntity *ent)
+{
+  if (!_eol_level_current)return;
+  eol_level_remove_entity_from_layer(g_list_nth_data(_eol_level_current->layers,
+                                                     _eol_level_current->active),
+                                     ent);
+}
 /*eol@eof*/

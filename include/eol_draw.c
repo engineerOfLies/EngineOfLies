@@ -31,6 +31,49 @@ void eol_draw_trail(eolTrail * trail,
   }
 }
 
+void eol_draw_cirlce_3D(eolVec3D point,
+                        eolFloat radius,
+                        eolUint  segments,
+                        eolVec3D color,
+                        eolFloat alpha)
+{
+  eolVec3D p1,p2;
+  eolFloat step;
+  int i;
+  if (segments < 3)return;
+  step = EOL_2PI / segments;
+  glDisable(GL_DEPTH_TEST);
+  glEnable(GL_COLOR_MATERIAL);
+  glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_BLEND);
+  glColor4f(color.x,color.y,color.z,alpha);
+  glPushMatrix();
+
+  glTranslatef(point.x,point.y,point.z);
+  
+  glBegin( GL_LINES );
+  
+  for (i = 0; i < segments;i++)
+  {
+    eol_vec3d_set_angle_by_radians(&p1,i * step);
+    eol_vec3d_set_angle_by_radians(&p2,(i + 1) * step);
+    p1.x *= radius;
+    p1.y *= radius;
+    p2.x *= radius;
+    p2.y *= radius;
+    glVertex3f(p1.x,p1.y,0);
+    glVertex3f(p2.x,p2.y,0);
+  }
+  
+  glEnd( );
+  glPopMatrix();
+  glColor4f(1,1,1,1);
+  glDisable(GL_BLEND);
+  glDisable(GL_COLOR_MATERIAL);
+  glEnable(GL_DEPTH_TEST);
+  
+}
+
 void eol_draw_dot_3D(eolVec3D point,
                      eolFloat radius,
                      eolVec3D color,
@@ -38,7 +81,6 @@ void eol_draw_dot_3D(eolVec3D point,
 {
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
-  glDisable(GL_FOG);
   glColor4f(color.x,color.y,color.z,alpha);
   glPushMatrix();
   glEnable(GL_POINT_SMOOTH);
@@ -46,7 +88,6 @@ void eol_draw_dot_3D(eolVec3D point,
   glBegin( GL_POINTS );
   glVertex3f(point.x,point.y,point.z);
   glEnd( );
-  glEnable(GL_FOG);
   glPopMatrix();
   glColor4f(1,1,1,1);
   glDisable(GL_BLEND);
