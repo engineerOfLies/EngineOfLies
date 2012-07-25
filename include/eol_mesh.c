@@ -2,9 +2,11 @@
 #include "eol_matrix.h"
 #include "eol_logger.h"
 #include "eol_loader.h"
+#include "eol_shader.h"
 #include <glib/glist.h>
 
 /*local global variables*/
+GLuint    _eol_mesh_shader_program = 0;
 eolBool   _eol_mesh_initialized = eolFalse;
 eolMesh * _eol_mesh_list = NULL;
 eolUint   _eol_mesh_max = 0;
@@ -34,6 +36,9 @@ void eol_mesh_init()
   );
   atexit(eol_mesh_close);
   _eol_mesh_initialized = eolTrue;
+  _eol_mesh_shader_program =
+    eol_shader_load_program("shaders/lighting1.vert",
+                            "shaders/lighting1.frag");
   eol_logger_message(
     EOL_LOG_INFO,
     "eol_mesh:initialized\n"
@@ -690,6 +695,11 @@ void eol_mesh_draw(
   glScalef(scale.x,scale.y,scale.z);
 
   glColor3f(color.x,color.y,color.z);
+
+  glUseProgram(_eol_mesh_shader_program);
+
+  glUniform1i(glGetUniformLocation(_eol_mesh_shader_program, "colorMap"), 0);
+  
   glBegin(GL_TRIANGLES);
   for (i = 0; i < mesh->_numFaces; i++)
   {
