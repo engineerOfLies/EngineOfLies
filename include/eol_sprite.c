@@ -36,6 +36,7 @@ void eol_sprite_init()
   
   _num_sprites = 0;
   _sprite_list = (eolSprite *)malloc(sizeof(eolSprite)*_max_sprites);
+  memset(_sprite_list,0,sizeof(eolSprite)*_max_sprites);
   eol_graphics_register_resize(eol_sprite_resync_graphics_view);
   atexit(eol_sprite_close);
   _sprite_init = eolTrue;
@@ -449,7 +450,10 @@ void eol_sprite_free(eolSprite **sprite)
   if (!eol_sprite_initialized())return;
   if (!sprite)return;
   if (!*sprite)return;
-  (*sprite)->_refCount--;
+  if ((*sprite)->_refCount > 0)
+  {
+    (*sprite)->_refCount--;
+  }
   *sprite = NULL;
 }
 
@@ -460,6 +464,7 @@ void eol_sprite_clear_all()
   {
     if(_sprite_list[i]._sdlSurface != NULL)
     {
+      fprintf(stdout,"freeing sprite[%i]: %s\n",i,_sprite_list[i].filename);
       SDL_FreeSurface(_sprite_list[i]._sdlSurface);
     }
     if(glIsTexture(_sprite_list[i]._glImage) == GL_TRUE)
