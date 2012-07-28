@@ -109,8 +109,8 @@ void eol_level_delete_layer(eolLevelLayer * level)
   eolBackground *b = NULL;
   GList *s,*e;
   if (!level)return;
-  
-  eol_sprite_free(&level->tileMap.tileSet);
+
+  /*TODO: free tile set*/
   eol_mesh_free(&level->clipMesh);
   
   if (level->tileMap.map != NULL)free(level->tileMap.map);

@@ -49,10 +49,6 @@ void spawnTestEnt(eolVec3D position)
   eol_entity_set_collision_mask(self,CP_ALL_LAYERS);
   eol_entity_shape_make_circle(self);
   eol_level_add_entity_to_active_layer(self);
-
-  eol_logger_message(
-    EOL_LOG_INFO,
-    "spawned test entity\n");
 }
 
 /*eol@eof*/

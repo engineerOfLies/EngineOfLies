@@ -33,7 +33,7 @@ void eol_entity_config()
 {
   /*TODO: load from config*/
   _eol_entity_max = 1024;
-  _eol_entity_draw_mode = eolEntityDrawLighting;
+  _eol_entity_draw_mode = eolEntityDrawBounds;
   /*TODO support these draw modes*/
   switch(_eol_entity_draw_mode)
   {

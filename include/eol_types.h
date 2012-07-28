@@ -222,7 +222,25 @@ typedef struct
   eolFloat alpha;
 }eolOrientation;
 
+/**
+ * @brief Adds the two input orientations together.
+ * useful for applying vector to position
+ * @param out the output orientation.  If NULL, nothing happens.
+ * @param in1 one component
+ * @param in2 the other component
+ */
 void eol_orientation_add(eolOrientation * out,
+                         eolOrientation   in1,
+                         eolOrientation   in2);
+
+/**
+ * @brief Merges the two.  Add position and rotation, but multiplies scale, color and alpha.
+ * useful for applying layered  transformations.
+ * @param out the output orientation.  If NULL, nothing happens.
+ * @param in1 one component
+ * @param in2 the other component
+ */
+void eol_orientation_mix(eolOrientation * out,
                          eolOrientation   in1,
                          eolOrientation   in2);
 
@@ -340,6 +358,7 @@ eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
  * @param c result eolVect3D output
  */
 #define eol_vector_add_3D(a,b,c)     (c.x=a.x+b.x,c.y=a.y+b.y,c.z=a.z+b.z)
+#define eol_vec3d_add(out,in1,in2)   (out.x = in1.x+in2.x,out.y = in1.y+in2.y,out.z = in1.z+in2.z)
 #define eol_vector_add_3D_p(a,b,c)     (c->x=a->x+b->x,c->y=a->y+b->y,c->z=a->z+b->z)
 #define eol_vector_add_2D(a,b,c)     (c.x=a.x+b.x,c.y=a.y+b.y)
 #define eol_vector_add_2D_p(a,b,c)     (c->x=a->x+b->x,c->y=a->y+b->y)
