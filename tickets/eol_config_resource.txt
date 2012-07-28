@@ -3,4 +3,4 @@ Have eol_config use eol_resource
 eolConfigs are not necessarily unique and should survive the use of a single config.
 set up eol_config to use the resource manager.
 
-assigned: mjmeehan
+assigned: EngineerOfLies

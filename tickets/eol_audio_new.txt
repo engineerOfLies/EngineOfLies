@@ -4,3 +4,5 @@ the audio system can wrap sdl mixer and use physfs for loading the files.
 the resource manager should be used to maintain access to loaded files.
 since in games sounds come in sets or packs, support for loading whole packs
 should be added.
+
+assigned: EngineerOfLies

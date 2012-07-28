@@ -1,0 +1,12 @@
+create eol_net system.
+
+The Engine Of Lies needs to have networking architecture.
+
+This should involve multiple levels:
+ - eol_net a generic communication layer that supports sending data of arbitrary size between hosts
+ - eol_server a system that sets up the program for server mode.  Accepts connections from clients and publishes updates
+ - eol_client a system that sets up the program for client mode.  Connects to Server, sends input and listens for updates.
+
+assigned: mjmeehan
+completed:
+prize: pelt of a stick elemental, 17 xp
