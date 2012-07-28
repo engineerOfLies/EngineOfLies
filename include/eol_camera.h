@@ -85,4 +85,7 @@ void eol_camera_set_aspect_ratio(eolFloat aspect);
 void eol_camera_set_view_angle(eolFloat clip);
 void eol_camera_set_target_orientation(eolCameraGetTargetOri targetFunc);
 
+eolBool eol_camera_is_rect_in_view(eolVec3D point, eolRectFloat bounds);
+eolBool eol_camera_is_circle_in_view(eolVec3D point, eolFloat radius);
+
 #endif

@@ -18,9 +18,10 @@
     along with the EOL game engine.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "eol_keychain.h"
+#include "eol_tile.h"
 #include "eol_types.h"
 #include "eol_model.h"
-#include "eol_sprite.h"
 #include "eol_spawn.h"
 #include "eol_entity.h"
 #include <glib/glist.h>
@@ -48,18 +49,9 @@ typedef void (*eolSpawnGeneric)(eolSpawn *spawn);
 
 typedef struct
 {
-  eolUint     width;
-  eolUint     height;
-  eolUint     tileWidth;
-  eolUint     tileHeight;
-  eolSprite * tileSet;
-  eolUint   * map;
-}eolTileMap;
-
-typedef struct
-{
   eolOrientation   ori;
   eolLine          modelFile;
+  eolFloat         followCam; /**<For paralax effect. 0 if not, 1 if follows completely*/
   eolModel       * model;
 }eolBackground;
 
@@ -73,7 +65,7 @@ typedef struct
 
   eolFloat     alpha;        /**<translucency to apply to all layer assets.  by setting it to 0, you turn off
                                  rendering for the layer*/
-  eolBool      updateSpace;  /**<its possible to update all, near or only active layer*/
+  eolVec3D     color;        /**<Color shift applied to whole level.*/
   eolRectFloat bounds;       /**<absolute bounds in model space for the layer*/
   eolBool      usesClipMesh; /**<if true, the layer will build collision data from clip mesh*/
   eolBool      usesTileMap;  /**<if true, the layer will build collision data from tile map*/
@@ -89,6 +81,7 @@ typedef struct
   cpSpace    * space;        /**<the collision space for this layer*/
   eolMesh    * clipMesh;     /**<the collision mask as mesh data*/
   GList      * entities;     /**<entites that have been added to the layer*/
+  eolKeychain * keys;        /**<config keys for the layer*/
 }eolLevelLayer;
 
 typedef struct
@@ -96,6 +89,8 @@ typedef struct
   eolWord         idName;     /**<unique level name.  Searchable, should be part of the filename*/
   eolUint         layerCount; /**<how many layers the level contains*/
   eolUint         active;     /**<the layer that is active*/
+  eolFloat        cameraDist; /**<Camera follow distance*/
+  eolKeychain   * keys;       /**<level configuration keys*/
   GList         * layers;     /**<the allocated list of level layers*/
 }eolLevel;
 

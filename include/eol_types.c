@@ -187,6 +187,38 @@ void eol_orientation_add(eolOrientation * out,
   else if (out->color.z > 1)out->color.z = 1;
 }
 
+void eol_orientation_mix(eolOrientation * out,
+                         eolOrientation   in1,
+                         eolOrientation   in2)
+{
+  if (!out)return;
+  eol_vector_add_3D(in1.position,in2.position,out->position);
+  eol_vector_add_3D(in1.rotation,in2.rotation,out->rotation);
+  eol_vector_add_3D(in1.scale,in2.scale,out->scale);
+
+  out->scale.x = in1.scale.x * in2.scale.x;
+  out->scale.y = in1.scale.y * in2.scale.y;
+  out->scale.z = in1.scale.z * in2.scale.z;
+  
+  out->color.x = in1.color.x * in2.color.x;
+  out->color.y = in1.color.y * in2.color.y;
+  out->color.z = in1.color.z * in2.color.z;
+  
+  out->alpha = in1.alpha * in2.alpha;
+
+  if (out->alpha < 0)out->alpha = 0;
+  else if (out->alpha > 1)out->alpha = 1;
+
+  if (out->color.x < 0)out->color.x = 0;
+  else if (out->color.x > 1)out->color.x = 1;
+
+  if (out->color.y < 0)out->color.y = 0;
+  else if (out->color.y > 1)out->color.y = 1;
+
+  if (out->color.z < 0)out->color.z = 0;
+  else if (out->color.z > 1)out->color.z = 1;
+}
+
 void eol_trail_new(eolTrail *trail,eolUint maxLen)
 {
   if (!trail)return;
