@@ -29,7 +29,7 @@ void CreateTestLevel()
   eol_level_add_mask_to_space(layer);
   eol_orientation_clear(&layer->clipMaskOri);
 
-  eol_rectf_set(&layer->bounds, -5, -5, 10, 10);
+  eol_rectf_set(&layer->bounds, -10, -10, 20, 40);
 
   eol_level_set_active_layer(level, 0);
   eol_level_set_current_level(level);

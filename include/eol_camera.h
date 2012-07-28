@@ -77,6 +77,8 @@ void eol_camera_setup();
 * @param target which entity to follow
 */
 void eol_camera_set_target(void *target);
+
+void eol_camera_set_height(eolFloat dist);
 void eol_camera_set_near_clip(eolFloat clip);
 void eol_camera_set_far_clip(eolFloat clip);
 void eol_camera_set_aspect_ratio(eolFloat aspect);

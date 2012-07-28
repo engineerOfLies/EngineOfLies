@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
   }
   Init_All(argv[0]);
   eol_camera_config();
+  eol_camera_set_height(30);
   eol_camera_init();
   done = 0;
   MakeTestWindow();
@@ -180,14 +181,16 @@ void MakeTestWindow()
   eolFloat lineHeight;
   eolWindow *win = eol_window_new();
   eolComponent *comp = NULL;
+  eolUint w,h;
   if (!win)
   {
     fprintf(stdout,"OH NO IT FAILED TO CREATE!\n");
     return;
   }
+  eol_graphics_get_size(&w, &h);
   strncpy(win->name,"window",EOLLINELEN);
   win->id = 1;
-  eol_rect_copy(&win->rect,eol_rect(0,0,640,480));
+  eol_rect_copy(&win->rect,eol_rect(0,0,w,h));
   win->canHasFocus = eolTrue;
   win->hasFocus = eolTrue;
   win->drawGeneric = eolFalse;
@@ -200,6 +203,7 @@ void MakeTestWindow()
   win->draw = TestWindowDraw;
   win->customData = malloc(sizeof(TestData));
   memset(win->customData,0,sizeof(TestData));
+  eol_camera_set_height(30);
   comp = eol_label_new(
     0,
     "main_label",

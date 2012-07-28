@@ -77,4 +77,9 @@ void eol_camera_setup()
                -_eol_camera.position.z);
 }
 
+void eol_camera_set_height(eolFloat dist)
+{
+  _eol_camera.position.z = _eol_camera.followHeight = dist;
+}
+
 /*eol@eof*/

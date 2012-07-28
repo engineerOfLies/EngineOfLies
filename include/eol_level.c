@@ -56,7 +56,7 @@ void eol_level_config()
   _eol_level_max_layers = 3;
   _eol_level_max = 10;
   _eol_level_layer_draw_range = 1;
-  _eol_level_draw_mode = eolLevelDrawClip;
+  _eol_level_draw_mode = eolLevelDrawFull;
 }
 
 void eol_level_register_spawn_generic(eolSpawnGeneric spawnGeneric)

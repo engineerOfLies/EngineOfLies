@@ -28,6 +28,7 @@ typedef struct
 {
   eolUint       _refCount;         /**<internal ref count.  DO NOT ACCESS*/
   GLuint        _glImage;          /**<opengl texture handle*/
+  char          __buf;
   SDL_Surface * _sdlSurface;       /**<SDL_surface loaded.*/
   eolLine       filename;          /**<name with path of the file loaded*/
   eolUint       framesPerLine;     /**<How many frames are on each line of the
