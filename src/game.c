@@ -189,7 +189,6 @@ void MakeTestWindow()
   }
   eol_graphics_get_size(&w, &h);
   strncpy(win->name,"window",EOLLINELEN);
-  win->id = 1;
   eol_rect_copy(&win->rect,eol_rect(0,0,w,h));
   win->canHasFocus = eolTrue;
   win->hasFocus = eolTrue;

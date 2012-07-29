@@ -54,7 +54,6 @@ void eol_dialog_text_block(eolLine title,
     return;
   }
   strncpy(win->name,"text_block",EOLLINELEN);
-  win->id = 1;
 
   eol_graphics_get_size(&sw, &sh);
   eol_button_get_stock_size(&bw, &bh);
@@ -159,7 +158,6 @@ void eol_dialog_yes_no(eolLine question,
     return;
   }
   strncpy(win->name,"yesno",EOLLINELEN);
-  win->id = 1;
   eol_graphics_get_size(&sw, &sh);
   eol_button_get_stock_size(&bw, &bh);
   trect = eol_font_get_bounds(question,3);

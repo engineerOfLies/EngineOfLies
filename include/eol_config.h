@@ -40,19 +40,36 @@ enum eolConfigState { KEY, VAL, SEQ };
 void eol_config_init();
 
 /**
+ * @brief checks initalization status of config
+ */
+eolBool eol_config_initialized();
+
+/**
  * @brief loads a configuration file into a eolConfig struct
  *
+ * @param filename the config file to load.
  * @return a eolConfig pointer with the config structure
  */
 eolConfig *eol_config_load(char* filename);
 
-void eol_config_destroy(eolConfig *config);
+/**
+ * @brief returns the config back to the system.
+ *
+ * @param config a pointer to your config pointer.  Set to NULL upon completion
+ */
+void eol_config_free(eolConfig **config);
 
 /**
  * @brief writes config from a hash object into a file
  *
  */
 void eol_config_dump(char* filename, GHashTable* data);
+
+eolBool eol_config_get_vec3d_by_tag(
+  eolVec3D  *output,
+  eolConfig *conf,
+  eolLine    tag
+);
 
 eolBool eol_config_get_int_by_tag(
   eolInt    *output,

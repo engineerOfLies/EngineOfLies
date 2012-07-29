@@ -4,6 +4,7 @@
 #include "eol_font.h"
 #include "eol_sprite.h"
 #include "eol_input.h"
+#include "eol_config.h"
 #include "eol_mouse.h"
 #include "eol_lighting.h"
 #include "eol_mesh.h"
@@ -26,6 +27,7 @@ void eol_get_version(eolUint *major,eolUint *minor)
 void eol_init(eolUint components)
 {
   eol_logger_init();
+  eol_config_init();
   eol_loader_init();
   if (components & EOL_GRAPHICS)
   {

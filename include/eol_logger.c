@@ -1,4 +1,5 @@
 #include "eol_logger.h"
+#include "eol_config.h"
 #include <stdarg.h>
 
 /*local globals*/
@@ -64,7 +65,7 @@ void eol_logger_message(eolLogLevel level,char *msg,...)
   {
     fprintf(stderr,"eol_logger: unable to write at log level %i\n",level);
   }
-  if (level < _eol_log_threshold)return;
+  if (level > _eol_log_threshold)return;
   if (_eol_logger_stdout_echo == eolTrue)
   {
     va_start(ap,msg);
@@ -117,10 +118,61 @@ void eol_logger_set_threshold(eolLogLevel level)
 
 void eol_logger_load_config()
 {
-  /*TODO: load config, if not found set defaults*/
-  _eol_log_threshold = EOL_LOG_INFO;
-  _eol_logger_stdout_echo = eolTrue;
-  sprintf(_eol_logger_filename,"system/engineoflies.log");
+  eolLine buf;
+  eolConfig *conf;
+  conf = eol_config_load("system/logger.cfg");
+  if (conf != NULL)
+  {
+    eol_config_get_line_by_tag(buf,conf,"log_file");
+    if (strlen(buf) > 0)
+    {
+      if (eol_line_cmp(_eol_logger_filename,buf) != 0)
+      {
+        eol_line_cpy(_eol_logger_filename,buf);
+        if (_eol_logger_file != NULL)fclose(_eol_logger_file);
+        _eol_logger_file = fopen(_eol_logger_filename, "w");
+      }
+    }
+    eol_config_get_line_by_tag(buf,conf,"log_level");
+    if (strlen(buf) > 0)
+    {
+      if (eol_line_cmp(buf,"INFO")==0)
+      {
+        _eol_log_threshold = EOL_LOG_INFO;
+      }
+      else if (eol_line_cmp(buf,"ERROR")==0)
+      {
+        _eol_log_threshold = EOL_LOG_ERROR;
+      }
+      else if (eol_line_cmp(buf,"WARN")==0)
+      {
+        _eol_log_threshold = EOL_LOG_WARN;
+      }
+      else if (eol_line_cmp(buf,"FATAL")==0)
+      {
+        _eol_log_threshold = EOL_LOG_FATAL;
+      }
+      else if (eol_line_cmp(buf,"DEBUG")==0)
+      {
+        _eol_log_threshold = EOL_LOG_DEBUG;
+      }
+      else if (eol_line_cmp(buf,"NONE")==0)
+      {
+        _eol_log_threshold = EOL_LOG_NONE;
+      }
+    }
+    eol_config_get_line_by_tag(buf,conf,"echo_to_terminal");
+    {
+      if (eol_line_cmp(buf,"true")==0)
+      {
+        _eol_logger_stdout_echo = eolTrue;
+      }
+      else if (eol_line_cmp(buf,"false")==0)
+      {
+        _eol_logger_stdout_echo = eolFalse;
+      }
+    }
+  }
 }
 
 /*eol@eof*/

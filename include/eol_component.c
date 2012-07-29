@@ -6,6 +6,7 @@
 #include "eol_mouse.h"
 #include "eol_draw.h"
 #include "eol_input.h"
+#include "eol_config.h"
 #include <glib/glist.h>
 #include <glib/gstring.h>
 
@@ -86,6 +87,8 @@ typedef struct
 /*local global variables*/
 eolSprite * _eol_component_stock_button[3] = {NULL,NULL,NULL};
 eolVec3D    _eol_component_button_color[3];
+eolInt      _eol_component_button_offset_x = 0;
+eolInt      _eol_component_button_offset_y = 0;
 
 /*local function prototypes*/
 void eol_component_button_new(eolComponent *component);
@@ -127,13 +130,51 @@ void eol_component_make_label(
 /*definitions*/
 void eol_component_config()
 {
-  /*TODO: load from config file*/
-  _eol_component_stock_button[0] = eol_sprite_load("images/UI/btn.png",-1,-1);
-  _eol_component_stock_button[1] = eol_sprite_load("images/UI/btn_high.png",-1,-1);
-  _eol_component_stock_button[2] = eol_sprite_load("images/UI/btn_hit.png",-1,-1);
+  eolLine buf;
+  eolLine buttonfile,buttonhitfile,buttonhighfile;
+  eolConfig *conf = NULL;
+  _eol_component_button_offset_x = 0;
+  _eol_component_button_offset_y = 0;
   eol_vec3d_set(_eol_component_button_color[0],0.8,0.8,0.8);
   eol_vec3d_set(_eol_component_button_color[1],1,1,0);
   eol_vec3d_set(_eol_component_button_color[2],0.6,0.6,0.6);
+  eol_line_cpy(buttonfile,"images/UI/btn.png");
+  eol_line_cpy(buttonhitfile,"images/UI/btn_hit.png");
+  eol_line_cpy(buttonhighfile,"images/UI/btn_high.png");
+ 
+  conf = eol_config_load("system/component.cfg");
+  if (conf != NULL)
+  {
+    eol_config_get_int_by_tag(&_eol_component_button_offset_x,
+                              conf,
+                              "button_x_offset");
+    eol_config_get_int_by_tag(&_eol_component_button_offset_y,
+                              conf,
+                              "button_y_offset");
+    eol_config_get_line_by_tag(buf,conf,"button_file");
+    if (strlen(buf) > 0)
+    {
+      eol_line_cpy(buttonfile,buf);
+    }
+    eol_config_get_line_by_tag(buf,conf,"button_high_file");
+    if (strlen(buf) > 0)
+    {
+      eol_line_cpy(buttonhighfile,buf);
+    }
+    eol_config_get_line_by_tag(buf,conf,"button_hit_file");
+    if (strlen(buf) > 0)
+    {
+      eol_line_cpy(buttonhitfile,buf);
+    }
+    eol_config_get_vec3d_by_tag(&_eol_component_button_color[0],conf,"button_hit_file");
+    eol_config_get_vec3d_by_tag(&_eol_component_button_color[1],conf,"button_high_text_color");
+    eol_config_get_vec3d_by_tag(&_eol_component_button_color[2],conf,"button_hit_text_color");
+    eol_config_free(&conf);
+  }
+
+  _eol_component_stock_button[0] = eol_sprite_load(buttonfile,-1,-1);
+  _eol_component_stock_button[1] = eol_sprite_load(buttonhighfile,-1,-1);
+  _eol_component_stock_button[2] = eol_sprite_load(buttonhitfile,-1,-1);
 }
 
 void eol_button_get_stock_size(eolUint *w, eolUint *h)
@@ -725,6 +766,7 @@ void eol_component_button_draw(eolComponent *component,eolRect bounds)
   eolComponentButton *button = NULL;
   eolSprite *img = NULL;
   eolInt x,y;
+  eolUint ofx = 0, ofy = 0;
   button = eol_component_get_button_data(component);
   x = bounds.x;
   y = bounds.y;
@@ -745,12 +787,14 @@ void eol_component_button_draw(eolComponent *component,eolRect bounds)
                       bounds.x,
                       bounds.y);
       x = bounds.x + (img->frameWidth/2);
-      y = bounds.y + (img->frameHeight/2) - (r.h*0.7);
+      y = bounds.y + (img->frameHeight/2) - (r.h*0.5);
+      ofx = _eol_component_button_offset_x;
+      ofy = _eol_component_button_offset_y;
     }
     eol_font_draw_text_justify(
       button->buttonText,
-      x,
-      y,
+      x + ofx,
+      y + ofy,
       _eol_component_button_color[component->state],
       button->alpha,
       button->fontSize,

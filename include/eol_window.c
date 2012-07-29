@@ -35,9 +35,6 @@ void eol_window_init()
     eol_window_delete,
     eol_window_load_data_from_file
     );
-  eol_logger_message(
-      EOL_LOG_INFO,
-      "eol_window:initialized\n");
   atexit(eol_window_close);
   for (i = 0; i < _eol_window_sprite_count;i++)
   {
@@ -48,6 +45,9 @@ void eol_window_init()
   }
   _eol_window_initialized = eolTrue;
   eol_component_config();
+  eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_window:initialized\n");
 }
 
 eolBool eol_window_initialized()
@@ -177,6 +177,7 @@ eolWindow *eol_window_new()
     return NULL;
   }
   /*new windows are added at the top of the stack, ie: last to draw*/
+  win->id = eol_resource_element_get_id(_eol_window_manager,win);
   _eol_window_stack = g_list_append(_eol_window_stack,win);
   return win;
 }

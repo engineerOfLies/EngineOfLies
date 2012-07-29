@@ -1,4 +1,5 @@
 #include "eol_input.h"
+#include "eol_logger.h"
 #ifdef __APPLE__
 #include "fmemopen.h"
 #endif
@@ -15,16 +16,32 @@ Uint8    * _last_frame_keyboard = NULL;
 eolInt     _eol_input_keyboard_numkeys = 0;
 /* local funtions */
 void eol_input_keyboard_init();
+void eol_input_keyboard_close();
 void updateKeyboard();
+void eol_input_close();
 
 void eol_input_init()
 {
-  fprintf(stdout,"eol_input: initializing\n");
+  eol_logger_message(EOL_LOG_INFO,"eol_input: initializing\n");
   SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
   eol_input_load_config();
-	eol_input_keyboard_init();
+  eol_input_keyboard_init();
+  atexit(eol_input_close);
   _eol_input_initialized = eolTrue;
-  fprintf(stdout,"eol_input: initialized\n");
+  eol_logger_message(EOL_LOG_INFO,"eol_input: initialized\n");
+}
+
+void eol_input_close()
+{
+  eol_logger_message(EOL_LOG_INFO,"eol_input: closing\n");
+  eol_input_keyboard_close();
+  if (_input_list != NULL)
+  {
+    free(_input_list);
+    _input_list = NULL;
+  }
+  _eol_input_initialized = eolFalse;
+  eol_logger_message(EOL_LOG_INFO,"eol_input: closed\n");
 }
 
 eolBool eol_input_is_initialized()
@@ -163,14 +180,14 @@ void eol_input_load_config()
   PSfile = PHYSFS_openRead("system/controls.cfg");
   if(PSfile == NULL)
   {
-    fprintf(stderr,"Unable to open control configuration file!\n");
+    eol_logger_message(EOL_LOG_ERROR,"Unable to open control configuration file!\n");
     return;
   }
   size = PHYSFS_fileLength(PSfile);
   buffer = (char *)malloc(size);
   if(buffer == NULL)
   {
-    fprintf(stderr,"Unable to allocate space for control configuration file\n");
+    eol_logger_message(EOL_LOG_ERROR,"Unable to allocate space for control configuration file\n");
     PHYSFS_close(PSfile);
     return;
   }
@@ -179,8 +196,8 @@ void eol_input_load_config()
   /*Dry run to count inputs:*/
   if (_input_list != NULL)
   {
-  	free(_input_list);
-  	_input_list = NULL;
+    free(_input_list);
+    _input_list = NULL;
   }
   _num_inputs = 0;
   while(fscanf(file, "%s", buf) != EOF)
@@ -224,6 +241,11 @@ void eol_input_load_config()
   free(buffer);
 }
 
+void eol_input_keyboard_close()
+{
+  if (_last_frame_keyboard != NULL)free(_last_frame_keyboard);
+}
+
 void eol_input_keyboard_init()
 {
   _this_frame_keyboard = SDL_GetKeyState(&_eol_input_keyboard_numkeys);
@@ -235,7 +257,7 @@ void eol_input_keyboard_init()
       );
       if(_last_frame_keyboard == NULL)
   {
-    fprintf(stderr,"eol_input: unable to initialize keyboard structure!\n");
+    eol_logger_message(EOL_LOG_ERROR,"eol_input: unable to initialize keyboard structure!\n");
   }
 }
 
@@ -264,7 +286,7 @@ eolBool eol_input_is_key_pressed(eolUI8 key)
     (_last_frame_keyboard == NULL) ||
     (_this_frame_keyboard == NULL))
   {
-    fprintf(stderr,"eol_input: uninitialized.");
+    eol_logger_message(EOL_LOG_ERROR,"eol_input: uninitialized.");
     return 0;
   }
   if ((_last_frame_keyboard[key] == 0) &&
@@ -279,7 +301,7 @@ eolBool eol_input_is_key_released(eolUI8 key)
     (_last_frame_keyboard == NULL) ||
     (_this_frame_keyboard == NULL))
   {
-    fprintf(stderr,"eol_input: uninitialized.");
+    eol_logger_message(EOL_LOG_ERROR,"eol_input: uninitialized.");
     return 0;
   }
   if ((_last_frame_keyboard[key] == 1) &&
