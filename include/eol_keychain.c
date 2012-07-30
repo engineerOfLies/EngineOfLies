@@ -190,11 +190,10 @@ void eol_keychain_hash_insert(eolKeychain *hash,char *key,eolKeychain *value)
   hashtable = (GHashTable*)hash->keyValue;
   if (g_hash_table_lookup(hashtable,key) != NULL)
   {
-    g_hash_table_replace(hashtable,key,value);
+    g_hash_table_replace(hashtable,g_strdup(key),value);
   }
   else
   {
-    fprintf(stdout,"adding key %s to keychain.\n",key);
     g_hash_table_insert(hashtable,g_strdup(key),value);
     hash->itemCount++;
   }

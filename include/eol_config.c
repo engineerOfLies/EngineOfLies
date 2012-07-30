@@ -147,19 +147,22 @@ void eol_config_parse_tier(yaml_parser_t *parser, eolKeychain *chain)
         {
           /* state is VAL or SEQ */
           /* TODO data type logic should go here */
-          eol_logger_message( EOL_LOG_INFO, "adding key -> value (%s -> %s)\n", last_key, event.data.scalar.value);
+          eol_logger_message( EOL_LOG_INFO, "eol_config: adding key -> value (%s -> %s)\n", last_key, event.data.scalar.value);
           next = eol_keychain_new_string((char *)event.data.scalar.value);
           eol_keychain_hash_insert(chain,last_key,next);
         }
         state ^= VAL; /* Toggles KEY/VAL, avoids touching SEQ */
         break;
       case YAML_SEQUENCE_START_EVENT:
+        eol_logger_message(EOL_LOG_INFO,"eol_config: adding sequence %s...\n",last_key);
         next = eol_keychain_new_list();
         eol_keychain_hash_insert(chain,last_key,
                                  next);
+        eol_config_parse_sequence(parser, next);
         break;
       case YAML_MAPPING_START_EVENT:
         if (strlen(last_key) == 0)break;/*first level is implied hash.*/
+        eol_logger_message(EOL_LOG_INFO,"eol_config: adding hash %s...\n",last_key);
         next = eol_keychain_new_hash();
         eol_keychain_hash_insert(chain,last_key,next);
         state ^= VAL;
@@ -195,6 +198,18 @@ eolBool eol_config_get_keychain(eolKeychain *output,
   return eolTrue;
 }
 
+eolBool eol_config_get_keychain_by_tag(eolKeychain **output,
+                                       eolConfig *conf,
+                                       eolLine tag)
+{
+  g_return_val_if_fail(conf->_node, eolFalse);
+  g_return_val_if_fail(output, eolFalse);
+  *output = eol_keychain_get_hash_value(conf->_node, tag);
+  if (*output == NULL)return eolFalse;
+  return eolTrue;
+}
+
+
 eolBool eol_config_get_vec3d_by_tag(
   eolVec3D  *output,
   eolConfig *conf,
@@ -213,12 +228,24 @@ eolBool eol_config_get_int_by_tag(eolInt *output, eolConfig *conf, eolLine tag)
   return eol_keychain_get_hash_value_as_int(output, conf->_node, tag);
 }
 
+eolBool eol_config_get_uint_by_tag(eolUint *output, eolConfig *conf, eolLine tag)
+{
+  g_return_val_if_fail(conf, eolFalse);
+  g_return_val_if_fail(output, eolFalse);
+  return eol_keychain_get_hash_value_as_uint(output, conf->_node, tag);
+}
+
 eolBool eol_config_get_line_by_tag( eolLine output,  eolConfig *conf, eolLine tag)
 {
   g_return_val_if_fail(conf, eolFalse);
   return eol_keychain_get_hash_value_as_line(output, conf->_node, tag);
 }
 
+eolBool eol_config_get_rectfloat_by_tag( eolRectFloat * output,  eolConfig *conf, eolLine tag)
+{
+  g_return_val_if_fail(conf, eolFalse);
+  return eol_keychain_get_hash_value_as_rectfloat(output, conf->_node, tag);
+}
 
 /*eol@eof*/
 

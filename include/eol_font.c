@@ -672,5 +672,23 @@ eolUint eol_font_get_text_height_average_custom(eolFont *font)
   return r.h;
 }
 
+eolUint eol_font_justify_from_string(eolLine justify)
+{
+  if ((eol_line_cmp(justify,"LEFT") == 0) ||
+      (eol_line_cmp(justify,"left") == 0) ||
+      (eol_line_cmp(justify,"Left") == 0))
+    return eolJustifyLeft;
+  if ((eol_line_cmp(justify,"CENTER") == 0) ||
+    (eol_line_cmp(justify,"center") == 0) ||
+    (eol_line_cmp(justify,"Center") == 0))
+    return eolJustifyCenter;
+  if ((eol_line_cmp(justify,"RIGHT") == 0) ||
+    (eol_line_cmp(justify,"right") == 0) ||
+    (eol_line_cmp(justify,"Right") == 0))
+    return eolJustifyRight;
+  return eolJustifyLeft;
+}
+
+
 /*eol@eof*/
 

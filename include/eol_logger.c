@@ -6,7 +6,7 @@
 
 eolBool      _eol_logger_initialized = eolFalse;
 eolLogLevel  _eol_log_threshold = EOL_LOG_INFO;
-eolBool      _eol_logger_stdout_echo = eolTrue;
+eolBool      _eol_logger_stdout_echo = eolFalse;
 eolLine      _eol_logger_filename;
 FILE       * _eol_logger_file = NULL;
 

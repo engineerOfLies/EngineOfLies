@@ -61,6 +61,17 @@ void eol_config_free(eolConfig **config);
 eolBool eol_config_get_keychain(eolKeychain *output,
                                 eolConfig *conf);
 
+/**
+ * @brief gets the element by tag as a keychain.
+ * @param output a pointer to a keychain pointer.  Set to the key if found. Null otherwise.
+ * @param conf a pointer to your config.
+ * @param tag the key to search for.
+ * @return eolTrue if found, eolFalse otherwise
+ */
+eolBool eol_config_get_keychain_by_tag(eolKeychain **output,
+                                       eolConfig *conf,
+                                       eolLine tag);
+
 eolBool eol_config_get_vec3d_by_tag(
   eolVec3D  *output,
   eolConfig *conf,
@@ -72,6 +83,8 @@ eolBool eol_config_get_int_by_tag(
   eolConfig *conf,
   eolLine    tag
 );
+
+eolBool eol_config_get_uint_by_tag(eolUint *output, eolConfig *conf, eolLine tag);
 
 eolBool eol_config_get_line_by_tag(
   eolLine     output,
@@ -90,6 +103,10 @@ eolBool eol_config_get_list_by_tag(
   eolConfig   * conf,
   eolLine       tag
 );
+
+eolBool eol_config_get_rectfloat_by_tag(eolRectFloat *output,
+                                        eolConfig *conf,
+                                        eolLine tag);
 
 #endif
 

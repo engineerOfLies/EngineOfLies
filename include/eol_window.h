@@ -53,6 +53,7 @@ eolBool eol_window_initialized();
 void eol_window_draw_all();
 void eol_window_update_all();
 
+eolWindow * eol_window_load_from_file(eolLine file);
 eolWindow *eol_window_new();
 void eol_window_free(eolWindow **win);
 void eol_window_add_component(eolWindow *win,eolComponent *comp);
