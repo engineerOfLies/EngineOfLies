@@ -326,13 +326,21 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
   eol_graphics_get_size(&sw,&sh);
   eol_config_get_line_by_tag(window->name,conf,"name");
   eol_config_get_rectfloat_by_tag(&tempr,conf,"rect");
-  if (tempr.w == -1)
+  if (tempr.x < 0)
   {
-    tempr.w = sw;
+    tempr.x = sw + tempr.x;
   }
-  if (tempr.h == -1)
+  if (tempr.y < 0)
   {
-    tempr.h = sh;
+    tempr.y = sh + tempr.y;
+  }
+  if (tempr.w <= 0)
+  {
+    tempr.w = sw + tempr.w;
+  }
+  if (tempr.h <= 0)
+  {
+    tempr.h = sh - tempr.h;
   }
   window->rect.x = tempr.x;
   window->rect.y = tempr.y;
