@@ -18,6 +18,7 @@
 
 #include "eol_graphics.h"
 #include "eol_logger.h"
+#include "eol_config.h"
 #include <glib/glist.h>
 
 /*
@@ -60,15 +61,15 @@ void eol_save_screen_shot(const char *file);
 /*function definitions*/
 void eol_graphics_load_config()
 {
-	/*TODO handle config file stuff*/
+  eolConfig *conf = NULL;
   _eolGraphicsConfig.graphicsView.depth = 32;
   _eolGraphicsConfig.trackFPS = eolTrue;
   _eolGraphicsConfig.fullScreen = 0; 
   _eolGraphicsConfig.graphicsView.openGLOn = 1;
   _eolGraphicsConfig.scaleFactor = 1;
   _eolGraphicsConfig.frameDelay = 16;
-  _eolGraphicsConfig.graphicsView.xRes = 1024;
-  _eolGraphicsConfig.graphicsView.yRes = 768;
+  _eolGraphicsConfig.graphicsView.xRes = 640;
+  _eolGraphicsConfig.graphicsView.yRes = 480;
   _eolGraphicsConfig.graphicsView.mipmapping = eolFalse;
   #if SDL_BYTEORDER == SDL_BIG_ENDIAN
   _eolGraphicsConfig.graphicsView.rMask = 0xff000000;
@@ -81,6 +82,9 @@ void eol_graphics_load_config()
   _eolGraphicsConfig.graphicsView.bMask = 0x00ff0000;
   _eolGraphicsConfig.graphicsView.aMask = 0xff000000;
   #endif
+  conf = eol_config_load("system/graphics.cfg");
+  if (conf == NULL)return;
+  
 }
 
 void setup_default_fog()

@@ -29,9 +29,9 @@
 
 enum eolKeychainTypes {
   eolKeychainVoid,   /**<custom data*/
-  eolKeychainInt,    /**<eolInt*/
-  eolKeychainUint,   /**<eolUint*/
-  eolKeychainFloat,  /**<eolFloat*/
+  eolKeychainInt,
+  eolKeychainUint,
+  eolKeychainFloat,
   eolKeychainString, /**<GString*/
   eolKeychainList,   /**<GList of something*/
   eolKeychainHash,   /**<GHashTable of something*/
@@ -102,17 +102,17 @@ void eol_keychain_list_append(eolKeychain *list,eolKeychain *item);
 * @brief Insert or replace a key in the eolKeychain of a hash.
 * if it is not a pointer to a hash it will return without doing anything.
 * @param hash the typed pointer of a ghash
-* @param key the key to be inserted.  Limited to the size of eolWord.
+* @param key the key to be inserted.  Limited to the size of eolLine.
 * @param value the eolKeychain to the item to be added to the hash.
 */
-void eol_keychain_hash_insert(eolKeychain *hash,eolWord key,eolKeychain *value);
+void eol_keychain_hash_insert(eolKeychain *hash,eolLine key,eolKeychain *value);
 
 /**
 * @brief Removes a key from the eolKeychain of a hash.
 * if it is not a pointer to a hash it will return without doing anything.
 * if found, eol_keychain_destroy is called on the value.
 * @param hash the typed pointer of a ghash
-* @param key the key to be removed.  Limited to the size of eolWord.
+* @param key the key to be removed.  Limited to the size of eolLine.
 */
 void eol_keychain_hash_remove(eolKeychain *hash,char *key);
 
@@ -120,10 +120,19 @@ void eol_keychain_hash_remove(eolKeychain *hash,char *key);
  * @brief looks up the key in the hash.
  * checks type before any operation
  * @param hash the typed pointer of a ghash
- * @param key the key to be found.  Limited to the size of eolWord.
+ * @param key the key to be found.  Limited to the size of eolLine.
  * @return NULL if not a hash, or not found. A typed pointer to the value if found.
  */
-eolKeychain *eol_keychain_get_hash_value(eolKeychain *hash,eolWord key);
+eolKeychain *eol_keychain_get_hash_value(eolKeychain *hash,eolLine key);
+
+/*type value accessors*/
+eolBool eol_keychain_get_hash_value_as_uint(eolUint *output, eolKeychain *hash, eolLine key);
+eolBool eol_keychain_get_hash_value_as_int(eolInt *output, eolKeychain *hash, eolLine key);
+eolBool eol_keychain_get_hash_value_as_float(eolFloat *output, eolKeychain *hash, eolLine key);
+eolBool eol_keychain_get_hash_value_as_line(eolLine output, eolKeychain *hash, eolLine key);
+eolBool eol_keychain_get_hash_value_as_vec3d(eolVec3D *output, eolKeychain *hash, eolLine key);
+eolBool eol_keychain_get_hash_value_as_rect(eolRect *output, eolKeychain *hash, eolLine key);
+eolBool eol_keychain_get_hash_value_as_rectfloat(eolRectFloat *output, eolKeychain *hash, eolLine key);
 
 /**
 * @brief looks up the nth item in the list
@@ -159,10 +168,12 @@ void eol_keychain_list_move_nth_bottom(eolKeychain *list, eolUint n);
 */
 void eol_keychain_list_move_nth_top(eolKeychain *list, eolUint n);
 
+void eol_keychain_print_string(eolLine key, eolKeychain *chain,eolUint level);
+
 /**
 * @brief convenience function when working with GString types.
 * @param string the string to free.
 */
-void eol_g_string_free(GString *string);
+void eol_g_string_free(char *string);
 
 #endif

@@ -9,7 +9,7 @@ eolBool _eol_config_initialized;
 
 /*local functions*/
 void eol_config_deinit(void);
-void eol_config_parse_tier(yaml_parser_t *parser, GHashTable *cfg);
+void eol_config_parse_tier(yaml_parser_t *parser, eolKeychain *cfg);
 
 /*function definitions*/
 
@@ -37,28 +37,28 @@ eolConfig *eol_config_load(char* filename)
   
   if(!yaml_parser_initialize(&parser))
   {
-    eol_logger_message( EOL_LOG_ERROR, "Failed to initialize yaml parser\n");
+    eol_logger_message( EOL_LOG_ERROR, "eol_config: Failed to initialize yaml parser\n");
     return NULL;
   }
   
   config = malloc(sizeof(eolConfig));
   if (config == NULL)
   {
-    eol_logger_message( EOL_LOG_ERROR, "Unable to allocate config!\n");
+    eol_logger_message( EOL_LOG_ERROR, "eol_config: Unable to allocate config!\n");
     return NULL;
   }
   
   eol_line_cpy(config->filename, filename);
-  config->_node = g_hash_table_new(g_str_hash, g_str_equal);
+  config->_node = eol_keychain_new_hash();
   if(config->_node == NULL)
   {
-    eol_logger_message( EOL_LOG_ERROR, "Unable to allocate GHash for config\n");
+    eol_logger_message( EOL_LOG_ERROR, "eol_config: Unable to allocate keychain for config\n");
     return NULL;
   }
   input = fopen(filename, "r");
   if(input == NULL)
   {
-    eol_logger_message( EOL_LOG_ERROR, "Can't open config file %s\n", filename );
+    eol_logger_message( EOL_LOG_ERROR, "eol_config: Can't open config file %s\n", filename );
     return NULL;
   }
   yaml_parser_set_input_file(&parser, input);
@@ -72,7 +72,8 @@ eolConfig *eol_config_load(char* filename)
 
 void eol_config_destroy(eolConfig *config)
 {
-  g_hash_table_destroy(config->_node);
+  if (!config)return;
+  eol_keychain_destroy(config->_node);
   free(config);
 }
 
@@ -84,13 +85,53 @@ void eol_config_free(eolConfig **config)
   *config = NULL;
 }
 
-void eol_config_parse_tier(yaml_parser_t *parser, GHashTable *cfg)
+void eol_config_parse_sequence(yaml_parser_t *parser, eolKeychain *chain)
 {
   int done = 0;
-  gchar *last_key;
+  eolKeychain *next = NULL;
   yaml_event_t event;
   /* First element must be a variable, or we'll change states to SEQ */
   int state = KEY;
+  do
+  {
+    yaml_parser_parse(parser, &event);
+    switch(event.type)
+    {
+      case YAML_MAPPING_START_EVENT:
+        next = eol_keychain_new_hash();
+        eol_keychain_list_append(chain,next);
+        state ^= VAL;
+        eol_config_parse_tier(parser, next);
+        break;
+      case YAML_SEQUENCE_END_EVENT:
+      case YAML_MAPPING_END_EVENT:
+      case YAML_STREAM_END_EVENT:
+        done = 1;
+        /* terminate the while loop, see below */
+        break;
+      default:
+        eol_logger_message( EOL_LOG_INFO, "unhandled YAML event %d\n", event.type);
+    }
+    if(parser->error != YAML_NO_ERROR)
+    {
+      eol_logger_message( EOL_LOG_ERROR, "yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n",
+                          parser->error, parser->context, parser->problem, parser->problem_mark.line,
+                          parser->problem_mark.column);
+                          return;
+    }
+    yaml_event_delete(&event);
+  }while (!done);
+}
+
+void eol_config_parse_tier(yaml_parser_t *parser, eolKeychain *chain)
+{
+  int done = 0;
+  eolLine last_key;
+  eolKeychain *next = NULL;
+  yaml_event_t event;
+  /* First element must be a variable, or we'll change states to SEQ */
+  int state = KEY;
+  eol_line_cpy(last_key,"");
   do
   {
     yaml_parser_parse(parser, &event);
@@ -100,38 +141,38 @@ void eol_config_parse_tier(yaml_parser_t *parser, GHashTable *cfg)
         if (state == KEY)
         {
           /* new key, hold on to it until we get a value as well */
-          last_key = g_strdup((gchar*) event.data.scalar.value);
+          eol_line_cpy(last_key,(char *)event.data.scalar.value);
         }
         else
         {
           /* state is VAL or SEQ */
           /* TODO data type logic should go here */
           eol_logger_message( EOL_LOG_INFO, "adding key -> value (%s -> %s)\n", last_key, event.data.scalar.value);
-          g_hash_table_insert(cfg, last_key, g_strdup((gchar*) event.data.scalar.value));
+          next = eol_keychain_new_string((char *)event.data.scalar.value);
+          eol_keychain_hash_insert(chain,last_key,next);
         }
         state ^= VAL; /* Toggles KEY/VAL, avoids touching SEQ */
         break;
       case YAML_SEQUENCE_START_EVENT:
-        state = SEQ;
-        break;
-      case YAML_SEQUENCE_END_EVENT:
-        state = KEY;
+        next = eol_keychain_new_list();
+        eol_keychain_hash_insert(chain,last_key,
+                                 next);
         break;
       case YAML_MAPPING_START_EVENT:
-        /* create a child hash table and recurse
-        mapping = g_hash_table_new(&g_str_hash, &g_str_equal);
-        g_hash_table_insert(cfg, last_key, mapping);
-        eol_config_parse_tier(parser, mapping);
+        if (strlen(last_key) == 0)break;/*first level is implied hash.*/
+        next = eol_keychain_new_hash();
+        eol_keychain_hash_insert(chain,last_key,next);
         state ^= VAL;
-        */
+        eol_config_parse_tier(parser, next);
         break;
       case YAML_MAPPING_END_EVENT:
       case YAML_STREAM_END_EVENT:
+      case YAML_SEQUENCE_END_EVENT:
         done = 1;
         /* terminate the while loop, see below */
         break;
       default:
-        eol_logger_message( EOL_LOG_WARN, "unhandled YAML event %d\n", event.type);
+        eol_logger_message( EOL_LOG_INFO, "unhandled YAML event %d\n", event.type);
     }
     if(parser->error != YAML_NO_ERROR)
     {
@@ -145,13 +186,13 @@ void eol_config_parse_tier(yaml_parser_t *parser, GHashTable *cfg)
   while (!done);
 }
 
-void eol_config_dump(char* filename, GHashTable* data)
+eolBool eol_config_get_keychain(eolKeychain *output,
+                                eolConfig *conf)
 {
-
-}
-
-void eol_config_print(GHashTable* data)
-{
+  g_return_val_if_fail(conf->_node, eolFalse);
+  g_return_val_if_fail(output, eolFalse);
+  output = conf->_node;
+  return eolTrue;
 }
 
 eolBool eol_config_get_vec3d_by_tag(
@@ -160,64 +201,24 @@ eolBool eol_config_get_vec3d_by_tag(
   eolLine    tag
 )
 {
-  gchar *data;
-  g_return_val_if_fail(conf->_node, eolFalse);
+  g_return_val_if_fail(conf, eolFalse);
   g_return_val_if_fail(output, eolFalse);
-  
-  data = g_hash_table_lookup(conf->_node, tag);
-  if(data)
-  {
-    sscanf(data,
-           "%lf,%lf,%lf",
-           &output->x,
-           &output->y,
-           &output->z);
-    return eolTrue;
-  }
-  else
-  {
-    eol_logger_message( EOL_LOG_WARN,"Config tag %s not found in %s\n", tag, conf->filename);
-    return eolFalse;
-  }
+  return eol_keychain_get_hash_value_as_vec3d(output, conf->_node, tag);
 }
 
 eolBool eol_config_get_int_by_tag(eolInt *output, eolConfig *conf, eolLine tag)
 {
-  gchar *data;
-  g_return_val_if_fail(conf->_node, eolFalse);
+  g_return_val_if_fail(conf, eolFalse);
   g_return_val_if_fail(output, eolFalse);
-  
-  data = g_hash_table_lookup(conf->_node, tag);
-  if(data)
-  {
-    *output = (eolInt) atoi(data);
-    return eolTrue;
-  }
-  else
-  {
-    eol_logger_message( EOL_LOG_WARN,"Config tag %s not found in %s\n", tag, conf->filename);
-    return eolFalse;
-  }
+  return eol_keychain_get_hash_value_as_int(output, conf->_node, tag);
 }
 
 eolBool eol_config_get_line_by_tag( eolLine output,  eolConfig *conf, eolLine tag)
 {
-  gchar *data;
-  g_return_val_if_fail(conf->_node, eolFalse);
-  g_return_val_if_fail(output, eolFalse);
-  
-  data = g_hash_table_lookup(conf->_node, tag);
-  if(data)
-  {
-    g_strlcpy(output, data, sizeof(eolLine));
-    return eolTrue;
-  }
-  else
-  {
-    eol_logger_message( EOL_LOG_WARN, "Config tag %s not found in %s\n", tag, conf->filename);
-    return eolFalse;
-  }
+  g_return_val_if_fail(conf, eolFalse);
+  return eol_keychain_get_hash_value_as_line(output, conf->_node, tag);
 }
+
 
 /*eol@eof*/
 

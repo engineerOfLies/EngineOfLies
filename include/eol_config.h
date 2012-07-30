@@ -19,20 +19,19 @@
 */
 
 #include "eol_types.h"
-#include <glib.h>
+#include "eol_keychain.h"
 #include <yaml.h>
 
 
 typedef struct
 {
-  eolLine     filename;
-  eolUint     elementCount;
-  GHashTable  * _node;
+  eolLine       filename;
+  eolUint       elementCount;
+  eolKeychain * _node;
 } eolConfig;
 
 /* Variable, Value, Sequence (vector) */
 enum eolConfigState { KEY, VAL, SEQ };
-
 
 /**
  * @brief initializes config system
@@ -59,11 +58,8 @@ eolConfig *eol_config_load(char* filename);
  */
 void eol_config_free(eolConfig **config);
 
-/**
- * @brief writes config from a hash object into a file
- *
- */
-void eol_config_dump(char* filename, GHashTable* data);
+eolBool eol_config_get_keychain(eolKeychain *output,
+                                eolConfig *conf);
 
 eolBool eol_config_get_vec3d_by_tag(
   eolVec3D  *output,
@@ -90,9 +86,9 @@ eolBool eol_config_get_list_count_by_tag(
 );
 
 eolBool eol_config_get_list_by_tag(
-  GList      *output,
-  eolConfig  *conf,
-  eolLine     tag
+  eolKeychain * output,
+  eolConfig   * conf,
+  eolLine       tag
 );
 
 #endif
