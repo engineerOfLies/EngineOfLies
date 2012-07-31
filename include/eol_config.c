@@ -221,6 +221,13 @@ eolBool eol_config_get_vec3d_by_tag(
   return eol_keychain_get_hash_value_as_vec3d(output, conf->_node, tag);
 }
 
+eolBool eol_config_get_float_by_tag(eolFloat *output, eolConfig *conf, eolLine tag)
+{
+  g_return_val_if_fail(conf, eolFalse);
+  g_return_val_if_fail(output, eolFalse);
+  return eol_keychain_get_hash_value_as_float(output, conf->_node, tag);
+}
+
 eolBool eol_config_get_int_by_tag(eolInt *output, eolConfig *conf, eolLine tag)
 {
   g_return_val_if_fail(conf, eolFalse);

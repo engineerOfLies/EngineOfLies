@@ -84,6 +84,7 @@ eolBool eol_config_get_int_by_tag(
   eolLine    tag
 );
 
+eolBool eol_config_get_float_by_tag(eolFloat *output, eolConfig *conf, eolLine tag);
 eolBool eol_config_get_uint_by_tag(eolUint *output, eolConfig *conf, eolLine tag);
 eolBool eol_config_get_bool_by_tag(eolBool *output, eolConfig *conf, eolLine tag);
 

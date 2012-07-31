@@ -560,6 +560,7 @@ eolWindow * eol_window_load_from_file(eolLine file)
   }
   window =
   (eolWindow *)eol_resource_manager_load_resource(_eol_window_manager,file);
+  if (window == NULL)return NULL;
   window->id = eol_resource_element_get_id(_eol_window_manager,window);
   _eol_window_stack = g_list_append(_eol_window_stack,window);
   return window;

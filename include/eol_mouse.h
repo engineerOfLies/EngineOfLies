@@ -21,11 +21,10 @@
 
 enum eolMouseStates {
   eolMouseLeft       = 0,
-  eolMouseRight      = 1,
-  eolMouseCenter     = 2,
+  eolMouseCenter     = 1,
+  eolMouseRight      = 2,
   eolMouseWheelUp    = 3,
-  eolMouseWheelDown  = 4,
-  eolMouseWheelPress = 5
+  eolMouseWheelDown  = 4
 };
 
 /**
