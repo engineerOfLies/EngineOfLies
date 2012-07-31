@@ -318,6 +318,23 @@ eolBool eol_keychain_get_hash_value_as_float(eolFloat *output, eolKeychain *hash
   return eolTrue;
 }
 
+eolBool eol_keychain_get_hash_value_as_bool(eolBool *output, eolKeychain *hash, eolLine key)
+{
+  eolKeychain *chain;
+  eolInt boo;
+  if ((!hash) || (strlen(key) == 0))return eolFalse;
+  chain = eol_keychain_get_hash_value(hash,key);
+  if (!chain)
+  {
+    return eolFalse;
+  }
+  if (chain->keyType != eolKeychainString)return eolFalse;
+  boo = eol_bool_from_string(chain->keyValue);
+  if (boo == -1)return eolFalse;/*tag was not boolean*/
+  *output = boo;
+  return eolTrue;
+}
+
 eolBool eol_keychain_get_hash_value_as_line(eolLine output, eolKeychain *hash, eolLine key)
 {
   eolKeychain *chain;

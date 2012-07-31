@@ -6,13 +6,13 @@
 /*local global variables*/
 eolBool _eol_dialog_quitting = eolFalse;
 
-void eol_dialog_text_block_update(eolWindow *win,GList *updates)
+eolBool eol_dialog_text_block_update(eolWindow *win,GList *updates)
 {
   GList *c;
   eolWindowCallback call = NULL;
   eolComponent *comp = NULL;
   eolComponent *labelComp = NULL;
-  if ((win == NULL)||(updates == NULL))return;
+  if ((win == NULL)||(updates == NULL))return eolFalse;
   for (c = updates;c != NULL;c = c->next)
   {
     if (c->data == NULL)continue;
@@ -27,9 +27,10 @@ void eol_dialog_text_block_update(eolWindow *win,GList *updates)
           if (call != NULL)call(win->customData);
         }
         eol_window_free(&win);
-        break;
+        return eolTrue;
     }
   }
+  return eolFalse;
 }
 
 void eol_dialog_text_block(eolLine title,
@@ -105,13 +106,13 @@ void eol_dialog_text_block(eolLine title,
   }
 }
 
-void eol_dialog_yes_no_update(eolWindow *win,GList *updates)
+eolBool eol_dialog_yes_no_update(eolWindow *win,GList *updates)
 {
   GList *c;
   eolWindowCallback call = NULL;
   eolComponent *comp = NULL;
   eolComponent *labelComp = NULL;
-  if ((win == NULL)||(updates == NULL))return;
+  if ((win == NULL)||(updates == NULL))return eolFalse;
   for (c = updates;c != NULL;c = c->next)
   {
     if (c->data == NULL)continue;
@@ -126,7 +127,7 @@ void eol_dialog_yes_no_update(eolWindow *win,GList *updates)
           if (call != NULL)call(win->customData);
         }
         eol_window_free(&win);
-        break;
+        return eolTrue;
       case 2:
         if (win->callbacks != NULL)
         {
@@ -134,9 +135,10 @@ void eol_dialog_yes_no_update(eolWindow *win,GList *updates)
           if (call != NULL)call(win->customData);
         }
         eol_window_free(&win);
-        break;
+        return eolTrue;
     }
   }
+  return eolFalse;
 }
 
 void eol_dialog_yes_no(eolLine question,

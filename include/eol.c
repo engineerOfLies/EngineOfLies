@@ -31,7 +31,7 @@ void eol_init(eolUint components)
   eol_loader_init();
   if (components & EOL_GRAPHICS)
   {
-    eol_graphics_load_config();
+    eol_graphics_config();
     eol_graphics_init();
     if (components & EOL_FONT)
     {

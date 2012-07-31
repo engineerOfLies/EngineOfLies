@@ -28,6 +28,7 @@ typedef struct eolWindow_S
   eolLine             name;          /**<name of the window*/
   eolUint             id;            /**<number ID of the window*/
   eolRect             rect;          /**<rectangle bounds of the window*/
+  eolBool             passesInput;   /**<if false, prevent input from hitting windows below this one*/
   eolBool             canHasFocus;   /**<if the window can receive focus*/
   eolBool             hasFocus;      /**<if the window HAS focus*/
   eolBool             drawGeneric;   /**<if the window uses the stock draw*/
@@ -40,7 +41,7 @@ typedef struct eolWindow_S
                       /**<function to call to delete the custom data*/
   void                (*draw)(struct eolWindow_S *self);
                       /**<custom window draw function*/
-  void                (*update)(struct eolWindow_S *self,GList *updates);
+  eolBool             (*update)(struct eolWindow_S *self,GList *updates);
                       /**<function to handle updates*/
 }eolWindow;
 

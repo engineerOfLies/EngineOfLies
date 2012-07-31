@@ -126,6 +126,7 @@ void eol_keychain_hash_remove(eolKeychain *hash,char *key);
 eolKeychain *eol_keychain_get_hash_value(eolKeychain *hash,eolLine key);
 
 /*type value accessors*/
+eolBool eol_keychain_get_hash_value_as_bool(eolBool *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_uint(eolUint *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_int(eolInt *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_float(eolFloat *output, eolKeychain *hash, eolLine key);

@@ -59,7 +59,7 @@ void eol_save_screen_shot(const char *file);
 
 
 /*function definitions*/
-void eol_graphics_load_config()
+void eol_graphics_config()
 {
   eolConfig *conf = NULL;
   _eolGraphicsConfig.graphicsView.depth = 32;
@@ -84,7 +84,15 @@ void eol_graphics_load_config()
   #endif
   conf = eol_config_load("system/graphics.cfg");
   if (conf == NULL)return;
-  
+  eol_config_get_uint_by_tag(&_eolGraphicsConfig.graphicsView.depth,conf,"bitdepth");
+  eol_config_get_uint_by_tag(&_eolGraphicsConfig.graphicsView.xRes,conf,"x_resolution");
+  eol_config_get_uint_by_tag(&_eolGraphicsConfig.graphicsView.yRes,conf,"y_resolution");
+  eol_config_get_uint_by_tag(&_eolGraphicsConfig.frameDelay,conf,"frameDelay");
+  eol_config_get_bool_by_tag(&_eolGraphicsConfig.fullScreen,conf,"fullScreen");
+  eol_config_get_bool_by_tag(&_eolGraphicsConfig.trackFPS,conf,"trackFPS");
+  eol_config_get_bool_by_tag(&_eolGraphicsConfig.graphicsView.mipmapping,conf,"mipmapping");
+  eol_config_get_bool_by_tag(&_eolGraphicsConfig.graphicsView.openGLOn,conf,"openGLOn");
+  eol_config_free(&conf);
 }
 
 void setup_default_fog()
@@ -197,7 +205,7 @@ void eol_graphics_init()
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "Unable to use your screen: %s\n Deepest appologies \n", SDL_GetError());
+        "Unable to use your screen: %s\n Deepest apologies \n", SDL_GetError());
     exit(1);
   }
   _eol_videobuffer = SDL_SetVideoMode(

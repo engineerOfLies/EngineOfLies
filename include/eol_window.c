@@ -130,10 +130,11 @@ void eol_window_update_all()
   GList *l = NULL;
   GList *c = NULL;
   GList *update = NULL;
+  eolBool updateHandled = eolFalse;
   eolWindow *win;
   if (!eol_window_initialized())return;
   l = g_list_last(_eol_window_stack);
-  if (l != NULL)
+  for (;l != NULL;l = l->prev)
   {
     win = (eolWindow*)l->data;
     if ((win != NULL)&&(win->update != NULL))
@@ -151,11 +152,12 @@ void eol_window_update_all()
       }
     }
     /*call update for window*/
-    win->update(win,update);
+    updateHandled = win->update(win,update);
     if (update != NULL)
     {
       g_list_free(update);
     }
+    if ((updateHandled) || (!win->passesInput))break;
   }
 }
 
@@ -295,7 +297,6 @@ void eol_window_load_button(eolWindow *win,eolKeychain *def)
   
   if (eol_line_cmp(buttonType,"STOCK") == 0)
   {
-    fprintf(stdout,"stock button\n");
     comp = eol_button_stock_new(
       id,
       name,
@@ -314,7 +315,6 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
   eolWindow *window;
   eolConfig *conf;
   eolKeychain *chain, *item;
-  eolLine truefalse;
   int i;
   eolLine typecheck;
   eolRectFloat tempr;
@@ -346,38 +346,30 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
   window->rect.y = tempr.y;
   window->rect.w = tempr.w;
   window->rect.h = tempr.h;
-  eol_config_get_line_by_tag(truefalse,conf,"canHasFocus");
-  window->canHasFocus = eol_true_from_string(truefalse);
+  eol_config_get_bool_by_tag(&window->canHasFocus,conf,"canHasFocus");
+  eol_config_get_bool_by_tag(&window->drawGeneric ,conf,"drawGeneric");
+  eol_config_get_bool_by_tag(&window->passesInput ,conf,"passesInput");
   
-  eol_config_get_line_by_tag(truefalse,conf,"drawGeneric");
-  window->drawGeneric = eol_true_from_string(truefalse);
-
   /*add components*/
   if (eol_config_get_keychain_by_tag(&chain,conf,"components"))
   {
-    fprintf(stdout,"found components\n");
     if (chain != NULL)
     {
-      fprintf(stdout,"chain is valid....\n");
       if (chain->keyType == eolKeychainList)
       {
-        fprintf(stdout,"components list...\n");
         for (i = 0; i < chain->itemCount; i++)
         {
-          fprintf(stdout,"item....");
           item = eol_keychain_get_list_nth(chain, i);
           if (item != NULL)
           {
             eol_keychain_get_hash_value_as_line(typecheck, item, "type");
             if (eol_line_cmp(typecheck,"BUTTON") == 0)
             {
-              fprintf(stdout,"is a BUTTON!\n");
               eol_window_load_button(window,item);
               continue;
             }
             if (eol_line_cmp(typecheck,"LABEL") == 0)
             {
-              fprintf(stdout,"is a LABEL!\n");
               eol_window_load_label(window,item);
               continue;
             }

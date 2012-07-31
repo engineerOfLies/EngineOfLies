@@ -140,13 +140,13 @@ void TestWindowDraw(eolWindow *win)
   else data->frame+=0.3;
 }
 
-void TestWindowUpdate(eolWindow *win,GList *updates)
+eolBool TestWindowUpdate(eolWindow *win,GList *updates)
 {
   int i;
   GList *c;
   eolComponent *comp = NULL;
   eolComponent *labelComp = NULL;
-  if ((win == NULL)||(updates == NULL))return;
+  if ((win == NULL)||(updates == NULL))return eolFalse;
   
   for (c = updates;c != NULL;c = c->next)
   {
@@ -168,12 +168,13 @@ void TestWindowUpdate(eolWindow *win,GList *updates)
                                 1,
                                 100);
         }
-        break;
+        return eolTrue;
       case 3:
         spawnTestEnt(eol_vec3d(0,0,0));
-        break;
+        return eolTrue;
     }
   }
+  return eolFalse;
 }
 
 void MakeTestWindow()

@@ -235,6 +235,13 @@ eolBool eol_config_get_uint_by_tag(eolUint *output, eolConfig *conf, eolLine tag
   return eol_keychain_get_hash_value_as_uint(output, conf->_node, tag);
 }
 
+eolBool eol_config_get_bool_by_tag(eolBool *output, eolConfig *conf, eolLine tag)
+{
+  g_return_val_if_fail(conf, eolFalse);
+  g_return_val_if_fail(output, eolFalse);
+  return eol_keychain_get_hash_value_as_bool(output, conf->_node, tag);
+}
+
 eolBool eol_config_get_line_by_tag( eolLine output,  eolConfig *conf, eolLine tag)
 {
   g_return_val_if_fail(conf, eolFalse);
