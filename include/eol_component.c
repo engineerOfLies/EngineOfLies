@@ -729,11 +729,32 @@ eolBool eol_component_button_update(eolComponent *component)
 {
   eolVec2D v;
   eolInt x,y;
+  eolComponentButton *button = NULL;
   if (!component)return eolFalse;
+  button = eol_component_get_button_data(component);
+  
   component->oldState = component->state;
   eol_mouse_get_position(&x,&y);
   v.x = x;
   v.y = y;
+  if (button->input > 0)
+  {
+    if (eol_input_is_key_pressed(button->input))
+    {
+      component->state = eolButtonPressed;
+      return eolFalse;
+    }
+    if (eol_input_is_key_held(button->input))
+    {
+      component->state = eolButtonPressed;
+      return eolFalse;
+    }
+    if (eol_input_is_key_released(button->input))
+    {
+      component->state = eolButtonIdle;
+      return eolTrue;
+    }
+  }
   if (eol_vec_in_rect(v,component->bounds))
   {
     component->state = eolButtonHighlight;
@@ -753,10 +774,7 @@ eolBool eol_component_button_update(eolComponent *component)
       return eolTrue;
     }
   }
-  else
-  {
-    component->state = eolButtonIdle;
-  }
+  component->state = eolButtonIdle;
   return eolFalse;
 }
 

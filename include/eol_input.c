@@ -280,7 +280,7 @@ void eol_input_clear_keyboard()
   memset(_last_frame_keyboard,0,sizeof(Uint8)*_eol_input_keyboard_numkeys);
 }
 
-eolBool eol_input_is_key_pressed(eolUI8 key)
+eolBool eol_input_is_key_pressed(eolInt key)
 {
   if((!_eol_input_initialized) ||
     (_last_frame_keyboard == NULL) ||
@@ -289,13 +289,38 @@ eolBool eol_input_is_key_pressed(eolUI8 key)
     eol_logger_message(EOL_LOG_ERROR,"eol_input: uninitialized.");
     return 0;
   }
+  if ((key < 0) || (key >= _eol_input_keyboard_numkeys))
+  {
+    eol_logger_message(EOL_LOG_ERROR,"eol_input: key out of range\n");
+    return 0;
+  }
   if ((_last_frame_keyboard[key] == 0) &&
       (_this_frame_keyboard[key] == 1))
     return eolTrue;
   return eolFalse;
 }
 
-eolBool eol_input_is_key_released(eolUI8 key)
+eolBool eol_input_is_key_released(eolInt key)
+{
+  if((_eol_input_initialized == eolFalse) ||
+    (_last_frame_keyboard == NULL) ||
+    (_this_frame_keyboard == NULL))
+  {
+    eol_logger_message(EOL_LOG_ERROR,"eol_input: uninitialized.\n");
+    return 0;
+  }
+  if ((key < 0) || (key >= _eol_input_keyboard_numkeys))
+  {
+    eol_logger_message(EOL_LOG_ERROR,"eol_input: key out of range\n");
+    return 0;
+  }
+  if ((_last_frame_keyboard[key] == 1) &&
+    (_this_frame_keyboard[key] == 0))
+    return eolTrue;
+  return eolFalse;
+}
+
+eolBool eol_input_is_key_held(eolInt key)
 {
   if((_eol_input_initialized == eolFalse) ||
     (_last_frame_keyboard == NULL) ||
@@ -304,9 +329,16 @@ eolBool eol_input_is_key_released(eolUI8 key)
     eol_logger_message(EOL_LOG_ERROR,"eol_input: uninitialized.");
     return 0;
   }
+  if ((key < 0) || (key >= _eol_input_keyboard_numkeys))
+  {
+    eol_logger_message(EOL_LOG_ERROR,"eol_input: key out of range\n");
+    return 0;
+  }
   if ((_last_frame_keyboard[key] == 1) &&
-    (_this_frame_keyboard[key] == 0))
+    (_this_frame_keyboard[key] == 1))
+  {
     return eolTrue;
+  }
   return eolFalse;
 }
 

@@ -51,6 +51,14 @@ typedef struct
 }eolInput;
 
 /**
+ * @brief converts input config into sdl_key info
+ *
+ * @param type type of input: "mod" "key" "button", "+axis" "-axis"
+ */
+eolInt eol_input_parse(char *type, char *input);
+
+
+/**
  * @brief initializes internal components of eol_input
  */
 void eol_input_init();
@@ -70,7 +78,7 @@ eolBool eol_input_is_initialized();
  *
  * @return eolTrue if pressed, eolFalse otherwise
  */
-eolBool eol_input_is_key_pressed(eolUI8 key);
+eolBool eol_input_is_key_pressed(eolInt key);
 
 /**
  * @brief determines if the keyboard key was released this frame
@@ -80,7 +88,7 @@ eolBool eol_input_is_key_pressed(eolUI8 key);
  *
  * @return eolTrue if released, eolFalse otherwise
  */
-eolBool eol_input_is_key_released(eolUI8 key);
+eolBool eol_input_is_key_released(eolInt key);
 
 /**
  * @brief determines if the keyboard key is held during this frame
@@ -90,7 +98,7 @@ eolBool eol_input_is_key_released(eolUI8 key);
  *
  * @return eolTrue if held, eolFalse otherwise
  */
-eolBool eol_input_is_key_held(eolUI8 key);
+eolBool eol_input_is_key_held(eolInt key);
 
 eolInput *eol_input_get_nth_input(char *name,eolInt n);
 

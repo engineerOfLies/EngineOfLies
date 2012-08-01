@@ -192,7 +192,7 @@ void eol_dialog_yes_no(eolLine question,
                               eol_rectf(0.75,0.65,1,1),
                               win->rect,
                               "NO",
-                              SDLK_y,
+                              SDLK_n,
                               eolTrue);
   eol_window_add_component(win,comp);
   win->customData = customData;

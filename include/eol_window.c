@@ -5,6 +5,7 @@
 #include "eol_logger.h"
 #include "eol_config.h"
 #include "eol_font.h"
+#include "eol_input.h"
 
 /*local global variables*/
 eolBool              _eol_window_initialized = eolFalse;
@@ -285,16 +286,18 @@ void eol_window_load_button(eolWindow *win,eolKeychain *def)
   eolLine buttonText;
   eolLine name;
   eolLine hotkey;
+  eolInt hotkeybutton;
   
   if ((!win) || (!def))return;
   eol_keychain_get_hash_value_as_line(buttonType, def, "buttonType");
   eol_keychain_get_hash_value_as_line(name, def, "name");
   eol_keychain_get_hash_value_as_uint(&id, def, "id");
   eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
-  eol_keychain_get_hash_value_as_line(justify, def, "justify");
+  eol_keychain_get_hash_value_as_line(justify, def, "justify");/*NOTE: not used*/
   eol_keychain_get_hash_value_as_line(buttonText, def, "buttonText");
   eol_keychain_get_hash_value_as_line(hotkey, def, "hotkey");
   
+  hotkeybutton = eol_input_parse("key", hotkey);
   if (eol_line_cmp(buttonType,"STOCK") == 0)
   {
     comp = eol_button_stock_new(
@@ -303,7 +306,7 @@ void eol_window_load_button(eolWindow *win,eolKeychain *def)
       rect,
       win->rect,
       buttonText,
-      eol_font_justify_from_string(justify),
+      hotkeybutton,
       eolFalse
     );
     eol_window_add_component(win,comp);

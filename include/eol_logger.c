@@ -85,7 +85,6 @@ void eol_logger_message(eolLogLevel level,char *msg,...)
 
 void eol_logger_init()
 {
-	fprintf(stdout,"eol_logger: initializing\n");
   if (strlen(_eol_logger_filename) <= 0)
   {
   	sprintf(_eol_logger_filename,"system/engineoflies.log");
@@ -98,7 +97,6 @@ void eol_logger_init()
   }
   _eol_logger_initialized = eolTrue;
   atexit(eol_logger_deinit);
-  fprintf(stdout,"eol_logger: initialized\n");
 }
 
 void eol_logger_deinit(void)
