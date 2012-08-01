@@ -36,6 +36,7 @@ typedef struct
 
 typedef struct
 {
+  char    * output;      /**<only on confirmation will the output be changed.*/
   GString * buffer;
   eolInt    bufferLimit; /**<if -1 no limit, otherwise its the maximum character
   that will be added to buffer*/
@@ -630,6 +631,23 @@ eolBool eol_component_entry_update(eolComponent *component)
   return eolFalse;
 }
 
+void eol_entry_assign_output(eolComponent *component)
+{
+  eolComponentEntry * entry = NULL;
+  entry = eol_component_get_entry_data(component);
+  if (entry == NULL)
+  {
+    eol_logger_message(EOL_LOG_WARN,"eol_component:unable to assign entry output\n");
+    return;
+  }
+  if (entry->output == NULL)
+  {
+    eol_logger_message(EOL_LOG_WARN,"eol_component:unable to assign output.  NULL pointer specified\n");
+    return;
+  }
+  strncpy(entry->output,entry->buffer->str,entry->bufferLimit);
+}
+
 void eol_component_make_entry(
     eolComponent * component,
     char         * output,
@@ -661,6 +679,7 @@ void eol_component_make_entry(
     eol_component_entry_free(component);
     return;
   }
+  entry->output = output;
   entry->bufferLimit = outputLimit;
   entry->justify = justify;
   entry->fontSize = fontSize;

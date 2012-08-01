@@ -100,6 +100,33 @@ eolBool eol_input_is_key_released(eolInt key);
  */
 eolBool eol_input_is_key_held(eolInt key);
 
+/**
+ * @brief determines if the keyboard modifier key is held during this frame
+ * Uses SDLMod enumerations, ex: KMOD_LSHIFT, KMOD_ALT, etc.
+ * @param key the SDLMod value of the mod of interest.  
+ *
+ * @return eolTrue if held, eolFalse otherwise
+ */
+eolBool eol_input_is_mod_held(eolUint mod);
+
+/**
+ * @brief determines if the keyboard modifier key is pressed during this frame
+ * Uses SDLMod enumerations, ex: KMOD_LSHIFT, KMOD_ALT, etc.
+ * @param key the SDLMod value of the mod of interest.  
+ *
+ * @return eolTrue if held, eolFalse otherwise
+ */
+eolBool eol_input_is_mod_pressed(eolUint mod);
+
+/**
+* @brief determines if the keyboard modifier key is released during this frame
+* Uses SDLMod enumerations, ex: KMOD_LSHIFT, KMOD_ALT, etc.
+* @param key the SDLMod value of the mod of interest.  
+*
+* @return eolTrue if held, eolFalse otherwise
+*/
+eolBool eol_input_is_mod_released(eolUint mod);
+
 eolInput *eol_input_get_nth_input(char *name,eolInt n);
 
 /**

@@ -24,6 +24,25 @@
  */
 
 /**
+ * @brief pops up a text entry dialog.  output buffer is not touched unless user presses enter.
+ *
+ * @param output This is where the output will be written upon completion.  Buffer must survive the dialog box
+ * @param bufferSize this is the character limit for the output buffer.
+ * @param lineWidth this how many characters per line will be drawn.  if 0, there is no limit
+ * @param question this is the text that is shown to the user to phrase the input
+ * @param customData this is up the user.  This will be passed to the callback upon completion
+ * @param onOk if specified this will be called (and bassed customData) if the user hits OK
+ * @param onCancel if specified this will be called (and bassed customData) if the user hits CANCEL
+ * @return a pointer to the window created.  If output cannot wait for the dialog to complete, the dialog should be destroyed.
+ */
+eolWindow *eol_dialog_text_prompt(char *output,
+                                  eolUint bufferSize,
+                                  eolUint lineWidth,  /*0 means no limit*/
+                                  eolLine question,
+                                  void * customData,
+                                  eolWindowCallback onOk,
+                                  eolWindowCallback onCancel);
+/**
   * @brief pops up a text dialog box with an "OK"
   *
   * @param question the text to show in the dialog box

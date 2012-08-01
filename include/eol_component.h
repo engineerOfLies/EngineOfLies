@@ -145,6 +145,8 @@ eolComponent *eol_button_stock_new(
 void eol_entry_delete_char(eolComponent *component);
 void eol_entry_append_char(eolComponent *component,
                            char          newchar);
+                           
+void eol_entry_assign_output(eolComponent *component);
 
 eolComponent *eol_entry_new(
     eolUint       id,
