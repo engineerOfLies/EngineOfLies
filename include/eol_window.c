@@ -286,7 +286,9 @@ void eol_window_load_button(eolWindow *win,eolKeychain *def)
   eolLine buttonText;
   eolLine name;
   eolLine hotkey;
+  eolLine hotmod;
   eolInt hotkeybutton;
+  eolInt hotkeymod;
   
   if ((!win) || (!def))return;
   eol_keychain_get_hash_value_as_line(buttonType, def, "buttonType");
@@ -295,9 +297,13 @@ void eol_window_load_button(eolWindow *win,eolKeychain *def)
   eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
   eol_keychain_get_hash_value_as_line(justify, def, "justify");/*NOTE: not used*/
   eol_keychain_get_hash_value_as_line(buttonText, def, "buttonText");
+  
   eol_keychain_get_hash_value_as_line(hotkey, def, "hotkey");
+  eol_keychain_get_hash_value_as_line(hotmod, def, "hotkeymod");
   
   hotkeybutton = eol_input_parse("key", hotkey);
+  hotkeymod = eol_input_parse("mod",hotmod);
+  if (hotkeymod < 0)hotkeymod = 0;
   if (eol_line_cmp(buttonType,"STOCK") == 0)
   {
     comp = eol_button_stock_new(
@@ -307,6 +313,7 @@ void eol_window_load_button(eolWindow *win,eolKeychain *def)
       win->rect,
       buttonText,
       hotkeybutton,
+      hotkeymod,
       eolFalse
     );
     eol_window_add_component(win,comp);

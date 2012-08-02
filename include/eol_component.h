@@ -40,7 +40,8 @@ enum eolComponentTypes {
 enum eolButtonTypes {
   eolButtonStock  = 0,
   eolButtonText   = 1,
-  eolButtonCustom = 2
+  eolButtonHidden = 2,
+  eolButtonCustom = 3
 };
 enum eolButtonStates {
   eolButtonIdle       = 0,
@@ -126,6 +127,7 @@ eolComponent *eol_button_new(
     char         * buttonText,
     eolInt         buttonType,
     eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
     eolBool        center,
     char         * buttonFileUp,
     char         * buttonFileHigh,
@@ -139,6 +141,7 @@ eolComponent *eol_button_stock_new(
     eolRect        bounds,
     char         * buttonText,
     eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
     eolBool        center
   );
 

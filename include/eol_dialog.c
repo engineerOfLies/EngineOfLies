@@ -92,6 +92,7 @@ void eol_dialog_text_block(eolLine title,
                               win->rect,
                               "OK",
                               SDLK_RETURN,
+                              0,
                               eolFalse);
   eol_window_add_component(win,comp);
 
@@ -181,6 +182,7 @@ void eol_dialog_yes_no(eolLine question,
                               win->rect,
                               "YES",
                               SDLK_y,
+                              0,
                               eolTrue);
   eol_window_add_component(win,comp);
   comp = eol_button_stock_new(2,
@@ -189,6 +191,7 @@ void eol_dialog_yes_no(eolLine question,
                               win->rect,
                               "NO",
                               SDLK_n,
+                              0,
                               eolTrue);
   eol_window_add_component(win,comp);
   win->customData = customData;
@@ -288,9 +291,9 @@ eolWindow *eol_dialog_text_prompt(char *output,
   eol_graphics_get_size(&sw, &sh);
   eol_button_get_stock_size(&bw, &bh);
   trect = eol_font_get_bounds(question,3);
-  brect = eol_font_get_bounds("Woj",3);
+  brect = eol_font_get_bounds("W",3);
   brect.w *= bufferSize;
-  if (trect.w > ((bw*2) + 6))
+  if (MAX(trect.w,brect.w) > ((bw*2) + 6))
   {
     ww = MAX(trect.w,brect.w) + 10;
   }
@@ -298,6 +301,7 @@ eolWindow *eol_dialog_text_prompt(char *output,
   {
     ww = (bw*2) + 16;
   }
+  if (ww > sw - 20)ww = sw - 20;
   wh = trect.h + brect.h + bh + 30;
   eol_rect_copy(&win->rect,eol_rect((sw/2) - (ww/2),(sh/2) - (wh/2),ww,wh));
   win->canHasFocus = eolTrue;
@@ -314,6 +318,7 @@ eolWindow *eol_dialog_text_prompt(char *output,
                               win->rect,
                               "OK",
                               SDLK_RETURN,
+                              0,
                               eolTrue);
   eol_window_add_component(win,comp);
   
@@ -321,14 +326,15 @@ eolWindow *eol_dialog_text_prompt(char *output,
                               "cancel_button",
                               eol_rectf(0.75,0.7,1,1),
                               win->rect,
-                              "NO",
+                              "CANCEL",
                               SDLK_ESCAPE,
+                              0,
                               eolTrue);
   eol_window_add_component(win,comp);
   
   comp = eol_entry_new(3,
                        "text_entry",
-                       eol_rectf(0.1,0.25,0.8,1),
+                       eol_rectf(0.05,0.25,0.9,0.25),
                        win->rect,
                        output,
                        bufferSize,

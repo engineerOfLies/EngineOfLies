@@ -25,6 +25,7 @@ typedef struct
 typedef struct
 {
   eolUint     input;                    /**<if defined, the input will operate as a hotkey*/
+  eolUint     hotkeymod;
   eolInt      justify;
   eolUint     fontSize;
   eolFloat    alpha;
@@ -748,6 +749,7 @@ eolBool eol_component_button_update(eolComponent *component)
 {
   eolVec2D v;
   eolInt x,y;
+  eolBool mod = eolTrue;
   eolComponentButton *button = NULL;
   if (!component)return eolFalse;
   button = eol_component_get_button_data(component);
@@ -756,7 +758,11 @@ eolBool eol_component_button_update(eolComponent *component)
   eol_mouse_get_position(&x,&y);
   v.x = x;
   v.y = y;
-  if (button->input > 0)
+  if (button->hotkeymod)
+  {
+    mod = eol_input_is_mod_held(button->hotkeymod);
+  }
+  if ((button->input > 0) && (mod))
   {
     if (eol_input_is_key_pressed(button->input))
     {
@@ -845,6 +851,7 @@ void eol_component_make_button(
     char         * buttonText,
     eolUint        buttonType,
     eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
     eolLine        buttonUpFile,
     eolLine        buttonHighFile,
     eolLine        buttonDownFile
@@ -863,6 +870,8 @@ void eol_component_make_button(
   button->alpha = 1;
   button->fontSize = 3;
   button->input = buttonHotkey;
+  button->hotkeymod = buttonHotkeymod;
+  
   strncpy(button->buttonText,buttonText,EOLLINELEN);
   button->buttonType = buttonType;
   switch(buttonType)
@@ -1024,6 +1033,7 @@ eolComponent *eol_button_stock_new(
     eolRect        bounds,
     char         * buttonText,
     eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
     eolBool        center
   )
 {
@@ -1035,6 +1045,7 @@ eolComponent *eol_button_stock_new(
     buttonText,
     eolButtonStock,
     buttonHotkey,
+    buttonHotkeymod,
     center,
     NULL,
     NULL,
@@ -1050,6 +1061,7 @@ eolComponent *eol_button_new(
     char         * buttonText,
     eolInt         buttonType,
     eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
     eolBool        center,
     char         * buttonFileUp,
     char         * buttonFileHigh,
@@ -1064,6 +1076,7 @@ eolComponent *eol_button_new(
     buttonText,
     buttonType,
     buttonHotkey,
+    buttonHotkeymod,
     buttonFileUp,
     buttonFileHigh,
     buttonFileDown
