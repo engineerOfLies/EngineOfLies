@@ -7,3 +7,4 @@ Entities have a number of function pointers to define custom behavior
 Entities have the option for game specific data packed in with it.
 
 assigned: engineerOfLies
+completed: 7/12
