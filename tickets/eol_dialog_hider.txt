@@ -1,0 +1,12 @@
+Make a hide/unhide dialog window
+
+Make a utility dialog that is spawned as a child window and given a pointer
+to its parent window.  The hide/unhide window will remain hidden and sleeping
+intil its parent window is hidden, at which point it will be drawn and wake up.
+it contains only a single button to unhide the window.  It should take as an
+option the window def file path.  So individual programs and windows can 
+define their own.
+
+assigned:
+estimate:
+reward: goblin skin tunic (+3) [cursed]
