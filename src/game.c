@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     if (radius > 1)radius = 0;
 
     if((eol_input_quit_check()) ||
-      ((eol_input_is_key_pressed(SDLK_F4)) && (eol_input_is_mod_held(KMOD_ALT)))
+      ((eol_input_is_key_pressed(SDLK_F4)) && (eol_input_is_mod_held(KMOD_ALT))))
     {
       eol_dialog_quit();
     }
@@ -227,6 +227,7 @@ void MakeTestWindow()
     win->rect,
     "Test Particle",
     0,
+    0,
     eolFalse
   );
   eol_window_add_component(win,comp);
@@ -248,6 +249,7 @@ void MakeTestWindow()
     eol_rectf(0.1,0.7,1,1),
     win->rect,
     "Test Entity",
+    0,
     0,
     eolFalse
   );
