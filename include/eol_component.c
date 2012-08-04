@@ -798,6 +798,7 @@ eolBool eol_component_button_update(eolComponent *component)
       component->state = eolButtonIdle;
       return eolTrue;
     }
+    return eolFalse;
   }
   component->state = eolButtonIdle;
   return eolFalse;
@@ -814,6 +815,10 @@ void eol_component_button_draw(eolComponent *component,eolRect bounds)
   x = bounds.x;
   y = bounds.y;
   if (button == NULL)return;
+  r = eol_font_get_bounds(
+    button->buttonText,
+    button->fontSize
+  );
   if ((component->state >= 0) &&
     (component->state < eolButtonStateMax))
   {
@@ -821,10 +826,6 @@ void eol_component_button_draw(eolComponent *component,eolRect bounds)
 
     if (img != NULL)
     {
-      r = eol_font_get_bounds(
-        button->buttonText,
-        button->fontSize
-      );
       eol_sprite_draw(img,
                       0,
                       bounds.x,
@@ -834,15 +835,21 @@ void eol_component_button_draw(eolComponent *component,eolRect bounds)
       ofx = _eol_component_button_offset_x;
       ofy = _eol_component_button_offset_y;
     }
+    r.x = x + ofx;
+    r.y = y + ofy;
     eol_font_draw_text_justify(
       button->buttonText,
-      x + ofx,
-      y + ofy,
+      r.x,
+      r.y,
       _eol_component_button_color[component->state],
       button->alpha,
       button->fontSize,
       button->justify
     );
+    if ((button->buttonType == eolButtonText) && (component->state == eolButtonHighlight))
+    {
+      eol_draw_rect(component->bounds,_eol_component_button_color[component->state],button->alpha);
+    }
   }
 }
 
@@ -1053,13 +1060,40 @@ eolComponent *eol_button_stock_new(
   );
 }
 
+eolComponent *eol_button_text_new(
+    eolUint        id,
+    eolWord        name,
+    eolRectFloat   rect,
+    eolRect        bounds,
+    char         * buttonText,
+    eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
+    eolBool        center
+  )
+{
+  return eol_button_new(
+    id,
+    name,
+    rect,
+    bounds,
+    buttonText,
+    eolButtonText,
+    buttonHotkey,
+    buttonHotkeymod,
+    center,
+    NULL,
+    NULL,
+    NULL
+  );
+}
+
 eolComponent *eol_button_new(
     eolUint        id,
     eolWord        name,
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
-    eolInt         buttonType,
+    eolUint        buttonType,
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
     eolBool        center,
@@ -1093,6 +1127,8 @@ eolComponent *eol_button_new(
   component->type = eolButtonComponent;
   component->bounds.x = bounds.x + (bounds.w * rect.x);
   component->bounds.y = bounds.y + (bounds.h * rect.y);
+  if (rect.w > 1)component->bounds.w = (eolUint)rect.w;
+  if (rect.h > 1)component->bounds.h = (eolUint)rect.h;
   if (center)
   {
     component->bounds.x -= component->bounds.w/2;

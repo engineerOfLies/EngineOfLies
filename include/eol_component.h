@@ -125,7 +125,7 @@ eolComponent *eol_button_new(
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
-    eolInt         buttonType,
+    eolUint        buttonType,
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
     eolBool        center,
@@ -135,6 +135,17 @@ eolComponent *eol_button_new(
   );
 
 eolComponent *eol_button_stock_new(
+    eolUint        id,
+    eolWord        name,
+    eolRectFloat   rect,
+    eolRect        bounds,
+    char         * buttonText,
+    eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
+    eolBool        center
+  );
+
+eolComponent *eol_button_text_new(
     eolUint        id,
     eolWord        name,
     eolRectFloat   rect,

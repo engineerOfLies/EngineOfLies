@@ -6,6 +6,7 @@
 #include "eol_config.h"
 #include "eol_font.h"
 #include "eol_input.h"
+#include "eol_mouse.h"
 
 /*local global variables*/
 eolBool              _eol_window_initialized = eolFalse;
@@ -318,6 +319,20 @@ void eol_window_load_button(eolWindow *win,eolKeychain *def)
     );
     eol_window_add_component(win,comp);
   }
+  else if (eol_line_cmp(buttonType,"TEXT") == 0)
+  {
+    comp = eol_button_text_new(
+      id,
+      name,
+      rect,
+      win->rect,
+      buttonText,
+      hotkeybutton,
+      hotkeymod,
+      eolFalse
+    );
+    eol_window_add_component(win,comp);
+  }
 }
 
 eolBool eol_window_load_data_from_file(char * filename,void *data)
@@ -391,6 +406,19 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
   
   eol_config_free(&conf);
   return eolTrue;
+}
+
+void eol_window_free_if_outside_click(eolWindow **win)
+{
+  if ((!win) || (!*win))return;
+  if ((eol_mouse_input_state(eolMouseLeft)) ||
+    (eol_mouse_input_state(eolMouseRight)))
+  {
+    if (!eol_mouse_in_rect((*win)->rect))
+    {
+      eol_window_free(win);
+    }
+  }
 }
 
 void eol_window_draw_generic(eolWindow *win)
@@ -561,9 +589,15 @@ eolFloat eol_window_get_relative_position(eolInt position,eolUint range)
   return (eolFloat)position/(eolFloat)range;
 }
 
+eolUint eol_window_get_refcount(eolWindow * window)
+{
+  return eol_resource_element_get_refcount(_eol_window_manager,window);
+}
+
 eolWindow * eol_window_load_from_file(eolLine file)
 {
   eolWindow *window;
+  eolLine filename;
   if (!eol_window_initialized())
   {
     return NULL;
@@ -572,6 +606,7 @@ eolWindow * eol_window_load_from_file(eolLine file)
   (eolWindow *)eol_resource_manager_load_resource(_eol_window_manager,file);
   if (window == NULL)return NULL;
   window->id = eol_resource_element_get_id(_eol_window_manager,window);
+  eol_resource_element_get_filename(filename, _eol_window_manager,window);
   _eol_window_stack = g_list_append(_eol_window_stack,window);
   return window;
 }

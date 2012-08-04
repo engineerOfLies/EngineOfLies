@@ -119,4 +119,12 @@ void eol_mouse_get_position(eolInt *x, eolInt *y);
 */
 void eol_mouse_get_motion(eolInt *dx, eolInt *dy);
 
+/**
+* @brief checks if the mouse is within the rect specified.
+*
+* @param rect the bounding rect to check for.
+* @return eolTrue if the mouse is in the rect, eolFalse otherwise.
+*/
+eolBool eol_mouse_in_rect(eolRect rect);
+
 #endif
