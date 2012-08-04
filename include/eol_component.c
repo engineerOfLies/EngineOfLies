@@ -168,7 +168,7 @@ void eol_component_config()
     {
       eol_line_cpy(buttonhitfile,buf);
     }
-    eol_config_get_vec3d_by_tag(&_eol_component_button_color[0],conf,"button_hit_file");
+    eol_config_get_vec3d_by_tag(&_eol_component_button_color[0],conf,"button_text_color");
     eol_config_get_vec3d_by_tag(&_eol_component_button_color[1],conf,"button_high_text_color");
     eol_config_get_vec3d_by_tag(&_eol_component_button_color[2],conf,"button_hit_text_color");
     eol_config_free(&conf);

@@ -28,6 +28,8 @@ typedef struct eolWindow_S
   eolLine             name;          /**<name of the window*/
   eolUint             id;            /**<number ID of the window*/
   eolRect             rect;          /**<rectangle bounds of the window*/
+  eolBool             hidden;        /**<hidden windows do not get drawn*/
+  eolBool             sleeping;      /**<sleeping windows do not update*/
   eolBool             passesInput;   /**<if false, prevent input from hitting windows below this one*/
   eolBool             canHasFocus;   /**<if the window can receive focus*/
   eolBool             hasFocus;      /**<if the window HAS focus*/
@@ -65,4 +67,8 @@ void eol_window_allocat_callbacks(eolWindow *win,eolUint count);
 eolFloat eol_window_get_relative_position(eolInt position,eolUint range);
 eolUint eol_window_get_refcount(eolWindow * window);
 
+void eol_window_hide(eolWindow *win);
+void eol_window_show(eolWindow *win);
+void eol_window_sleep(eolWindow *win);
+void eol_window_wakeup(eolWindow *win);
 #endif

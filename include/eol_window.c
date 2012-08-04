@@ -112,6 +112,7 @@ void eol_window_draw_all()
   {
     win = (eolWindow*)l->data;
     if (win == NULL)continue;
+    if (win->hidden)continue;
     if (win->drawGeneric)
     {
       eol_window_draw_generic(win);
@@ -139,7 +140,7 @@ void eol_window_update_all()
   for (;l != NULL;l = l->prev)
   {
     win = (eolWindow*)l->data;
-    if ((win != NULL)&&(win->update != NULL))
+    if ((win != NULL)&&(win->update != NULL)&& (!win->sleeping))
     {
       /*update all components*/
       for (c = win->components;c != NULL; c= c->next)
@@ -290,6 +291,9 @@ void eol_window_load_button(eolWindow *win,eolKeychain *def)
   eolLine hotmod;
   eolInt hotkeybutton;
   eolInt hotkeymod;
+  eolLine buttonFile;
+  eolLine buttonHighFile;
+  eolLine buttonHitFile;
   
   if ((!win) || (!def))return;
   eol_keychain_get_hash_value_as_line(buttonType, def, "buttonType");
@@ -301,6 +305,10 @@ void eol_window_load_button(eolWindow *win,eolKeychain *def)
   
   eol_keychain_get_hash_value_as_line(hotkey, def, "hotkey");
   eol_keychain_get_hash_value_as_line(hotmod, def, "hotkeymod");
+  
+  eol_keychain_get_hash_value_as_line(buttonFile, def, "buttonImage");
+  eol_keychain_get_hash_value_as_line(buttonHighFile, def, "buttonHigh");
+  eol_keychain_get_hash_value_as_line(buttonHitFile, def, "buttonHit");
   
   hotkeybutton = eol_input_parse("key", hotkey);
   hotkeymod = eol_input_parse("mod",hotmod);
@@ -333,6 +341,24 @@ void eol_window_load_button(eolWindow *win,eolKeychain *def)
     );
     eol_window_add_component(win,comp);
   }
+  else if (eol_line_cmp(buttonType,"CUSTOM") == 0)
+  {
+    comp = eol_button_new(
+      id,
+      name,
+      rect,
+      win->rect,
+      buttonText,
+      eolButtonCustom,
+      hotkeybutton,
+      hotkeymod,
+      eolFalse,
+      buttonFile,
+      buttonHighFile,
+      buttonHitFile
+    );
+    eol_window_add_component(win,comp);
+  }
 }
 
 eolBool eol_window_load_data_from_file(char * filename,void *data)
@@ -361,11 +387,11 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
   }
   if (tempr.w <= 0)
   {
-    tempr.w = sw + tempr.w;
+    tempr.w = sw - tempr.w - tempr.x;
   }
   if (tempr.h <= 0)
   {
-    tempr.h = sh - tempr.h;
+    tempr.h = sh - tempr.h - tempr.y;
   }
   window->rect.x = tempr.x;
   window->rect.y = tempr.y;
@@ -610,5 +636,30 @@ eolWindow * eol_window_load_from_file(eolLine file)
   _eol_window_stack = g_list_append(_eol_window_stack,window);
   return window;
 }
+
+void eol_window_hide(eolWindow *win)
+{
+  if (!win)return;
+  win->hidden = eolTrue;
+}
+
+void eol_window_show(eolWindow *win)
+{
+  if (!win)return;
+  win->hidden = eolFalse;
+}
+
+void eol_window_sleep(eolWindow *win)
+{
+  if (!win)return;
+  win->sleeping = eolTrue;
+}
+
+void eol_window_wakeup(eolWindow *win)
+{
+  if (!win)return;
+  win->sleeping = eolFalse;
+}
+
 
 /*eol@eof*/
