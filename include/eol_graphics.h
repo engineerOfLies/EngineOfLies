@@ -128,7 +128,7 @@ void eol_graphics_init();
 /**
  * @breif loads up graphics config information from file or sets defaults
  */
-void eol_graphics_load_config();
+void eol_graphics_config();
 
 /**
 * @brief Query the graphics ready state.

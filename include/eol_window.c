@@ -4,6 +4,9 @@
 #include "eol_resource.h"
 #include "eol_logger.h"
 #include "eol_config.h"
+#include "eol_font.h"
+#include "eol_input.h"
+#include "eol_mouse.h"
 
 /*local global variables*/
 eolBool              _eol_window_initialized = eolFalse;
@@ -35,9 +38,6 @@ void eol_window_init()
     eol_window_delete,
     eol_window_load_data_from_file
     );
-  eol_logger_message(
-      EOL_LOG_INFO,
-      "eol_window:initialized\n");
   atexit(eol_window_close);
   for (i = 0; i < _eol_window_sprite_count;i++)
   {
@@ -48,6 +48,9 @@ void eol_window_init()
   }
   _eol_window_initialized = eolTrue;
   eol_component_config();
+  eol_logger_message(
+      EOL_LOG_INFO,
+      "eol_window:initialized\n");
 }
 
 eolBool eol_window_initialized()
@@ -109,6 +112,7 @@ void eol_window_draw_all()
   {
     win = (eolWindow*)l->data;
     if (win == NULL)continue;
+    if (win->hidden)continue;
     if (win->drawGeneric)
     {
       eol_window_draw_generic(win);
@@ -129,13 +133,14 @@ void eol_window_update_all()
   GList *l = NULL;
   GList *c = NULL;
   GList *update = NULL;
+  eolBool updateHandled = eolFalse;
   eolWindow *win;
   if (!eol_window_initialized())return;
   l = g_list_last(_eol_window_stack);
-  if (l != NULL)
+  for (;l != NULL;l = l->prev)
   {
     win = (eolWindow*)l->data;
-    if ((win != NULL)&&(win->update != NULL))
+    if ((win != NULL)&&(win->update != NULL)&& (!win->sleeping))
     {
       /*update all components*/
       for (c = win->components;c != NULL; c= c->next)
@@ -150,11 +155,12 @@ void eol_window_update_all()
       }
     }
     /*call update for window*/
-    win->update(win,update);
+    updateHandled = win->update(win,update);
     if (update != NULL)
     {
       g_list_free(update);
     }
+    if ((updateHandled) || (!win->passesInput))break;
   }
 }
 
@@ -177,6 +183,7 @@ eolWindow *eol_window_new()
     return NULL;
   }
   /*new windows are added at the top of the stack, ie: last to draw*/
+  win->id = eol_resource_element_get_id(_eol_window_manager,win);
   _eol_window_stack = g_list_append(_eol_window_stack,win);
   return win;
 }
@@ -222,9 +229,222 @@ void eol_window_delete(void *window)
   memset(win, 0, sizeof(eolWindow));
 }
 
+void eol_window_load_label(eolWindow *win,eolKeychain *def)
+{
+  eolUint       id;
+  eolLine       text;
+  eolLine       name;
+  eolLine       justify;
+  eolLine       wordWrap;
+  eolUint       fontSize;
+  eolVec3D      color = {1,1,1};
+  eolFloat      alpha = 1;
+  eolLine       fontfile; 
+  eolRectFloat  rect;
+  eolComponent *comp;
+  char        * font = NULL;
+  
+  eol_line_cpy(fontfile,"\0");
+  eol_line_cpy(justify,"\0");
+  eol_line_cpy(wordWrap,"\0");
+  if ((!win) || (!def))return;
+  
+  eol_keychain_get_hash_value_as_uint(&id, def, "id");
+  eol_keychain_get_hash_value_as_uint(&fontSize, def, "fontSize");
+  eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
+  eol_keychain_get_hash_value_as_line(text, def, "text");
+  eol_keychain_get_hash_value_as_line(name, def, "name");
+  eol_keychain_get_hash_value_as_line(justify, def, "justify");
+  eol_keychain_get_hash_value_as_line(fontfile, def, "fontName");
+  eol_keychain_get_hash_value_as_line(wordWrap, def, "wordWrap");
+  eol_keychain_get_hash_value_as_vec3d(&color, def, "color");
+  eol_keychain_get_hash_value_as_float(&alpha, def, "alpha");
+  
+  if (strlen(fontfile) > 0)font = fontfile;
+  comp = eol_label_new(
+    id,
+    name,
+    rect,
+    win->rect,
+    eolTrue,
+    text,
+    eol_font_justify_from_string(justify),
+    eol_true_from_string(wordWrap),
+    fontSize,
+    font,
+    color,
+    alpha
+  );
+  eol_window_add_component(win,comp);
+}
+
+void eol_window_load_button(eolWindow *win,eolKeychain *def)
+{
+  eolComponent *comp;
+  eolLine buttonType;
+  eolUint id;
+  eolRectFloat rect;
+  eolLine justify;
+  eolLine buttonText;
+  eolLine name;
+  eolLine hotkey;
+  eolLine hotmod;
+  eolInt hotkeybutton;
+  eolInt hotkeymod;
+  eolLine buttonFile;
+  eolLine buttonHighFile;
+  eolLine buttonHitFile;
+  
+  if ((!win) || (!def))return;
+  eol_keychain_get_hash_value_as_line(buttonType, def, "buttonType");
+  eol_keychain_get_hash_value_as_line(name, def, "name");
+  eol_keychain_get_hash_value_as_uint(&id, def, "id");
+  eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
+  eol_keychain_get_hash_value_as_line(justify, def, "justify");/*NOTE: not used*/
+  eol_keychain_get_hash_value_as_line(buttonText, def, "buttonText");
+  
+  eol_keychain_get_hash_value_as_line(hotkey, def, "hotkey");
+  eol_keychain_get_hash_value_as_line(hotmod, def, "hotkeymod");
+  
+  eol_keychain_get_hash_value_as_line(buttonFile, def, "buttonImage");
+  eol_keychain_get_hash_value_as_line(buttonHighFile, def, "buttonHigh");
+  eol_keychain_get_hash_value_as_line(buttonHitFile, def, "buttonHit");
+  
+  hotkeybutton = eol_input_parse("key", hotkey);
+  hotkeymod = eol_input_parse("mod",hotmod);
+  if (hotkeymod < 0)hotkeymod = 0;
+  if (eol_line_cmp(buttonType,"STOCK") == 0)
+  {
+    comp = eol_button_stock_new(
+      id,
+      name,
+      rect,
+      win->rect,
+      buttonText,
+      hotkeybutton,
+      hotkeymod,
+      eolFalse
+    );
+    eol_window_add_component(win,comp);
+  }
+  else if (eol_line_cmp(buttonType,"TEXT") == 0)
+  {
+    comp = eol_button_text_new(
+      id,
+      name,
+      rect,
+      win->rect,
+      buttonText,
+      hotkeybutton,
+      hotkeymod,
+      eolFalse
+    );
+    eol_window_add_component(win,comp);
+  }
+  else if (eol_line_cmp(buttonType,"CUSTOM") == 0)
+  {
+    comp = eol_button_new(
+      id,
+      name,
+      rect,
+      win->rect,
+      buttonText,
+      eolButtonCustom,
+      hotkeybutton,
+      hotkeymod,
+      eolFalse,
+      buttonFile,
+      buttonHighFile,
+      buttonHitFile
+    );
+    eol_window_add_component(win,comp);
+  }
+}
+
 eolBool eol_window_load_data_from_file(char * filename,void *data)
 {
+  eolWindow *window;
+  eolConfig *conf;
+  eolKeychain *chain, *item;
+  int i;
+  eolLine typecheck;
+  eolRectFloat tempr;
+  eolUint sw,sh;
+  if (!data)return eolFalse;
+  window = (eolWindow *)data;
+  conf = eol_config_load(filename);
+  if (!conf)return eolFalse;
+  eol_graphics_get_size(&sw,&sh);
+  eol_config_get_line_by_tag(window->name,conf,"name");
+  eol_config_get_rectfloat_by_tag(&tempr,conf,"rect");
+  if (tempr.x < 0)
+  {
+    tempr.x = sw + tempr.x;
+  }
+  if (tempr.y < 0)
+  {
+    tempr.y = sh + tempr.y;
+  }
+  if (tempr.w <= 0)
+  {
+    tempr.w = sw - tempr.w - tempr.x;
+  }
+  if (tempr.h <= 0)
+  {
+    tempr.h = sh - tempr.h - tempr.y;
+  }
+  window->rect.x = tempr.x;
+  window->rect.y = tempr.y;
+  window->rect.w = tempr.w;
+  window->rect.h = tempr.h;
+  eol_config_get_bool_by_tag(&window->canHasFocus,conf,"canHasFocus");
+  eol_config_get_bool_by_tag(&window->drawGeneric ,conf,"drawGeneric");
+  eol_config_get_bool_by_tag(&window->passesInput ,conf,"passesInput");
+  
+  /*add components*/
+  if (eol_config_get_keychain_by_tag(&chain,conf,"components"))
+  {
+    if (chain != NULL)
+    {
+      if (chain->keyType == eolKeychainList)
+      {
+        for (i = 0; i < chain->itemCount; i++)
+        {
+          item = eol_keychain_get_list_nth(chain, i);
+          if (item != NULL)
+          {
+            eol_keychain_get_hash_value_as_line(typecheck, item, "type");
+            if (eol_line_cmp(typecheck,"BUTTON") == 0)
+            {
+              eol_window_load_button(window,item);
+              continue;
+            }
+            if (eol_line_cmp(typecheck,"LABEL") == 0)
+            {
+              eol_window_load_label(window,item);
+              continue;
+            }
+          }
+        }        
+      }
+    }
+  }                                      
+  
+  eol_config_free(&conf);
   return eolTrue;
+}
+
+void eol_window_free_if_outside_click(eolWindow **win)
+{
+  if ((!win) || (!*win))return;
+  if ((eol_mouse_input_state(eolMouseLeft)) ||
+    (eol_mouse_input_state(eolMouseRight)))
+  {
+    if (!eol_mouse_in_rect((*win)->rect))
+    {
+      eol_window_free(win);
+    }
+  }
 }
 
 void eol_window_draw_generic(eolWindow *win)
@@ -394,5 +614,52 @@ eolFloat eol_window_get_relative_position(eolInt position,eolUint range)
   if (range == 0)return 0;
   return (eolFloat)position/(eolFloat)range;
 }
+
+eolUint eol_window_get_refcount(eolWindow * window)
+{
+  return eol_resource_element_get_refcount(_eol_window_manager,window);
+}
+
+eolWindow * eol_window_load_from_file(eolLine file)
+{
+  eolWindow *window;
+  eolLine filename;
+  if (!eol_window_initialized())
+  {
+    return NULL;
+  }
+  window =
+  (eolWindow *)eol_resource_manager_load_resource(_eol_window_manager,file);
+  if (window == NULL)return NULL;
+  window->id = eol_resource_element_get_id(_eol_window_manager,window);
+  eol_resource_element_get_filename(filename, _eol_window_manager,window);
+  _eol_window_stack = g_list_append(_eol_window_stack,window);
+  return window;
+}
+
+void eol_window_hide(eolWindow *win)
+{
+  if (!win)return;
+  win->hidden = eolTrue;
+}
+
+void eol_window_show(eolWindow *win)
+{
+  if (!win)return;
+  win->hidden = eolFalse;
+}
+
+void eol_window_sleep(eolWindow *win)
+{
+  if (!win)return;
+  win->sleeping = eolTrue;
+}
+
+void eol_window_wakeup(eolWindow *win)
+{
+  if (!win)return;
+  win->sleeping = eolFalse;
+}
+
 
 /*eol@eof*/

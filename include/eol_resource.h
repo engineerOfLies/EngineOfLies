@@ -42,12 +42,13 @@ typedef struct
 /*All resources managed by this system must contain this header structure.*/
 typedef struct
 {
-  eolLine filename;
   eolUint refCount;
+  eolLine filename;
   eolUint index;
   eolUint id;       /**<unique identifier.  In case of a memory re-use it can be
                         compared with expected for validity*/
   eolUint timeFree; /**<time when free was called on resource.  Oldest get reclaimed first*/
+  eolUint underflowprot;
 }eolResourceHeader;
 
 eolResourceManager *eol_resource_manager_new();
@@ -152,6 +153,9 @@ void * eol_resource_get_next_data(eolResourceManager *manager,void *data);
  * @return eolTrue if the id's match or eolFalse on error or mismatch.
  */
 eolBool eol_resource_element_id_valid(eolResourceManager *manager,void *element,eolUint id);
+
+eolUint eol_resource_element_get_refcount(eolResourceManager *manager,void *element);
+void eol_resource_element_get_filename(eolLine filename, eolResourceManager *manager,void *element);
 
 #endif
 

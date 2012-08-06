@@ -19,20 +19,19 @@
 */
 
 #include "eol_types.h"
-#include <glib.h>
+#include "eol_keychain.h"
 #include <yaml.h>
 
 
 typedef struct
 {
-  eolLine     filename;
-  eolUint     elementCount;
-  GHashTable  * _node;
+  eolLine       filename;
+  eolUint       elementCount;
+  eolKeychain * _node;
 } eolConfig;
 
 /* Variable, Value, Sequence (vector) */
 enum eolConfigState { KEY, VAL, SEQ };
-
 
 /**
  * @brief initializes config system
@@ -40,25 +39,54 @@ enum eolConfigState { KEY, VAL, SEQ };
 void eol_config_init();
 
 /**
+ * @brief checks initalization status of config
+ */
+eolBool eol_config_initialized();
+
+/**
  * @brief loads a configuration file into a eolConfig struct
  *
+ * @param filename the config file to load.
  * @return a eolConfig pointer with the config structure
  */
 eolConfig *eol_config_load(char* filename);
 
-void eol_config_destroy(eolConfig *config);
+/**
+ * @brief returns the config back to the system.
+ *
+ * @param config a pointer to your config pointer.  Set to NULL upon completion
+ */
+void eol_config_free(eolConfig **config);
+
+eolBool eol_config_get_keychain(eolKeychain *output,
+                                eolConfig *conf);
 
 /**
- * @brief writes config from a hash object into a file
- *
+ * @brief gets the element by tag as a keychain.
+ * @param output a pointer to a keychain pointer.  Set to the key if found. Null otherwise.
+ * @param conf a pointer to your config.
+ * @param tag the key to search for.
+ * @return eolTrue if found, eolFalse otherwise
  */
-void eol_config_dump(char* filename, GHashTable* data);
+eolBool eol_config_get_keychain_by_tag(eolKeychain **output,
+                                       eolConfig *conf,
+                                       eolLine tag);
+
+eolBool eol_config_get_vec3d_by_tag(
+  eolVec3D  *output,
+  eolConfig *conf,
+  eolLine    tag
+);
 
 eolBool eol_config_get_int_by_tag(
   eolInt    *output,
   eolConfig *conf,
   eolLine    tag
 );
+
+eolBool eol_config_get_float_by_tag(eolFloat *output, eolConfig *conf, eolLine tag);
+eolBool eol_config_get_uint_by_tag(eolUint *output, eolConfig *conf, eolLine tag);
+eolBool eol_config_get_bool_by_tag(eolBool *output, eolConfig *conf, eolLine tag);
 
 eolBool eol_config_get_line_by_tag(
   eolLine     output,
@@ -73,10 +101,14 @@ eolBool eol_config_get_list_count_by_tag(
 );
 
 eolBool eol_config_get_list_by_tag(
-  GList      *output,
-  eolConfig  *conf,
-  eolLine     tag
+  eolKeychain * output,
+  eolConfig   * conf,
+  eolLine       tag
 );
+
+eolBool eol_config_get_rectfloat_by_tag(eolRectFloat *output,
+                                        eolConfig *conf,
+                                        eolLine tag);
 
 #endif
 

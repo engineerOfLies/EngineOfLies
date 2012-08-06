@@ -57,7 +57,33 @@ typedef eolUI8   eolBool;
 enum eolBoolEnum {
   eolTrue  = 1,
   eolFalse = 0
+  
 };
+
+/**
+* @brief converts a string represention of true/false to the value
+* accepts "true", "TRUE" and "True" / "false", "FALSE" and "False"
+* @param truth the string to check for "true" or "false"
+* @return eolTrue if "true" or eolFalse if "false",-1 if nothing
+*/
+eolInt eol_bool_from_string(char * truth);
+
+/**
+* @brief checks if a string says "true"
+* accepts "true", "TRUE" and "True"
+* @param truth the string to check for "true"
+* @return eolTrue if "true" or eolFalse if anything else
+*/
+eolUint eol_true_from_string(char * truth);
+
+/**
+* @brief checks if a string says "false"
+* accepts "false", "FALSE" and "False"
+* @param truth the string to check for "false"
+* @return eolFalse if "false" eolTrue otherwise
+*/
+eolUint eol_false_from_string(char * truth);
+
 
 /*
  * The Floating point numbers 

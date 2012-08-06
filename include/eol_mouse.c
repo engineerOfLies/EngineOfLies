@@ -102,6 +102,16 @@ void eol_mouse_get_motion(eolInt *dx, eolInt *dy)
   if (dy)*dy = _eol_mouse.y - _eol_mouse.oy;
 }
 
+eolBool eol_mouse_in_rect(eolRect rect)
+{
+  eolVec2D v;
+  eolInt x,y;
+  eol_mouse_get_position(&x, &y);
+  v.x = x;
+  v.y = y;
+  return eol_vec_in_rect(v,rect);
+}
+
 eolBool eol_mouse_input_pressed(eolUint button)
 {
   return ((eol_mouse_input_state(button)) &&

@@ -279,5 +279,41 @@ eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori)
   return eolTrue;
 }
 
+eolUint eol_true_from_string(char * truth)
+{
+  if ((strcmp(truth,"TRUE") == 0) ||
+    (strcmp(truth,"true") == 0) ||
+    (strcmp(truth,"True") == 0) ||
+    (strcmp(truth,"1") == 0))
+    return eolTrue;
+  return eolFalse;
+}
+
+eolUint eol_false_from_string(char * truth)
+{
+  if ((strcmp(truth,"FALSE") == 0) ||
+    (strcmp(truth,"false") == 0) ||
+    (strcmp(truth,"False") == 0) ||
+    (strcmp(truth,"0") == 0))
+    return eolFalse;
+  return eolTrue;
+}
+
+eolInt eol_bool_from_string(char * truth)
+{
+  if ((strcmp(truth,"TRUE") == 0) ||
+    (strcmp(truth,"true") == 0) ||
+    (strcmp(truth,"True") == 0) ||
+    (strcmp(truth,"1") == 0))
+    return eolTrue;
+  if ((strcmp(truth,"FALSE") == 0) ||
+    (strcmp(truth,"false") == 0) ||
+    (strcmp(truth,"False") == 0) ||
+    (strcmp(truth,"0") == 0))
+    return eolFalse;
+  return -1;
+}
+
+
 /*eol @ eof*/
 

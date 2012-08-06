@@ -1,11 +1,14 @@
 #include "eol_keychain.h"
+#include "eol_loader.h"
 #include <glib/gstring.h>
 #include <glib/glist.h>
 #include <glib/ghash.h>
+#include <glib.h>
 
-void eol_g_string_free(GString *string)
+void eol_g_string_free(char *string)
 {
-  g_string_free(string,eolTrue);
+  if (!string)return;
+  g_free(string);
 }
 
 void eol_keychain_scalar_free(eolKeychain *scalar)
@@ -137,7 +140,7 @@ eolKeychain *eol_keychain_new_string(char *text)
   link->keyType = eolKeychainString;
   link->itemCount = strlen(text);
   link->keyFree = (eolKeychainFree)eol_g_string_free;
-  link->keyValue = g_string_new(text);
+  link->keyValue = g_strdup(text);
   return link;
 }
 
@@ -171,36 +174,30 @@ eolKeychain *eol_keychain_new_hash()
 
 void eol_keychain_hash_remove(eolKeychain *hash,char *key)
 {
-  GString *keyString;
   GHashTable*hashtable = NULL;
   if (!hash)return;
   if (hash->keyType != eolKeychainHash)return;
   if (hash->keyValue == NULL)return;
   hashtable = (GHashTable*)hash->keyValue;
-  keyString = g_string_new_len(key,EOLWORDLEN);
-  g_hash_table_remove(hashtable,keyString);
-  g_string_free(keyString,eolTrue);
+  g_hash_table_remove(hashtable,key);
 }
 
 void eol_keychain_hash_insert(eolKeychain *hash,char *key,eolKeychain *value)
 {
-  GString *keyString;
   GHashTable*hashtable = NULL;
   if (!hash)return;
   if (hash->keyType != eolKeychainHash)return;
   if (hash->keyValue == NULL)return;
   hashtable = (GHashTable*)hash->keyValue;
-  keyString = g_string_new_len(key,EOLWORDLEN);
-  if (g_hash_table_lookup(hashtable,keyString) != NULL)
+  if (g_hash_table_lookup(hashtable,key) != NULL)
   {
-    g_hash_table_replace(hashtable,keyString,value);
+    g_hash_table_replace(hashtable,g_strdup(key),value);
   }
   else
   {
-    g_hash_table_insert(hashtable,keyString,value);
+    g_hash_table_insert(hashtable,g_strdup(key),value);
     hash->itemCount++;
   }
-  g_string_free(keyString,eolTrue);
 }
 
 void eol_keychain_list_append(eolKeychain *list,eolKeychain *item)
@@ -211,19 +208,23 @@ void eol_keychain_list_append(eolKeychain *list,eolKeychain *item)
   list->itemCount++;
 }
 
-eolKeychain *eol_keychain_get_hash_value(eolKeychain *hash,eolWord key)
+eolKeychain *eol_keychain_get_hash_value(eolKeychain *hash,eolLine key)
 {
-  eolKeychain *value;
-  GString *keyString;
   GHashTable*hashtable = NULL;
-  if (!hash)return NULL;
-  if (hash->keyType != eolKeychainHash)return NULL;
-  if (hash->keyValue == NULL)return NULL;
+  if (!hash)
+  {    
+    return NULL;
+  }
+  if (hash->keyType != eolKeychainHash)
+  {    
+    return NULL;
+  }
+  if (hash->keyValue == NULL)
+  {
+    return NULL;
+  }
   hashtable = (GHashTable*)hash->keyValue;
-  keyString = g_string_new_len(key,EOLWORDLEN);
-  value = g_hash_table_lookup(hashtable,keyString);
-  g_string_free(keyString,eolTrue);
-  return value;
+  return g_hash_table_lookup(hashtable,key);
 }
 
 eolKeychain *eol_keychain_get_list_nth(eolKeychain *list, eolUint n)
@@ -271,6 +272,142 @@ void eol_keychain_list_move_nth_bottom(eolKeychain *list, eolUint n)
   list->keyValue = g_list_remove_link(list->keyValue,link);
   list->keyValue = g_list_concat(list->keyValue,link);
   g_list_free(link);
+}
+
+eolBool eol_keychain_get_hash_value_as_uint(eolUint *output, eolKeychain *hash, eolLine key)
+{
+  eolUint temp = 0;
+  eolLine keyValue;
+  eolKeychain *chain;
+  if ((!hash) || (!output) || (strlen(key) == 0))return eolFalse;
+  chain = eol_keychain_get_hash_value(hash,key);
+  if (!chain)return eolFalse;
+  if (chain->keyType != eolKeychainString)return eolFalse;
+  eol_line_cpy(keyValue,chain->keyValue);
+  if (sscanf(keyValue,"%ui",&temp) != 1)return eolFalse;
+  *output = temp;
+  return eolTrue;
+}
+
+eolBool eol_keychain_get_hash_value_as_int(eolInt *output, eolKeychain *hash, eolLine key)
+{
+  eolInt temp = 0;
+  eolLine keyValue;
+  eolKeychain *chain;
+  if ((!hash) || (!output) || (strlen(key) == 0))return eolFalse;
+  chain = eol_keychain_get_hash_value(hash,key);
+  if (!chain)return eolFalse;
+  if (chain->keyType != eolKeychainString)return eolFalse;
+  eol_line_cpy(keyValue,chain->keyValue);
+  if (sscanf(keyValue,"%i",&temp) != 1)return eolFalse;
+  *output = temp;
+  return eolTrue;
+}
+
+eolBool eol_keychain_get_hash_value_as_float(eolFloat *output, eolKeychain *hash, eolLine key)
+{
+  eolFloat temp = 0;
+  eolLine keyValue;
+  eolKeychain *chain;
+  if ((!hash) || (!output) || (strlen(key) == 0))return eolFalse;
+  chain = eol_keychain_get_hash_value(hash,key);
+  if (!chain)return eolFalse;
+  if (chain->keyType != eolKeychainString)return eolFalse;
+  eol_line_cpy(keyValue,chain->keyValue);
+  if (sscanf(keyValue,"%f",&temp) != 1)return eolFalse;
+  *output = temp;
+  return eolTrue;
+}
+
+eolBool eol_keychain_get_hash_value_as_bool(eolBool *output, eolKeychain *hash, eolLine key)
+{
+  eolKeychain *chain;
+  eolInt boo;
+  if ((!hash) || (strlen(key) == 0))return eolFalse;
+  chain = eol_keychain_get_hash_value(hash,key);
+  if (!chain)
+  {
+    return eolFalse;
+  }
+  if (chain->keyType != eolKeychainString)return eolFalse;
+  boo = eol_bool_from_string(chain->keyValue);
+  if (boo == -1)return eolFalse;/*tag was not boolean*/
+  *output = boo;
+  return eolTrue;
+}
+
+eolBool eol_keychain_get_hash_value_as_line(eolLine output, eolKeychain *hash, eolLine key)
+{
+  eolKeychain *chain;
+  if ((!hash) || (strlen(key) == 0))return eolFalse;
+  chain = eol_keychain_get_hash_value(hash,key);
+  if (!chain)
+  {
+    return eolFalse;
+  }
+  if (chain->keyType != eolKeychainString)return eolFalse;
+  eol_line_cpy(output,chain->keyValue);
+  return eolTrue;
+}
+
+eolBool eol_keychain_get_hash_value_as_vec3d(eolVec3D *output, eolKeychain *hash, eolLine key)
+{
+  eolVec3D temp = {0,0,0};
+  eolLine keyValue;
+  eolKeychain *chain;
+  if ((!hash) || (!output) || (strlen(key) == 0))return eolFalse;
+  chain = eol_keychain_get_hash_value(hash,key);
+  if (!chain)return eolFalse;
+  if (chain->keyType != eolKeychainString)return eolFalse;
+  eol_line_cpy(keyValue,chain->keyValue);
+  if (sscanf(keyValue,"%lf,%lf,%lf",&temp.x,&temp.y,&temp.z) != 3)return eolFalse;
+  eol_vec3d_copy((*output),temp);
+  return eolTrue;
+}
+
+eolBool eol_keychain_get_hash_value_as_rect(eolRect *output, eolKeychain *hash, eolLine key)
+{
+  eolRect temp = {0,0,0,0};
+  eolLine keyValue;
+  eolKeychain *chain;
+  if ((!hash) || (!output) || (strlen(key) == 0))return eolFalse;
+  chain = eol_keychain_get_hash_value(hash,key);
+  if (!chain)return eolFalse;
+  if (chain->keyType != eolKeychainString)return eolFalse;
+  eol_line_cpy(keyValue,chain->keyValue);
+  if (sscanf(keyValue,"%hi,%hi,%hu,%hu",&temp.x,&temp.y,&temp.w,&temp.h) != 4)return eolFalse;
+  eol_rect_copy(output,temp);
+  return eolTrue;
+}
+
+eolBool eol_keychain_get_hash_value_as_rectfloat(eolRectFloat *output, eolKeychain *hash, eolLine key)
+{
+  eolRectFloat temp = {0,0,0,0};
+  eolLine keyValue;
+  eolKeychain *chain;
+  if ((!hash) || (!output) || (strlen(key) == 0))return eolFalse;
+  chain = eol_keychain_get_hash_value(hash,key);
+  if (!chain)return eolFalse;
+  if (chain->keyType != eolKeychainString)return eolFalse;
+  eol_line_cpy(keyValue,chain->keyValue);
+  if (sscanf(keyValue,"%lf,%lf,%lf,%lf",&temp.x,&temp.y,&temp.w,&temp.h) != 4)return eolFalse;
+  eol_rectf_copy(output,temp);
+  return eolTrue;
+}
+
+void eol_keychain_save_v1(eolKeychain *chain, char *filename)
+{
+  
+}
+
+void eol_keychain_print_hash(eolLine key, eolKeychain *chain, eolUint level)
+{
+  
+}
+
+void eol_keychain_print(eolKeychain *chain)
+{
+  
 }
 
 /*eol@eof*/

@@ -6,6 +6,7 @@
 #include "eol_mouse.h"
 #include "eol_draw.h"
 #include "eol_input.h"
+#include "eol_config.h"
 #include <glib/glist.h>
 #include <glib/gstring.h>
 
@@ -24,6 +25,7 @@ typedef struct
 typedef struct
 {
   eolUint     input;                    /**<if defined, the input will operate as a hotkey*/
+  eolUint     hotkeymod;
   eolInt      justify;
   eolUint     fontSize;
   eolFloat    alpha;
@@ -35,6 +37,7 @@ typedef struct
 
 typedef struct
 {
+  char    * output;      /**<only on confirmation will the output be changed.*/
   GString * buffer;
   eolInt    bufferLimit; /**<if -1 no limit, otherwise its the maximum character
   that will be added to buffer*/
@@ -86,6 +89,8 @@ typedef struct
 /*local global variables*/
 eolSprite * _eol_component_stock_button[3] = {NULL,NULL,NULL};
 eolVec3D    _eol_component_button_color[3];
+eolInt      _eol_component_button_offset_x = 0;
+eolInt      _eol_component_button_offset_y = 0;
 
 /*local function prototypes*/
 void eol_component_button_new(eolComponent *component);
@@ -127,13 +132,51 @@ void eol_component_make_label(
 /*definitions*/
 void eol_component_config()
 {
-  /*TODO: load from config file*/
-  _eol_component_stock_button[0] = eol_sprite_load("images/UI/btn.png",-1,-1);
-  _eol_component_stock_button[1] = eol_sprite_load("images/UI/btn_high.png",-1,-1);
-  _eol_component_stock_button[2] = eol_sprite_load("images/UI/btn_hit.png",-1,-1);
+  eolLine buf;
+  eolLine buttonfile,buttonhitfile,buttonhighfile;
+  eolConfig *conf = NULL;
+  _eol_component_button_offset_x = 0;
+  _eol_component_button_offset_y = 0;
   eol_vec3d_set(_eol_component_button_color[0],0.8,0.8,0.8);
   eol_vec3d_set(_eol_component_button_color[1],1,1,0);
   eol_vec3d_set(_eol_component_button_color[2],0.6,0.6,0.6);
+  eol_line_cpy(buttonfile,"images/UI/btn.png");
+  eol_line_cpy(buttonhitfile,"images/UI/btn_hit.png");
+  eol_line_cpy(buttonhighfile,"images/UI/btn_high.png");
+ 
+  conf = eol_config_load("system/component.cfg");
+  if (conf != NULL)
+  {
+    eol_config_get_int_by_tag(&_eol_component_button_offset_x,
+                              conf,
+                              "button_x_offset");
+    eol_config_get_int_by_tag(&_eol_component_button_offset_y,
+                              conf,
+                              "button_y_offset");
+    eol_config_get_line_by_tag(buf,conf,"button_file");
+    if (strlen(buf) > 0)
+    {
+      eol_line_cpy(buttonfile,buf);
+    }
+    eol_config_get_line_by_tag(buf,conf,"button_high_file");
+    if (strlen(buf) > 0)
+    {
+      eol_line_cpy(buttonhighfile,buf);
+    }
+    eol_config_get_line_by_tag(buf,conf,"button_hit_file");
+    if (strlen(buf) > 0)
+    {
+      eol_line_cpy(buttonhitfile,buf);
+    }
+    eol_config_get_vec3d_by_tag(&_eol_component_button_color[0],conf,"button_text_color");
+    eol_config_get_vec3d_by_tag(&_eol_component_button_color[1],conf,"button_high_text_color");
+    eol_config_get_vec3d_by_tag(&_eol_component_button_color[2],conf,"button_hit_text_color");
+    eol_config_free(&conf);
+  }
+
+  _eol_component_stock_button[0] = eol_sprite_load(buttonfile,-1,-1);
+  _eol_component_stock_button[1] = eol_sprite_load(buttonhighfile,-1,-1);
+  _eol_component_stock_button[2] = eol_sprite_load(buttonhitfile,-1,-1);
 }
 
 void eol_button_get_stock_size(eolUint *w, eolUint *h)
@@ -589,6 +632,23 @@ eolBool eol_component_entry_update(eolComponent *component)
   return eolFalse;
 }
 
+void eol_entry_assign_output(eolComponent *component)
+{
+  eolComponentEntry * entry = NULL;
+  entry = eol_component_get_entry_data(component);
+  if (entry == NULL)
+  {
+    eol_logger_message(EOL_LOG_WARN,"eol_component:unable to assign entry output\n");
+    return;
+  }
+  if (entry->output == NULL)
+  {
+    eol_logger_message(EOL_LOG_WARN,"eol_component:unable to assign output.  NULL pointer specified\n");
+    return;
+  }
+  strncpy(entry->output,entry->buffer->str,entry->bufferLimit);
+}
+
 void eol_component_make_entry(
     eolComponent * component,
     char         * output,
@@ -620,6 +680,7 @@ void eol_component_make_entry(
     eol_component_entry_free(component);
     return;
   }
+  entry->output = output;
   entry->bufferLimit = outputLimit;
   entry->justify = justify;
   entry->fontSize = fontSize;
@@ -688,11 +749,37 @@ eolBool eol_component_button_update(eolComponent *component)
 {
   eolVec2D v;
   eolInt x,y;
+  eolBool mod = eolTrue;
+  eolComponentButton *button = NULL;
   if (!component)return eolFalse;
+  button = eol_component_get_button_data(component);
+  
   component->oldState = component->state;
   eol_mouse_get_position(&x,&y);
   v.x = x;
   v.y = y;
+  if (button->hotkeymod)
+  {
+    mod = eol_input_is_mod_held(button->hotkeymod);
+  }
+  if ((button->input > 0) && (mod))
+  {
+    if (eol_input_is_key_pressed(button->input))
+    {
+      component->state = eolButtonPressed;
+      return eolFalse;
+    }
+    if (eol_input_is_key_held(button->input))
+    {
+      component->state = eolButtonPressed;
+      return eolFalse;
+    }
+    if (eol_input_is_key_released(button->input))
+    {
+      component->state = eolButtonIdle;
+      return eolTrue;
+    }
+  }
   if (eol_vec_in_rect(v,component->bounds))
   {
     component->state = eolButtonHighlight;
@@ -711,11 +798,9 @@ eolBool eol_component_button_update(eolComponent *component)
       component->state = eolButtonIdle;
       return eolTrue;
     }
+    return eolFalse;
   }
-  else
-  {
-    component->state = eolButtonIdle;
-  }
+  component->state = eolButtonIdle;
   return eolFalse;
 }
 
@@ -725,10 +810,15 @@ void eol_component_button_draw(eolComponent *component,eolRect bounds)
   eolComponentButton *button = NULL;
   eolSprite *img = NULL;
   eolInt x,y;
+  eolUint ofx = 0, ofy = 0;
   button = eol_component_get_button_data(component);
   x = bounds.x;
   y = bounds.y;
   if (button == NULL)return;
+  r = eol_font_get_bounds(
+    button->buttonText,
+    button->fontSize
+  );
   if ((component->state >= 0) &&
     (component->state < eolButtonStateMax))
   {
@@ -736,26 +826,30 @@ void eol_component_button_draw(eolComponent *component,eolRect bounds)
 
     if (img != NULL)
     {
-      r = eol_font_get_bounds(
-        button->buttonText,
-        button->fontSize
-      );
       eol_sprite_draw(img,
                       0,
                       bounds.x,
                       bounds.y);
       x = bounds.x + (img->frameWidth/2);
-      y = bounds.y + (img->frameHeight/2) - (r.h*0.7);
+      y = bounds.y + (img->frameHeight/2) - (r.h*0.5);
+      ofx = _eol_component_button_offset_x;
+      ofy = _eol_component_button_offset_y;
     }
+    r.x = x + ofx;
+    r.y = y + ofy;
     eol_font_draw_text_justify(
       button->buttonText,
-      x,
-      y,
+      r.x,
+      r.y,
       _eol_component_button_color[component->state],
       button->alpha,
       button->fontSize,
       button->justify
     );
+    if ((button->buttonType == eolButtonText) && (component->state == eolButtonHighlight))
+    {
+      eol_draw_rect(component->bounds,_eol_component_button_color[component->state],button->alpha);
+    }
   }
 }
 
@@ -764,6 +858,7 @@ void eol_component_make_button(
     char         * buttonText,
     eolUint        buttonType,
     eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
     eolLine        buttonUpFile,
     eolLine        buttonHighFile,
     eolLine        buttonDownFile
@@ -782,6 +877,8 @@ void eol_component_make_button(
   button->alpha = 1;
   button->fontSize = 3;
   button->input = buttonHotkey;
+  button->hotkeymod = buttonHotkeymod;
+  
   strncpy(button->buttonText,buttonText,EOLLINELEN);
   button->buttonType = buttonType;
   switch(buttonType)
@@ -943,6 +1040,7 @@ eolComponent *eol_button_stock_new(
     eolRect        bounds,
     char         * buttonText,
     eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
     eolBool        center
   )
 {
@@ -954,6 +1052,34 @@ eolComponent *eol_button_stock_new(
     buttonText,
     eolButtonStock,
     buttonHotkey,
+    buttonHotkeymod,
+    center,
+    NULL,
+    NULL,
+    NULL
+  );
+}
+
+eolComponent *eol_button_text_new(
+    eolUint        id,
+    eolWord        name,
+    eolRectFloat   rect,
+    eolRect        bounds,
+    char         * buttonText,
+    eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
+    eolBool        center
+  )
+{
+  return eol_button_new(
+    id,
+    name,
+    rect,
+    bounds,
+    buttonText,
+    eolButtonText,
+    buttonHotkey,
+    buttonHotkeymod,
     center,
     NULL,
     NULL,
@@ -967,8 +1093,9 @@ eolComponent *eol_button_new(
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
-    eolInt         buttonType,
+    eolUint        buttonType,
     eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
     eolBool        center,
     char         * buttonFileUp,
     char         * buttonFileHigh,
@@ -983,6 +1110,7 @@ eolComponent *eol_button_new(
     buttonText,
     buttonType,
     buttonHotkey,
+    buttonHotkeymod,
     buttonFileUp,
     buttonFileHigh,
     buttonFileDown
@@ -999,6 +1127,8 @@ eolComponent *eol_button_new(
   component->type = eolButtonComponent;
   component->bounds.x = bounds.x + (bounds.w * rect.x);
   component->bounds.y = bounds.y + (bounds.h * rect.y);
+  if (rect.w > 1)component->bounds.w = (eolUint)rect.w;
+  if (rect.h > 1)component->bounds.h = (eolUint)rect.h;
   if (center)
   {
     component->bounds.x -= component->bounds.w/2;

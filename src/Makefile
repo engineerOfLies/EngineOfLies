@@ -24,6 +24,7 @@ SDL_CFLAGS = `sdl-config --cflags`
 SDL_LDFLAGS = `sdl-config --libs` -lSDL_image -lSDL_ttf -lSDL_mixer -lSDL_net -lGLU -lz -lphysfs -lglib-2.0
 EOL_CFLAGS = -I../include
 EOL_LDFLAGS = ../lib/libeol.a
+YAML_LDFLAGS = /usr/lib/libyaml.so
 LFLAGS = -g  -o ../$(PROJECT) -lphysfs
 CFLAGS = -g -Wall -pedantic -std=gnu99 -fgnu89-inline -Wno-unknown-pragmas 
 # -ffast-math for relase version
@@ -35,7 +36,7 @@ DOXYGEN = doxygen
 #
 
 $(PROJECT): $(OBJ)
-	$(CC) $(OBJ) $(LFLAGS) $(EOL_LDFLAGS) $(SDL_LDFLAGS) $(GLIB_LDFLAGS) libchipmunk.a
+	$(CC) $(OBJ) $(LFLAGS) $(EOL_LDFLAGS) $(SDL_LDFLAGS) $(GLIB_LDFLAGS) $(YAML_LDFLAGS) libchipmunk.a
 docs:
 	$(DOXYGEN) doxygen.cfg
   

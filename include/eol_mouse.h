@@ -21,11 +21,10 @@
 
 enum eolMouseStates {
   eolMouseLeft       = 0,
-  eolMouseRight      = 1,
-  eolMouseCenter     = 2,
+  eolMouseCenter     = 1,
+  eolMouseRight      = 2,
   eolMouseWheelUp    = 3,
-  eolMouseWheelDown  = 4,
-  eolMouseWheelPress = 5
+  eolMouseWheelDown  = 4
 };
 
 /**
@@ -119,5 +118,13 @@ void eol_mouse_get_position(eolInt *x, eolInt *y);
 * @param y putput pointer to where the change in Y position can be written to.
 */
 void eol_mouse_get_motion(eolInt *dx, eolInt *dy);
+
+/**
+* @brief checks if the mouse is within the rect specified.
+*
+* @param rect the bounding rect to check for.
+* @return eolTrue if the mouse is in the rect, eolFalse otherwise.
+*/
+eolBool eol_mouse_in_rect(eolRect rect);
 
 #endif

@@ -25,7 +25,8 @@ typedef enum _eol_log_levels {
 	EOL_LOG_FATAL = 1,  /**<only log FATAL errors*/
 	EOL_LOG_ERROR = 2,  /**<only log ERROR level and worse*/
 	EOL_LOG_WARN  = 3,  /**<only log Warning level and worse*/
-	EOL_LOG_INFO  = 4,  /**<log all*/
+	EOL_LOG_DEBUG = 4,  /**<only log debug level and worse*/
+	EOL_LOG_INFO  = 5,  /**<log all*/
 	EOL_LOG_MAX
 }eolLogLevel;
 

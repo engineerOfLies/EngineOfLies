@@ -41,6 +41,7 @@ typedef struct eolCamera_S
   eolVec3D    rotation;    /**<rotation of the camera*/
   eolFloat    followDist;  /**<the following distance to the target*/
   eolFloat    followHeight;/**<how high up the camera should be when following a target*/
+  eolFloat    moveStep;    /**<how fast the camera moves with mouse.*/
   void * target;      /**<target entity to watch*/
   eolCameraGetTargetOri getOri; /**<for getting the target orientation*/
   void (*update)(struct eolCamera_S *cam,void *data);  /**<what update function to call for camera*/
@@ -87,5 +88,7 @@ void eol_camera_set_target_orientation(eolCameraGetTargetOri targetFunc);
 
 eolBool eol_camera_is_rect_in_view(eolVec3D point, eolRectFloat bounds);
 eolBool eol_camera_is_circle_in_view(eolVec3D point, eolFloat radius);
+
+eolUint eol_camera_get_type_by_string(char *camtype);
 
 #endif

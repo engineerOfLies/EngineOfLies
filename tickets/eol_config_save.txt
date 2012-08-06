@@ -1,0 +1,9 @@
+Save Config
+
+We should make it possible to save an eolConfig in yaml format.
+save function should take a pointer to the config and the filename.
+Additionally create a function to check if the file already exists.
+
+assigned:
+estimate:
+Reward: Lime Gelatinous Cube

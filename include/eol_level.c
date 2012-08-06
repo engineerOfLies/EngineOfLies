@@ -59,6 +59,11 @@ void eol_level_config()
   _eol_level_draw_mode = eolLevelDrawFull;
 }
 
+void eol_level_set_draw_mode(eolUint mode)
+{
+  _eol_level_draw_mode = mode;
+}
+
 void eol_level_register_spawn_generic(eolSpawnGeneric spawnGeneric)
 {
   _eol_level_spawn_generic = spawnGeneric;

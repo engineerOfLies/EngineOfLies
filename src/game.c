@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     if (radius > 1)radius = 0;
 
     if((eol_input_quit_check()) ||
-      (eol_input_is_key_pressed(SDLK_ESCAPE)))
+      ((eol_input_is_key_pressed(SDLK_F4)) && (eol_input_is_mod_held(KMOD_ALT))))
     {
       eol_dialog_quit();
     }
@@ -140,13 +140,13 @@ void TestWindowDraw(eolWindow *win)
   else data->frame+=0.3;
 }
 
-void TestWindowUpdate(eolWindow *win,GList *updates)
+eolBool TestWindowUpdate(eolWindow *win,GList *updates)
 {
   int i;
   GList *c;
   eolComponent *comp = NULL;
   eolComponent *labelComp = NULL;
-  if ((win == NULL)||(updates == NULL))return;
+  if ((win == NULL)||(updates == NULL))return eolFalse;
   
   for (c = updates;c != NULL;c = c->next)
   {
@@ -168,12 +168,13 @@ void TestWindowUpdate(eolWindow *win,GList *updates)
                                 1,
                                 100);
         }
-        break;
+        return eolTrue;
       case 3:
         spawnTestEnt(eol_vec3d(0,0,0));
-        break;
+        return eolTrue;
     }
   }
+  return eolFalse;
 }
 
 void MakeTestWindow()
@@ -189,7 +190,6 @@ void MakeTestWindow()
   }
   eol_graphics_get_size(&w, &h);
   strncpy(win->name,"window",EOLLINELEN);
-  win->id = 1;
   eol_rect_copy(&win->rect,eol_rect(0,0,w,h));
   win->canHasFocus = eolTrue;
   win->hasFocus = eolTrue;
@@ -227,6 +227,7 @@ void MakeTestWindow()
     win->rect,
     "Test Particle",
     0,
+    0,
     eolFalse
   );
   eol_window_add_component(win,comp);
@@ -248,6 +249,7 @@ void MakeTestWindow()
     eol_rectf(0.1,0.7,1,1),
     win->rect,
     "Test Entity",
+    0,
     0,
     eolFalse
   );

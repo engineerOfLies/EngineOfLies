@@ -40,7 +40,8 @@ enum eolComponentTypes {
 enum eolButtonTypes {
   eolButtonStock  = 0,
   eolButtonText   = 1,
-  eolButtonCustom = 2
+  eolButtonHidden = 2,
+  eolButtonCustom = 3
 };
 enum eolButtonStates {
   eolButtonIdle       = 0,
@@ -124,8 +125,9 @@ eolComponent *eol_button_new(
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
-    eolInt         buttonType,
+    eolUint        buttonType,
     eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
     eolBool        center,
     char         * buttonFileUp,
     char         * buttonFileHigh,
@@ -139,12 +141,26 @@ eolComponent *eol_button_stock_new(
     eolRect        bounds,
     char         * buttonText,
     eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
+    eolBool        center
+  );
+
+eolComponent *eol_button_text_new(
+    eolUint        id,
+    eolWord        name,
+    eolRectFloat   rect,
+    eolRect        bounds,
+    char         * buttonText,
+    eolInt         buttonHotkey,
+    eolUint        buttonHotkeymod,
     eolBool        center
   );
 
 void eol_entry_delete_char(eolComponent *component);
 void eol_entry_append_char(eolComponent *component,
                            char          newchar);
+                           
+void eol_entry_assign_output(eolComponent *component);
 
 eolComponent *eol_entry_new(
     eolUint       id,

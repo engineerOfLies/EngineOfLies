@@ -297,5 +297,7 @@ eolUint eol_font_get_text_height_average(eolUint fontsize);
 
 eolUint eol_font_get_text_height_average_custom(eolFont *font);
 
+eolUint eol_font_justify_from_string(eolLine justify);
+
 #endif
 
