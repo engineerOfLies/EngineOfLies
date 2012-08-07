@@ -13,12 +13,12 @@ eolBool eol_loader_initialized()
 void eol_loader_init()
 {
   PHYSFS_init(NULL);
-  PHYSFS_addToSearchPath("./", 1);
+  PHYSFS_mount("./", "./", 1);
   PHYSFS_addToSearchPath("./system/pak0.pak", 1);
   _eol_loader_initialized = eolTrue;
 }
 
-eolFile *eol_loader_read_file(char *filename)
+eolFile *eol_loader_write_file(char *filename)
 {
   eolFile *file;
   if (!_eol_loader_initialized)
@@ -46,7 +46,7 @@ eolFile *eol_loader_read_file(char *filename)
       );
     return NULL;
   }
-  memset(file,0,sizeof(eolFile);
+  memset(file,0,sizeof(eolFile));
   
   file->_PSfile = PHYSFS_openRead(filename);
   if(file->_PSfile == NULL)
@@ -60,6 +60,7 @@ eolFile *eol_loader_read_file(char *filename)
   }
   return file;
 }
+
 eolFile *eol_loader_read_file(char *filename)
 {
 	eolFile *file;
@@ -89,7 +90,7 @@ eolFile *eol_loader_read_file(char *filename)
   	return NULL;
   }
 
-  memset(file,0,sizeof(eolFile);
+  memset(file,0,sizeof(eolFile));
   file->_PSfile = PHYSFS_openRead(filename);
   if(file->_PSfile == NULL)
   {

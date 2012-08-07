@@ -19,6 +19,7 @@
 */
 
 #include "eol_types.h"
+#include "eol_matrix.h"
 #include <stdio.h>
 #include <physfs.h>
 
@@ -33,7 +34,7 @@ typedef struct
   char        * _buffer;  /**<the file data stored while the file is open*/
   size_t        size;     /**<the size of the file data stored while the file is open*/
   PHYSFS_File * _PSfile;  /**<pointer to the physfs file handle*/
-  eolUint       _fileMode;/**<*read or write, expects eolLoaderMode/
+  eolUint       _fileMode;/**<*read or write, expects eolLoaderMode*/
 }eolFile;
 
 /**
@@ -97,7 +98,7 @@ void eol_loader_write_line_to_file(eolFile *file,eolLine data);
 * @param file the file handle to write to
 * @param data the data to be written.
 */
-void eol_loader_write_float_to_file(eolFile *file,eolFLoat data);
+void eol_loader_write_float_to_file(eolFile *file,eolFloat data);
 
 /**
 * @brief write data to an open eolFile buffer.
