@@ -20,6 +20,48 @@ void eol_loader_init()
 
 eolFile *eol_loader_read_file(char *filename)
 {
+  eolFile *file;
+  if (!_eol_loader_initialized)
+  {
+    eol_logger_message(
+        EOL_LOG_ERROR,
+        "eol_loader: not initialized\n"
+      );
+    return NULL;
+  }
+  if (filename == NULL)
+  {
+    eol_logger_message(
+        EOL_LOG_ERROR,
+        "eol_loader: passed NULL data to load from object\n"
+      );
+    return NULL;
+  }
+  file = (eolFile *)malloc(sizeof(eolFile));
+  if (file == NULL)
+  {
+    eol_logger_message(
+        EOL_LOG_ERROR,
+        "eol_loader: unable to allocate eolFile handle\n"
+      );
+    return NULL;
+  }
+  memset(file,0,sizeof(eolFile);
+  
+  file->_PSfile = PHYSFS_openRead(filename);
+  if(file->_PSfile == NULL)
+  {
+    eol_logger_message(
+        EOL_LOG_ERROR,
+        "eol_loader:Unable to open file %s!\n",
+        filename);
+    free(file);
+    return NULL;
+  }
+  return file;
+}
+eolFile *eol_loader_read_file(char *filename)
+{
 	eolFile *file;
   if (!_eol_loader_initialized)
   {
@@ -46,6 +88,8 @@ eolFile *eol_loader_read_file(char *filename)
       );
   	return NULL;
   }
+
+  memset(file,0,sizeof(eolFile);
   file->_PSfile = PHYSFS_openRead(filename);
   if(file->_PSfile == NULL)
   {
