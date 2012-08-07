@@ -1,0 +1,16 @@
+/**
+@brief Documentation file for Mainpage, and defgroups.
+@author EngineerOfLies@EngineOfLies
+@file
+*/
+/** @defgroup Engine of Lies Sources
+/**
+@mainpage Engine Of Lies
+The Engine of Lies is an exercise in writing a game engine library, in C with an
+eye on open standards and portability.  It uses some open libraries for ease of
+access to media (SDL) and physics (Chipmunk) and file operations (PhysFS).  It
+provides resource management, the loading and displaying of common assets used
+in game development and provides a generic level and entity system.
+It compiles as a C library that can be bound against any preferred language.
+*/
+
