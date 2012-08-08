@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol_logger.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_LOGGER__</span>
+<h1>eol_logger.h</h1><a href="eol__logger_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_LOGGER__</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __EOL_LOGGER__</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="comment">/*</span>
 <a name="l00004"></a>00004 <span class="comment">    Copyright 2012 Engineer of Lies</span>
@@ -41,40 +42,40 @@
 <a name="l00018"></a>00018 <span class="comment">    along with the EOL game engine.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00019"></a>00019 <span class="comment">*/</span>
 <a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;eol_types.h&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="eol__types_8h.html">eol_types.h</a>&quot;</span>
 <a name="l00022"></a>00022 
-<a name="l00023"></a>00023 <span class="keyword">typedef</span> <span class="keyword">enum</span> _eol_log_levels {
-<a name="l00024"></a>00024   EOL_LOG_NONE  = 0,  
-<a name="l00025"></a>00025   EOL_LOG_FATAL = 1,  
-<a name="l00026"></a>00026   EOL_LOG_ERROR = 2,  
-<a name="l00027"></a>00027   EOL_LOG_WARN  = 3,  
-<a name="l00028"></a>00028   EOL_LOG_DEBUG = 4,  
-<a name="l00029"></a>00029   EOL_LOG_INFO  = 5,  
-<a name="l00030"></a>00030   EOL_LOG_MAX
-<a name="l00031"></a>00031 }eolLogLevel;
+<a name="l00023"></a><a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968">00023</a> <span class="keyword">typedef</span> <span class="keyword">enum</span> <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968">_eol_log_levels</a> {
+<a name="l00024"></a><a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad3963fc0fe763974d87bb77747d515cb">00024</a>   <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad3963fc0fe763974d87bb77747d515cb">EOL_LOG_NONE</a>  = 0,  
+<a name="l00025"></a><a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a7f1a38302732b78f48669ee99bcc6ee9">00025</a>   <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a7f1a38302732b78f48669ee99bcc6ee9">EOL_LOG_FATAL</a> = 1,  
+<a name="l00026"></a><a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">00026</a>   <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a> = 2,  
+<a name="l00027"></a><a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">00027</a>   <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>  = 3,  
+<a name="l00028"></a><a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a372a3ff4f02ca0b9d90b77395c27884a">00028</a>   <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a372a3ff4f02ca0b9d90b77395c27884a">EOL_LOG_DEBUG</a> = 4,  
+<a name="l00029"></a><a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">00029</a>   <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>  = 5,  
+<a name="l00030"></a><a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a8539f25d6f366282ab1a494e14aefe25">00030</a>   <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a8539f25d6f366282ab1a494e14aefe25">EOL_LOG_MAX</a>
+<a name="l00031"></a>00031 }<a class="code" href="eol__logger_8h.html#a396c919a6f6ecaac062358e8ff964bf2">eolLogLevel</a>;
 <a name="l00032"></a>00032 
-<a name="l00036"></a>00036 <span class="keywordtype">void</span> eol_logger_init();
+<a name="l00036"></a>00036 <span class="keywordtype">void</span> <a class="code" href="eol__logger_8c.html#aaf97aa654e077204dec605e2f4521e3a" title="initializes logging system">eol_logger_init</a>();
 <a name="l00037"></a>00037 
-<a name="l00043"></a>00043 eolBool eol_logger_is_initialized();
+<a name="l00043"></a>00043 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__logger_8h.html#a3fdd58c440b8e8a2750f4afe6f1ba0f0" title="returns the initialization status of the logger">eol_logger_is_initialized</a>();
 <a name="l00044"></a>00044 
-<a name="l00049"></a>00049 <span class="keywordtype">void</span> eol_logger_load_config();
+<a name="l00049"></a>00049 <span class="keywordtype">void</span> <a class="code" href="eol__logger_8c.html#a3c1f790b9cdb98835da33bbb7ab4383c" title="loads up configuration from file or if no file available it will set defaults.">eol_logger_load_config</a>();
 <a name="l00050"></a>00050 
-<a name="l00054"></a>00054 <span class="keywordtype">void</span> eol_logger_set_threshold(eolLogLevel level);
+<a name="l00054"></a>00054 <span class="keywordtype">void</span> <a class="code" href="eol__logger_8c.html#a0eda15bed11782976567cab912933f09" title="sets how verbose logging will be.">eol_logger_set_threshold</a>(<a class="code" href="eol__logger_8h.html#a396c919a6f6ecaac062358e8ff964bf2">eolLogLevel</a> level);
 <a name="l00055"></a>00055 
-<a name="l00064"></a>00064 <span class="keywordtype">void</span> eol_logger_message(eolLogLevel level,<span class="keywordtype">char</span> *msg,...);
+<a name="l00064"></a>00064 <span class="keywordtype">void</span> <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(<a class="code" href="eol__logger_8h.html#a396c919a6f6ecaac062358e8ff964bf2">eolLogLevel</a> level,<span class="keywordtype">char</span> *msg,...);
 <a name="l00065"></a>00065 
-<a name="l00073"></a>00073 <span class="keywordtype">void</span> eol_logger_info(<span class="keywordtype">char</span> *msg,...);
+<a name="l00073"></a>00073 <span class="keywordtype">void</span> <a class="code" href="eol__logger_8c.html#ad8edda34be2bd09c3014192dd04663ec" title="log a message at the info warning level. It will ignore warning levels below the...">eol_logger_info</a>(<span class="keywordtype">char</span> *msg,...);
 <a name="l00074"></a>00074 
-<a name="l00082"></a>00082 <span class="keywordtype">void</span> eol_logger_warn(<span class="keywordtype">char</span> *msg,...);
+<a name="l00082"></a>00082 <span class="keywordtype">void</span> <a class="code" href="eol__logger_8c.html#a8ec371dd9a9cb5b69c84a879b211deca" title="log a message at the &amp;quot;warning&amp;quot; warning level. It will ignore warning levels...">eol_logger_warn</a>(<span class="keywordtype">char</span> *msg,...);
 <a name="l00083"></a>00083 
-<a name="l00091"></a>00091 <span class="keywordtype">void</span> eol_logger_error(<span class="keywordtype">char</span> *msg,...);
+<a name="l00091"></a>00091 <span class="keywordtype">void</span> <a class="code" href="eol__logger_8c.html#a5ff3fd9e93a31adae78937d3a7a5bbbe" title="log a message at the error warning level. It will ignore warning levels below the...">eol_logger_error</a>(<span class="keywordtype">char</span> *msg,...);
 <a name="l00092"></a>00092 
-<a name="l00100"></a>00100 <span class="keywordtype">void</span> eol_logger_fatal(<span class="keywordtype">char</span> *msg,...);
+<a name="l00100"></a>00100 <span class="keywordtype">void</span> <a class="code" href="eol__logger_8c.html#a237f7b3277d8652d80277204449b944b" title="log a message at the fatal warning level. It will ignore warning levels below the...">eol_logger_fatal</a>(<span class="keywordtype">char</span> *msg,...);
 <a name="l00101"></a>00101 
 <a name="l00102"></a>00102 <span class="preprocessor">#endif</span>
 <a name="l00103"></a>00103 <span class="preprocessor"></span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:55 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

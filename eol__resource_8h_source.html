@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol_resource.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_RESOURCE__</span>
+<h1>eol_resource.h</h1><a href="eol__resource_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_RESOURCE__</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __EOL_RESOURCE__</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="comment">/*</span>
 <a name="l00004"></a>00004 <span class="comment">    Copyright 2012 Engineer of Lies</span>
@@ -41,73 +42,73 @@
 <a name="l00018"></a>00018 <span class="comment">    along with the EOL game engine.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00019"></a>00019 <span class="comment">*/</span>
 <a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;eol_types.h&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="eol__types_8h.html">eol_types.h</a>&quot;</span>
 <a name="l00022"></a>00022 
 <a name="l00028"></a><a class="code" href="structeolResourceManager.html">00028</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00029"></a>00029 {
-<a name="l00030"></a>00030   eolBool   _initialized;
-<a name="l00031"></a>00031   eolLine   <a class="code" href="structEntity__S.html#a1d14b6eca4e533b64a49ded448d3c01a">name</a>;
-<a name="l00032"></a>00032   eolUint   _data_count;
-<a name="l00033"></a>00033   eolUint   _data_max;
-<a name="l00034"></a>00034   eolUint   _data_size;
-<a name="l00035"></a>00035   eolBool   _data_unique;
-<a name="l00036"></a><a class="code" href="structeolResourceManager.html#a409924f3a592948e2270009399b8e434">00036</a>   eolUint   _data_id_pool;
+<a name="l00030"></a><a class="code" href="structeolResourceManager.html#ac61961eabc4c667def90d77f00a336d3">00030</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>   _initialized;
+<a name="l00031"></a><a class="code" href="structeolResourceManager.html#ab2b1531fe25ab4d9a44a74ecf86e560d">00031</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>   <a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>;
+<a name="l00032"></a><a class="code" href="structeolResourceManager.html#a1e8f6f178f5a881ca440efb4fe9d4aa8">00032</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>   _data_count;
+<a name="l00033"></a><a class="code" href="structeolResourceManager.html#ac33175fa7c363618079eb2e20438f785">00033</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>   _data_max;
+<a name="l00034"></a><a class="code" href="structeolResourceManager.html#a310bba0503410b0cae834df437174f50">00034</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>   _data_size;
+<a name="l00035"></a><a class="code" href="structeolResourceManager.html#af2f1ddb85dca4c7f61a500a4e03fafa7">00035</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>   _data_unique;
+<a name="l00036"></a><a class="code" href="structeolResourceManager.html#a409924f3a592948e2270009399b8e434">00036</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>   _data_id_pool;
 <a name="l00037"></a><a class="code" href="structeolResourceManager.html#a9d5f827194baac79222c4b9bebdc7cbd">00037</a>   <span class="keywordtype">char</span> *    _data_list;   
-<a name="l00038"></a>00038   void (*data_delete)(<span class="keywordtype">void</span> *data);
-<a name="l00039"></a>00039   eolBool (*data_load)(<span class="keywordtype">char</span> *filename,<span class="keywordtype">void</span> *data);
+<a name="l00038"></a><a class="code" href="structeolResourceManager.html#a63316bf3f824949bcd7845d9fb08b363">00038</a>   <a class="code" href="eol__opengl_8h.html#a0f46383af3c04eeaa5f69463a6e59445">void</a> (*data_delete)(<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>);
+<a name="l00039"></a><a class="code" href="structeolResourceManager.html#a3aa18c0184d483042491dc951212b172">00039</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> (*data_load)(<span class="keywordtype">char</span> *filename,<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>);
 <a name="l00040"></a>00040 }<a class="code" href="structeolResourceManager.html">eolResourceManager</a>;
 <a name="l00041"></a>00041 
 <a name="l00042"></a>00042 <span class="comment">/*All resources managed by this system must contain this header structure.*/</span>
 <a name="l00043"></a><a class="code" href="structeolResourceHeader.html">00043</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00044"></a>00044 {
-<a name="l00045"></a>00045   eolUint refCount;
-<a name="l00046"></a>00046   eolLine filename;
-<a name="l00047"></a>00047   eolUint index;
-<a name="l00048"></a><a class="code" href="structeolResourceHeader.html#a1d79a016d3032d3a92c073945cf80a4b">00048</a>   eolUint <a class="code" href="structEntity__S.html#a7d93867258e7c2997b920cf48238fdad">id</a>;       
-<a name="l00050"></a><a class="code" href="structeolResourceHeader.html#a8a16801e840524124787afc2bd1a7335">00050</a>   eolUint timeFree; 
-<a name="l00051"></a>00051   eolUint underflowprot;
+<a name="l00045"></a><a class="code" href="structeolResourceHeader.html#ae98ebba885b86d59a13a9127dd4d7ce5">00045</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> refCount;
+<a name="l00046"></a><a class="code" href="structeolResourceHeader.html#a825c610ec2a15865483cbc76edfa518f">00046</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> filename;
+<a name="l00047"></a><a class="code" href="structeolResourceHeader.html#ae1f3ae7479e046256e8cb29fb834644c">00047</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__opengl_8h.html#a57f14e05b1900f16a2da82ade47d0c6d">index</a>;
+<a name="l00048"></a><a class="code" href="structeolResourceHeader.html#a1d79a016d3032d3a92c073945cf80a4b">00048</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>;       
+<a name="l00050"></a><a class="code" href="structeolResourceHeader.html#a8a16801e840524124787afc2bd1a7335">00050</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> timeFree; 
+<a name="l00051"></a><a class="code" href="structeolResourceHeader.html#afa7195868f2b44aa19bcfa4441837baf">00051</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> underflowprot;
 <a name="l00052"></a>00052 }<a class="code" href="structeolResourceHeader.html">eolResourceHeader</a>;
 <a name="l00053"></a>00053 
-<a name="l00054"></a>00054 <a class="code" href="structeolResourceManager.html">eolResourceManager</a> *eol_resource_manager_new();
+<a name="l00054"></a>00054 <a class="code" href="structeolResourceManager.html">eolResourceManager</a> *<a class="code" href="eol__resource_8c.html#a1ea612d6cfda796dcafd589e16866ebe">eol_resource_manager_new</a>();
 <a name="l00055"></a>00055 
-<a name="l00056"></a>00056 <a class="code" href="structeolResourceManager.html">eolResourceManager</a> * eol_resource_manager_init(
-<a name="l00057"></a>00057     eolLine managerName,
-<a name="l00058"></a>00058     eolUint max,
-<a name="l00059"></a>00059     eolUint dataSize,
-<a name="l00060"></a>00060     eolBool dataUnique,
-<a name="l00061"></a>00061     <span class="keywordtype">void</span>    (*data_delete)(<span class="keywordtype">void</span> *data),
-<a name="l00062"></a>00062     eolBool (*data_load)(<span class="keywordtype">char</span> *filename,<span class="keywordtype">void</span> *data)
+<a name="l00056"></a>00056 <a class="code" href="structeolResourceManager.html">eolResourceManager</a> * <a class="code" href="eol__resource_8c.html#a14cd7d7153b6a58ebd9b5bcf227018ab">eol_resource_manager_init</a>(
+<a name="l00057"></a>00057     <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> managerName,
+<a name="l00058"></a>00058     <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> max,
+<a name="l00059"></a>00059     <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> dataSize,
+<a name="l00060"></a>00060     <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> dataUnique,
+<a name="l00061"></a>00061     <span class="keywordtype">void</span>    (*data_delete)(<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>),
+<a name="l00062"></a>00062     <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> (*data_load)(<span class="keywordtype">char</span> *filename,<span class="keywordtype">void</span> *data)
 <a name="l00063"></a>00063     );
 <a name="l00064"></a>00064 
-<a name="l00072"></a>00072 <span class="keywordtype">void</span> * eol_resource_new_element(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager);
+<a name="l00072"></a>00072 <span class="keywordtype">void</span> * <a class="code" href="eol__resource_8c.html#aeb3e7d608eb643eca2e3136e2b035d1b" title="returns a pointer to a new allocated element or NULL on error">eol_resource_new_element</a>(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager);
 <a name="l00073"></a>00073 
-<a name="l00083"></a>00083 <span class="keywordtype">void</span> eol_resource_free_element(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> **data);
+<a name="l00083"></a>00083 <span class="keywordtype">void</span> <a class="code" href="eol__resource_8c.html#a04a80e2833dab61ed23ac62dc3977df9" title="reduces the reference count to the element passed in. if data in the manager is unique...">eol_resource_free_element</a>(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> **data);
 <a name="l00084"></a>00084 
-<a name="l00085"></a>00085 <span class="keywordtype">void</span> eol_resource_manager_free(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> **manager);
+<a name="l00085"></a>00085 <span class="keywordtype">void</span> <a class="code" href="eol__resource_8c.html#ab2a627097c3ed304ee32b5fa48d9d036">eol_resource_manager_free</a>(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> **manager);
 <a name="l00086"></a>00086 
-<a name="l00093"></a>00093 <span class="keywordtype">void</span> eol_resource_manager_clean(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager);
+<a name="l00093"></a>00093 <span class="keywordtype">void</span> <a class="code" href="eol__resource_8c.html#a0eb687b77c0698babe339d981c981de0" title="delete any unreferenced data from the resource manager a delete function must be...">eol_resource_manager_clean</a>(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager);
 <a name="l00094"></a>00094 
-<a name="l00101"></a>00101 <span class="keywordtype">void</span> eol_resource_manager_clear(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager);
+<a name="l00101"></a>00101 <span class="keywordtype">void</span> <a class="code" href="eol__resource_8c.html#a09fe6ac7fd519f4cc58c75bef792a30f" title="delete ALL allocated resources. a delete function must be set.">eol_resource_manager_clear</a>(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager);
 <a name="l00102"></a>00102 
-<a name="l00110"></a>00110 <span class="keywordtype">void</span> *eol_resource_manager_load_resource(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">char</span> *filename);
+<a name="l00110"></a>00110 <span class="keywordtype">void</span> *<a class="code" href="eol__resource_8c.html#abddc583b5a364c8243bac63e23c859dd" title="Allocated and loads a resource from file. Calls the manager&amp;#39;s data load function...">eol_resource_manager_load_resource</a>(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">char</span> *filename);
 <a name="l00111"></a>00111 
-<a name="l00117"></a>00117 eolUint eol_resource_manager_get_element_count(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager);
+<a name="l00117"></a>00117 <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__resource_8c.html#a4f96473eba494aedadc9e439a67857b0" title="Gets the count of active elements in the resource manager.">eol_resource_manager_get_element_count</a>(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager);
 <a name="l00118"></a>00118 
-<a name="l00125"></a>00125 eolInt eol_resource_element_get_index(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> *element);
+<a name="l00125"></a>00125 <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> <a class="code" href="eol__resource_8c.html#a8de45d11cc20252e235e7cd078316bf7" title="returns the index of the element passed.">eol_resource_element_get_index</a>(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> *element);
 <a name="l00126"></a>00126 
-<a name="l00133"></a>00133 eolInt eol_resource_element_get_id(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> *element);
+<a name="l00133"></a>00133 <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> <a class="code" href="eol__resource_8c.html#ab60140467b8950a843cd369f32287441" title="returns the index of the element passed.">eol_resource_element_get_id</a>(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> *element);
 <a name="l00134"></a>00134 
-<a name="l00145"></a>00145 <span class="keywordtype">void</span> * eol_resource_get_next_data(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> *data);
+<a name="l00145"></a>00145 <span class="keywordtype">void</span> * <a class="code" href="eol__resource_8c.html#a9de141f59a011d68b3a00097dd27b830" title="iterates through the resource list">eol_resource_get_next_data</a>(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> *data);
 <a name="l00146"></a>00146 
-<a name="l00155"></a>00155 eolBool eol_resource_element_id_valid(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> *element,eolUint <span class="keywordtype">id</span>);
+<a name="l00155"></a>00155 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__resource_8c.html#a2810aca2570704fb8f4a8967ad5cddb4" title="confirms that the resource pointed at by element is the one expected based on the...">eol_resource_element_id_valid</a>(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> *element,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <span class="keywordtype">id</span>);
 <a name="l00156"></a>00156 
-<a name="l00157"></a>00157 eolUint eol_resource_element_get_refcount(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> *element);
-<a name="l00158"></a>00158 <span class="keywordtype">void</span> eol_resource_element_get_filename(eolLine filename, <a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> *element);
+<a name="l00157"></a>00157 <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__resource_8c.html#a038594970c8e385021c9ae71cacf205e">eol_resource_element_get_refcount</a>(<a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> *element);
+<a name="l00158"></a>00158 <span class="keywordtype">void</span> <a class="code" href="eol__resource_8c.html#a4f445f05848c5ee1f6d7c6a6c21f0934">eol_resource_element_get_filename</a>(<a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> filename, <a class="code" href="structeolResourceManager.html">eolResourceManager</a> *manager,<span class="keywordtype">void</span> *element);
 <a name="l00159"></a>00159 
 <a name="l00160"></a>00160 <span class="preprocessor">#endif</span>
 <a name="l00161"></a>00161 <span class="preprocessor"></span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:56 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

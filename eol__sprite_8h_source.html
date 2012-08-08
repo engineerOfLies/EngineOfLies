@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol_sprite.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_SPRITE_H__</span>
+<h1>eol_sprite.h</h1><a href="eol__sprite_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_SPRITE_H__</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __EOL_SPRITE_H__</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="comment">/*</span>
 <a name="l00004"></a>00004 <span class="comment">    Copyright 2012 Engineer of Lies</span>
@@ -41,86 +42,86 @@
 <a name="l00018"></a>00018 <span class="comment">    along with the EOL game engine.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00019"></a>00019 <span class="comment">*/</span>
 <a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;eol_graphics.h&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="eol__graphics_8h.html">eol_graphics.h</a>&quot;</span>
 <a name="l00022"></a>00022 <span class="preprocessor">#include &lt;SDL_image.h&gt;</span>
 <a name="l00023"></a>00023 
 <a name="l00027"></a><a class="code" href="structeolSprite.html">00027</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00028"></a>00028 {
-<a name="l00029"></a><a class="code" href="structeolSprite.html#a0dd96acbc8cddc7dae34a1eee2f3bd2e">00029</a>   eolUint       _refCount;         
-<a name="l00030"></a><a class="code" href="structeolSprite.html#af2cb0079323ac0e690a22de2f986b7c7">00030</a>   GLuint        _glImage;          
-<a name="l00031"></a>00031   <span class="keywordtype">char</span>          __buf;
+<a name="l00029"></a><a class="code" href="structeolSprite.html#a0dd96acbc8cddc7dae34a1eee2f3bd2e">00029</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>       _refCount;         
+<a name="l00030"></a><a class="code" href="structeolSprite.html#af2cb0079323ac0e690a22de2f986b7c7">00030</a>   <a class="code" href="eol__opengl_8h.html#a2eb1c2ee14138739d1bd2603349b66ca">GLuint</a>        _glImage;          
+<a name="l00031"></a><a class="code" href="structeolSprite.html#ae109aed33367a28683ee12760df75001">00031</a>   <span class="keywordtype">char</span>          __buf;
 <a name="l00032"></a><a class="code" href="structeolSprite.html#ae9df1dfb63fa2304ab4e90630abb4e71">00032</a>   SDL_Surface * _sdlSurface;       
-<a name="l00033"></a><a class="code" href="structeolSprite.html#a4445d0c1eee5f3cbad210fa07da59936">00033</a>   eolLine       filename;          
-<a name="l00034"></a><a class="code" href="structeolSprite.html#a652a82d1c006078f655db4d276762ad6">00034</a>   eolUint       framesPerLine;     
-<a name="l00036"></a><a class="code" href="structeolSprite.html#a501ee358b9eb719cd01e946de5a837d9">00036</a>   eolUint       numFrames;         
-<a name="l00037"></a><a class="code" href="structeolSprite.html#a758f6bad9b305aa6b7b011f92f3a9fc0">00037</a>   eolUint       imageWidth;        
-<a name="l00038"></a><a class="code" href="structeolSprite.html#af4dc377e0493b3e49e502565d1fa54c0">00038</a>   eolUint       imageHeight;       
-<a name="l00039"></a><a class="code" href="structeolSprite.html#a1e3d2b7b3b0d2b5bb51bc4d9506636ea">00039</a>   eolFloat      texWidth;          
-<a name="l00041"></a><a class="code" href="structeolSprite.html#ae89e465891580ee918a2c1b73138b149">00041</a>   eolFloat      texHeight;         
-<a name="l00043"></a><a class="code" href="structeolSprite.html#a1733470fb5c1f1b9dc62e92fd4d0894e">00043</a>   eolDouble     x3D;   
-<a name="l00045"></a><a class="code" href="structeolSprite.html#a67c849becefff595cf225d168e5372bd">00045</a>   eolDouble     y3D;  
-<a name="l00047"></a><a class="code" href="structeolSprite.html#ad927af04cd7fd47846f4b6e146e36cc5">00047</a>   eolDouble     z3D;  
-<a name="l00049"></a><a class="code" href="structeolSprite.html#a15de8219e6ba16a3cd216bbab84e680b">00049</a>   eolUint       frameWidth;        
-<a name="l00050"></a><a class="code" href="structeolSprite.html#a677ec84d1f8dfb82c906f511289982ba">00050</a>   eolUint       frameHeight;       
-<a name="l00051"></a><a class="code" href="structeolSprite.html#ab07bdce5ca72b13d8a7193f511bee231">00051</a>   eolFloat      frameTextureWidth; 
-<a name="l00053"></a><a class="code" href="structeolSprite.html#a3ab975b571ce99e3ba0b925e8a91963d">00053</a>   eolFloat      frameTextureHeight;
+<a name="l00033"></a><a class="code" href="structeolSprite.html#a4445d0c1eee5f3cbad210fa07da59936">00033</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>       filename;          
+<a name="l00034"></a><a class="code" href="structeolSprite.html#a652a82d1c006078f655db4d276762ad6">00034</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>       framesPerLine;     
+<a name="l00036"></a><a class="code" href="structeolSprite.html#a501ee358b9eb719cd01e946de5a837d9">00036</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>       numFrames;         
+<a name="l00037"></a><a class="code" href="structeolSprite.html#a758f6bad9b305aa6b7b011f92f3a9fc0">00037</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>       imageWidth;        
+<a name="l00038"></a><a class="code" href="structeolSprite.html#af4dc377e0493b3e49e502565d1fa54c0">00038</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>       imageHeight;       
+<a name="l00039"></a><a class="code" href="structeolSprite.html#a1e3d2b7b3b0d2b5bb51bc4d9506636ea">00039</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>      texWidth;          
+<a name="l00041"></a><a class="code" href="structeolSprite.html#ae89e465891580ee918a2c1b73138b149">00041</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>      texHeight;         
+<a name="l00043"></a><a class="code" href="structeolSprite.html#a1733470fb5c1f1b9dc62e92fd4d0894e">00043</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>     x3D;   
+<a name="l00045"></a><a class="code" href="structeolSprite.html#a67c849becefff595cf225d168e5372bd">00045</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>     y3D;  
+<a name="l00047"></a><a class="code" href="structeolSprite.html#ad927af04cd7fd47846f4b6e146e36cc5">00047</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>     z3D;  
+<a name="l00049"></a><a class="code" href="structeolSprite.html#a15de8219e6ba16a3cd216bbab84e680b">00049</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>       frameWidth;        
+<a name="l00050"></a><a class="code" href="structeolSprite.html#a677ec84d1f8dfb82c906f511289982ba">00050</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>       frameHeight;       
+<a name="l00051"></a><a class="code" href="structeolSprite.html#ab07bdce5ca72b13d8a7193f511bee231">00051</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>      frameTextureWidth; 
+<a name="l00053"></a><a class="code" href="structeolSprite.html#a3ab975b571ce99e3ba0b925e8a91963d">00053</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>      frameTextureHeight;
 <a name="l00055"></a>00055 }<a class="code" href="structeolSprite.html">eolSprite</a>;
 <a name="l00056"></a>00056 
-<a name="l00061"></a>00061 <span class="keywordtype">void</span> eol_sprite_load_config();
-<a name="l00066"></a>00066 <span class="keywordtype">void</span> eol_sprite_init();
+<a name="l00061"></a>00061 <span class="keywordtype">void</span> <a class="code" href="eol__sprite_8c.html#a8411db2225aa9ad5c3e7a139825f8be1" title="loads sprite configuration from file, or sets up defaults if no config file found...">eol_sprite_load_config</a>();
+<a name="l00066"></a>00066 <span class="keywordtype">void</span> <a class="code" href="eol__sprite_8c.html#a8d59683173bdfe40bd66a6cbb2f5b003" title="set up the sprite system for use. Must be called before any sprite functions are...">eol_sprite_init</a>();
 <a name="l00067"></a>00067 
-<a name="l00076"></a>00076 <a class="code" href="structeolSprite.html">eolSprite</a> *eol_sprite_load(
-<a name="l00077"></a>00077     eolLine filename,
-<a name="l00078"></a>00078     eolUint frameWidth,
-<a name="l00079"></a>00079     eolUint frameHeight
+<a name="l00076"></a>00076 <a class="code" href="structeolSprite.html">eolSprite</a> *<a class="code" href="eol__sprite_8c.html#a8b31ffa2794eeee972fe43540b366ee5" title="Load the sprite from file, or if it has already been loaded, get a pointer to the...">eol_sprite_load</a>(
+<a name="l00077"></a>00077     <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> filename,
+<a name="l00078"></a>00078     <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> frameWidth,
+<a name="l00079"></a>00079     <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> frameHeight
 <a name="l00080"></a>00080   );
 <a name="l00081"></a>00081 
-<a name="l00088"></a>00088 <span class="keywordtype">void</span> eol_sprite_free(<a class="code" href="structeolSprite.html">eolSprite</a> **sprite);
+<a name="l00088"></a>00088 <span class="keywordtype">void</span> <a class="code" href="eol__sprite_8c.html#a225b9cf331b36e6dfeef40418d50d5e9" title="free the given sprite">eol_sprite_free</a>(<a class="code" href="structeolSprite.html">eolSprite</a> **sprite);
 <a name="l00089"></a>00089 
-<a name="l00106"></a>00106 <span class="keywordtype">void</span> eol_sprite_draw_transformed(
+<a name="l00106"></a>00106 <span class="keywordtype">void</span> <a class="code" href="eol__sprite_8c.html#ac868ec5af120431b8d0c5a49b9ac983d" title="draw a given sprite to the screen buffer with the given transformation information...">eol_sprite_draw_transformed</a>(
 <a name="l00107"></a>00107     <a class="code" href="structeolSprite.html">eolSprite</a> *sprite,
-<a name="l00108"></a>00108     eolUint frame,
-<a name="l00109"></a>00109     eolInt x,
-<a name="l00110"></a>00110     eolInt y,
-<a name="l00111"></a>00111     eolFloat scaleX,
-<a name="l00112"></a>00112     eolFloat scaleY,
-<a name="l00113"></a>00113     eolFloat rotation,
-<a name="l00114"></a>00114     eolBool hFlip,
-<a name="l00115"></a>00115     eolBool vFlip,
+<a name="l00108"></a>00108     <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> frame,
+<a name="l00109"></a>00109     <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,
+<a name="l00110"></a>00110     <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>,
+<a name="l00111"></a>00111     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> scaleX,
+<a name="l00112"></a>00112     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> scaleY,
+<a name="l00113"></a>00113     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> rotation,
+<a name="l00114"></a>00114     <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> hFlip,
+<a name="l00115"></a>00115     <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> vFlip,
 <a name="l00116"></a>00116     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00117"></a>00117     eolFloat alpha
+<a name="l00117"></a>00117     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha
 <a name="l00118"></a>00118   );
 <a name="l00119"></a>00119 
-<a name="l00128"></a>00128 <span class="keywordtype">void</span> eol_sprite_draw(
+<a name="l00128"></a>00128 <span class="keywordtype">void</span> <a class="code" href="eol__sprite_8c.html#ac4bac9b1955325945516ede11b3269e0" title="draw a given sprite to the screen buffer">eol_sprite_draw</a>(
 <a name="l00129"></a>00129   <a class="code" href="structeolSprite.html">eolSprite</a> *sprite,
-<a name="l00130"></a>00130   eolUint    frame,
-<a name="l00131"></a>00131   eolInt     x,
-<a name="l00132"></a>00132   eolInt     y
+<a name="l00130"></a>00130   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>    frame,
+<a name="l00131"></a>00131   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>     <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,
+<a name="l00132"></a>00132   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>     <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>
 <a name="l00133"></a>00133 );
 <a name="l00134"></a>00134 
-<a name="l00146"></a>00146 <span class="keywordtype">void</span> eol_sprite_draw_transformed_3d(
+<a name="l00146"></a>00146 <span class="keywordtype">void</span> <a class="code" href="eol__sprite_8c.html#abf49d25db02464bc7b08893f7927ae16" title="draw a sprite in 3D space">eol_sprite_draw_transformed_3d</a>(
 <a name="l00147"></a>00147     <a class="code" href="structeolSprite.html">eolSprite</a> *sprite,
-<a name="l00148"></a>00148     eolUint frame,
+<a name="l00148"></a>00148     <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> frame,
 <a name="l00149"></a>00149     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
 <a name="l00150"></a>00150     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
 <a name="l00151"></a>00151     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
 <a name="l00152"></a>00152     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00153"></a>00153     eolFloat alpha
+<a name="l00153"></a>00153     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha
 <a name="l00154"></a>00154   );
 <a name="l00155"></a>00155 
-<a name="l00166"></a>00166 <span class="keywordtype">void</span> eol_sprite_draw_3d(
+<a name="l00166"></a>00166 <span class="keywordtype">void</span> <a class="code" href="eol__sprite_8c.html#a093d7f17ae1a127c2e87d412be62fdae" title="draw a sprite in 3D space oriented towards the camera in &amp;quot;billboard&amp;quot; style...">eol_sprite_draw_3d</a>(
 <a name="l00167"></a>00167     <a class="code" href="structeolSprite.html">eolSprite</a> *sprite,
-<a name="l00168"></a>00168     eolUint frame,
+<a name="l00168"></a>00168     <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> frame,
 <a name="l00169"></a>00169     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
 <a name="l00170"></a>00170     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
-<a name="l00171"></a>00171     eolFloat alpha
+<a name="l00171"></a>00171     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha
 <a name="l00172"></a>00172   );
 <a name="l00173"></a>00173 
-<a name="l00179"></a>00179 <a class="code" href="structeolSprite.html">eolSprite</a> *eol_sprite_new();
+<a name="l00179"></a>00179 <a class="code" href="structeolSprite.html">eolSprite</a> *<a class="code" href="eol__sprite_8c.html#ad318aaf99f6bc4c188c811efa6c89ec3" title="creates a blank sprite and returns it. surface and gl texture data are not set. This...">eol_sprite_new</a>();
 <a name="l00180"></a>00180 
 <a name="l00181"></a>00181 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:56 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

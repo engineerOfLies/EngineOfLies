@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
+<h1>eol.h</h1><a href="eol_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
 <a name="l00002"></a>00002 <span class="comment">Copyright 2012 Engineer of Lies</span>
 <a name="l00003"></a>00003 <span class="comment">This file is part of the Engine of Lies game engine library</span>
 <a name="l00004"></a>00004 <span class="comment"></span>
@@ -41,29 +42,29 @@
 <a name="l00018"></a>00018 <span class="preprocessor">#ifndef _EOL_CORE_</span>
 <a name="l00019"></a>00019 <span class="preprocessor"></span><span class="preprocessor">#define _EOL_CORE_</span>
 <a name="l00020"></a>00020 <span class="preprocessor"></span>
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;eol_types.h&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="eol__types_8h.html">eol_types.h</a>&quot;</span>
 <a name="l00022"></a>00022 
-<a name="l00023"></a>00023 <span class="keyword">enum</span> eol_components {
-<a name="l00024"></a>00024   EOL_GRAPHICS  = 1,
-<a name="l00025"></a>00025   EOL_FONT      = 2,
-<a name="l00026"></a>00026   EOL_SPRITE    = 4,
-<a name="l00027"></a>00027   EOL_LIGHTING  = 8,
-<a name="l00028"></a>00028   EOL_MESH      = 16,
-<a name="l00029"></a>00029   EOL_ARMATURE  = 32,
-<a name="l00030"></a>00030   EOL_INPUT     = 64,
-<a name="l00031"></a>00031   EOL_MODEL     = 128,
-<a name="l00032"></a>00032   EOL_PARTICLE  = 256,
-<a name="l00033"></a>00033   EOL_WINDOW    = 512,
-<a name="l00034"></a>00034   EOL_ALL       = 0xFFFF
+<a name="l00023"></a><a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6e">00023</a> <span class="keyword">enum</span> <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6e">eol_components</a> {
+<a name="l00024"></a><a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea98e086fa37d6cd7302e9ef6016420c55">00024</a>   <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea98e086fa37d6cd7302e9ef6016420c55">EOL_GRAPHICS</a>  = 1,
+<a name="l00025"></a><a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eadafb49333d4dcffb29f6e9b028e425a8">00025</a>   <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eadafb49333d4dcffb29f6e9b028e425a8">EOL_FONT</a>      = 2,
+<a name="l00026"></a><a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea0c34c893d7102a71f98c88ff982deb40">00026</a>   <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea0c34c893d7102a71f98c88ff982deb40">EOL_SPRITE</a>    = 4,
+<a name="l00027"></a><a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea7bf180c0213ef95dc63d40c96e228a50">00027</a>   <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea7bf180c0213ef95dc63d40c96e228a50">EOL_LIGHTING</a>  = 8,
+<a name="l00028"></a><a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea8c01b81a9a975140f9dc53e8a517dee3">00028</a>   <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea8c01b81a9a975140f9dc53e8a517dee3">EOL_MESH</a>      = 16,
+<a name="l00029"></a><a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea97a83ae7247f7b2b5c68d05e4212abb8">00029</a>   <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea97a83ae7247f7b2b5c68d05e4212abb8">EOL_ARMATURE</a>  = 32,
+<a name="l00030"></a><a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eae48e73f884a2714bb7c98a7cd5ea9638">00030</a>   <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eae48e73f884a2714bb7c98a7cd5ea9638">EOL_INPUT</a>     = 64,
+<a name="l00031"></a><a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eaa5b83a062f21f49ec438f3f4d64af96d">00031</a>   <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eaa5b83a062f21f49ec438f3f4d64af96d">EOL_MODEL</a>     = 128,
+<a name="l00032"></a><a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea20ea2ef2eb0bda69c8c803b615611e2b">00032</a>   <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea20ea2ef2eb0bda69c8c803b615611e2b">EOL_PARTICLE</a>  = 256,
+<a name="l00033"></a><a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea4ff328925413c2323d932a8dd9f5a660">00033</a>   <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea4ff328925413c2323d932a8dd9f5a660">EOL_WINDOW</a>    = 512,
+<a name="l00034"></a><a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eacd3200dc929695ffcf9c83c48cff7601">00034</a>   <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eacd3200dc929695ffcf9c83c48cff7601">EOL_ALL</a>       = 0xFFFF
 <a name="l00035"></a>00035 };
 <a name="l00036"></a>00036 
-<a name="l00043"></a>00043 <span class="keywordtype">void</span> eol_init(eolUint components);
+<a name="l00043"></a>00043 <span class="keywordtype">void</span> <a class="code" href="eol_8c.html#aaebed60184f7c203069aaebd9a5d117e" title="Initializes the Engine of Lies and any specified subcomponents.">eol_init</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> components);
 <a name="l00044"></a>00044 
-<a name="l00048"></a>00048 <span class="keywordtype">void</span> eol_get_version(eolUint *major,eolUint *minor);
+<a name="l00048"></a>00048 <span class="keywordtype">void</span> <a class="code" href="eol_8c.html#a75cc714941f09a1f314d6013797810c0" title="returns the major and minor versions of eol*">eol_get_version</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> *major,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> *minor);
 <a name="l00049"></a>00049 <span class="preprocessor">#endif</span>
 <a name="l00050"></a>00050 <span class="preprocessor"></span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:53 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

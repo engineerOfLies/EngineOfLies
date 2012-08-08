@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol_draw.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_DRAWSHAPES__</span>
+<h1>eol_draw.h</h1><a href="eol__draw_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_DRAWSHAPES__</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __EOL_DRAWSHAPES__</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="comment">/*</span>
 <a name="l00004"></a>00004 <span class="comment">    Copyright 2012 Engineer of Lies</span>
@@ -40,46 +41,46 @@
 <a name="l00017"></a>00017 <span class="comment">    You should have received a copy of the GNU Lesser General Public License</span>
 <a name="l00018"></a>00018 <span class="comment">    along with the EOL game engine.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00019"></a>00019 <span class="comment">*/</span>
-<a name="l00020"></a>00020 <span class="preprocessor">#include &quot;eol_types.h&quot;</span>
+<a name="l00020"></a>00020 <span class="preprocessor">#include &quot;<a class="code" href="eol__types_8h.html">eol_types.h</a>&quot;</span>
 <a name="l00021"></a>00021 
-<a name="l00022"></a>00022 <span class="keywordtype">void</span> eol_draw_trail(<a class="code" href="structeolTrail.html">eolTrail</a> * trail,
-<a name="l00023"></a>00023                     eolFloat   radius,
-<a name="l00024"></a>00024                     eolBool    fade,
-<a name="l00025"></a>00025                     eolBool    taper);
+<a name="l00022"></a>00022 <span class="keywordtype">void</span> <a class="code" href="eol__draw_8c.html#a45de8066644bca3ffb3a72b65140006b">eol_draw_trail</a>(<a class="code" href="structeolTrail.html">eolTrail</a> * trail,
+<a name="l00023"></a>00023                     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>   radius,
+<a name="l00024"></a>00024                     <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>    fade,
+<a name="l00025"></a>00025                     <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>    taper);
 <a name="l00026"></a>00026 
-<a name="l00027"></a>00027 <span class="keywordtype">void</span> eol_draw_dot_3D(<a class="code" href="structeolVec3D.html">eolVec3D</a> point,
-<a name="l00028"></a>00028                      eolFloat radius,
+<a name="l00027"></a>00027 <span class="keywordtype">void</span> <a class="code" href="eol__draw_8c.html#a7c6a982a52b521b655fe43e33505cfc9">eol_draw_dot_3D</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> point,
+<a name="l00028"></a>00028                      <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radius,
 <a name="l00029"></a>00029                      <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00030"></a>00030                      eolFloat alpha);
+<a name="l00030"></a>00030                      <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha);
 <a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="keywordtype">void</span> eol_draw_cirlce_3D(<a class="code" href="structeolVec3D.html">eolVec3D</a> point,
-<a name="l00033"></a>00033                         eolFloat radius,
-<a name="l00034"></a>00034                         eolUint  segments,
+<a name="l00032"></a>00032 <span class="keywordtype">void</span> <a class="code" href="eol__draw_8c.html#a692db8a82ada693e90750df9f0c4c783">eol_draw_cirlce_3D</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> point,
+<a name="l00033"></a>00033                         <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radius,
+<a name="l00034"></a>00034                         <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>  segments,
 <a name="l00035"></a>00035                         <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00036"></a>00036                         eolFloat alpha);
+<a name="l00036"></a>00036                         <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha);
 <a name="l00037"></a>00037 
-<a name="l00038"></a>00038 <span class="keywordtype">void</span> eol_draw_line_3D(<a class="code" href="structeolVec3D.html">eolVec3D</a> p1,
+<a name="l00038"></a>00038 <span class="keywordtype">void</span> <a class="code" href="eol__draw_8c.html#aba97cdee4e3543128b3e6e3de2e00f80">eol_draw_line_3D</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> p1,
 <a name="l00039"></a>00039                       <a class="code" href="structeolVec3D.html">eolVec3D</a> p2,
-<a name="l00040"></a>00040                       eolFloat radius,
+<a name="l00040"></a>00040                       <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radius,
 <a name="l00041"></a>00041                       <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00042"></a>00042                       eolFloat alpha);
+<a name="l00042"></a>00042                       <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha);
 <a name="l00043"></a>00043 
-<a name="l00044"></a>00044 <span class="keywordtype">void</span> eol_draw_tri_3D(<a class="code" href="structeolVec3D.html">eolVec3D</a> p1,
+<a name="l00044"></a>00044 <span class="keywordtype">void</span> <a class="code" href="eol__draw_8c.html#a08b70578033c822030493d28db44465a">eol_draw_tri_3D</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> p1,
 <a name="l00045"></a>00045                      <a class="code" href="structeolVec3D.html">eolVec3D</a> p2,
 <a name="l00046"></a>00046                      <a class="code" href="structeolVec3D.html">eolVec3D</a> p3,
 <a name="l00047"></a>00047                      <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00048"></a>00048                      eolFloat alpha);
+<a name="l00048"></a>00048                      <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha);
 <a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="keywordtype">void</span> eol_draw_rect_3D(<a class="code" href="structeolRectFloat.html">eolRectFloat</a> rect, <a class="code" href="structeolOrientation.html">eolOrientation</a> ori);
+<a name="l00050"></a>00050 <span class="keywordtype">void</span> <a class="code" href="eol__draw_8c.html#ac9a06cb936177c0bd6bae54456f3944d">eol_draw_rect_3D</a>(<a class="code" href="structeolRectFloat.html">eolRectFloat</a> <a class="code" href="structeolComponent__S.html#aadbc2d5ca2e6c9b16b98f327620d99f5">rect</a>, <a class="code" href="structeolOrientation.html">eolOrientation</a> ori);
 <a name="l00051"></a>00051 
-<a name="l00058"></a>00058 <span class="keywordtype">void</span> eol_draw_solid_rect(eolRect rect,<a class="code" href="structeolVec3D.html">eolVec3D</a> color,eolFloat alpha);
+<a name="l00058"></a>00058 <span class="keywordtype">void</span> <a class="code" href="eol__draw_8c.html#aa7a70632639e6a8270da926d24ace541" title="draws a rectangle on the screen in 2D space">eol_draw_solid_rect</a>(<a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> <a class="code" href="structeolComponent__S.html#aadbc2d5ca2e6c9b16b98f327620d99f5">rect</a>,<a class="code" href="structeolVec3D.html">eolVec3D</a> color,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha);
 <a name="l00059"></a>00059 
-<a name="l00060"></a>00060 <span class="keywordtype">void</span> eol_draw_rect(eolRect rect,<a class="code" href="structeolVec3D.html">eolVec3D</a> color,eolFloat alpha);
+<a name="l00060"></a>00060 <span class="keywordtype">void</span> <a class="code" href="eol__draw_8c.html#a120ca94bf2e7b0582234af983d7f8650">eol_draw_rect</a>(<a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> <a class="code" href="structeolComponent__S.html#aadbc2d5ca2e6c9b16b98f327620d99f5">rect</a>,<a class="code" href="structeolVec3D.html">eolVec3D</a> color,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha);
 <a name="l00061"></a>00061 
 <a name="l00062"></a>00062 
 <a name="l00063"></a>00063 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:54 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

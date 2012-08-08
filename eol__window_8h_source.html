@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol_window.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_WINDOW__</span>
+<h1>eol_window.h</h1><a href="eol__window_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_WINDOW__</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __EOL_WINDOW__</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="comment">/*</span>
 <a name="l00004"></a>00004 <span class="comment">Copyright 2012 EngineerOfLies</span>
@@ -40,60 +41,60 @@
 <a name="l00017"></a>00017 <span class="comment">You should have received a copy of the GNU Lesser General Public License</span>
 <a name="l00018"></a>00018 <span class="comment">along with the EOL game engine.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00019"></a>00019 <span class="comment">*/</span>
-<a name="l00020"></a>00020 <span class="preprocessor">#include &quot;eol_types.h&quot;</span>
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;eol_component.h&quot;</span>
+<a name="l00020"></a>00020 <span class="preprocessor">#include &quot;<a class="code" href="eol__types_8h.html">eol_types.h</a>&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="eol__component_8h.html">eol_component.h</a>&quot;</span>
 <a name="l00022"></a>00022 <span class="preprocessor">#include &lt;glib/glist.h&gt;</span>
 <a name="l00023"></a>00023 
-<a name="l00024"></a>00024 <span class="keyword">typedef</span> void (*eolWindowCallback)(<span class="keywordtype">void</span> *data);
+<a name="l00024"></a><a class="code" href="eol__window_8h.html#aa03ae453c4a9ae7aab334c116eb1d79d">00024</a> <span class="keyword">typedef</span> <a class="code" href="eol__opengl_8h.html#a0f46383af3c04eeaa5f69463a6e59445">void</a> (*<a class="code" href="eol__window_8h.html#aa03ae453c4a9ae7aab334c116eb1d79d">eolWindowCallback</a>)(<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>);
 <a name="l00025"></a>00025 
 <a name="l00026"></a><a class="code" href="structeolWindow__S.html">00026</a> <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structeolWindow__S.html">eolWindow_S</a>
 <a name="l00027"></a>00027 {
-<a name="l00028"></a><a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">00028</a>   eolLine             <a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">name</a>;          
-<a name="l00029"></a><a class="code" href="structeolWindow__S.html#adfa20f4e10dee732d3060919a32839f3">00029</a>   eolUint             <a class="code" href="structeolWindow__S.html#adfa20f4e10dee732d3060919a32839f3">id</a>;            
-<a name="l00030"></a><a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">00030</a>   eolRect             <a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>;          
-<a name="l00031"></a><a class="code" href="structeolWindow__S.html#adf90fdfcd36114a7e70b3e8a7c41e5c7">00031</a>   eolBool             <a class="code" href="structeolWindow__S.html#adf90fdfcd36114a7e70b3e8a7c41e5c7">hidden</a>;        
-<a name="l00032"></a><a class="code" href="structeolWindow__S.html#a3358db7ee974975d5b979d098025dcb3">00032</a>   eolBool             <a class="code" href="structeolWindow__S.html#a3358db7ee974975d5b979d098025dcb3">sleeping</a>;      
-<a name="l00033"></a><a class="code" href="structeolWindow__S.html#abc8de401f2eb01f1b7a217b858099f98">00033</a>   eolBool             <a class="code" href="structeolWindow__S.html#abc8de401f2eb01f1b7a217b858099f98">passesInput</a>;   
-<a name="l00034"></a><a class="code" href="structeolWindow__S.html#afcd63bc8e3500fc99728a7fd43a4e197">00034</a>   eolBool             <a class="code" href="structeolWindow__S.html#afcd63bc8e3500fc99728a7fd43a4e197">canHasFocus</a>;   
-<a name="l00035"></a><a class="code" href="structeolWindow__S.html#a623cc65d0d53705021eda303509d1eca">00035</a>   eolBool             <a class="code" href="structeolWindow__S.html#a623cc65d0d53705021eda303509d1eca">hasFocus</a>;      
-<a name="l00036"></a><a class="code" href="structeolWindow__S.html#ad925ff4c3c4589b611c94e9ee2089095">00036</a>   eolBool             <a class="code" href="structeolWindow__S.html#ad925ff4c3c4589b611c94e9ee2089095">drawGeneric</a>;   
-<a name="l00037"></a><a class="code" href="structeolWindow__S.html#a1a24ab9f6073618e0e85285064842de4">00037</a>   eolUint             <a class="code" href="structeolWindow__S.html#a1a24ab9f6073618e0e85285064842de4">componentCount</a>;
+<a name="l00028"></a><a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">00028</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>             <a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">name</a>;          
+<a name="l00029"></a><a class="code" href="structeolWindow__S.html#adfa20f4e10dee732d3060919a32839f3">00029</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>             <a class="code" href="structeolWindow__S.html#adfa20f4e10dee732d3060919a32839f3">id</a>;            
+<a name="l00030"></a><a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">00030</a>   <a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>             <a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>;          
+<a name="l00031"></a><a class="code" href="structeolWindow__S.html#adf90fdfcd36114a7e70b3e8a7c41e5c7">00031</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>             <a class="code" href="structeolWindow__S.html#adf90fdfcd36114a7e70b3e8a7c41e5c7">hidden</a>;        
+<a name="l00032"></a><a class="code" href="structeolWindow__S.html#a3358db7ee974975d5b979d098025dcb3">00032</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>             <a class="code" href="structeolWindow__S.html#a3358db7ee974975d5b979d098025dcb3">sleeping</a>;      
+<a name="l00033"></a><a class="code" href="structeolWindow__S.html#abc8de401f2eb01f1b7a217b858099f98">00033</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>             <a class="code" href="structeolWindow__S.html#abc8de401f2eb01f1b7a217b858099f98">passesInput</a>;   
+<a name="l00034"></a><a class="code" href="structeolWindow__S.html#afcd63bc8e3500fc99728a7fd43a4e197">00034</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>             <a class="code" href="structeolWindow__S.html#afcd63bc8e3500fc99728a7fd43a4e197">canHasFocus</a>;   
+<a name="l00035"></a><a class="code" href="structeolWindow__S.html#a623cc65d0d53705021eda303509d1eca">00035</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>             <a class="code" href="structeolWindow__S.html#a623cc65d0d53705021eda303509d1eca">hasFocus</a>;      
+<a name="l00036"></a><a class="code" href="structeolWindow__S.html#ad925ff4c3c4589b611c94e9ee2089095">00036</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>             <a class="code" href="structeolWindow__S.html#ad925ff4c3c4589b611c94e9ee2089095">drawGeneric</a>;   
+<a name="l00037"></a><a class="code" href="structeolWindow__S.html#a1a24ab9f6073618e0e85285064842de4">00037</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>             <a class="code" href="structeolWindow__S.html#a1a24ab9f6073618e0e85285064842de4">componentCount</a>;
 <a name="l00038"></a><a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">00038</a>   GList             * <a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a>;    
-<a name="l00039"></a><a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">00039</a>   eolWindowCallback * <a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a>;     
-<a name="l00040"></a><a class="code" href="structeolWindow__S.html#af2c88a8fc5a313774e04be4a0954f18f">00040</a>   eolUint             <a class="code" href="structeolWindow__S.html#af2c88a8fc5a313774e04be4a0954f18f">callbackCount</a>; 
+<a name="l00039"></a><a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">00039</a>   <a class="code" href="eol__window_8h.html#aa03ae453c4a9ae7aab334c116eb1d79d">eolWindowCallback</a> * <a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a>;     
+<a name="l00040"></a><a class="code" href="structeolWindow__S.html#af2c88a8fc5a313774e04be4a0954f18f">00040</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>             <a class="code" href="structeolWindow__S.html#af2c88a8fc5a313774e04be4a0954f18f">callbackCount</a>; 
 <a name="l00041"></a><a class="code" href="structeolWindow__S.html#aaa60307344dcb51c4a833d6555e956d5">00041</a>   <span class="keywordtype">void</span>              * <a class="code" href="structeolWindow__S.html#aaa60307344dcb51c4a833d6555e956d5">customData</a>;    
-<a name="l00042"></a><a class="code" href="structeolWindow__S.html#a79adcbe21ba26fa33140ee1cd7764050">00042</a>   void                (*<a class="code" href="structeolWindow__S.html#a79adcbe21ba26fa33140ee1cd7764050">custom_delete</a>)(<span class="keywordtype">void</span> *data);
-<a name="l00044"></a><a class="code" href="structeolWindow__S.html#a6986fcf6c0db80e1f9452715316ba538">00044</a>   void                (*<a class="code" href="structeolWindow__S.html#a6986fcf6c0db80e1f9452715316ba538">draw</a>)(<span class="keyword">struct </span><a class="code" href="structeolWindow__S.html">eolWindow_S</a> *<span class="keyword">self</span>);
-<a name="l00046"></a><a class="code" href="structeolWindow__S.html#a6fe030fa5521b74751dddc421f9ce22c">00046</a>   eolBool             (*<a class="code" href="structeolWindow__S.html#a6fe030fa5521b74751dddc421f9ce22c">update</a>)(<span class="keyword">struct </span><a class="code" href="structeolWindow__S.html">eolWindow_S</a> *<span class="keyword">self</span>,GList *updates);
+<a name="l00042"></a><a class="code" href="structeolWindow__S.html#a79adcbe21ba26fa33140ee1cd7764050">00042</a>   <a class="code" href="eol__opengl_8h.html#a0f46383af3c04eeaa5f69463a6e59445">void</a>                (*<a class="code" href="structeolWindow__S.html#a79adcbe21ba26fa33140ee1cd7764050">custom_delete</a>)(<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>);
+<a name="l00044"></a><a class="code" href="structeolWindow__S.html#a6986fcf6c0db80e1f9452715316ba538">00044</a>   <a class="code" href="eol__opengl_8h.html#a0f46383af3c04eeaa5f69463a6e59445">void</a>                (*<a class="code" href="structeolWindow__S.html#a6986fcf6c0db80e1f9452715316ba538">draw</a>)(<span class="keyword">struct </span><a class="code" href="structeolWindow__S.html">eolWindow_S</a> *<span class="keyword">self</span>);
+<a name="l00046"></a><a class="code" href="structeolWindow__S.html#a6fe030fa5521b74751dddc421f9ce22c">00046</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>             (*<a class="code" href="structeolWindow__S.html#a6fe030fa5521b74751dddc421f9ce22c">update</a>)(<span class="keyword">struct </span><a class="code" href="structeolWindow__S.html">eolWindow_S</a> *<span class="keyword">self</span>,GList *updates);
 <a name="l00048"></a>00048 }<a class="code" href="structeolWindow__S.html">eolWindow</a>;
 <a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="keywordtype">void</span> eol_window_init();
-<a name="l00051"></a>00051 <span class="keywordtype">void</span> eol_window_config();
-<a name="l00052"></a>00052 <span class="keywordtype">void</span> eol_window_clean();
-<a name="l00053"></a>00053 <span class="keywordtype">void</span> eol_window_close();
-<a name="l00054"></a>00054 eolBool eol_window_initialized();
+<a name="l00050"></a>00050 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ae0bf59b57aa890f054d9bf6a25ecb953">eol_window_init</a>();
+<a name="l00051"></a>00051 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#abf072fa8f463e5389fbd4f33dc88ae8a">eol_window_config</a>();
+<a name="l00052"></a>00052 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a6192a9e410b03762d825f9fab8e4890e">eol_window_clean</a>();
+<a name="l00053"></a>00053 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a99112b1e674f9ff37e6063ddc2ea615f">eol_window_close</a>();
+<a name="l00054"></a>00054 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>();
 <a name="l00055"></a>00055 
-<a name="l00056"></a>00056 <span class="keywordtype">void</span> eol_window_draw_all();
-<a name="l00057"></a>00057 <span class="keywordtype">void</span> eol_window_update_all();
+<a name="l00056"></a>00056 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a1104c1aea6158f6b81c93682624572c2">eol_window_draw_all</a>();
+<a name="l00057"></a>00057 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a919e696698fb9226404efdfd8aa0ca77">eol_window_update_all</a>();
 <a name="l00058"></a>00058 
-<a name="l00059"></a>00059 <a class="code" href="structeolWindow__S.html">eolWindow</a> * eol_window_load_from_file(eolLine file);
-<a name="l00060"></a>00060 <a class="code" href="structeolWindow__S.html">eolWindow</a> *eol_window_new();
-<a name="l00061"></a>00061 <span class="keywordtype">void</span> eol_window_free(<a class="code" href="structeolWindow__S.html">eolWindow</a> **win);
-<a name="l00062"></a>00062 <span class="keywordtype">void</span> eol_window_free_if_outside_click(<a class="code" href="structeolWindow__S.html">eolWindow</a> **win);
-<a name="l00063"></a>00063 <span class="keywordtype">void</span> eol_window_add_component(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp);
-<a name="l00064"></a>00064 <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *eol_window_get_component_by_id(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,eolUint <span class="keywordtype">id</span>);
-<a name="l00065"></a>00065 <span class="keywordtype">void</span> eol_window_allocat_callbacks(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,eolUint count);
+<a name="l00059"></a>00059 <a class="code" href="structeolWindow__S.html">eolWindow</a> * <a class="code" href="eol__window_8c.html#a08c178084fe4ea36579e0923cd6cb0bd">eol_window_load_from_file</a>(<a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> file);
+<a name="l00060"></a>00060 <a class="code" href="structeolWindow__S.html">eolWindow</a> *<a class="code" href="eol__window_8c.html#a9eccca7d357ef728aa83b97af7fe2443">eol_window_new</a>();
+<a name="l00061"></a>00061 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ac0b3fa50b77de1b89562f1951e2a5667">eol_window_free</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> **win);
+<a name="l00062"></a>00062 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a3ee9da97c18bdd0f6099692932ff7a94">eol_window_free_if_outside_click</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> **win);
+<a name="l00063"></a>00063 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp);
+<a name="l00064"></a>00064 <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *<a class="code" href="eol__window_8c.html#a27a3a9b9d7778ee22a2a7e60e8f3b9c5">eol_window_get_component_by_id</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <span class="keywordtype">id</span>);
+<a name="l00065"></a>00065 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ad9b402b7ddb558f087070600a1c856e3">eol_window_allocat_callbacks</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__opengl_8h.html#a619bc20e8198de3bd3f3d7fc34de66b2">count</a>);
 <a name="l00066"></a>00066 
-<a name="l00067"></a>00067 eolFloat eol_window_get_relative_position(eolInt position,eolUint range);
-<a name="l00068"></a>00068 eolUint eol_window_get_refcount(<a class="code" href="structeolWindow__S.html">eolWindow</a> * window);
+<a name="l00067"></a>00067 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__window_8c.html#a1135fa87f14bbcc759bf2910528e2698">eol_window_get_relative_position</a>(<a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> position,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> range);
+<a name="l00068"></a>00068 <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__window_8c.html#a0ec60a586386a89e87baef20d4c6c674">eol_window_get_refcount</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> * window);
 <a name="l00069"></a>00069 
-<a name="l00070"></a>00070 <span class="keywordtype">void</span> eol_window_hide(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
-<a name="l00071"></a>00071 <span class="keywordtype">void</span> eol_window_show(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
-<a name="l00072"></a>00072 <span class="keywordtype">void</span> eol_window_sleep(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
-<a name="l00073"></a>00073 <span class="keywordtype">void</span> eol_window_wakeup(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
+<a name="l00070"></a>00070 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#aec0d922b70d59f382e7740c2f70d8b0c">eol_window_hide</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
+<a name="l00071"></a>00071 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#aa7ed6725fd4c65e87bf241e514101048">eol_window_show</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
+<a name="l00072"></a>00072 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a6d5960d599b2f7d6b4a043dd1a709b1d">eol_window_sleep</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
+<a name="l00073"></a>00073 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a1f30ef74a8b05dca89e78e78ba648e3c">eol_window_wakeup</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
 <a name="l00074"></a>00074 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:56 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

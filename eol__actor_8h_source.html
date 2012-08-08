@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol_actor.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_ACTOR__</span>
+<h1>eol_actor.h</h1><a href="eol__actor_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_ACTOR__</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __EOL_ACTOR__</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="comment">/*</span>
 <a name="l00004"></a>00004 <span class="comment">    Copyright 2012 Engineer of Lies</span>
@@ -41,63 +42,63 @@
 <a name="l00018"></a>00018 <span class="comment">    along with the EOL game engine.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00019"></a>00019 <span class="comment">*/</span>
 <a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;eol_model.h&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="eol__model_8h.html">eol_model.h</a>&quot;</span>
 <a name="l00022"></a>00022 
 <a name="l00029"></a><a class="code" href="structeolActor.html">00029</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00030"></a>00030 {
-<a name="l00031"></a>00031   eolLine     name;
-<a name="l00032"></a>00032   <a class="code" href="structeolModel.html">eolModel</a>  * model;
-<a name="l00033"></a>00033   eolWord     actionName;
-<a name="l00034"></a>00034   <a class="code" href="structeolAction.html">eolAction</a> * action;
-<a name="l00035"></a>00035   eolFloat    frame;
-<a name="l00036"></a>00036   eolFloat    frameRate;
-<a name="l00037"></a>00037   eolInt      frameDirection;
+<a name="l00031"></a><a class="code" href="structeolActor.html#a634128dd185b5d5474109dda7ed587f1">00031</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>     <a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>;
+<a name="l00032"></a><a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">00032</a>   <a class="code" href="structeolModel.html">eolModel</a>  * model;
+<a name="l00033"></a><a class="code" href="structeolActor.html#a2ee17f192e72a19208089eabfd753b6b">00033</a>   <a class="code" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb" title="16 character buffer used for short tags">eolWord</a>     actionName;
+<a name="l00034"></a><a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">00034</a>   <a class="code" href="structeolAction.html">eolAction</a> * action;
+<a name="l00035"></a><a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">00035</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>    frame;
+<a name="l00036"></a><a class="code" href="structeolActor.html#a3bae69f967c9f1d4e41ff7cf426a03dd">00036</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>    frameRate;
+<a name="l00037"></a><a class="code" href="structeolActor.html#a8d8df5c969cd1a8fb438039746389efe">00037</a>   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>      frameDirection;
 <a name="l00038"></a>00038 }<a class="code" href="structeolActor.html">eolActor</a>;
 <a name="l00039"></a>00039 
-<a name="l00047"></a>00047 <span class="keywordtype">void</span> eol_actor_load(<a class="code" href="structeolActor.html">eolActor</a> *act, <span class="keywordtype">char</span> *filename);
+<a name="l00047"></a>00047 <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#a0ad79892aac21cf71f1a6cb9af9ff43b" title="loads an actor from file and returns a pointer to it. based on the file information...">eol_actor_load</a>(<a class="code" href="structeolActor.html">eolActor</a> *act, <span class="keywordtype">char</span> *filename);
 <a name="l00048"></a>00048 
-<a name="l00052"></a>00052 <span class="keywordtype">void</span> eol_actor_clear(<a class="code" href="structeolActor.html">eolActor</a> *act);
+<a name="l00052"></a>00052 <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#ad375086fbb746f0a0fccdc9cc69e662e" title="clears any of the actor information at the location specified">eol_actor_clear</a>(<a class="code" href="structeolActor.html">eolActor</a> *act);
 <a name="l00053"></a>00053 
-<a name="l00059"></a>00059 <a class="code" href="structeolActor.html">eolActor</a> * eol_actor_new();
+<a name="l00059"></a>00059 <a class="code" href="structeolActor.html">eolActor</a> * <a class="code" href="eol__actor_8c.html#a751fbfe069edbba3cd8c2c2cdaa089af" title="allocated empty actor data;">eol_actor_new</a>();
 <a name="l00060"></a>00060 
-<a name="l00066"></a>00066 <span class="keywordtype">void</span> eol_actor_free(<a class="code" href="structeolActor.html">eolActor</a> **actor);
+<a name="l00066"></a>00066 <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#ad6b2dc9751ff1b470d49db444bc59d48" title="frees all data pointed to by actor">eol_actor_free</a>(<a class="code" href="structeolActor.html">eolActor</a> **actor);
 <a name="l00067"></a>00067 
-<a name="l00078"></a>00078 <span class="keywordtype">void</span> eol_actor_set_frame_rate(
+<a name="l00078"></a>00078 <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#aa3c933070d38aa1cead32610c3175d18" title="sets the actor&amp;#39;s frame change rate. this is in float to allow granular speed...">eol_actor_set_frame_rate</a>(
 <a name="l00079"></a>00079     <a class="code" href="structeolActor.html">eolActor</a> *act,
-<a name="l00080"></a>00080     eolFloat rate
+<a name="l00080"></a>00080     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> rate
 <a name="l00081"></a>00081   );
 <a name="l00082"></a>00082   
-<a name="l00090"></a>00090 <span class="keywordtype">void</span> eol_actor_set_action(
+<a name="l00090"></a>00090 <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#a119de8323d1f42836bd45fbf69802c01" title="set the actor to the begining of the specified action">eol_actor_set_action</a>(
 <a name="l00091"></a>00091     <a class="code" href="structeolActor.html">eolActor</a> * act,
-<a name="l00092"></a>00092     eolWord    action
+<a name="l00092"></a>00092     <a class="code" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb" title="16 character buffer used for short tags">eolWord</a>    action
 <a name="l00093"></a>00093   );
 <a name="l00094"></a>00094 
-<a name="l00109"></a>00109 eolBool eol_actor_next_frame(<a class="code" href="structeolActor.html">eolActor</a> * act);
+<a name="l00109"></a>00109 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__actor_8c.html#a4135df2094ea584ff9471f459e263f07" title="steps an actor to the next frame in an action. lets caller know if if the action...">eol_actor_next_frame</a>(<a class="code" href="structeolActor.html">eolActor</a> * act);
 <a name="l00110"></a>00110 
-<a name="l00119"></a>00119 eolFloat eol_actor_get_frame(<a class="code" href="structeolActor.html">eolActor</a> *act);
+<a name="l00119"></a>00119 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__actor_8c.html#ac960280d3731b890cc3e22f968dc36ba" title="retrieve the current frame of an actor">eol_actor_get_frame</a>(<a class="code" href="structeolActor.html">eolActor</a> *act);
 <a name="l00120"></a>00120 
-<a name="l00131"></a>00131 <span class="keywordtype">void</span> eol_actor_draw(
+<a name="l00131"></a>00131 <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#a1149fe3c5650fbd08800ad71c8766402" title="draw the actor under the current conditions">eol_actor_draw</a>(
 <a name="l00132"></a>00132     <a class="code" href="structeolActor.html">eolActor</a> *act,
 <a name="l00133"></a>00133     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
 <a name="l00134"></a>00134     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
 <a name="l00135"></a>00135     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
 <a name="l00136"></a>00136     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00137"></a>00137     eolFloat alpha
+<a name="l00137"></a>00137     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha
 <a name="l00138"></a>00138   );
 <a name="l00139"></a>00139 
-<a name="l00140"></a>00140 <span class="keywordtype">void</span> eol_actor_draw_wire(
+<a name="l00140"></a>00140 <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#abcbc9762b591e47e825f220036d0bec0">eol_actor_draw_wire</a>(
 <a name="l00141"></a>00141     <a class="code" href="structeolActor.html">eolActor</a> *act,
 <a name="l00142"></a>00142     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
 <a name="l00143"></a>00143     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
 <a name="l00144"></a>00144     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
 <a name="l00145"></a>00145     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00146"></a>00146     eolFloat alpha
+<a name="l00146"></a>00146     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha
 <a name="l00147"></a>00147   );
 <a name="l00148"></a>00148 
 <a name="l00149"></a>00149 <span class="preprocessor">#endif</span>
 <a name="l00150"></a>00150 <span class="preprocessor"></span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:54 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

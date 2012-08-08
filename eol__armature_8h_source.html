@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol_armature.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef _EOL_ARMATURE_H_</span>
+<h1>eol_armature.h</h1><a href="eol__armature_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef _EOL_ARMATURE_H_</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define _EOL_ARMATURE_H_</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="comment">/*</span>
 <a name="l00004"></a>00004 <span class="comment">    Copyright 2012 Engineer of Lies</span>
@@ -40,85 +41,85 @@
 <a name="l00017"></a>00017 <span class="comment">    You should have received a copy of the GNU Lesser General Public License</span>
 <a name="l00018"></a>00018 <span class="comment">    along with the EOL game engine.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00019"></a>00019 <span class="comment">*/</span>
-<a name="l00020"></a>00020 <span class="preprocessor">#include &quot;eol_mesh.h&quot;</span>
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;eol_types.h&quot;</span>
-<a name="l00022"></a>00022 <span class="preprocessor">#include &quot;eol_matrix.h&quot;</span>
+<a name="l00020"></a>00020 <span class="preprocessor">#include &quot;<a class="code" href="eol__mesh_8h.html">eol_mesh.h</a>&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="eol__types_8h.html">eol_types.h</a>&quot;</span>
+<a name="l00022"></a>00022 <span class="preprocessor">#include &quot;<a class="code" href="eol__matrix_8h.html">eol_matrix.h</a>&quot;</span>
 <a name="l00023"></a>00023 
 <a name="l00027"></a><a class="code" href="structS__Bone.html">00027</a> <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structS__Bone.html" title="this composes the skeletal structure of the armature at rest.">S_Bone</a>
 <a name="l00028"></a>00028 {
-<a name="l00029"></a><a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">00029</a>   eolLine    <a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>;         
-<a name="l00030"></a><a class="code" href="structS__Bone.html#aeafc1f25113f0597780ede9d2299fd0e">00030</a>   eolInt     <a class="code" href="structS__Bone.html#aeafc1f25113f0597780ede9d2299fd0e">index</a>;        
+<a name="l00029"></a><a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">00029</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>    <a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>;         
+<a name="l00030"></a><a class="code" href="structS__Bone.html#aeafc1f25113f0597780ede9d2299fd0e">00030</a>   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>     <a class="code" href="structS__Bone.html#aeafc1f25113f0597780ede9d2299fd0e">index</a>;        
 <a name="l00031"></a><a class="code" href="structS__Bone.html#ab77d7244cbf26545d33934f3566af09e">00031</a>   <a class="code" href="structeolGroup.html">eolGroup</a> * <a class="code" href="structS__Bone.html#ab77d7244cbf26545d33934f3566af09e">meshGroup</a>;    
-<a name="l00032"></a><a class="code" href="structS__Bone.html#a0c4898c73eeabdfda740bbfc2daa2cc0">00032</a>   eolBool    <a class="code" href="structS__Bone.html#a0c4898c73eeabdfda740bbfc2daa2cc0">hasParent</a>;    
-<a name="l00033"></a><a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">00033</a>   eolInt     <a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">parentIndex</a>;  
-<a name="l00034"></a><a class="code" href="structS__Bone.html#a237cf1f265c1de3b882847f61c311c4a">00034</a>   eolInt     <a class="code" href="structS__Bone.html#a237cf1f265c1de3b882847f61c311c4a">numChildren</a>;  
-<a name="l00035"></a><a class="code" href="structS__Bone.html#a2ed4804f8f61f3b8fc4cb8276f96c7b0">00035</a>   eolInt   * <a class="code" href="structS__Bone.html#a2ed4804f8f61f3b8fc4cb8276f96c7b0">children</a>;     
-<a name="l00036"></a><a class="code" href="structS__Bone.html#a8c19fee5743fc7d8d0740a1826f89cbd">00036</a>   eolMat4    <a class="code" href="structS__Bone.html#a8c19fee5743fc7d8d0740a1826f89cbd">matrix</a>;       
+<a name="l00032"></a><a class="code" href="structS__Bone.html#a0c4898c73eeabdfda740bbfc2daa2cc0">00032</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>    <a class="code" href="structS__Bone.html#a0c4898c73eeabdfda740bbfc2daa2cc0">hasParent</a>;    
+<a name="l00033"></a><a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">00033</a>   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>     <a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">parentIndex</a>;  
+<a name="l00034"></a><a class="code" href="structS__Bone.html#a237cf1f265c1de3b882847f61c311c4a">00034</a>   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>     <a class="code" href="structS__Bone.html#a237cf1f265c1de3b882847f61c311c4a">numChildren</a>;  
+<a name="l00035"></a><a class="code" href="structS__Bone.html#a2ed4804f8f61f3b8fc4cb8276f96c7b0">00035</a>   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>   * <a class="code" href="structS__Bone.html#a2ed4804f8f61f3b8fc4cb8276f96c7b0">children</a>;     
+<a name="l00036"></a><a class="code" href="structS__Bone.html#a8c19fee5743fc7d8d0740a1826f89cbd">00036</a>   <a class="code" href="eol__matrix_8h.html#a61b9867642d7c9db7eb535b88205fd2f" title="a 4x4 double matrix useful in a lot of 3D programming.">eolMat4</a>    <a class="code" href="structS__Bone.html#a8c19fee5743fc7d8d0740a1826f89cbd">matrix</a>;       
 <a name="l00037"></a>00037 }<a class="code" href="structS__Bone.html" title="this composes the skeletal structure of the armature at rest.">eolBone</a>;
 <a name="l00038"></a>00038 
 <a name="l00039"></a><a class="code" href="structeolPoseBone.html">00039</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00040"></a>00040 {
-<a name="l00041"></a>00041   eolLine    name;
-<a name="l00042"></a>00042   eolUint    boneIndex;
-<a name="l00043"></a>00043   eolMat4    matrix;
-<a name="l00044"></a>00044   <a class="code" href="structeolVec3D.html">eolVec3D</a>   scale;
+<a name="l00041"></a><a class="code" href="structeolPoseBone.html#a1b6364ee19c61f759212c0c6fd5e5deb">00041</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>    <a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>;
+<a name="l00042"></a><a class="code" href="structeolPoseBone.html#a4a098996b38750767ee12f1d25ce099f">00042</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>    boneIndex;
+<a name="l00043"></a><a class="code" href="structeolPoseBone.html#a0c3ef8079418b71a2ae0422052f12817">00043</a>   <a class="code" href="eol__matrix_8h.html#a61b9867642d7c9db7eb535b88205fd2f" title="a 4x4 double matrix useful in a lot of 3D programming.">eolMat4</a>    matrix;
+<a name="l00044"></a><a class="code" href="structeolPoseBone.html#a0633b4977cac8bb71ef0e24227a5bf91">00044</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a>   scale;
 <a name="l00045"></a>00045 }<a class="code" href="structeolPoseBone.html">eolPoseBone</a>;
 <a name="l00046"></a>00046 
 <a name="l00047"></a><a class="code" href="structeolPose.html">00047</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00048"></a>00048 {
-<a name="l00049"></a>00049   <a class="code" href="structeolPoseBone.html">eolPoseBone</a> *bones;
+<a name="l00049"></a><a class="code" href="structeolPose.html#a2042c331eece26d002533712efc17784">00049</a>   <a class="code" href="structeolPoseBone.html">eolPoseBone</a> *bones;
 <a name="l00050"></a>00050 }<a class="code" href="structeolPose.html">eolPose</a>;
 <a name="l00051"></a>00051 
 <a name="l00052"></a><a class="code" href="structeolArmature.html">00052</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00053"></a>00053 {
-<a name="l00054"></a><a class="code" href="structeolArmature.html#a8a26cc193232d0689974e604de15effe">00054</a>   eolInt   _refCount;  
-<a name="l00055"></a><a class="code" href="structeolArmature.html#a5a46cfc07e11410a3ec1f10e3a63f666">00055</a>   eolLine   filename;  
-<a name="l00056"></a><a class="code" href="structeolArmature.html#a2f00f959523d5a97e46b1c848eaa3069">00056</a>   eolLine   name;      
-<a name="l00058"></a><a class="code" href="structeolArmature.html#a18879a6a2bcb549cd8fe688043663650">00058</a>   eolMat4   matrix;    
-<a name="l00060"></a><a class="code" href="structeolArmature.html#a89c8f90d845b93ea95aeb008c4956ff2">00060</a>   eolInt   boneCount;  
-<a name="l00061"></a><a class="code" href="structeolArmature.html#aedd8c52f67696ad1c7d2f02960b726ba">00061</a>   eolInt   frameCount; 
+<a name="l00054"></a><a class="code" href="structeolArmature.html#a8a26cc193232d0689974e604de15effe">00054</a>   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>   _refCount;  
+<a name="l00055"></a><a class="code" href="structeolArmature.html#a5a46cfc07e11410a3ec1f10e3a63f666">00055</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>   filename;  
+<a name="l00056"></a><a class="code" href="structeolArmature.html#a2f00f959523d5a97e46b1c848eaa3069">00056</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>   <a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>;      
+<a name="l00058"></a><a class="code" href="structeolArmature.html#a18879a6a2bcb549cd8fe688043663650">00058</a>   <a class="code" href="eol__matrix_8h.html#a61b9867642d7c9db7eb535b88205fd2f" title="a 4x4 double matrix useful in a lot of 3D programming.">eolMat4</a>   matrix;    
+<a name="l00060"></a><a class="code" href="structeolArmature.html#a89c8f90d845b93ea95aeb008c4956ff2">00060</a>   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>   boneCount;  
+<a name="l00061"></a><a class="code" href="structeolArmature.html#aedd8c52f67696ad1c7d2f02960b726ba">00061</a>   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>   frameCount; 
 <a name="l00063"></a><a class="code" href="structeolArmature.html#a5274c71a24a17f15d9395467b09a6201">00063</a>   <a class="code" href="structS__Bone.html" title="this composes the skeletal structure of the armature at rest.">eolBone</a> * root;      
 <a name="l00064"></a><a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">00064</a>   <a class="code" href="structS__Bone.html" title="this composes the skeletal structure of the armature at rest.">eolBone</a> * _bones;    
 <a name="l00065"></a><a class="code" href="structeolArmature.html#ae5247767324856b7ac238e19256c7242">00065</a>   <a class="code" href="structeolPose.html">eolPose</a> * _poses;    
-<a name="l00066"></a><a class="code" href="structeolArmature.html#a8898827341fbed1d383f8316538bc4ec">00066</a>   eolBool   _isLinked; 
+<a name="l00066"></a><a class="code" href="structeolArmature.html#a8898827341fbed1d383f8316538bc4ec">00066</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>   _isLinked; 
 <a name="l00067"></a>00067 }<a class="code" href="structeolArmature.html">eolArmature</a>;
 <a name="l00068"></a>00068 
-<a name="l00072"></a>00072 <span class="keywordtype">void</span> eol_armature_load_config();
+<a name="l00072"></a>00072 <span class="keywordtype">void</span> <a class="code" href="eol__armature_8c.html#ae3e9d5100d4a08b21c0be2872c0cfc19" title="loads up defaults for armatures.">eol_armature_load_config</a>();
 <a name="l00073"></a>00073 
-<a name="l00077"></a>00077 <span class="keywordtype">void</span> eol_armature_init();
+<a name="l00077"></a>00077 <span class="keywordtype">void</span> <a class="code" href="eol__armature_8c.html#a911d40f7a0b0a5ea606c7f0fd4c6e3aa" title="initializes internal structures for armature system">eol_armature_init</a>();
 <a name="l00078"></a>00078 
-<a name="l00084"></a>00084 eolBool eol_armature_initialized();
+<a name="l00084"></a>00084 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__armature_8c.html#a941baaae53978c488587572e927020a9" title="checks initialization status for armature system">eol_armature_initialized</a>();
 <a name="l00085"></a>00085 
-<a name="l00092"></a>00092 <a class="code" href="structeolArmature.html">eolArmature</a> * eol_armature_load(<span class="keywordtype">char</span> *filename);
+<a name="l00092"></a>00092 <a class="code" href="structeolArmature.html">eolArmature</a> * <a class="code" href="eol__armature_8c.html#a301d51757907997fc66f7bcf78302851" title="loads an armature structure from file">eol_armature_load</a>(<span class="keywordtype">char</span> *filename);
 <a name="l00093"></a>00093 
-<a name="l00102"></a>00102 <span class="keywordtype">void</span> eol_armature_free(<a class="code" href="structeolArmature.html">eolArmature</a> **arm);
+<a name="l00102"></a>00102 <span class="keywordtype">void</span> <a class="code" href="eol__armature_8c.html#a0f8be0d5c02cc003a8aecce5dfc8538b" title="returns the armature information to the system. It will only be freed from memory...">eol_armature_free</a>(<a class="code" href="structeolArmature.html">eolArmature</a> **arm);
 <a name="l00103"></a>00103 
-<a name="l00108"></a>00108 <span class="keywordtype">void</span> eol_armature_cleanup();
+<a name="l00108"></a>00108 <span class="keywordtype">void</span> <a class="code" href="eol__armature_8c.html#a7af5d1a5174f765c13deffcd02f8a78c" title="delete any unreferenced but allocated armature data. This will be needed to run between...">eol_armature_cleanup</a>();
 <a name="l00109"></a>00109 
-<a name="l00113"></a>00113 <span class="keywordtype">void</span> eol_armature_close();
+<a name="l00113"></a>00113 <span class="keywordtype">void</span> <a class="code" href="eol__armature_8c.html#aad7c64957a35fe83ae2d1c1eb4fdc4fa" title="frees all allocated memory and closes downthe armature system.">eol_armature_close</a>();
 <a name="l00114"></a>00114 
 <a name="l00124"></a>00124 <span class="keywordtype">void</span>
-<a name="l00125"></a>00125 eol_armature_deform_mesh(
+<a name="l00125"></a>00125 <a class="code" href="eol__armature_8c.html#a9d2b7aaf4e717768a089cbb53de44ee8" title="deforms the drawing vertices of the model based on the bone pose for the specified...">eol_armature_deform_mesh</a>(
 <a name="l00126"></a>00126     <a class="code" href="structeolArmature.html">eolArmature</a> *arm,
 <a name="l00127"></a>00127     <a class="code" href="structeolMesh.html">eolMesh</a>     *mesh,
-<a name="l00128"></a>00128     eolUint      frame
+<a name="l00128"></a>00128     <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>      frame
 <a name="l00129"></a>00129 );
 <a name="l00130"></a>00130 
 <a name="l00137"></a>00137 <span class="keywordtype">void</span>
-<a name="l00138"></a>00138 eol_armature_link_mesh(
+<a name="l00138"></a>00138 <a class="code" href="eol__armature_8c.html#a8d9182477e5a909550724e6be5966e3c" title="set up references between mesh and armature.">eol_armature_link_mesh</a>(
 <a name="l00139"></a>00139     <a class="code" href="structeolArmature.html">eolArmature</a>   *arm,
 <a name="l00140"></a>00140     <a class="code" href="structeolMesh.html">eolMesh</a>       *mesh
 <a name="l00141"></a>00141 );
 <a name="l00142"></a>00142 
 <a name="l00146"></a>00146 <span class="keywordtype">void</span>
-<a name="l00147"></a>00147 eol_armature_print_bone_hierarchy(
+<a name="l00147"></a>00147 <a class="code" href="eol__armature_8c.html#ac730e7a4d1e36fd8d0d6369569d681f1" title="prints out to log the bone structure">eol_armature_print_bone_hierarchy</a>(
 <a name="l00148"></a>00148   <a class="code" href="structeolArmature.html">eolArmature</a> *arm
 <a name="l00149"></a>00149 );
 <a name="l00150"></a>00150 
 <a name="l00151"></a>00151 <span class="preprocessor">#endif</span>
 <a name="l00152"></a>00152 <span class="preprocessor"></span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:54 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

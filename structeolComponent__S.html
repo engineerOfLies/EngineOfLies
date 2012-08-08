@@ -31,50 +31,250 @@
 <p><code>#include &lt;<a class="el" href="eol__component_8h_source.html">eol_component.h</a>&gt;</code></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Data Fields</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f85d78c3f9a045487e3dfc1dfdf48fa"></a><!-- doxytag: member="eolComponent_S::id" ref="a8f85d78c3f9a045487e3dfc1dfdf48fa" args="" -->
-eolUint&nbsp;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a258d00ef0150c255989a25f7d87a358b"></a><!-- doxytag: member="eolComponent_S::name" ref="a258d00ef0150c255989a25f7d87a358b" args="" -->
-eolWord&nbsp;</td><td class="memItemRight" valign="bottom"><b>name</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aadbc2d5ca2e6c9b16b98f327620d99f5"></a><!-- doxytag: member="eolComponent_S::rect" ref="aadbc2d5ca2e6c9b16b98f327620d99f5" args="" -->
-<a class="el" href="structeolRectFloat.html">eolRectFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><b>rect</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4bafc80f7b426e95b29a4b62d8d531bc"></a><!-- doxytag: member="eolComponent_S::bounds" ref="a4bafc80f7b426e95b29a4b62d8d531bc" args="" -->
-eolRect&nbsp;</td><td class="memItemRight" valign="bottom"><b>bounds</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">eolBool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#aed1af587475de1b97effc22f4896c68f">canHasFocus</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="affe50169441fdd65a321804c8aa34937"></a><!-- doxytag: member="eolComponent_S::hasFocus" ref="affe50169441fdd65a321804c8aa34937" args="" -->
-eolBool&nbsp;</td><td class="memItemRight" valign="bottom"><b>hasFocus</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25926b12650c19838f45bcfb2e9e1228"></a><!-- doxytag: member="eolComponent_S::state" ref="a25926b12650c19838f45bcfb2e9e1228" args="" -->
-eolInt&nbsp;</td><td class="memItemRight" valign="bottom"><b>state</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a6948194287f33514bc64352e57f64d"></a><!-- doxytag: member="eolComponent_S::oldState" ref="a2a6948194287f33514bc64352e57f64d" args="" -->
-eolInt&nbsp;</td><td class="memItemRight" valign="bottom"><b>oldState</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a1ccdbbc5cc830ca9cc3bf92e52faf2"></a><!-- doxytag: member="eolComponent_S::type" ref="a0a1ccdbbc5cc830ca9cc3bf92e52faf2" args="" -->
-eolUint&nbsp;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a037c5a46ec02d3e85dc425c279bee222"></a><!-- doxytag: member="eolComponent_S::componentData" ref="a037c5a46ec02d3e85dc425c279bee222" args="" -->
-void *&nbsp;</td><td class="memItemRight" valign="bottom"><b>componentData</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa124fc7bf5f3ab704d8b5bac002c75a0"></a><!-- doxytag: member="eolComponent_S::data_free" ref="aa124fc7bf5f3ab704d8b5bac002c75a0" args=")(struct eolComponent_S *component)" -->
-void(*&nbsp;</td><td class="memItemRight" valign="bottom"><b>data_free</b> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86a6a65fff9a4c7ed3ff7422de472214"></a><!-- doxytag: member="eolComponent_S::data_draw" ref="a86a6a65fff9a4c7ed3ff7422de472214" args=")(struct eolComponent_S *component, eolRect bounds)" -->
-void(*&nbsp;</td><td class="memItemRight" valign="bottom"><b>data_draw</b> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component, eolRect bounds)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40c3aeffe604a42ef55374b4cac3a3db"></a><!-- doxytag: member="eolComponent_S::data_update" ref="a40c3aeffe604a42ef55374b4cac3a3db" args=")(struct eolComponent_S *component)" -->
-eolBool(*&nbsp;</td><td class="memItemRight" valign="bottom"><b>data_update</b> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a906907cf6b4046e0638bb35e80fefd2d"></a><!-- doxytag: member="eolComponent_S::data_get_state" ref="a906907cf6b4046e0638bb35e80fefd2d" args=")(struct eolComponent_S *component)" -->
-eolInt(*&nbsp;</td><td class="memItemRight" valign="bottom"><b>data_get_state</b> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f857b4ab2c39f344d2350605e844a17"></a><!-- doxytag: member="eolComponent_S::data_changed" ref="a2f857b4ab2c39f344d2350605e844a17" args=")(struct eolComponent_S *component)" -->
-eolBool(*&nbsp;</td><td class="memItemRight" valign="bottom"><b>data_changed</b> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a8f85d78c3f9a045487e3dfc1dfdf48fa">id</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a258d00ef0150c255989a25f7d87a358b">name</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolRectFloat.html">eolRectFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#aadbc2d5ca2e6c9b16b98f327620d99f5">rect</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a4bafc80f7b426e95b29a4b62d8d531bc">bounds</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#aed1af587475de1b97effc22f4896c68f">canHasFocus</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#affe50169441fdd65a321804c8aa34937">hasFocus</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a25926b12650c19838f45bcfb2e9e1228">state</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a2a6948194287f33514bc64352e57f64d">oldState</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a0a1ccdbbc5cc830ca9cc3bf92e52faf2">type</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a037c5a46ec02d3e85dc425c279bee222">componentData</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#aa124fc7bf5f3ab704d8b5bac002c75a0">data_free</a> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a86a6a65fff9a4c7ed3ff7422de472214">data_draw</a> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> <a class="el" href="structeolComponent__S.html#a4bafc80f7b426e95b29a4b62d8d531bc">bounds</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a40c3aeffe604a42ef55374b4cac3a3db">data_update</a> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a906907cf6b4046e0638bb35e80fefd2d">data_get_state</a> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a2f857b4ab2c39f344d2350605e844a17">data_changed</a> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>this structure serves as a header for all components </p>
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00065">65</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 <hr/><h2>Field Documentation</h2>
+<a class="anchor" id="a4bafc80f7b426e95b29a4b62d8d531bc"></a><!-- doxytag: member="eolComponent_S::bounds" ref="a4bafc80f7b426e95b29a4b62d8d531bc" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> <a class="el" href="structeolComponent__S.html#a4bafc80f7b426e95b29a4b62d8d531bc">eolComponent_S::bounds</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00070">70</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aed1af587475de1b97effc22f4896c68f"></a><!-- doxytag: member="eolComponent_S::canHasFocus" ref="aed1af587475de1b97effc22f4896c68f" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">eolBool <a class="el" href="structeolComponent__S.html#aed1af587475de1b97effc22f4896c68f">eolComponent_S::canHasFocus</a></td>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="el" href="structeolComponent__S.html#aed1af587475de1b97effc22f4896c68f">eolComponent_S::canHasFocus</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 <p>I apologize for the lolcat reference </p>
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00071">71</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a037c5a46ec02d3e85dc425c279bee222"></a><!-- doxytag: member="eolComponent_S::componentData" ref="a037c5a46ec02d3e85dc425c279bee222" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* <a class="el" href="structeolComponent__S.html#a037c5a46ec02d3e85dc425c279bee222">eolComponent_S::componentData</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00076">76</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2f857b4ab2c39f344d2350605e844a17"></a><!-- doxytag: member="eolComponent_S::data_changed" ref="a2f857b4ab2c39f344d2350605e844a17" args=")(struct eolComponent_S *component)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>(* <a class="el" href="structeolComponent__S.html#a2f857b4ab2c39f344d2350605e844a17">eolComponent_S::data_changed</a>)(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00081">81</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a86a6a65fff9a4c7ed3ff7422de472214"></a><!-- doxytag: member="eolComponent_S::data_draw" ref="a86a6a65fff9a4c7ed3ff7422de472214" args=")(struct eolComponent_S *component, eolRect bounds)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* <a class="el" href="structeolComponent__S.html#a86a6a65fff9a4c7ed3ff7422de472214">eolComponent_S::data_draw</a>)(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> <a class="el" href="structeolComponent__S.html#a4bafc80f7b426e95b29a4b62d8d531bc">bounds</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00078">78</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa124fc7bf5f3ab704d8b5bac002c75a0"></a><!-- doxytag: member="eolComponent_S::data_free" ref="aa124fc7bf5f3ab704d8b5bac002c75a0" args=")(struct eolComponent_S *component)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* <a class="el" href="structeolComponent__S.html#aa124fc7bf5f3ab704d8b5bac002c75a0">eolComponent_S::data_free</a>)(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00077">77</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a906907cf6b4046e0638bb35e80fefd2d"></a><!-- doxytag: member="eolComponent_S::data_get_state" ref="a906907cf6b4046e0638bb35e80fefd2d" args=")(struct eolComponent_S *component)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>(* <a class="el" href="structeolComponent__S.html#a906907cf6b4046e0638bb35e80fefd2d">eolComponent_S::data_get_state</a>)(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00080">80</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a40c3aeffe604a42ef55374b4cac3a3db"></a><!-- doxytag: member="eolComponent_S::data_update" ref="a40c3aeffe604a42ef55374b4cac3a3db" args=")(struct eolComponent_S *component)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>(* <a class="el" href="structeolComponent__S.html#a40c3aeffe604a42ef55374b4cac3a3db">eolComponent_S::data_update</a>)(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00079">79</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="affe50169441fdd65a321804c8aa34937"></a><!-- doxytag: member="eolComponent_S::hasFocus" ref="affe50169441fdd65a321804c8aa34937" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="el" href="structeolComponent__S.html#affe50169441fdd65a321804c8aa34937">eolComponent_S::hasFocus</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00072">72</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8f85d78c3f9a045487e3dfc1dfdf48fa"></a><!-- doxytag: member="eolComponent_S::id" ref="a8f85d78c3f9a045487e3dfc1dfdf48fa" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="structeolComponent__S.html#a8f85d78c3f9a045487e3dfc1dfdf48fa">eolComponent_S::id</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00067">67</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a258d00ef0150c255989a25f7d87a358b"></a><!-- doxytag: member="eolComponent_S::name" ref="a258d00ef0150c255989a25f7d87a358b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a> <a class="el" href="structeolComponent__S.html#a258d00ef0150c255989a25f7d87a358b">eolComponent_S::name</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00068">68</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2a6948194287f33514bc64352e57f64d"></a><!-- doxytag: member="eolComponent_S::oldState" ref="a2a6948194287f33514bc64352e57f64d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> <a class="el" href="structeolComponent__S.html#a2a6948194287f33514bc64352e57f64d">eolComponent_S::oldState</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00074">74</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aadbc2d5ca2e6c9b16b98f327620d99f5"></a><!-- doxytag: member="eolComponent_S::rect" ref="aadbc2d5ca2e6c9b16b98f327620d99f5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolRectFloat.html">eolRectFloat</a> <a class="el" href="structeolComponent__S.html#aadbc2d5ca2e6c9b16b98f327620d99f5">eolComponent_S::rect</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00069">69</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a25926b12650c19838f45bcfb2e9e1228"></a><!-- doxytag: member="eolComponent_S::state" ref="a25926b12650c19838f45bcfb2e9e1228" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> <a class="el" href="structeolComponent__S.html#a25926b12650c19838f45bcfb2e9e1228">eolComponent_S::state</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00073">73</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0a1ccdbbc5cc830ca9cc3bf92e52faf2"></a><!-- doxytag: member="eolComponent_S::type" ref="a0a1ccdbbc5cc830ca9cc3bf92e52faf2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="structeolComponent__S.html#a0a1ccdbbc5cc830ca9cc3bf92e52faf2">eolComponent_S::type</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00075">75</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -82,7 +282,7 @@ eolBool(*&nbsp;</td><td class="memItemRight" valign="bottom"><b>data_changed</b>
 <li><a class="el" href="eol__component_8h_source.html">eol_component.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:59 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

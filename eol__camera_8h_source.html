@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol_camera.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_CAMERA__</span>
+<h1>eol_camera.h</h1><a href="eol__camera_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_CAMERA__</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __EOL_CAMERA__</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="comment">/*</span>
 <a name="l00004"></a>00004 <span class="comment">    Copyright 2012 Engineer of Lies</span>
@@ -41,60 +42,60 @@
 <a name="l00018"></a>00018 <span class="comment">    along with the EOL game engine.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00019"></a>00019 <span class="comment">*/</span>
 <a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;eol_types.h&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="eol__types_8h.html">eol_types.h</a>&quot;</span>
 <a name="l00022"></a>00022 
-<a name="l00023"></a>00023 <span class="keyword">enum</span> eolCameraTypes {
-<a name="l00024"></a>00024   eolCameraEditor  = 0, 
-<a name="l00025"></a>00025   eolCamera2D      = 1, 
-<a name="l00026"></a>00026   eolCameraThird   = 2, 
-<a name="l00027"></a>00027   eolCameraFirst   = 3, 
-<a name="l00028"></a>00028   eolCameraCustom  = 4  
+<a name="l00023"></a><a class="code" href="eol__camera_8h.html#abb43678ea209245e9a4d530ddcd11a8e">00023</a> <span class="keyword">enum</span> <a class="code" href="eol__camera_8h.html#abb43678ea209245e9a4d530ddcd11a8e">eolCameraTypes</a> {
+<a name="l00024"></a><a class="code" href="eol__camera_8h.html#abb43678ea209245e9a4d530ddcd11a8ea560adb50b8af1f657f491a00384bbbb2">00024</a>   <a class="code" href="eol__camera_8h.html#abb43678ea209245e9a4d530ddcd11a8ea560adb50b8af1f657f491a00384bbbb2">eolCameraEditor</a>  = 0, 
+<a name="l00025"></a><a class="code" href="eol__camera_8h.html#abb43678ea209245e9a4d530ddcd11a8ea9206e13de2337d43a3c98225b5870c07">00025</a>   <a class="code" href="eol__camera_8h.html#abb43678ea209245e9a4d530ddcd11a8ea9206e13de2337d43a3c98225b5870c07">eolCamera2D</a>      = 1, 
+<a name="l00026"></a><a class="code" href="eol__camera_8h.html#abb43678ea209245e9a4d530ddcd11a8ea5476e18c1d5742d468f9170bbe10b266">00026</a>   <a class="code" href="eol__camera_8h.html#abb43678ea209245e9a4d530ddcd11a8ea5476e18c1d5742d468f9170bbe10b266">eolCameraThird</a>   = 2, 
+<a name="l00027"></a><a class="code" href="eol__camera_8h.html#abb43678ea209245e9a4d530ddcd11a8ea5cabe749f27a7faf9d240def96a3b6e9">00027</a>   <a class="code" href="eol__camera_8h.html#abb43678ea209245e9a4d530ddcd11a8ea5cabe749f27a7faf9d240def96a3b6e9">eolCameraFirst</a>   = 3, 
+<a name="l00028"></a><a class="code" href="eol__camera_8h.html#abb43678ea209245e9a4d530ddcd11a8ea67293fc70945af3c68f88a586e4603aa">00028</a>   <a class="code" href="eol__camera_8h.html#abb43678ea209245e9a4d530ddcd11a8ea67293fc70945af3c68f88a586e4603aa">eolCameraCustom</a>  = 4  
 <a name="l00029"></a>00029 };
 <a name="l00030"></a>00030 
-<a name="l00034"></a>00034 <span class="keyword">typedef</span> <a class="code" href="structeolOrientation.html">eolOrientation</a> (*eolCameraGetTargetOri)(<span class="keywordtype">void</span> *target);
+<a name="l00034"></a><a class="code" href="eol__camera_8h.html#a330d1851947e33167ab6c9dc5891bd31">00034</a> <span class="keyword">typedef</span> <a class="code" href="structeolOrientation.html">eolOrientation</a> (*<a class="code" href="eol__camera_8h.html#a330d1851947e33167ab6c9dc5891bd31" title="function pointer prototype for getting the target&amp;#39;s orientation">eolCameraGetTargetOri</a>)(<span class="keywordtype">void</span> *target);
 <a name="l00035"></a>00035 
 <a name="l00036"></a><a class="code" href="structeolCamera__S.html">00036</a> <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structeolCamera__S.html">eolCamera_S</a>
 <a name="l00037"></a>00037 {
-<a name="l00038"></a><a class="code" href="structeolCamera__S.html#aeb3382722d0175d6de203af892b022c3">00038</a>   eolUint     <a class="code" href="structeolCamera__S.html#aeb3382722d0175d6de203af892b022c3">cameratype</a>;  
+<a name="l00038"></a><a class="code" href="structeolCamera__S.html#aeb3382722d0175d6de203af892b022c3">00038</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>     <a class="code" href="structeolCamera__S.html#aeb3382722d0175d6de203af892b022c3">cameratype</a>;  
 <a name="l00039"></a><a class="code" href="structeolCamera__S.html#a0e2d49539122b7eef7132ee88db70fa4">00039</a>   <a class="code" href="structeolVec2D.html">eolVec2D</a>    <a class="code" href="structeolCamera__S.html#a0e2d49539122b7eef7132ee88db70fa4">bounds</a>;      
 <a name="l00040"></a><a class="code" href="structeolCamera__S.html#a1862b8a455dc30aff20ab651441ffaf5">00040</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a>    <a class="code" href="structeolCamera__S.html#a1862b8a455dc30aff20ab651441ffaf5">position</a>;    
 <a name="l00041"></a><a class="code" href="structeolCamera__S.html#ae1ff2a89113ba27d83d5fbe146616f36">00041</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a>    <a class="code" href="structeolCamera__S.html#ae1ff2a89113ba27d83d5fbe146616f36">rotation</a>;    
-<a name="l00042"></a><a class="code" href="structeolCamera__S.html#ade0212ca63500a3bca385622b36b179d">00042</a>   eolFloat    <a class="code" href="structeolCamera__S.html#ade0212ca63500a3bca385622b36b179d">followDist</a>;  
-<a name="l00043"></a><a class="code" href="structeolCamera__S.html#a5c005c8901de42ba4274ffe37819b60f">00043</a>   eolFloat    <a class="code" href="structeolCamera__S.html#a5c005c8901de42ba4274ffe37819b60f">followHeight</a>;
-<a name="l00044"></a><a class="code" href="structeolCamera__S.html#a2d50af274ae158aae533df15aae1ea01">00044</a>   eolFloat    <a class="code" href="structeolCamera__S.html#a2d50af274ae158aae533df15aae1ea01">moveStep</a>;    
+<a name="l00042"></a><a class="code" href="structeolCamera__S.html#ade0212ca63500a3bca385622b36b179d">00042</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>    <a class="code" href="structeolCamera__S.html#ade0212ca63500a3bca385622b36b179d">followDist</a>;  
+<a name="l00043"></a><a class="code" href="structeolCamera__S.html#a5c005c8901de42ba4274ffe37819b60f">00043</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>    <a class="code" href="structeolCamera__S.html#a5c005c8901de42ba4274ffe37819b60f">followHeight</a>;
+<a name="l00044"></a><a class="code" href="structeolCamera__S.html#a2d50af274ae158aae533df15aae1ea01">00044</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>    <a class="code" href="structeolCamera__S.html#a2d50af274ae158aae533df15aae1ea01">moveStep</a>;    
 <a name="l00045"></a><a class="code" href="structeolCamera__S.html#afa45f135881789559a0cb2347cb84bfa">00045</a>   <span class="keywordtype">void</span> * <a class="code" href="structeolCamera__S.html#afa45f135881789559a0cb2347cb84bfa">target</a>;      
-<a name="l00046"></a><a class="code" href="structeolCamera__S.html#afbb31ac3de90943514b9b7c3e6e498da">00046</a>   eolCameraGetTargetOri <a class="code" href="structeolCamera__S.html#afbb31ac3de90943514b9b7c3e6e498da">getOri</a>; 
-<a name="l00047"></a><a class="code" href="structeolCamera__S.html#a0a96f47187b46af23b673fbdc79f8381">00047</a>   void (*<a class="code" href="structeolCamera__S.html#a0a96f47187b46af23b673fbdc79f8381">update</a>)(<span class="keyword">struct </span><a class="code" href="structeolCamera__S.html">eolCamera_S</a> *cam,<span class="keywordtype">void</span> *data);  
+<a name="l00046"></a><a class="code" href="structeolCamera__S.html#afbb31ac3de90943514b9b7c3e6e498da">00046</a>   <a class="code" href="eol__camera_8h.html#a330d1851947e33167ab6c9dc5891bd31" title="function pointer prototype for getting the target&amp;#39;s orientation">eolCameraGetTargetOri</a> <a class="code" href="structeolCamera__S.html#afbb31ac3de90943514b9b7c3e6e498da">getOri</a>; 
+<a name="l00047"></a><a class="code" href="structeolCamera__S.html#a0a96f47187b46af23b673fbdc79f8381">00047</a>   <a class="code" href="eol__opengl_8h.html#a0f46383af3c04eeaa5f69463a6e59445">void</a> (*<a class="code" href="structeolCamera__S.html#a0a96f47187b46af23b673fbdc79f8381">update</a>)(<span class="keyword">struct </span><a class="code" href="structeolCamera__S.html">eolCamera_S</a> *cam,<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>);  
 <a name="l00048"></a><a class="code" href="structeolCamera__S.html#a1749561a32a21f4e16674c61302a8400">00048</a>   <span class="keywordtype">void</span>      * <a class="code" href="structeolCamera__S.html#a1749561a32a21f4e16674c61302a8400">customData</a>;  
 <a name="l00049"></a>00049 }<a class="code" href="structeolCamera__S.html">eolCamera</a>;
 <a name="l00050"></a>00050 
-<a name="l00054"></a>00054 <span class="keyword">typedef</span> void (*eolCameraUpdate)(<a class="code" href="structeolCamera__S.html">eolCamera</a> *cam, <span class="keywordtype">void</span> *data);
+<a name="l00054"></a><a class="code" href="eol__camera_8h.html#a9f33dcef1ad3fa2ba63a3c8009cb2443">00054</a> <span class="keyword">typedef</span> <a class="code" href="eol__opengl_8h.html#a0f46383af3c04eeaa5f69463a6e59445">void</a> (*<a class="code" href="eol__camera_8h.html#a9f33dcef1ad3fa2ba63a3c8009cb2443" title="function pointer prototype for setting a custom">eolCameraUpdate</a>)(<a class="code" href="structeolCamera__S.html">eolCamera</a> *cam, <span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>);
 <a name="l00055"></a>00055 
-<a name="l00059"></a>00059 <span class="keywordtype">void</span> eol_camera_config();
+<a name="l00059"></a>00059 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8c.html#aa4f16ad6a2a4d4f0d9be493d08932db3" title="loads camera configuration from file or sets up defaults.">eol_camera_config</a>();
 <a name="l00060"></a>00060 
-<a name="l00064"></a>00064 <span class="keywordtype">void</span> eol_camera_init();
+<a name="l00064"></a>00064 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8c.html#a54841711fb0399298577336e5ad6dc60" title="sets up camera perspective based on graphics view.">eol_camera_init</a>();
 <a name="l00065"></a>00065 
-<a name="l00069"></a>00069 <span class="keywordtype">void</span> eol_camera_update();
+<a name="l00069"></a>00069 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8c.html#ae55e29587425936e9f2ee3c48a239dfc" title="updates the camera based on type. Should be called each frame before setup.">eol_camera_update</a>();
 <a name="l00070"></a>00070 
-<a name="l00074"></a>00074 <span class="keywordtype">void</span> eol_camera_setup();
+<a name="l00074"></a>00074 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8c.html#aef0efb726703297cbc5072b5f5ecc218" title="sets up the camera for this frame within the current context">eol_camera_setup</a>();
 <a name="l00075"></a>00075 
-<a name="l00080"></a>00080 <span class="keywordtype">void</span> eol_camera_set_target(<span class="keywordtype">void</span> *<a class="code" href="structeolCamera__S.html#afa45f135881789559a0cb2347cb84bfa">target</a>);
+<a name="l00080"></a>00080 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8h.html#a5dbd2a7a826d4447d54e2857862cf64b" title="Tell the camera to follow an entity.">eol_camera_set_target</a>(<span class="keywordtype">void</span> *<a class="code" href="structeolCamera__S.html#afa45f135881789559a0cb2347cb84bfa">target</a>);
 <a name="l00081"></a>00081 
-<a name="l00082"></a>00082 <span class="keywordtype">void</span> eol_camera_set_height(eolFloat dist);
-<a name="l00083"></a>00083 <span class="keywordtype">void</span> eol_camera_set_near_clip(eolFloat clip);
-<a name="l00084"></a>00084 <span class="keywordtype">void</span> eol_camera_set_far_clip(eolFloat clip);
-<a name="l00085"></a>00085 <span class="keywordtype">void</span> eol_camera_set_aspect_ratio(eolFloat aspect);
-<a name="l00086"></a>00086 <span class="keywordtype">void</span> eol_camera_set_view_angle(eolFloat clip);
-<a name="l00087"></a>00087 <span class="keywordtype">void</span> eol_camera_set_target_orientation(eolCameraGetTargetOri targetFunc);
+<a name="l00082"></a>00082 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8c.html#a65a320b884f26976d002683663f46011">eol_camera_set_height</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> dist);
+<a name="l00083"></a>00083 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8h.html#ac72f176cd25461bffe205eeefb112f28">eol_camera_set_near_clip</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> clip);
+<a name="l00084"></a>00084 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8h.html#a51c8404c070d344792631b29a9fbb8c1">eol_camera_set_far_clip</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> clip);
+<a name="l00085"></a>00085 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8h.html#ad5343f39fb21b635fcaaf1a6f4db710d">eol_camera_set_aspect_ratio</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> aspect);
+<a name="l00086"></a>00086 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8h.html#a066c83ab5e0ec73afedb0afd9b34a2af">eol_camera_set_view_angle</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> clip);
+<a name="l00087"></a>00087 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8h.html#a1874947d1e3e4a0aaecbe65080733962">eol_camera_set_target_orientation</a>(<a class="code" href="eol__camera_8h.html#a330d1851947e33167ab6c9dc5891bd31" title="function pointer prototype for getting the target&amp;#39;s orientation">eolCameraGetTargetOri</a> targetFunc);
 <a name="l00088"></a>00088 
-<a name="l00089"></a>00089 eolBool eol_camera_is_rect_in_view(<a class="code" href="structeolVec3D.html">eolVec3D</a> point, <a class="code" href="structeolRectFloat.html">eolRectFloat</a> <a class="code" href="structeolCamera__S.html#a0e2d49539122b7eef7132ee88db70fa4">bounds</a>);
-<a name="l00090"></a>00090 eolBool eol_camera_is_circle_in_view(<a class="code" href="structeolVec3D.html">eolVec3D</a> point, eolFloat radius);
+<a name="l00089"></a>00089 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__camera_8h.html#a223eb3906cdf1c9fcc5c19be30d31cd3">eol_camera_is_rect_in_view</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> point, <a class="code" href="structeolRectFloat.html">eolRectFloat</a> <a class="code" href="structeolCamera__S.html#a0e2d49539122b7eef7132ee88db70fa4">bounds</a>);
+<a name="l00090"></a>00090 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__camera_8h.html#a8126a234aad250493c4600b701adeb6e">eol_camera_is_circle_in_view</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> point, <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radius);
 <a name="l00091"></a>00091 
-<a name="l00092"></a>00092 eolUint eol_camera_get_type_by_string(<span class="keywordtype">char</span> *camtype);
+<a name="l00092"></a>00092 <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__camera_8c.html#aa1feb97eca5a9305eb9d2dcb46524b3b">eol_camera_get_type_by_string</a>(<span class="keywordtype">char</span> *camtype);
 <a name="l00093"></a>00093 
 <a name="l00094"></a>00094 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:54 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

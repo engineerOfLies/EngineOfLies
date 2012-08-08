@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol_audio.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_AUDIO__</span>
+<h1>eol_audio.h</h1><a href="eol__audio_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_AUDIO__</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __EOL_AUDIO__</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="comment">/*</span>
 <a name="l00004"></a>00004 <span class="comment">    Copyright 2012 Engineer of Lies</span>
@@ -41,25 +42,25 @@
 <a name="l00018"></a>00018 <span class="comment">    along with the EOL game engine.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00019"></a>00019 <span class="comment">*/</span>
 <a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;eol_types.h&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="eol__types_8h.html">eol_types.h</a>&quot;</span>
 <a name="l00022"></a>00022 <span class="preprocessor">#include &lt;SDL_mixer.h&gt;</span>
 <a name="l00023"></a>00023 <span class="preprocessor">#include &lt;glib/ghash.h&gt;</span>
 <a name="l00024"></a>00024 
 <a name="l00025"></a><a class="code" href="structeolSound.html">00025</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00026"></a>00026 {
-<a name="l00027"></a>00027   Mix_Chunk * chunk;
-<a name="l00028"></a>00028   eolUint     defaultVolume;
+<a name="l00027"></a><a class="code" href="structeolSound.html#af9ef0e9658bff5507e2896eb28890b66">00027</a>   Mix_Chunk * chunk;
+<a name="l00028"></a><a class="code" href="structeolSound.html#a5115f5fe22eed7dc8abb795fa9832d09">00028</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>     defaultVolume;
 <a name="l00029"></a>00029 }<a class="code" href="structeolSound.html">eolSound</a>;
 <a name="l00030"></a>00030 
 <a name="l00031"></a><a class="code" href="structeolSoundPack.html">00031</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00032"></a>00032 {
-<a name="l00033"></a>00033   eolUint     defaultChannel;
-<a name="l00034"></a>00034   GHashTable *pack;
+<a name="l00033"></a><a class="code" href="structeolSoundPack.html#a43597fc9a3e75587fe186d242555132b">00033</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>     defaultChannel;
+<a name="l00034"></a><a class="code" href="structeolSoundPack.html#ac73f889752d8d974b4bccb550a75c2ea">00034</a>   GHashTable *pack;
 <a name="l00035"></a>00035 }<a class="code" href="structeolSoundPack.html">eolSoundPack</a>;
 <a name="l00036"></a>00036 
 <a name="l00037"></a>00037 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:54 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

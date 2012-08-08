@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol_mouse.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_MOUSE__</span>
+<h1>eol_mouse.h</h1><a href="eol__mouse_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_MOUSE__</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __EOL_MOUSE__</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="comment">/*</span>
 <a name="l00004"></a>00004 <span class="comment">    Copyright 2012 Engineer of Lies</span>
@@ -40,49 +41,49 @@
 <a name="l00017"></a>00017 <span class="comment">    You should have received a copy of the GNU Lesser General Public License</span>
 <a name="l00018"></a>00018 <span class="comment">    along with the EOL game engine.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00019"></a>00019 <span class="comment">*/</span>
-<a name="l00020"></a>00020 <span class="preprocessor">#include &quot;eol_types.h&quot;</span>
+<a name="l00020"></a>00020 <span class="preprocessor">#include &quot;<a class="code" href="eol__types_8h.html">eol_types.h</a>&quot;</span>
 <a name="l00021"></a>00021 
-<a name="l00022"></a>00022 <span class="keyword">enum</span> eolMouseStates {
-<a name="l00023"></a>00023   eolMouseLeft       = 0,
-<a name="l00024"></a>00024   eolMouseCenter     = 1,
-<a name="l00025"></a>00025   eolMouseRight      = 2,
-<a name="l00026"></a>00026   eolMouseWheelUp    = 3,
-<a name="l00027"></a>00027   eolMouseWheelDown  = 4
+<a name="l00022"></a><a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5f">00022</a> <span class="keyword">enum</span> <a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5f">eolMouseStates</a> {
+<a name="l00023"></a><a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5faca44ef94b892c093e230318c2f697e53">00023</a>   <a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5faca44ef94b892c093e230318c2f697e53">eolMouseLeft</a>       = 0,
+<a name="l00024"></a><a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5fa80fd94154a4809cf93d357ef56f7fdd2">00024</a>   <a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5fa80fd94154a4809cf93d357ef56f7fdd2">eolMouseCenter</a>     = 1,
+<a name="l00025"></a><a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5fa36ba279cccddf15ee96787770a33046d">00025</a>   <a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5fa36ba279cccddf15ee96787770a33046d">eolMouseRight</a>      = 2,
+<a name="l00026"></a><a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5fa2422007297bd6ca880a59d0350880187">00026</a>   <a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5fa2422007297bd6ca880a59d0350880187">eolMouseWheelUp</a>    = 3,
+<a name="l00027"></a><a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5fa90f91a1869392714765475a4396f38ab">00027</a>   <a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5fa90f91a1869392714765475a4396f38ab">eolMouseWheelDown</a>  = 4
 <a name="l00028"></a>00028 };
 <a name="l00029"></a>00029 
-<a name="l00033"></a>00033 <span class="keywordtype">void</span> eol_mouse_init();
+<a name="l00033"></a>00033 <span class="keywordtype">void</span> <a class="code" href="eol__mouse_8c.html#a0b24a5e19603ef038b1722481706aa10" title="Initializes internal mouse data based on loaded config.">eol_mouse_init</a>();
 <a name="l00034"></a>00034 
-<a name="l00038"></a>00038 <span class="keywordtype">void</span> eol_mouse_config();
+<a name="l00038"></a>00038 <span class="keywordtype">void</span> <a class="code" href="eol__mouse_8c.html#a51fb6c6d834bf5a2ec44a749f4bc4684" title="Loads mouse configs or sets up defaults.">eol_mouse_config</a>();
 <a name="l00039"></a>00039 
-<a name="l00043"></a>00043 <span class="keywordtype">void</span> eol_mouse_draw();
+<a name="l00043"></a>00043 <span class="keywordtype">void</span> <a class="code" href="eol__mouse_8c.html#aaefbf3a16c49eb315818f3ff39f96a1c" title="draws the mouse to the screen based on current states">eol_mouse_draw</a>();
 <a name="l00044"></a>00044 
-<a name="l00048"></a>00048 <span class="keywordtype">void</span> eol_mouse_hide();
+<a name="l00048"></a>00048 <span class="keywordtype">void</span> <a class="code" href="eol__mouse_8c.html#ae516af3898795103177dfb5ad3688c27" title="Stops drawing the mouse.">eol_mouse_hide</a>();
 <a name="l00049"></a>00049 
-<a name="l00053"></a>00053 <span class="keywordtype">void</span> eol_mouse_show();
+<a name="l00053"></a>00053 <span class="keywordtype">void</span> <a class="code" href="eol__mouse_8c.html#af2b107688db3554d5d78d90187e2e6f0" title="Starts drawing the mouse.">eol_mouse_show</a>();
 <a name="l00054"></a>00054 
-<a name="l00059"></a>00059 <span class="keywordtype">void</span> eol_mouse_reset();
+<a name="l00059"></a>00059 <span class="keywordtype">void</span> <a class="code" href="eol__mouse_8c.html#ac28809ea2ced80d10e726bb94bc65ddd" title="resests the show/hiding of a mouse. Sets it to hiden. Useful when moving into a new...">eol_mouse_reset</a>();
 <a name="l00060"></a>00060 
-<a name="l00064"></a>00064 <span class="keywordtype">void</span> eol_mouse_update();
+<a name="l00064"></a>00064 <span class="keywordtype">void</span> <a class="code" href="eol__mouse_8c.html#ad8c145e76df3b46d87f4521c03bd0047" title="updates the internal mouse information. Relies on global input update.">eol_mouse_update</a>();
 <a name="l00065"></a>00065 
-<a name="l00072"></a>00072 eolBool eol_mouse_input_state(eolUint button);
+<a name="l00072"></a>00072 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__mouse_8c.html#a11fec8d28db97af65edef133ecc2de43" title="returns the state of the mouse button specified">eol_mouse_input_state</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> button);
 <a name="l00073"></a>00073 
-<a name="l00080"></a>00080 eolBool eol_mouse_input_pressed(eolUint button);
+<a name="l00080"></a>00080 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__mouse_8c.html#a155a8d4f3420e8c2fd49f84e16f57831" title="checks if the mouse button is pressed this frame">eol_mouse_input_pressed</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> button);
 <a name="l00081"></a>00081 
-<a name="l00088"></a>00088 eolBool eol_mouse_input_released(eolUint button);
+<a name="l00088"></a>00088 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__mouse_8c.html#ac7a033a8bc68d04d3b49413645d86779" title="checks if the mouse button is released this frame">eol_mouse_input_released</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> button);
 <a name="l00089"></a>00089 
-<a name="l00096"></a>00096 eolBool eol_mouse_input_held(eolUint button);
+<a name="l00096"></a>00096 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__mouse_8c.html#a87322ae0332a0327b8e16edf0d4278a6" title="checks if the mouse button is held">eol_mouse_input_held</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> button);
 <a name="l00097"></a>00097 
-<a name="l00104"></a>00104 eolBool eol_mouse_input_double_tapped(eolUint button);
+<a name="l00104"></a>00104 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__mouse_8c.html#a1cd67ad3e05959ef02f94137f80ef5b8" title="checks if the mouse button was double-tapped">eol_mouse_input_double_tapped</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> button);
 <a name="l00105"></a>00105 
-<a name="l00112"></a>00112 <span class="keywordtype">void</span> eol_mouse_get_position(eolInt *x, eolInt *y);
+<a name="l00112"></a>00112 <span class="keywordtype">void</span> <a class="code" href="eol__mouse_8c.html#a225957c778d627d7c633f571cfba7f78" title="gets the current mouse position">eol_mouse_get_position</a>(<a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> *<a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>, <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> *<a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>);
 <a name="l00113"></a>00113 
-<a name="l00120"></a>00120 <span class="keywordtype">void</span> eol_mouse_get_motion(eolInt *dx, eolInt *dy);
+<a name="l00120"></a>00120 <span class="keywordtype">void</span> <a class="code" href="eol__mouse_8c.html#ab21768d16607ad05f2975b44e4cf772d" title="gets the change in mouse position since the last input frame">eol_mouse_get_motion</a>(<a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> *dx, <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> *dy);
 <a name="l00121"></a>00121 
-<a name="l00128"></a>00128 eolBool eol_mouse_in_rect(eolRect rect);
+<a name="l00128"></a>00128 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__mouse_8c.html#a0e757ef0952e02d1cc8f4d3d08c29403" title="checks if the mouse is within the rect specified.">eol_mouse_in_rect</a>(<a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> rect);
 <a name="l00129"></a>00129 
 <a name="l00130"></a>00130 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:55 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

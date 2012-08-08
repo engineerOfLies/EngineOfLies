@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol_lighting.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_LIGHTING__</span>
+<h1>eol_lighting.h</h1><a href="eol__lighting_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_LIGHTING__</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __EOL_LIGHTING__</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="comment">/*</span>
 <a name="l00004"></a>00004 <span class="comment">    Copyright 2012 Engineer of Lies</span>
@@ -41,76 +42,76 @@
 <a name="l00018"></a>00018 <span class="comment">    along with the EOL game engine.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00019"></a>00019 <span class="comment">*/</span>
 <a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;eol_types.h&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="eol__types_8h.html">eol_types.h</a>&quot;</span>
 <a name="l00022"></a>00022 
-<a name="l00023"></a>00023 <span class="keyword">enum</span> eolLightTypes {
-<a name="l00024"></a>00024   eolLightArea,
-<a name="l00025"></a>00025   eolLightSpot,
-<a name="l00026"></a>00026   eolLightAmbient,
-<a name="l00027"></a>00027   eolLightDirectional
+<a name="l00023"></a><a class="code" href="eol__lighting_8h.html#a8c10faa71336f99ef6a75dd9d7f29179">00023</a> <span class="keyword">enum</span> <a class="code" href="eol__lighting_8h.html#a8c10faa71336f99ef6a75dd9d7f29179">eolLightTypes</a> {
+<a name="l00024"></a><a class="code" href="eol__lighting_8h.html#a8c10faa71336f99ef6a75dd9d7f29179a696d92a0012c8a2372d006a75a4cfdc2">00024</a>   <a class="code" href="eol__lighting_8h.html#a8c10faa71336f99ef6a75dd9d7f29179a696d92a0012c8a2372d006a75a4cfdc2">eolLightArea</a>,
+<a name="l00025"></a><a class="code" href="eol__lighting_8h.html#a8c10faa71336f99ef6a75dd9d7f29179adac02b0bbaf224647733dcb846994a63">00025</a>   <a class="code" href="eol__lighting_8h.html#a8c10faa71336f99ef6a75dd9d7f29179adac02b0bbaf224647733dcb846994a63">eolLightSpot</a>,
+<a name="l00026"></a><a class="code" href="eol__lighting_8h.html#a8c10faa71336f99ef6a75dd9d7f29179a3be29509973eb94f4b72c9fefa35dde0">00026</a>   <a class="code" href="eol__lighting_8h.html#a8c10faa71336f99ef6a75dd9d7f29179a3be29509973eb94f4b72c9fefa35dde0">eolLightAmbient</a>,
+<a name="l00027"></a><a class="code" href="eol__lighting_8h.html#a8c10faa71336f99ef6a75dd9d7f29179a1750d0a7dd02dbfbbf051efdd9d6c869">00027</a>   <a class="code" href="eol__lighting_8h.html#a8c10faa71336f99ef6a75dd9d7f29179a1750d0a7dd02dbfbbf051efdd9d6c869">eolLightDirectional</a>
 <a name="l00028"></a>00028 };
 <a name="l00029"></a>00029 
 <a name="l00030"></a><a class="code" href="structeolLight.html">00030</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00031"></a>00031 {
-<a name="l00032"></a>00032   eolUint  _inUse;
-<a name="l00033"></a>00033   eolUint  type;
-<a name="l00034"></a><a class="code" href="structeolLight.html#a6fc07043e53ba9b3900ceac5e7f7d29a">00034</a>   eolInt   lightIndex; 
-<a name="l00035"></a>00035   eolBool  on;
-<a name="l00036"></a>00036   eolFloat <a class="code" href="structEntity__S.html#ab0935e73999d6f9690fa7ce2633fe628">radius</a>;
-<a name="l00037"></a>00037   <a class="code" href="structeolVec3D.html">eolVec3D</a> position;
-<a name="l00038"></a>00038   <a class="code" href="structeolVec3D.html">eolVec3D</a> colorSpec;
-<a name="l00039"></a>00039   <a class="code" href="structeolVec3D.html">eolVec3D</a> colorAmbi;
-<a name="l00040"></a>00040   <a class="code" href="structeolVec3D.html">eolVec3D</a> colorDiff;
-<a name="l00041"></a>00041   eolFloat constantAttenuation;
-<a name="l00042"></a>00042   eolFloat linearAttenuation;
-<a name="l00043"></a>00043   eolFloat QuadraticAttenuation;
-<a name="l00044"></a>00044   <a class="code" href="structeolVec3D.html">eolVec3D</a> direction;
-<a name="l00045"></a>00045   eolFloat exponent;
-<a name="l00046"></a>00046   eolFloat angle;
+<a name="l00032"></a><a class="code" href="structeolLight.html#a602e5ea7cd8fb81da96ca3c9d0fc426d">00032</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>  _inUse;
+<a name="l00033"></a><a class="code" href="structeolLight.html#a9f6a41cd15be947908a02380ca9f6e52">00033</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>  <a class="code" href="eol__opengl_8h.html#a7d05960f4f1c1b11f3177dc963a45d86">type</a>;
+<a name="l00034"></a><a class="code" href="structeolLight.html#a6fc07043e53ba9b3900ceac5e7f7d29a">00034</a>   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>   lightIndex; 
+<a name="l00035"></a><a class="code" href="structeolLight.html#a6d0414d0d5373364f175483a4b671e38">00035</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>  on;
+<a name="l00036"></a><a class="code" href="structeolLight.html#a98748b4f1c1141b638f6b542cc9a012c">00036</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="structEntity__S.html#ab0935e73999d6f9690fa7ce2633fe628">radius</a>;
+<a name="l00037"></a><a class="code" href="structeolLight.html#a53ebc6b203ba7ea25f191e9301147277">00037</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> position;
+<a name="l00038"></a><a class="code" href="structeolLight.html#adb8bbc8c14be3e8b427cec01e5a39c28">00038</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> colorSpec;
+<a name="l00039"></a><a class="code" href="structeolLight.html#aae07b827a3ddfcc642a3d3ced3867119">00039</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> colorAmbi;
+<a name="l00040"></a><a class="code" href="structeolLight.html#ab15eff7efca2ffc6f110f8920c7885f6">00040</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> colorDiff;
+<a name="l00041"></a><a class="code" href="structeolLight.html#ab97651ead71e53bfbe8fa8b9f7861ab9">00041</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> constantAttenuation;
+<a name="l00042"></a><a class="code" href="structeolLight.html#a1fe25c02e8968261122e24669407a8a1">00042</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> linearAttenuation;
+<a name="l00043"></a><a class="code" href="structeolLight.html#aae83c4232e2186e04e24d894e7809c2c">00043</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> QuadraticAttenuation;
+<a name="l00044"></a><a class="code" href="structeolLight.html#ab3b31283ac5e8897a1556c6c65e5dba1">00044</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> direction;
+<a name="l00045"></a><a class="code" href="structeolLight.html#a2469fa2efe90ede0f3d7593a40c2b14d">00045</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> exponent;
+<a name="l00046"></a><a class="code" href="structeolLight.html#a01475af56efad31f479da0c757b9cde1">00046</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> angle;
 <a name="l00047"></a>00047 }<a class="code" href="structeolLight.html">eolLight</a>;
 <a name="l00048"></a>00048 
-<a name="l00052"></a>00052 <span class="keywordtype">void</span> eol_lighting_config();
+<a name="l00052"></a>00052 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a775a8065e20d7de24d30ea3b0a573a16" title="configures the lighting system">eol_lighting_config</a>();
 <a name="l00053"></a>00053 
-<a name="l00057"></a>00057 <span class="keywordtype">void</span> eol_lighting_init();
+<a name="l00057"></a>00057 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a277891bc87b72681ba7678fa27ad0e4e" title="initializes the lighting system">eol_lighting_init</a>();
 <a name="l00058"></a>00058 
-<a name="l00062"></a>00062 eolBool eol_lighting_initialized();
+<a name="l00062"></a>00062 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__lighting_8c.html#a5631001be885e2f75061db68cc5116d3" title="retrieves initialization status for the lighting system">eol_lighting_initialized</a>();
 <a name="l00063"></a>00063 
-<a name="l00067"></a>00067 <a class="code" href="structeolLight.html">eolLight</a> * eol_light_new();
+<a name="l00067"></a>00067 <a class="code" href="structeolLight.html">eolLight</a> * <a class="code" href="eol__lighting_8c.html#a43f9e346a2947ea8687f63f421d1fe5d" title="allocates a new light and returns a pointer to it.">eol_light_new</a>();
 <a name="l00068"></a>00068 
-<a name="l00074"></a>00074 <span class="keywordtype">void</span> eol_light_free(<a class="code" href="structeolLight.html">eolLight</a> **light);
+<a name="l00074"></a>00074 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#aba118e5821b05765892011f234cbf834" title="frees the passed in light and sets pointer to NULL">eol_light_free</a>(<a class="code" href="structeolLight.html">eolLight</a> **light);
 <a name="l00075"></a>00075 
-<a name="l00079"></a>00079 <a class="code" href="structeolLight.html">eolLight</a> *eol_light_area_new();
-<a name="l00080"></a>00080 <a class="code" href="structeolLight.html">eolLight</a> *eol_light_spot_new();
-<a name="l00081"></a>00081 <a class="code" href="structeolLight.html">eolLight</a> *eol_light_ambient_new();
-<a name="l00082"></a>00082 <a class="code" href="structeolLight.html">eolLight</a> *eol_light_directional_new();
+<a name="l00079"></a>00079 <a class="code" href="structeolLight.html">eolLight</a> *<a class="code" href="eol__lighting_8c.html#a9354230d5612de1c68f77b0f9e21e5e4" title="allocates new lights of the type specified">eol_light_area_new</a>();
+<a name="l00080"></a>00080 <a class="code" href="structeolLight.html">eolLight</a> *<a class="code" href="eol__lighting_8c.html#a978ced53b933d3238e2fb069be05f405">eol_light_spot_new</a>();
+<a name="l00081"></a>00081 <a class="code" href="structeolLight.html">eolLight</a> *<a class="code" href="eol__lighting_8c.html#a5c3b22ae9b2f3487002db6120658a1f5">eol_light_ambient_new</a>();
+<a name="l00082"></a>00082 <a class="code" href="structeolLight.html">eolLight</a> *<a class="code" href="eol__lighting_8c.html#acd0e3926c3af48c7aa9234dcbd79b479">eol_light_directional_new</a>();
 <a name="l00083"></a>00083 
-<a name="l00088"></a>00088 <span class="keywordtype">void</span> eol_light_update(<a class="code" href="structeolLight.html">eolLight</a> *light);
+<a name="l00088"></a>00088 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a279f6d9b1de6a5631490af2399a168a3" title="Any changes to the lighting struct will not be applied to the rendering light until...">eol_light_update</a>(<a class="code" href="structeolLight.html">eolLight</a> *light);
 <a name="l00089"></a>00089 
-<a name="l00095"></a>00095 <span class="keywordtype">void</span> eol_lighting_setup_rep_plot();
+<a name="l00095"></a>00095 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a2d03e4d6a6d152972394192113feecc8" title="sets up a basic 3 point lighting system useful for most applications use the rep...">eol_lighting_setup_rep_plot</a>();
 <a name="l00096"></a>00096 
-<a name="l00101"></a>00101 <span class="keywordtype">void</span> eol_lighting_clear();
+<a name="l00101"></a>00101 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8h.html#afb636793b42392b019f07a8c748d8b98" title="removes all active lights. Used during scene transition. WARNING, it will invalidate...">eol_lighting_clear</a>();
 <a name="l00102"></a>00102 
-<a name="l00106"></a>00106 <span class="keywordtype">void</span> eol_light_enable(<a class="code" href="structeolLight.html">eolLight</a> *light,eolBool enable);
+<a name="l00106"></a>00106 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a3fdc9e6a20ec4db8306ae387e614f503" title="turns on or off a light without killing the pointer.">eol_light_enable</a>(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> enable);
 <a name="l00107"></a>00107 
-<a name="l00114"></a>00114 <span class="keywordtype">void</span> eol_light_point_at(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="structeolVec3D.html">eolVec3D</a> point);
+<a name="l00114"></a>00114 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8h.html#a29c587c6aaa147accbfced9a5e3939f9" title="points a spot light at a specific point in 3d space does nothing unless light type...">eol_light_point_at</a>(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="structeolVec3D.html">eolVec3D</a> point);
 <a name="l00115"></a>00115 
-<a name="l00122"></a>00122 <span class="keywordtype">void</span> eol_light_move(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="structeolVec3D.html">eolVec3D</a> point);
+<a name="l00122"></a>00122 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a65d09bf079b477449b9498ee04d6da24" title="sets lighting position to the point specified. does nothing if spot is ambient or...">eol_light_move</a>(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="structeolVec3D.html">eolVec3D</a> point);
 <a name="l00123"></a>00123 
-<a name="l00129"></a>00129 <span class="keywordtype">void</span> eol_light_set_color(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="structeolVec3D.html">eolVec3D</a> color);
+<a name="l00129"></a>00129 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a957c782d6f794887c543b417d9853f17" title="sets the ambient diffuse and specular lighting to color">eol_light_set_color</a>(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="structeolVec3D.html">eolVec3D</a> color);
 <a name="l00130"></a>00130 
-<a name="l00135"></a>00135 <span class="keywordtype">void</span> eol_light_set_radius(<a class="code" href="structeolLight.html">eolLight</a> *light,eolFloat <a class="code" href="structEntity__S.html#ab0935e73999d6f9690fa7ce2633fe628">radius</a>);
+<a name="l00135"></a>00135 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a8723792736d6673ed14c386e902053f9" title="sets the light radius for a light. The light is disabled for anything outside the...">eol_light_set_radius</a>(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="structEntity__S.html#ab0935e73999d6f9690fa7ce2633fe628">radius</a>);
 <a name="l00136"></a>00136 
-<a name="l00142"></a>00142 <span class="keywordtype">void</span> eol_lighting_filter_for_position(<a class="code" href="structeolVec3D.html">eolVec3D</a> pos);
+<a name="l00142"></a>00142 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a91c8593b84eba61818cb6f98b70f3d87" title="goes through each light and enables / disabled them based on distance to the point...">eol_lighting_filter_for_position</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> pos);
 <a name="l00143"></a>00143 
-<a name="l00148"></a>00148 <span class="keywordtype">void</span> eol_light_turn_on(<a class="code" href="structeolLight.html">eolLight</a> *light);
+<a name="l00148"></a>00148 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a159af4164abbae22685425379bfbb544" title="turns light on and enables it for rendering.">eol_light_turn_on</a>(<a class="code" href="structeolLight.html">eolLight</a> *light);
 <a name="l00149"></a>00149 
-<a name="l00154"></a>00154 <span class="keywordtype">void</span> eol_light_turn_off(<a class="code" href="structeolLight.html">eolLight</a> *light);
+<a name="l00154"></a>00154 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a397b4d3c92c949eddfd5ce2dcac142e3" title="turns light off and disables it for rendering.">eol_light_turn_off</a>(<a class="code" href="structeolLight.html">eolLight</a> *light);
 <a name="l00155"></a>00155 
-<a name="l00159"></a>00159 <span class="keywordtype">void</span> eol_light_draw();
+<a name="l00159"></a>00159 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a15fa9ec5dbe9ed2c98247953605efb3b">eol_light_draw</a>();
 <a name="l00160"></a>00160 
 <a name="l00161"></a>00161 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:55 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

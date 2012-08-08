@@ -31,14 +31,14 @@
 <p><code>#include &lt;<a class="el" href="eol__level_8h_source.html">eol_level.h</a>&gt;</code></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Data Fields</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">eolWord&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#af55305012f5a11462a53b733adb160f7">idName</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">eolFloat&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a61b9ced59a2b944ff69d461afb4fcb46">alpha</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#af55305012f5a11462a53b733adb160f7">idName</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a61b9ced59a2b944ff69d461afb4fcb46">alpha</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a6d04a5e9f29e727eca44e1b522c32ca0">color</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolRectFloat.html">eolRectFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a1e73c6a8a0c357ac82030200236739d3">bounds</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">eolBool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a008cc78eb1b616a920eaad4bc83519da">usesClipMesh</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">eolBool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#aafb7f768bfb2807de3375ac2ce69a0b0">usesTileMap</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">eolLine&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a4c9d933644b926d2fbcf06c120837975">clipMeshFile</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">eolLine&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a65f894d2122785189b1f2c2121a6ba8d">tileSet</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a008cc78eb1b616a920eaad4bc83519da">usesClipMesh</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#aafb7f768bfb2807de3375ac2ce69a0b0">usesTileMap</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a4c9d933644b926d2fbcf06c120837975">clipMeshFile</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a65f894d2122785189b1f2c2121a6ba8d">tileSet</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolOrientation.html">eolOrientation</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a666236eff670187e24bba095db24bba1">clipMaskOri</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolTileMap.html">eolTileMap</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a3d668b4d5fc38924d5521590196a08ac">tileMap</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">GList *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolLevelLayer.html#a6c8c09b74bdb834d54616f892508bb9c">spawnList</a></td></tr>
@@ -50,18 +50,22 @@
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>the structure used to house the level layer data. The engine supports multiple layers. Your game does not have to. </p>
+
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00062">62</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
 <hr/><h2>Field Documentation</h2>
 <a class="anchor" id="a61b9ced59a2b944ff69d461afb4fcb46"></a><!-- doxytag: member="eolLevelLayer::alpha" ref="a61b9ced59a2b944ff69d461afb4fcb46" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">eolFloat <a class="el" href="structeolLevelLayer.html#a61b9ced59a2b944ff69d461afb4fcb46">eolLevelLayer::alpha</a></td>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="structeolLevelLayer.html#a61b9ced59a2b944ff69d461afb4fcb46">eolLevelLayer::alpha</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 <p>translucency to apply to all layer assets. by setting it to 0, you turn off rendering for the layer </p>
+
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00066">66</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
 
 </div>
 </div>
@@ -77,6 +81,8 @@
 <div class="memdoc">
 <p>a list of background display models. </p>
 
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00080">80</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a1e73c6a8a0c357ac82030200236739d3"></a><!-- doxytag: member="eolLevelLayer::bounds" ref="a1e73c6a8a0c357ac82030200236739d3" args="" -->
@@ -90,6 +96,8 @@
 </div>
 <div class="memdoc">
 <p>absolute bounds in model space for the layer </p>
+
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00069">69</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
 
 </div>
 </div>
@@ -105,6 +113,8 @@
 <div class="memdoc">
 <p>offset for where the clipmask is set in 3D space </p>
 
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00076">76</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a907bb985bff55d3ba53453ae9f21a18c"></a><!-- doxytag: member="eolLevelLayer::clipMesh" ref="a907bb985bff55d3ba53453ae9f21a18c" args="" -->
@@ -119,6 +129,8 @@
 <div class="memdoc">
 <p>the collision mask as mesh data </p>
 
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00082">82</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a4c9d933644b926d2fbcf06c120837975"></a><!-- doxytag: member="eolLevelLayer::clipMeshFile" ref="a4c9d933644b926d2fbcf06c120837975" args="" -->
@@ -126,12 +138,14 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">eolLine <a class="el" href="structeolLevelLayer.html#a4c9d933644b926d2fbcf06c120837975">eolLevelLayer::clipMeshFile</a></td>
+          <td class="memname"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> <a class="el" href="structeolLevelLayer.html#a4c9d933644b926d2fbcf06c120837975">eolLevelLayer::clipMeshFile</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 <p>the file to load for a clip mask </p>
+
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00073">73</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
 
 </div>
 </div>
@@ -147,6 +161,8 @@
 <div class="memdoc">
 <p>Color shift applied to whole level. </p>
 
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00068">68</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a4192ca0847002343571a8aef7c82efff"></a><!-- doxytag: member="eolLevelLayer::entities" ref="a4192ca0847002343571a8aef7c82efff" args="" -->
@@ -161,6 +177,8 @@
 <div class="memdoc">
 <p>entites that have been added to the layer </p>
 
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00083">83</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="af55305012f5a11462a53b733adb160f7"></a><!-- doxytag: member="eolLevelLayer::idName" ref="af55305012f5a11462a53b733adb160f7" args="" -->
@@ -168,12 +186,14 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">eolWord <a class="el" href="structeolLevelLayer.html#af55305012f5a11462a53b733adb160f7">eolLevelLayer::idName</a></td>
+          <td class="memname"><a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a> <a class="el" href="structeolLevelLayer.html#af55305012f5a11462a53b733adb160f7">eolLevelLayer::idName</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 <p>unique id for the level layer. This should be unique </p>
+
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00064">64</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
 
 </div>
 </div>
@@ -189,6 +209,8 @@
 <div class="memdoc">
 <p>config keys for the layer </p>
 
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00084">84</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a2bcdeac3df36364974ddaf0f44ba59fd"></a><!-- doxytag: member="eolLevelLayer::space" ref="a2bcdeac3df36364974ddaf0f44ba59fd" args="" -->
@@ -202,6 +224,8 @@
 </div>
 <div class="memdoc">
 <p>the collision space for this layer </p>
+
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00081">81</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
 
 </div>
 </div>
@@ -217,6 +241,8 @@
 <div class="memdoc">
 <p>the loaded spawn candidates </p>
 
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00079">79</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a3d668b4d5fc38924d5521590196a08ac"></a><!-- doxytag: member="eolLevelLayer::tileMap" ref="a3d668b4d5fc38924d5521590196a08ac" args="" -->
@@ -231,6 +257,8 @@
 <div class="memdoc">
 <p>the loaded tile map </p>
 
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00078">78</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a65f894d2122785189b1f2c2121a6ba8d"></a><!-- doxytag: member="eolLevelLayer::tileSet" ref="a65f894d2122785189b1f2c2121a6ba8d" args="" -->
@@ -238,12 +266,14 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">eolLine <a class="el" href="structeolLevelLayer.html#a65f894d2122785189b1f2c2121a6ba8d">eolLevelLayer::tileSet</a></td>
+          <td class="memname"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> <a class="el" href="structeolLevelLayer.html#a65f894d2122785189b1f2c2121a6ba8d">eolLevelLayer::tileSet</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 <p>the group of tiles to use, Generally a sprite where each cell is a tile </p>
+
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00074">74</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
 
 </div>
 </div>
@@ -252,12 +282,14 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">eolBool <a class="el" href="structeolLevelLayer.html#a008cc78eb1b616a920eaad4bc83519da">eolLevelLayer::usesClipMesh</a></td>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="el" href="structeolLevelLayer.html#a008cc78eb1b616a920eaad4bc83519da">eolLevelLayer::usesClipMesh</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 <p>if true, the layer will build collision data from clip mesh </p>
+
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00070">70</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
 
 </div>
 </div>
@@ -266,12 +298,14 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">eolBool <a class="el" href="structeolLevelLayer.html#aafb7f768bfb2807de3375ac2ce69a0b0">eolLevelLayer::usesTileMap</a></td>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="el" href="structeolLevelLayer.html#aafb7f768bfb2807de3375ac2ce69a0b0">eolLevelLayer::usesTileMap</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 <p>if true, the layer will build collision data from tile map </p>
+
+<p>Definition at line <a class="el" href="eol__level_8h_source.html#l00071">71</a> of file <a class="el" href="eol__level_8h_source.html">eol_level.h</a>.</p>
 
 </div>
 </div>
@@ -279,7 +313,7 @@
 <li><a class="el" href="eol__level_8h_source.html">eol_level.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:59 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

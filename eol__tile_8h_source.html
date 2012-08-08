@@ -19,9 +19,10 @@
   <div class="tabs">
     <ul>
       <li><a href="files.html"><span>File&nbsp;List</span></a></li>
+      <li><a href="globals.html"><span>Globals</span></a></li>
     </ul>
   </div>
-<h1>eol_tile.h</h1><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_TILE__</span>
+<h1>eol_tile.h</h1><a href="eol__tile_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef __EOL_TILE__</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define __EOL_TILE__</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span><span class="comment">/*</span>
 <a name="l00004"></a>00004 <span class="comment">    Copyright 2012 Engineer of Lies</span>
@@ -41,45 +42,45 @@
 <a name="l00018"></a>00018 <span class="comment">    along with the EOL game engine.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <a name="l00019"></a>00019 <span class="comment">*/</span>
 <a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;eol_types.h&quot;</span>
-<a name="l00022"></a>00022 <span class="preprocessor">#include &quot;eol_actor.h&quot;</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="eol__types_8h.html">eol_types.h</a>&quot;</span>
+<a name="l00022"></a>00022 <span class="preprocessor">#include &quot;<a class="code" href="eol__actor_8h.html">eol_actor.h</a>&quot;</span>
 <a name="l00023"></a>00023 
 <a name="l00024"></a>00024 <span class="preprocessor">#include &lt;glib/glist.h&gt;</span>
 <a name="l00025"></a>00025 
 <a name="l00036"></a><a class="code" href="structeolTileType.html">00036</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00037"></a>00037 {
-<a name="l00038"></a><a class="code" href="structeolTileType.html#a46f9f351c70e8fa320c3b1b622e9f195">00038</a>   eolUint        <a class="code" href="structEntity__S.html#a7d93867258e7c2997b920cf48238fdad">id</a>;        
-<a name="l00039"></a><a class="code" href="structeolTileType.html#ac1a9a024eb39924a5d00dff18db28755">00039</a>   eolUint        footwidth; 
-<a name="l00040"></a><a class="code" href="structeolTileType.html#a61c8ce6046e865a1976c182a42b6355d">00040</a>   eolUint        footheight;
+<a name="l00038"></a><a class="code" href="structeolTileType.html#a46f9f351c70e8fa320c3b1b622e9f195">00038</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>        <a class="code" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>;        
+<a name="l00039"></a><a class="code" href="structeolTileType.html#ac1a9a024eb39924a5d00dff18db28755">00039</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>        footwidth; 
+<a name="l00040"></a><a class="code" href="structeolTileType.html#a61c8ce6046e865a1976c182a42b6355d">00040</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>        footheight;
 <a name="l00041"></a><a class="code" href="structeolTileType.html#a352d63647caacc5776d48f2235312ba5">00041</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> <a class="code" href="structEntity__S.html#a787ec1dd949e18bf8d5f75311ecd45b0">ori</a>;       
-<a name="l00042"></a><a class="code" href="structeolTileType.html#a3083039a3ff22bfd4940dea4eb521b8b">00042</a>   eolLine        modelFile; 
+<a name="l00042"></a><a class="code" href="structeolTileType.html#a3083039a3ff22bfd4940dea4eb521b8b">00042</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        modelFile; 
 <a name="l00043"></a>00043 }<a class="code" href="structeolTileType.html" title="Tiles are a means of constructing levels with components, rather than a fully fleshed...">eolTileType</a>;
 <a name="l00044"></a>00044 
 <a name="l00045"></a><a class="code" href="structeolTile.html">00045</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00046"></a>00046 {
-<a name="l00047"></a><a class="code" href="structeolTile.html#a59e467cc103f6b8655a29f72ec5fe7ed">00047</a>   eolUint          x,y;     
+<a name="l00047"></a><a class="code" href="structeolTile.html#a59e467cc103f6b8655a29f72ec5fe7ed">00047</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>          <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,<a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>;     
 <a name="l00048"></a><a class="code" href="structeolTile.html#afaaa082a15eee8aebe2060bc8301e593">00048</a>   <a class="code" href="structeolActor.html">eolActor</a>       * <a class="code" href="structEntity__S.html#a5e854f8f625ce666a0b37816e712321e">actor</a>;   
 <a name="l00049"></a><a class="code" href="structeolTile.html#a9744dae3c3ca0f92fdf2f92d2ff4938e">00049</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a>   <a class="code" href="structEntity__S.html#a787ec1dd949e18bf8d5f75311ecd45b0">ori</a>;     
 <a name="l00050"></a>00050 }<a class="code" href="structeolTile.html">eolTile</a>;
 <a name="l00051"></a>00051 
 <a name="l00052"></a><a class="code" href="structeolTileMap.html">00052</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00053"></a>00053 {
-<a name="l00054"></a><a class="code" href="structeolTileMap.html#a8f5f0ceadd77107d95846f365d07fd20">00054</a>   eolFloat    tilewidth;      
-<a name="l00055"></a><a class="code" href="structeolTileMap.html#a26681f41396a603fdf52b480fdf137aa">00055</a>   eolFloat    tileheight;     
-<a name="l00056"></a><a class="code" href="structeolTileMap.html#ac2777811bc774941f572b7813f329940">00056</a>   eolUint     spaceWidth;     
-<a name="l00057"></a><a class="code" href="structeolTileMap.html#a20a1fb6b7b3fae4eed0fe60f6adfa5ba">00057</a>   eolUint     spaceHeight;    
-<a name="l00058"></a><a class="code" href="structeolTileMap.html#a7c6674598c9ffd333916bd22650c28a8">00058</a>   eolUint     tileIdPool;     
+<a name="l00054"></a><a class="code" href="structeolTileMap.html#a8f5f0ceadd77107d95846f365d07fd20">00054</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>    tilewidth;      
+<a name="l00055"></a><a class="code" href="structeolTileMap.html#a26681f41396a603fdf52b480fdf137aa">00055</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>    tileheight;     
+<a name="l00056"></a><a class="code" href="structeolTileMap.html#ac2777811bc774941f572b7813f329940">00056</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>     spaceWidth;     
+<a name="l00057"></a><a class="code" href="structeolTileMap.html#a20a1fb6b7b3fae4eed0fe60f6adfa5ba">00057</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>     spaceHeight;    
+<a name="l00058"></a><a class="code" href="structeolTileMap.html#a7c6674598c9ffd333916bd22650c28a8">00058</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>     tileIdPool;     
 <a name="l00059"></a><a class="code" href="structeolTileMap.html#a3bb3f1f4946e297acf610985b60ac747">00059</a>   GList     * tileSet;        
 <a name="l00060"></a><a class="code" href="structeolTileMap.html#aa534b314cb2e043305a0c18ea02030f4">00060</a>   GList     * map;            
 <a name="l00061"></a>00061 }<a class="code" href="structeolTileMap.html">eolTileMap</a>;
 <a name="l00062"></a>00062 
-<a name="l00063"></a>00063 <a class="code" href="structeolTileMap.html">eolTileMap</a> * eol_tile_map_new();
-<a name="l00064"></a>00064 <span class="keywordtype">void</span> eol_tile_map_delete(<a class="code" href="structeolTileMap.html">eolTileMap</a> *map);
-<a name="l00065"></a>00065 <span class="keywordtype">void</span> eol_tile_map_draw(<a class="code" href="structeolTileMap.html">eolTileMap</a> *map);
-<a name="l00066"></a>00066 <span class="keywordtype">void</span> eol_tile_map_add_to_space(<a class="code" href="structeolTileMap.html">eolTileMap</a> *map, cpSpace *space);
+<a name="l00063"></a>00063 <a class="code" href="structeolTileMap.html">eolTileMap</a> * <a class="code" href="eol__tile_8h.html#af3898e0201de90159c8ad2096f118a1a">eol_tile_map_new</a>();
+<a name="l00064"></a>00064 <span class="keywordtype">void</span> <a class="code" href="eol__tile_8h.html#ad5efbb4c2f27b628ca66a90e7ae3e5d6">eol_tile_map_delete</a>(<a class="code" href="structeolTileMap.html">eolTileMap</a> *map);
+<a name="l00065"></a>00065 <span class="keywordtype">void</span> <a class="code" href="eol__tile_8h.html#a704be55541bc969745a8b5cc175d761a">eol_tile_map_draw</a>(<a class="code" href="structeolTileMap.html">eolTileMap</a> *map);
+<a name="l00066"></a>00066 <span class="keywordtype">void</span> <a class="code" href="eol__tile_8h.html#a78773655deb683804fa17f9283c3d439">eol_tile_map_add_to_space</a>(<a class="code" href="structeolTileMap.html">eolTileMap</a> *map, cpSpace *space);
 <a name="l00067"></a>00067 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Aug 6 22:06:48 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:56 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
