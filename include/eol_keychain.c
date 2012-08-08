@@ -1,9 +1,14 @@
 #include "eol_keychain.h"
 #include "eol_loader.h"
+#include "eol_logger.h"
 #include <glib/gstring.h>
 #include <glib/glist.h>
 #include <glib/ghash.h>
 #include <glib.h>
+
+/*local prototypes*/
+
+void eol_keychain_write_link(eolKeychain *link,eolFile *file);
 
 void eol_g_string_free(char *string)
 {
@@ -395,11 +400,6 @@ eolBool eol_keychain_get_hash_value_as_rectfloat(eolRectFloat *output, eolKeycha
   return eolTrue;
 }
 
-void eol_keychain_save_v1(eolKeychain *chain, char *filename)
-{
-  
-}
-
 void eol_keychain_print_hash(eolLine key, eolKeychain *chain, eolUint level)
 {
   
@@ -409,5 +409,91 @@ void eol_keychain_print(eolKeychain *chain)
 {
   
 }
+
+/*saving and loading:*/
+
+void eol_keychain_write_hash(eolKeychain *link,eolFile *file)
+{
+  GHashTableIter *iter = NULL;
+  gpointer       *key = NULL;
+  gpointer       *value = NULL;
+  if (!link)return;
+  if (link->keyType != eolKeychainHash)return;
+  /*
+  type
+  count
+  key
+  value - expand for keychain type
+  key
+  value
+  ...
+  */
+  eol_loader_write_uint_to_file(file,link->keyType);
+  eol_loader_write_uint_to_file(file,link->itemCount);
+  g_hash_table_iter_init(iter,link->keyValue);
+  while(g_hash_table_iter_next(iter,key,value))
+  {
+    eol_loader_write_string_to_file(file,(char *)key);
+    eol_keychain_write_link((eolKeychain *)value,file);
+  }
+}
+
+void eol_keychain_write_line(eolKeychain *link,eolFile *file)
+{
+  GList *it;
+  if (!link)return;
+  if (link->keyType != eolKeychainList)return;
+  eol_loader_write_uint_to_file(file,link->keyType);
+  eol_loader_write_uint_to_file(file,link->itemCount);
+  for (it = (GList *)link->keyValue;it != NULL;it = it->next)
+  {
+    eol_keychain_write_link(it->data,file);
+  }
+}
+
+void eol_keychain_write_string(eolKeychain *link,eolFile *file)
+{
+  if (!link)return;
+  if (link->keyType != eolKeychainString)return;
+  /*
+  type
+  string (which is len,chars)
+  */
+  eol_loader_write_uint_to_file(file,link->keyType);
+  eol_loader_write_string_to_file(file,link->keyValue);
+}
+
+void eol_keychain_write_link(eolKeychain *link,eolFile *file)
+{
+  if ((!link) || (!file))return;
+  switch(link->keyType)
+  {
+    case eolKeychainString:
+      eol_keychain_write_string(link,file);
+      break;
+    case eolKeychainList:
+      eol_keychain_write_hash(link,file);
+      break;
+    case eolKeychainHash:
+    default:
+      eol_logger_message(
+        EOL_LOG_WARN,
+        "eol_keychain:unsupported keychain type for writing: %i\n",
+        link->keyType);
+  }
+}
+
+void eol_keychain_save_v1(eolKeychain *chain, char *filename)
+{
+  eolFile *file;
+  if ((!chain) || (!filename))return;
+  file = eol_loader_write_file_binary(filename);
+  if (file != NULL)
+  {
+    eol_keychain_write_link(chain,file);
+    eol_loader_close_file(&file);
+  }
+}
+
 
 /*eol@eof*/

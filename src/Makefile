@@ -15,7 +15,7 @@ OBJ = $(patsubst %.c,%.o,$(wildcard *.c))
 #
 
 # Linux
-PROJECT = eoleditor
+PROJECT = eoltest
 CC      = gcc
 #CC	= clang
 GLIB_CFLAGS = `pkg-config --cflags glib-2.0`

@@ -181,6 +181,7 @@ void eol_component_config()
 
 void eol_button_get_stock_size(eolUint *w, eolUint *h)
 {
+  if (_eol_component_stock_button[0] == NULL)return;
   if (w)*w = _eol_component_stock_button[0]->frameWidth;
   if (h)*h = _eol_component_stock_button[0]->frameHeight;
 }
@@ -905,8 +906,11 @@ void eol_component_make_button(
       button->button[eolButtonHighlight] = _eol_component_stock_button[eolButtonHighlight];
       button->button[eolButtonPressed] = _eol_component_stock_button[eolButtonPressed];
       button->justify = eolJustifyCenter;
-      component->bounds.w = button->button[eolButtonIdle]->frameWidth;
-      component->bounds.h = button->button[eolButtonIdle]->frameHeight;
+      if (button->button[eolButtonIdle] != NULL)
+      {
+        component->bounds.w = button->button[eolButtonIdle]->frameWidth;
+        component->bounds.h = button->button[eolButtonIdle]->frameHeight;
+      }
       break;
   }
   component->data_update = eol_component_button_update;

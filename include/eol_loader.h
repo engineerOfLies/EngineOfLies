@@ -23,9 +23,18 @@
 #include <stdio.h>
 #include <physfs.h>
 
+/**
+ * @brief To keep the assets made by eol consistent across platforms, all saving
+ * to file will be a set Endian-nes, regardless of platform.
+ */
+#define EOLFILEBIGENDIAN 0
+#define EOLFILELISTTLEENDIAN 1
+#define EOLFILEENDIAN EOLFILELISTTLEENDIAN
+
 enum eolLoaderMode {
   eolLoaderRead,
-  eolLoaderWrite
+  eolLoaderReadBinary,
+  eolLoaderWriteBinary
 };
 
 typedef struct
@@ -43,10 +52,23 @@ typedef struct
 void eol_loader_init();
 
 /**
+ * @brief loads config for the loader.  Unlike other system config functions, this
+ * MUST be called AFTR eol_loader_init() is called.
+ */
+void eol_load_config();
+
+/**
  * @brief checks initialization status of the loader
  * @return eolTrue if initialized, eolFalse otherwise
  */
 eolBool eol_loader_initialized();
+
+/**
+ * @brief adds a path to the search path for file loading.
+ * @param path the directory path "./system/paks/" or archive "./system/pak0.pak"
+ * @param point optional. defaults to "./" can be provided.
+ */
+void eol_loader_add_search_path(char *filename,char *point);
 
 /**
  * @brief opens a file for reading from the filesystem or a pak file
@@ -60,13 +82,17 @@ eolFile * eol_loader_read_file(char *filename);
 * @param filename the file to load.
 * @return a pointer to the opened eolFile handle or NULL on failure
 */
-eolFile * eol_loader_write_file(char *filename);
+eolFile * eol_loader_write_file_binary(char *filename);
 
 /**
  * @brief closes an eolFile handle and cleans up allocated memory
  * @param file a pointer to the file pointer to close.  Set to NULL on success.
  */
 void eol_loader_close_file(eolFile **file);
+
+/*
+ *** Binary File Operations ***
+ */
 
 /**
  * @brief write data to an open eolFile buffer.
@@ -91,6 +117,14 @@ void eol_loader_write_int_to_file(eolFile *file,eolInt data);
 * @param data the data to be written.
 */
 void eol_loader_write_line_to_file(eolFile *file,eolLine data);
+
+/**
+* @brief write data to an open eolFile buffer.
+* does nothing if the file handle is NULL or opened for reading.
+* @param file the file handle to write to
+* @param data the data to be written.
+*/
+void eol_loader_write_string_to_file(eolFile *file,char * data);
 
 /**
 * @brief write data to an open eolFile buffer.
