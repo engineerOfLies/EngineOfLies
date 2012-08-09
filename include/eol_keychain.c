@@ -8,8 +8,6 @@
 
 /*local prototypes*/
 
-void eol_keychain_write_link(eolKeychain *link,eolFile *file);
-
 void eol_g_string_free(char *string)
 {
   if (!string)return;
@@ -438,7 +436,7 @@ void eol_keychain_write_hash(eolKeychain *link,eolFile *file)
   }
 }
 
-void eol_keychain_write_line(eolKeychain *link,eolFile *file)
+void eol_keychain_write_list(eolKeychain *link,eolFile *file)
 {
   GList *it;
   if (!link)return;
@@ -472,9 +470,10 @@ void eol_keychain_write_link(eolKeychain *link,eolFile *file)
       eol_keychain_write_string(link,file);
       break;
     case eolKeychainList:
-      eol_keychain_write_hash(link,file);
+      eol_keychain_write_list(link,file);
       break;
     case eolKeychainHash:
+      eol_keychain_write_hash(link,file);
     default:
       eol_logger_message(
         EOL_LOG_WARN,
@@ -494,6 +493,105 @@ void eol_keychain_save_v1(eolKeychain *chain, char *filename)
     eol_loader_close_file(&file);
   }
 }
+/*
+*** loading from file ***
+*/
 
+eolKeychain *eol_keychain_read_hash(eolFile *file)
+{
+  int i;
+  eolLine buffer;  /*all keys should be limited to an eolLine*/
+  eolKeychain *link = NULL;
+  eolUint itemCount = 0;
+  eol_loader_read_uint_from_file(&itemCount,file);
+  /*
+  count
+  key
+  value - expand for keychain type
+  key
+  value
+  ...
+  */
+  eol_loader_read_uint_from_file(&itemCount,file);
+  if (itemCount == 0)return NULL;
+  link = eol_keychain_new_hash();
+  if (link == NULL)return NULL;
+  for (i= 0;i < itemCount; i++)
+  {
+    memset(buffer,0,sizeof(eolLine));
+    eol_loader_read_string_from_file((char **)&buffer,file);
+    if (strlen(buffer) == 0)
+    {
+      eol_logger_message(
+        EOL_LOG_WARN,
+        "eol_keychain:missing hash key in file: %i\n",
+        file->filename);
+      return link;
+    }
+    eol_keychain_hash_insert(link,buffer,eol_keychain_read_link(file));
+  }
+  return link;
+}
+
+eolKeychain *eol_keychain_read_list(eolFile *file)
+{
+  int i;
+  eolKeychain *link = NULL;
+  eolUint itemCount = 0;
+  eol_loader_read_uint_from_file(&itemCount,file);
+  if (!itemCount)return NULL;
+  link = eol_keychain_new_list();
+  if (link == NULL)return NULL;
+  for (i = 0;i < itemCount;i++)
+  {
+    eol_keychain_list_append(link,eol_keychain_read_link(file));
+  }
+  return link;
+}
+
+eolKeychain *eol_keychain_read_string(eolFile *file)
+{
+  eolKeychain * link = NULL;
+  char *buffer = NULL;
+  eol_loader_read_string_from_file((char **)&buffer,file);
+  if ((buffer == NULL) || (strlen(buffer) == 0))return NULL;
+  link = eol_keychain_new_string(buffer);
+  free(buffer);
+  return link;
+}
+
+eolKeychain *eol_keychain_read_link(eolFile *file)
+{
+  eolUint newtype = 0;
+  if (!file)return NULL;
+  eol_loader_read_uint_from_file(&newtype,file);
+  switch(newtype)
+  {
+    case eolKeychainString:
+      return eol_keychain_read_string(file);
+    case eolKeychainHash:
+      return eol_keychain_read_hash(file);
+    case eolKeychainList:
+      return eol_keychain_read_list(file);
+    default:
+      eol_logger_message(
+        EOL_LOG_WARN,
+        "eol_keychain:unsupported keychain type for reading: %i\n",
+        newtype);
+  }
+  return NULL;
+}
+
+void eol_keychain_load_v1(eolKeychain **chain, char *filename)
+{
+  eolFile *file;
+  if ((!chain) || (!filename))return;
+  file = eol_loader_read_file_binary(filename);
+  if (file != NULL)
+  {
+    *chain = eol_keychain_read_link(file);
+    eol_loader_close_file(&file);
+  }
+}
 
 /*eol@eof*/

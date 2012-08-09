@@ -39,11 +39,13 @@ enum eolLoaderMode {
 
 typedef struct
 {
-  FILE        * file;     /**<file pointer as std FILE type, not supported on all architectures*/
-  char        * _buffer;  /**<the file data stored while the file is open*/
-  size_t        size;     /**<the size of the file data stored while the file is open*/
-  PHYSFS_File * _PSfile;  /**<pointer to the physfs file handle*/
-  eolUint       _fileMode;/**<*read or write, expects eolLoaderMode*/
+  FILE        * file;       /**<file pointer as std FILE type, not supported on all architectures*/
+  eolLine       filename;   /**<for logging purposes*/
+  char        * _buffer;    /**<the file data stored while the file is open*/
+  size_t        size;       /**<the size of the file data stored while the file is open*/
+  PHYSFS_File * _PSfile;    /**<pointer to the physfs file handle*/
+  eolUint       _fileMode;  /**<*read or write, expects eolLoaderMode*/
+  eolBool       _fileEndian;/**<*what reads or writes style should be used*/
 }eolFile;
 
 /**
@@ -78,11 +80,18 @@ void eol_loader_add_search_path(char *filename,char *point);
 eolFile * eol_loader_read_file(char *filename);
 
 /**
-* @brief opens a file for writing from the filesystem or a pak file
+* @brief opens a file for writing
 * @param filename the file to load.
 * @return a pointer to the opened eolFile handle or NULL on failure
 */
 eolFile * eol_loader_write_file_binary(char *filename);
+
+/**
+* @brief opens a file for reading from the filesystem or a pak file
+* @param filename the file to load.
+* @return a pointer to the opened eolFile handle or NULL on failure
+*/
+eolFile *eol_loader_read_file_binary(char *filename);
 
 /**
  * @brief closes an eolFile handle and cleans up allocated memory
@@ -103,6 +112,14 @@ void eol_loader_close_file(eolFile **file);
 void eol_loader_write_uint_to_file(eolFile *file,eolUint data);
 
 /**
+ * @brief read data from an open eolFile buffer.
+ * does nothing if the file handle is NULL or opened for writing.
+ * @param data output. Left alone on error or eof
+ * @param file the file handle to read from
+ */
+void eol_loader_read_uint_from_file(eolUint * data, eolFile *file);
+
+/**
 * @brief write data to an open eolFile buffer.
 * does nothing if the file handle is NULL or opened for reading.
 * @param file the file handle to write to
@@ -119,12 +136,22 @@ void eol_loader_write_int_to_file(eolFile *file,eolInt data);
 void eol_loader_write_line_to_file(eolFile *file,eolLine data);
 
 /**
-* @brief write data to an open eolFile buffer.
-* does nothing if the file handle is NULL or opened for reading.
-* @param file the file handle to write to
-* @param data the data to be written.
-*/
+ * @brief write data to an open eolFile buffer.
+ * does nothing if the file handle is NULL or opened for reading.
+ * @param file the file handle to write to
+ * @param data the data to be written.
+ */
 void eol_loader_write_string_to_file(eolFile *file,char * data);
+
+/**
+ * @brief read string data from an open eolFile buffer.
+ * does nothing if the file handle is NULL or opened for writing.
+ * @param data a pointer to a char pointer.  If the char pointer is not null, it will be used
+ * otherwise a buffer will be allocated for the string in question and must be
+ * freed separately.
+ * @param file the file handle to read from
+ */
+void eol_loader_read_string_from_file(char ** data, eolFile *file);
 
 /**
 * @brief write data to an open eolFile buffer.
