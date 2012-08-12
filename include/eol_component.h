@@ -37,6 +37,19 @@ enum eolComponentTypes {
   eolListComponent   = 7
 };
 
+enum eolSliderTypes {
+  eolSliderCommon  = 0,  /**<stock slider image, drawn bar*/
+  eolSliderDraw    = 1,  /**<drawn slider, drawn bar*/
+  eolSliderStock   = 2,  /**<stock slider, stock bar*/
+  eolSliderCustom  = 3   /**<custom images for slider and bar*/
+};
+
+enum eolSliderStates {
+  eolSliderIdle   = 0,
+  eolSliderHigh   = 1,
+  eolSliderHeld   = 2
+};
+
 enum eolButtonTypes {
   eolButtonStock  = 0,
   eolButtonText   = 1,
@@ -185,6 +198,34 @@ eolComponent *eol_line_entry_new(
     eolRectFloat  rect,
     eolRect       bounds,
     eolLine       output
+);
+
+eolComponent *eol_slider_new(
+    eolUint      id,
+    eolWord      name,
+    eolRectFloat rect,
+    eolRect      bounds,
+    eolBool      vertical,
+    eolLine      slider,
+    eolLine      sliderHigh,
+    eolLine      bar,
+    eolLine      cap1,
+    eolLine      cap2,
+    eolVec3D     barColor,
+    eolVec3D     sliderColor,
+    eolFloat     startPosition,
+    eolUint      sliderType
+);
+
+eolComponent *eol_slider_common_new(
+    eolUint        id,
+    eolWord        name,
+    eolRectFloat   rect,
+    eolRect        bounds,
+    eolBool        vertical,
+    eolVec3D       barColor,
+    eolFloat       startPosition,
+    eolUint        sliderType
 );
 
 #endif

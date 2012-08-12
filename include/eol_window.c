@@ -278,6 +278,41 @@ void eol_window_load_label(eolWindow *win,eolKeychain *def)
   eol_window_add_component(win,comp);
 }
 
+void eol_window_load_slider(eolWindow *win,eolKeychain *def)
+{
+  eolComponent *comp = NULL;
+  eolUint        id;
+  eolLine        name;
+  eolRectFloat   rect;
+  eolLine        vertical;
+  eolVec3D       barColor;
+  eolLine        sliderType;
+  
+  if ((!win) || (!def))return;
+  eol_keychain_get_hash_value_as_line(name, def, "name");
+  eol_keychain_get_hash_value_as_uint(&id, def, "id");
+  eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
+  eol_keychain_get_hash_value_as_line(vertical, def, "vertical");
+  eol_keychain_get_hash_value_as_vec3d(&barColor, def, "barColor");
+  eol_keychain_get_hash_value_as_line(sliderType, def, "sliderType");
+  
+  if (eol_line_cmp(sliderType,"COMMON") == 0)
+  {
+    
+    comp = eol_slider_common_new(
+      id,
+      name,
+      rect,
+      win->rect,
+      eol_true_from_string(vertical),
+      barColor,
+      0,
+      eolSliderCommon
+    );
+    eol_window_add_component(win,comp);
+  }
+}
+
 void eol_window_load_button(eolWindow *win,eolKeychain *def)
 {
   eolComponent *comp;
@@ -422,6 +457,11 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
             if (eol_line_cmp(typecheck,"LABEL") == 0)
             {
               eol_window_load_label(window,item);
+              continue;
+            }
+            if (eol_line_cmp(typecheck,"SLIDER") == 0)
+            {
+              eol_window_load_slider(window,item);
               continue;
             }
           }
