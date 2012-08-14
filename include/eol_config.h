@@ -110,5 +110,8 @@ eolBool eol_config_get_rectfloat_by_tag(eolRectFloat *output,
                                         eolConfig *conf,
                                         eolLine tag);
 
+eolConfig *eol_config_load_binary(char* filename);
+void eol_config_save_binary(eolConfig *conf, char* filename);
+
 #endif
 

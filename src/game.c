@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
   int i;
   int dir = 1;
   float radius = 0.00001;
+
   eolVec3D point = {0,0,-5};
   eolLine fps;
   eolLight *light = NULL;
@@ -60,6 +61,7 @@ int main(int argc, char *argv[])
   eol_lighting_setup_rep_plot();
   srandom(SDL_GetTicks());
   CreateTestLevel();
+  
   do
   {
     eol_light_move(light,point);

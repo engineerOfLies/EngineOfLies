@@ -1,5 +1,6 @@
 #include "eol_config.h"
 #include "eol_logger.h"
+#include "eol_loader.h"
 #include <glib.h>
 #include <yaml.h>
 
@@ -29,6 +30,47 @@ void eol_config_deinit(void)
   eol_logger_message( EOL_LOG_INFO, "eol_config: closed\n");
 }
 
+eolConfig *eol_config_new()
+{
+  eolConfig *config = NULL;
+  config = malloc(sizeof(eolConfig));
+  if (config == NULL)
+  {
+    eol_logger_message( EOL_LOG_ERROR, "eol_config: Unable to allocate config!\n");
+    return NULL;
+  }
+  memset(config,0,sizeof(eolConfig));
+  return config;
+}
+
+void eol_config_save_binary(eolConfig *conf, char* filename)
+{
+  eolFile *file = NULL;
+  if (!conf)return;
+  file = eol_loader_write_file_binary(filename);
+  if (file == NULL)return;
+  eol_loader_write_keychain_link(conf->_node,file);
+  eol_loader_close_file(&file);
+}
+
+eolConfig *eol_config_load_binary(char* filename)
+{
+  eolConfig *config = NULL;
+  eolFile *file = NULL;
+  file = eol_loader_read_file_binary(filename);
+  if (file == NULL)return NULL;
+  config = eol_config_new();
+  if (config == NULL)
+  {
+    eol_loader_close_file(&file);
+    return NULL;
+  }
+  eol_line_cpy(config->filename,filename);
+  config->_node = eol_loader_read_keychain_link(file);
+  eol_loader_close_file(&file);
+  return config;
+}
+
 eolConfig *eol_config_load(char* filename)
 {
   yaml_parser_t parser;
@@ -40,13 +82,9 @@ eolConfig *eol_config_load(char* filename)
     eol_logger_message( EOL_LOG_ERROR, "eol_config: Failed to initialize yaml parser\n");
     return NULL;
   }
-  
-  config = malloc(sizeof(eolConfig));
-  if (config == NULL)
-  {
-    eol_logger_message( EOL_LOG_ERROR, "eol_config: Unable to allocate config!\n");
-    return NULL;
-  }
+
+  config= eol_config_new();
+  if (config == NULL)return NULL;
   
   eol_line_cpy(config->filename, filename);
   config->_node = eol_keychain_new_hash();
@@ -260,6 +298,7 @@ eolBool eol_config_get_rectfloat_by_tag( eolRectFloat * output,  eolConfig *conf
   g_return_val_if_fail(conf, eolFalse);
   return eol_keychain_get_hash_value_as_rectfloat(output, conf->_node, tag);
 }
+
 
 /*eol@eof*/
 

@@ -20,6 +20,7 @@
 
 #include "eol_types.h"
 #include "eol_matrix.h"
+#include "eol_keychain.h"
 #include <stdio.h>
 #include <physfs.h>
 
@@ -200,6 +201,20 @@ void eol_loader_write_matrix_to_file(eolFile *file, eolMat4 data);
 * @param data the data to be written.
 */
 void eol_loader_write_orientation_to_file(eolFile *file, eolOrientation data);
+
+/**
+ * @brief Saves the entire keychain passed to the open file.
+ * @param link the root of the keychain you wish to save
+ * @param file the file to save it to.
+ */
+void eol_loader_write_keychain_to_file(eolKeychain *link,eolFile *file);
+
+eolKeychain *eol_loader_read_keychain_from_file(eolFile *file);
+
+void eol_loader_keychain_load(eolKeychain **chain, char *filename);
+eolKeychain *eol_loader_read_keychain_link(eolFile *file);
+void eol_loader_write_keychain_link(eolKeychain *link,eolFile *file);
+
 
 #endif
 

@@ -19,7 +19,6 @@
 */
 
 #include "eol_types.h"
-#include "eol_loader.h"
 #include <glib/gstring.h>
 
 /**
@@ -176,15 +175,6 @@ void eol_keychain_print_string(eolLine key, eolKeychain *chain,eolUint level);
 * @param string the string to free.
 */
 void eol_g_string_free(char *string);
-
-/**
- * @brief Saves the entire keychain passed to the open file.
- * @param link the root of the keychain you wish to save
- * @param file the file to save it to.
- */
-void eol_keychain_write_link(eolKeychain *link,eolFile *file);
-
-eolKeychain *eol_keychain_read_link(eolFile *file);
 
 
 #endif
