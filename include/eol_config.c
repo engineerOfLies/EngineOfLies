@@ -74,8 +74,8 @@ eolConfig *eol_config_load_binary(char* filename)
 eolConfig *eol_config_load(char* filename)
 {
   yaml_parser_t parser;
-  FILE *input;
-  eolConfig *config;
+  eolFile *input = NULL;
+  eolConfig *config = NULL;
   
   if(!yaml_parser_initialize(&parser))
   {
@@ -93,18 +93,22 @@ eolConfig *eol_config_load(char* filename)
     eol_logger_message( EOL_LOG_ERROR, "eol_config: Unable to allocate keychain for config\n");
     return NULL;
   }
-  input = fopen(filename, "r");
+  input = eol_loader_read_file(filename);
   if(input == NULL)
   {
     eol_logger_message( EOL_LOG_ERROR, "eol_config: Can't open config file %s\n", filename );
     return NULL;
   }
-  yaml_parser_set_input_file(&parser, input);
-
+  /*
+  
+    yaml_parser_set_input_file(&parser, input->file);
+  */
+  /*TODO: test the following on alternate endianness architectures before deleting the above*/
+  yaml_parser_set_input_string(&parser,(const unsigned char *)input->_buffer,input->size);
   eol_config_parse_tier(&parser, config->_node);
 
   yaml_parser_delete(&parser);
-  fclose(input);
+  eol_loader_close_file(&input);
   return config;
 }
 
