@@ -464,7 +464,6 @@ void eol_sprite_clear_all()
   {
     if(_sprite_list[i]._sdlSurface != NULL)
     {
-      fprintf(stdout,"freeing sprite[%i]: %s\n",i,_sprite_list[i].filename);
       SDL_FreeSurface(_sprite_list[i]._sdlSurface);
     }
     if(glIsTexture(_sprite_list[i]._glImage) == GL_TRUE)

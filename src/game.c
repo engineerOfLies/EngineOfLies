@@ -33,7 +33,6 @@ int main(int argc, char *argv[])
 {
   int done;
   int i;
-  int dir = 1;
   float radius = 0.00001;
 
   eolVec3D point = {0,0,-5};
@@ -80,7 +79,6 @@ int main(int argc, char *argv[])
 
     eol_graphics_frame_begin();
     eol_window_draw_all();
-    eol_light_draw(light);
 
     sprintf(fps,"FPS: %f",eol_graphics_get_FPS());
     eol_font_draw_text_justify(
@@ -94,12 +92,6 @@ int main(int argc, char *argv[])
 
     eol_mouse_draw();
     eol_graphics_frame_end();
-
-    if (point.x > 5)dir = -1;
-    if (point.x < -5)dir = 1;
-    point.x += dir * 0.01;
-    radius = radius + 0.0001;
-    if (radius > 1)radius = 0;
 
     if((eol_input_quit_check()) ||
       ((eol_input_is_key_pressed(SDLK_F4)) && (eol_input_is_mod_held(KMOD_ALT))))

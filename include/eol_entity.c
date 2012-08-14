@@ -384,13 +384,13 @@ void eol_entity_draw(eolEntity *ent)
   if (!ent)return;
   if (ent->shown == eolFalse)
   {
-    fprintf(stdout,"skipping draw re: not shown\n");
+    eol_logger_message(EOL_LOG_INFO,"eol_entity:skipping draw re: not shown\n");
     return;
   }
   /*NOTE: may end up drawing other effects...*/
   if (ent->ori.alpha == 0.0f)
   {
-    fprintf(stdout,"skipping draw re: 0 alpha\n");
+    eol_logger_message(EOL_LOG_INFO,"eol_entity:skipping draw re: 0 alpha\n");
     return;
   }
   if (_eol_entity_draw_func != NULL)

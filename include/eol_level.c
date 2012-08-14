@@ -2,6 +2,7 @@
 #include "eol_draw.h"
 #include "eol_logger.h"
 #include "eol_resource.h"
+#include "eol_config.h"
 
 /*local global variables*/
 eolBool     _eol_level_initialized = eolFalse;
@@ -52,11 +53,15 @@ eolBool eol_level_initialized()
 
 void eol_level_config()
 {
-  /*TODO: load from config*/
+  eolConfig *conf = NULL;
   _eol_level_max_layers = 3;
   _eol_level_max = 10;
   _eol_level_layer_draw_range = 1;
   _eol_level_draw_mode = eolLevelDrawFull;
+  conf = eol_config_load("system/level.cfg");
+  if (conf == NULL)return;
+  eol_config_get_uint_by_tag(&_eol_level_draw_mode,conf,"drawLevel");
+  eol_config_get_uint_by_tag(&_eol_level_layer_draw_range,conf,"drawDepth");
 }
 
 void eol_level_set_draw_mode(eolUint mode)
