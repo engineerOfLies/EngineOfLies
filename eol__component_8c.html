@@ -52,6 +52,8 @@
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a00765afd0b2c57d14f5de69c27e03da8">eol_component_label_new</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a670ae126c7467714c4a947e1cae4533f">eol_component_label_free</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#ac6e88936009602a046e64d9ac411931a">eol_component_entry_new</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a015dde0376618323701b99f3b03370f7">eol_component_list_new</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a8a9fee5e915816e3cbb58cd16e8f6c1a">eol_component_slider_new</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a081343ca92e4d9b4ce753bb81606d535">eol_component_has_changed</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a4876e7c4703dcd4a74b94ffe94ba6053">eol_component_get_state</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#aef891c8c5c4100607500eaa322bfb7e0">eol_component_textinput_new</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
@@ -68,39 +70,67 @@
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a6110b64536c42f75d3c0e3055db7737c">eol_component_image_free</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a406ef3909c41a78a2abdcd15f739e5e2">eol_component_make_label</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component, char *text, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> justify, <a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> fontSize, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> wordWrap, char *fontName, <a class="el" href="structeolVec3D.html">eolVec3D</a> color, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#af61f2279cc301158396fd092a5b27412">eol_component_config</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">loads default component assets.  <a href="#af61f2279cc301158396fd092a5b27412"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#ac1f51e5a4b8079ebfae6180da75cc50e">eol_button_get_stock_size</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> *<a class="el" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> *h)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">gets the dimensions for a stock button  <a href="#ac1f51e5a4b8079ebfae6180da75cc50e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#aec8f975422eafddad82d5b03364b4a73">eol_component_new</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">creates a new blank component and returns a pointer to it  <a href="#aec8f975422eafddad82d5b03364b4a73"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a34a08766043096794753799d4ce3f661">eol_component_free</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> **component)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">frees a previously allocated component  <a href="#a34a08766043096794753799d4ce3f661"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#af84dcb044903d7a869b93048f729ffb6">eol_component_update</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">runs the appropriate update function on the component. This is called automatically interally to EOL. It should not have to be called directly.  <a href="#af84dcb044903d7a869b93048f729ffb6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a79e486be5a670c9c312a2943efd27b5f">eol_component_changed</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">checks if a component has changed since last frame  <a href="#a79e486be5a670c9c312a2943efd27b5f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#aadac908eb1812129232014e39d9c8e68">eol_component_set_focus</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> focus)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">gives the component focus and updates what that means for the component  <a href="#aadac908eb1812129232014e39d9c8e68"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponentList.html">eolComponentList</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a70e54e3111e4c178f6e5c8754966172f">eol_component_get_list_data</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponentLabel.html">eolComponentLabel</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a743c22022daf2bc23555eb5e028a87bd">eol_component_get_label_data</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponentEntry.html">eolComponentEntry</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a5e03987848998dbdf8217aa613e545f2">eol_component_get_entry_data</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponentImage.html">eolComponentImage</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a4bda6c159b24f7074a4cd239e3ddb7a4">eol_component_get_image_data</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponentActor.html">eolComponentActor</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#aec396e872d11c6a4cb8c9fcc04915f94">eol_component_get_actor_data</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponentSlider.html">eolComponentSlider</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a7aed529c3d07c5804a5a8e6c5a3c0df9">eol_component_get_slider_data</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#af1b5e5a4dc3c09eb0bbf5b3aff9f5a52">eol_component_slider_draw</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#afa3a754bd9abda90f59a58cff0661a99">eol_component_entry_draw</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#ad9a8c091c478030a304b9a092c84d2b7">eol_component_label_draw</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#af202e56a49ea882301abd1ade318a27d">eol_component_draw</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">draws the component to the screen.  <a href="#af202e56a49ea882301abd1ade318a27d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#aea87a4840125cf7388dbacc4a03111f5">eol_component_slider_update</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a378e81bf75cc3e193dd1469a1e9b5110">eol_entry_delete_char</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#aba36f2c2cfc217ab5ec4403fc7c74e93">eol_entry_append_char</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component, char newchar)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a1814d8eda8a8145d7bdd70e4f31f997c">eol_component_entry_update</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#add6e8eac1dde589143fcf3034c699abc">eol_entry_assign_output</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">changes what is in the output buffer for the entry.  <a href="#add6e8eac1dde589143fcf3034c699abc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a7a6250e7aed60904a620fe327a151c2a">eol_component_make_slider</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> vertical, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> sliderFile, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> sliderHigh, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> bar, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> cap1, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> cap2, <a class="el" href="structeolVec3D.html">eolVec3D</a> barColor, <a class="el" href="structeolVec3D.html">eolVec3D</a> sliderColor, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> startPosition, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> sliderType)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a744275f763b648ac51ea9b0c87806247">eol_component_make_entry</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component, char *output, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> outputLimit, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> justify, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> fontSize, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> wordWrap, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> fontName, <a class="el" href="structeolVec3D.html">eolVec3D</a> color, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha, <a class="el" href="structeolVec3D.html">eolVec3D</a> bgcolor)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a625511bcc8e6d8cd2f74e273675293f5">eol_component_button_update</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a52994d2db609a86c896b08b5e4fdd729">eol_component_button_draw</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a6f2ef263d0966f9aeee194ece36b813d">eol_component_make_button</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *component, char *buttonText, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> buttonType, <a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> buttonHotkey, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> buttonHotkeymod, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> buttonUpFile, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> buttonHighFile, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> buttonDownFile)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a476873a1f7888b4f42c0e63fabd30ae9">eol_label_set_text</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *comp, char *text)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">changes a label's text  <a href="#a476873a1f7888b4f42c0e63fabd30ae9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a95939f44092bd6fe7302ff276e969f7a">eol_slider_get_position</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *comp)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">gets the current position of a slider component does component type checking  <a href="#a95939f44092bd6fe7302ff276e969f7a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a804acf0acadd79fa3727f2989f332890">eol_slider_set_position</a> (<a class="el" href="structeolComponent__S.html">eolComponent</a> *comp, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> newPos)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">sets the position for a slider component no op if not a slider  <a href="#a804acf0acadd79fa3727f2989f332890"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a30eb249977a2b7764638237b4ad15b4d">eol_slider_common_new</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>, <a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a> <a class="el" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>, <a class="el" href="structeolRectFloat.html">eolRectFloat</a> rect, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> vertical, <a class="el" href="structeolVec3D.html">eolVec3D</a> barColor, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> startPosition, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> sliderType)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">created a new slider component using common settings  <a href="#a30eb249977a2b7764638237b4ad15b4d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a4fbd5dd106760bb2a5124aaee4835b4e">eol_slider_new</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>, <a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a> <a class="el" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>, <a class="el" href="structeolRectFloat.html">eolRectFloat</a> rect, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> vertical, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> slider, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> sliderHigh, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> bar, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> cap1, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> cap2, <a class="el" href="structeolVec3D.html">eolVec3D</a> barColor, <a class="el" href="structeolVec3D.html">eolVec3D</a> sliderColor, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> startPosition, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> sliderType)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">created a new slider component.  <a href="#a4fbd5dd106760bb2a5124aaee4835b4e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#ac175ad1e771c44045cf6fbe377901d92">eol_label_new</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>, <a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a> <a class="el" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>, <a class="el" href="structeolRectFloat.html">eolRectFloat</a> rect, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> canHasFocus, char *text, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> justify, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> wordWrap, <a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> fontSize, char *fontName, <a class="el" href="structeolVec3D.html">eolVec3D</a> color, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">creates a new label component  <a href="#ac175ad1e771c44045cf6fbe377901d92"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#adb599ad6ca0522c12fcb2345a038991d">eol_button_stock_new</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>, <a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a> <a class="el" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>, <a class="el" href="structeolRectFloat.html">eolRectFloat</a> rect, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds, char *buttonText, <a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> buttonHotkey, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> buttonHotkeymod, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> center)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">creates a new button component with common options  <a href="#adb599ad6ca0522c12fcb2345a038991d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#af77b0026a2514d4e321d25834f2aadc8">eol_button_text_new</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>, <a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a> <a class="el" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>, <a class="el" href="structeolRectFloat.html">eolRectFloat</a> rect, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds, char *buttonText, <a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> buttonHotkey, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> buttonHotkeymod, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> center)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">creates a new button component setup for use as a text button  <a href="#af77b0026a2514d4e321d25834f2aadc8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#afb9be2d5b219f0f76148694bfc0a2b81">eol_button_new</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>, <a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a> <a class="el" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>, <a class="el" href="structeolRectFloat.html">eolRectFloat</a> rect, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds, char *buttonText, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> buttonType, <a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> buttonHotkey, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> buttonHotkeymod, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> center, char *buttonFileUp, char *buttonFileHigh, char *buttonFileDown)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">creates a new button component  <a href="#afb9be2d5b219f0f76148694bfc0a2b81"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a08ec0c560d98b8d5b77b8712486a20bc">eol_line_entry_new</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>, <a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a> <a class="el" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>, <a class="el" href="structeolRectFloat.html">eolRectFloat</a> rect, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> output)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">creates a new entry component set up with common options for single line input  <a href="#a08ec0c560d98b8d5b77b8712486a20bc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a55fb41bafaf0910f9da4c586c9f3fa15">eol_entry_new</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>, <a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a> <a class="el" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>, <a class="el" href="structeolRectFloat.html">eolRectFloat</a> rect, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> bounds, char *output, <a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> outputLimit, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> justify, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> wordWrap, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> fontSize, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> fontName, <a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> number, <a class="el" href="structeolVec3D.html">eolVec3D</a> color, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha, <a class="el" href="structeolVec3D.html">eolVec3D</a> bgcolor)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">creates a new entry component  <a href="#a55fb41bafaf0910f9da4c586c9f3fa15"></a><br/></td></tr>
 <tr><td colspan="2"><h2>Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolSprite.html">eolSprite</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a9b6fe6ba524abd01cab79a73d93698f9">_eol_component_stock_button</a> [3] = {NULL,NULL,NULL}</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolSprite.html">eolSprite</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a8a3b1b245dfe589064924babe3da958b">_eol_component_slider</a> [4] = {NULL,NULL,NULL,NULL}</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#a16d433e6efbb1f8b877d7efe995cd803">_eol_component_slider_files</a> [4]</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#ab2e3e1fe78ba513af7d66f7de9241c02">_eol_component_button_color</a> [3]</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#acb707b6f1d5c779f661df9653e0a799c">_eol_component_button_offset_x</a> = 0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__component_8c.html#af6ebebe3fe106c1d0334a71c67872c56">_eol_component_button_offset_y</a> = 0</td></tr>
@@ -131,7 +161,16 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00182">182</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>gets the dimensions for a stock button </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>w</em>&nbsp;</td><td>output. if set, it will return the width of the stock button in pixels </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>h</em>&nbsp;</td><td>output. if set, it will return the height of the stock button in pixels </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00234">234</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -220,7 +259,26 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01094">1094</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>creates a new button component </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>id</em>&nbsp;</td><td>the id for this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>the name of this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>rect</em>&nbsp;</td><td>the component position relative to the window bounds </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bounds</em>&nbsp;</td><td>the window rect. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonText</em>&nbsp;</td><td>the text to write on the button. Can be NULL </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonType</em>&nbsp;</td><td>see button type enum above. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonHotkey</em>&nbsp;</td><td>the SDLKey hotkey that this button listens to. 0 or less is none </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonHotkeymod</em>&nbsp;</td><td>the SDKMod that this button listens to. 0 or less is none </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>center</em>&nbsp;</td><td>if the button should be centered on the rect or aligned to it. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonFileUp</em>&nbsp;</td><td>if specified it will attempt to load this file as the button idle image </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonFileHigh</em>&nbsp;</td><td>if specified it will attempt to load this file as the button highligh image </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonFileDown</em>&nbsp;</td><td>if specified it will attempt to load this file as the button pressed image </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01505">1505</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -285,7 +343,23 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01040">1040</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>creates a new button component with common options </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>id</em>&nbsp;</td><td>the id for this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>the name of this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>rect</em>&nbsp;</td><td>the component position relative to the window bounds </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bounds</em>&nbsp;</td><td>the window rect. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonText</em>&nbsp;</td><td>the text to write on the button. Can be NULL </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonType</em>&nbsp;</td><td>see button type enum above. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonHotkey</em>&nbsp;</td><td>the SDLKey hotkey that this button listens to. 0 or less is none </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonHotkeymod</em>&nbsp;</td><td>the SDKMod that this button listens to. 0 or less is none </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>center</em>&nbsp;</td><td>if the button should be centered on the rect or aligned to it. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01451">1451</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -350,7 +424,23 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01067">1067</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>creates a new button component setup for use as a text button </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>id</em>&nbsp;</td><td>the id for this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>the name of this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>rect</em>&nbsp;</td><td>the component position relative to the window bounds </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bounds</em>&nbsp;</td><td>the window rect. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonText</em>&nbsp;</td><td>the text to write on the button. Can be NULL </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonType</em>&nbsp;</td><td>see button type enum above. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonHotkey</em>&nbsp;</td><td>the SDLKey hotkey that this button listens to. 0 or less is none </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>buttonHotkeymod</em>&nbsp;</td><td>the SDKMod that this button listens to. 0 or less is none </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>center</em>&nbsp;</td><td>if the button should be centered on the rect or aligned to it. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01478">1478</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -370,7 +460,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00357">357</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00412">412</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -444,7 +534,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00808">808</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01071">1071</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -464,7 +554,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00317">317</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00372">372</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -484,7 +574,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00963">963</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01247">1247</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -504,7 +594,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00749">749</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01012">1012</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -533,7 +623,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if the component has changed, eolFalse otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00225">225</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00277">277</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -552,7 +642,9 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00133">133</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>loads default component assets. </p>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00147">147</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -581,7 +673,16 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00529">529</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>draws the component to the screen. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>component</em>&nbsp;</td><td>the component to draw. Some components may not be drawn by design </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bounds</em>&nbsp;</td><td>the window bounds that the component belongs to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00648">648</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -610,7 +711,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00402">402</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00521">521</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -630,7 +731,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00346">346</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00401">401</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -650,7 +751,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00921">921</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01184">1184</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -670,7 +771,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00567">567</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00767">767</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -690,7 +791,15 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00204">204</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>frees a previously allocated component </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>component</em>&nbsp;</td><td>a pointer to a component pointer. Set to NULL on success </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00256">256</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -710,7 +819,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00294">294</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00346">346</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -730,7 +839,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00239">239</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00291">291</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -750,7 +859,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00272">272</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00324">324</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -770,7 +879,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00283">283</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00335">335</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -790,7 +899,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00261">261</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00313">313</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -810,7 +919,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00250">250</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00302">302</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -830,7 +939,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00305">305</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00357">357</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -886,7 +995,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00393">393</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00451">451</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -915,7 +1024,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00469">469</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00588">588</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -935,7 +1044,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00335">335</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00390">390</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -955,7 +1064,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00942">942</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01226">1226</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -975,7 +1084,25 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00376">376</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00434">434</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a015dde0376618323701b99f3b03370f7"></a><!-- doxytag: member="eol_component.c::eol_component_list_new" ref="a015dde0376618323701b99f3b03370f7" args="(eolComponent *component)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_component_list_new </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td>
+          <td class="paramname"> <em>component</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
 
 </div>
 </div>
@@ -1040,7 +1167,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00857">857</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01120">1120</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1117,7 +1244,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00653">653</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00916">916</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1182,7 +1309,90 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00697">697</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00960">960</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7a6250e7aed60904a620fe327a151c2a"></a><!-- doxytag: member="eol_component.c::eol_component_make_slider" ref="a7a6250e7aed60904a620fe327a151c2a" args="(eolComponent *component, eolBool vertical, eolLine sliderFile, eolLine sliderHigh, eolLine bar, eolLine cap1, eolLine cap2, eolVec3D barColor, eolVec3D sliderColor, eolFloat startPosition, eolUint sliderType)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_component_make_slider </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td>
+          <td class="paramname"> <em>component</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td>
+          <td class="paramname"> <em>vertical</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>sliderFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>sliderHigh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>bar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>cap1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>cap2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>barColor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>sliderColor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>startPosition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td>
+          <td class="paramname"> <em>sliderType</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00859">859</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1201,7 +1411,10 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00189">189</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>creates a new blank component and returns a pointer to it </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to an empty, formless component or NULL on error </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00241">241</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1230,7 +1443,45 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00232">232</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>gives the component focus and updates what that means for the component </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>component</em>&nbsp;</td><td>which component to add focus to </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>focus</em>&nbsp;</td><td>the focus state to be set. eolTrue to have focus or eolFalse if not. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00284">284</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af1b5e5a4dc3c09eb0bbf5b3aff9f5a52"></a><!-- doxytag: member="eol_component.c::eol_component_slider_draw" ref="af1b5e5a4dc3c09eb0bbf5b3aff9f5a52" args="(eolComponent *component, eolRect bounds)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_component_slider_draw </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td>
+          <td class="paramname"> <em>component</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>&nbsp;</td>
+          <td class="paramname"> <em>bounds</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00469">469</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1250,7 +1501,47 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00366">366</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00421">421</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8a9fee5e915816e3cbb58cd16e8f6c1a"></a><!-- doxytag: member="eol_component.c::eol_component_slider_new" ref="a8a9fee5e915816e3cbb58cd16e8f6c1a" args="(eolComponent *component)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_component_slider_new </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td>
+          <td class="paramname"> <em>component</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01205">1205</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aea87a4840125cf7388dbacc4a03111f5"></a><!-- doxytag: member="eol_component.c::eol_component_slider_update" ref="aea87a4840125cf7388dbacc4a03111f5" args="(eolComponent *component)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_component_slider_update </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td>
+          <td class="paramname"> <em>component</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00670">670</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1333,7 +1624,16 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00215">215</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>runs the appropriate update function on the component. This is called automatically interally to EOL. It should not have to be called directly. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>component</em>&nbsp;</td><td>the component to be updated </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if the component has update information or eolFalse otherwise </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00267">267</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1362,7 +1662,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00557">557</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00757">757</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1382,7 +1682,15 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00636">636</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>changes what is in the output buffer for the entry. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>component</em>&nbsp;</td><td>the component to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00836">836</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1402,7 +1710,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00541">541</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00741">741</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1503,7 +1811,28 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01179">1179</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>creates a new entry component </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>id</em>&nbsp;</td><td>the id for this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>the name of this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>rect</em>&nbsp;</td><td>the component position relative to the window bounds </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bounds</em>&nbsp;</td><td>the window rect. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>output</em>&nbsp;</td><td>a pointer to the buffer where the output will be stored </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>outputLimit</em>&nbsp;</td><td>the length of the output buffer </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>justify</em>&nbsp;</td><td>how to draw the text in the entry (see eol_font justify enum) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>wordWrap</em>&nbsp;</td><td>if the text should wrap around or be a single line </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>fontSize</em>&nbsp;</td><td>stock font to use to draw the test. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>fontName</em>&nbsp;</td><td>if set it will attempt to use this font instead of stock </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>number</em>&nbsp;</td><td>if true, it treats it as a number input and follows that logic </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>color</em>&nbsp;</td><td>text color </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>alpha</em>&nbsp;</td><td>text transparency </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bgcolor</em>&nbsp;</td><td>background color. Should be in contrast to color. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01590">1590</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1592,7 +1921,27 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00996">996</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>creates a new label component </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>id</em>&nbsp;</td><td>the id for this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>the name of this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>rect</em>&nbsp;</td><td>the component position relative to the window bounds </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bounds</em>&nbsp;</td><td>the window rect. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>canHasFocus</em>&nbsp;</td><td>not all labels can have focus, nor should it make sense </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>text</em>&nbsp;</td><td>the text to display in the label </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>justify</em>&nbsp;</td><td>how to align the text (see eol_font justify enumeration) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>wordWrap</em>&nbsp;</td><td>if this label should word wrap or not </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>fontSize</em>&nbsp;</td><td>stock font size </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>fontName</em>&nbsp;</td><td>if not NULL, it will try to load the specified font for drawing. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>color</em>&nbsp;</td><td>the text draw color (1,1,1 is white) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>alpha</em>&nbsp;</td><td>the text draw transparency (1 is opaque) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>a newly setup label component or NULL on error </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01407">1407</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1621,7 +1970,16 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00984">984</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>changes a label's text </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>comp</em>&nbsp;</td><td>the label to change </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>text</em>&nbsp;</td><td>the text to change it to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01268">1268</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1668,7 +2026,289 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01152">1152</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>creates a new entry component set up with common options for single line input </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>id</em>&nbsp;</td><td>the id for this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>the name of this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>rect</em>&nbsp;</td><td>the component position relative to the window bounds </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bounds</em>&nbsp;</td><td>the window rect. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>output</em>&nbsp;</td><td>the eolLine where the output will be written. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01563">1563</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a30eb249977a2b7764638237b4ad15b4d"></a><!-- doxytag: member="eol_component.c::eol_slider_common_new" ref="a30eb249977a2b7764638237b4ad15b4d" args="(eolUint id, eolWord name, eolRectFloat rect, eolRect bounds, eolBool vertical, eolVec3D barColor, eolFloat startPosition, eolUint sliderType)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolComponent__S.html">eolComponent</a>* eol_slider_common_new </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td>
+          <td class="paramname"> <em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a>&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolRectFloat.html">eolRectFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>rect</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>&nbsp;</td>
+          <td class="paramname"> <em>bounds</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td>
+          <td class="paramname"> <em>vertical</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>barColor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>startPosition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td>
+          <td class="paramname"> <em>sliderType</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>created a new slider component using common settings </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>id</em>&nbsp;</td><td>the id for this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>the name of this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>rect</em>&nbsp;</td><td>the component position relative to the window bounds </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bounds</em>&nbsp;</td><td>the window rect. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>vertical</em>&nbsp;</td><td>if eolTrue the slider will be set up as a vertical slider, horizontal otherwise </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>barColor</em>&nbsp;</td><td>the color to draw the bar </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>startPosition</em>&nbsp;</td><td>the starting position of the slider </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to newly allocated and set up slider or NULL on error. </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01301">1301</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a95939f44092bd6fe7302ff276e969f7a"></a><!-- doxytag: member="eol_component.c::eol_slider_get_position" ref="a95939f44092bd6fe7302ff276e969f7a" args="(eolComponent *comp)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> eol_slider_get_position </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td>
+          <td class="paramname"> <em>comp</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>gets the current position of a slider component does component type checking </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>the</em>&nbsp;</td><td>component to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the slider position (0-1). Set to 0 on error. </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01277">1277</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4fbd5dd106760bb2a5124aaee4835b4e"></a><!-- doxytag: member="eol_component.c::eol_slider_new" ref="a4fbd5dd106760bb2a5124aaee4835b4e" args="(eolUint id, eolWord name, eolRectFloat rect, eolRect bounds, eolBool vertical, eolLine slider, eolLine sliderHigh, eolLine bar, eolLine cap1, eolLine cap2, eolVec3D barColor, eolVec3D sliderColor, eolFloat startPosition, eolUint sliderType)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolComponent__S.html">eolComponent</a>* eol_slider_new </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td>
+          <td class="paramname"> <em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb">eolWord</a>&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolRectFloat.html">eolRectFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>rect</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>&nbsp;</td>
+          <td class="paramname"> <em>bounds</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td>
+          <td class="paramname"> <em>vertical</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>slider</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>sliderHigh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>bar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>cap1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>cap2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>barColor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>sliderColor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>startPosition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td>
+          <td class="paramname"> <em>sliderType</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>created a new slider component. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>id</em>&nbsp;</td><td>the id for this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>the name of this component. This should be unique per window. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>rect</em>&nbsp;</td><td>the component position relative to the window bounds </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bounds</em>&nbsp;</td><td>the window rect. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>vertical</em>&nbsp;</td><td>if eolTrue the slider will be set up as a vertical slider, horizontal otherwise </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>slider</em>&nbsp;</td><td>the slider graphic to use </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>sliderHigh</em>&nbsp;</td><td>the highlighted slider graphic to use </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bar</em>&nbsp;</td><td>the bar graphic to use </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cap1</em>&nbsp;</td><td>the bar end cap to use (top or left) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cap2</em>&nbsp;</td><td>the bar end cap to use (bottom or right) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>barColor</em>&nbsp;</td><td>the color to draw the bar </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>sliderColor</em>&nbsp;</td><td>the color to draw the slider </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>startPosition</em>&nbsp;</td><td>the starting position of the slider </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>sliderType</em>&nbsp;</td><td>the type of slider (see enum above). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to newly allocated and set up slider or NULL on error. </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01351">1351</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a804acf0acadd79fa3727f2989f332890"></a><!-- doxytag: member="eol_component.c::eol_slider_set_position" ref="a804acf0acadd79fa3727f2989f332890" args="(eolComponent *comp, eolFloat newPos)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_slider_set_position </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td>
+          <td class="paramname"> <em>comp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>newPos</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>sets the position for a slider component no op if not a slider </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>comp</em>&nbsp;</td><td>the component to set </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>newPos</em>&nbsp;</td><td>the new position to set the slider to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l01285">1285</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1684,7 +2324,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00091">91</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00103">103</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1699,7 +2339,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00092">92</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00104">104</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1714,7 +2354,37 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00093">93</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00105">105</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8a3b1b245dfe589064924babe3da958b"></a><!-- doxytag: member="eol_component.c::_eol_component_slider" ref="a8a3b1b245dfe589064924babe3da958b" args="[4]" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolSprite.html">eolSprite</a>* <a class="el" href="eol__component_8c.html#a8a3b1b245dfe589064924babe3da958b">_eol_component_slider</a>[4] = {NULL,NULL,NULL,NULL}</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00101">101</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a16d433e6efbb1f8b877d7efe995cd803"></a><!-- doxytag: member="eol_component.c::_eol_component_slider_files" ref="a16d433e6efbb1f8b877d7efe995cd803" args="[4]" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> <a class="el" href="eol__component_8c.html#a16d433e6efbb1f8b877d7efe995cd803">_eol_component_slider_files</a>[4]</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00102">102</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
@@ -1729,12 +2399,12 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00090">90</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00100">100</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:56 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:25 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

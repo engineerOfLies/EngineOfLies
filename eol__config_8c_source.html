@@ -24,271 +24,314 @@
   </div>
 <h1>eol_config.c</h1><a href="eol__config_8c.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#include &quot;<a class="code" href="eol__config_8h.html">eol_config.h</a>&quot;</span>
 <a name="l00002"></a>00002 <span class="preprocessor">#include &quot;<a class="code" href="eol__logger_8h.html">eol_logger.h</a>&quot;</span>
-<a name="l00003"></a>00003 <span class="preprocessor">#include &lt;glib.h&gt;</span>
-<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;yaml.h&gt;</span>
-<a name="l00005"></a>00005 
-<a name="l00006"></a>00006 <span class="comment">/*local globals*/</span>
-<a name="l00007"></a><a class="code" href="eol__config_8c.html#a6985b3c190c10aa16f9062320752be31">00007</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a6985b3c190c10aa16f9062320752be31">_eol_config_initialized</a>;
-<a name="l00008"></a>00008 
+<a name="l00003"></a>00003 <span class="preprocessor">#include &quot;<a class="code" href="eol__loader_8h.html">eol_loader.h</a>&quot;</span>
+<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;glib.h&gt;</span>
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;yaml.h&gt;</span>
+<a name="l00006"></a>00006 
+<a name="l00007"></a>00007 <span class="comment">/*local globals*/</span>
+<a name="l00008"></a><a class="code" href="eol__config_8c.html#a6985b3c190c10aa16f9062320752be31">00008</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a6985b3c190c10aa16f9062320752be31">_eol_config_initialized</a>;
 <a name="l00009"></a>00009 
-<a name="l00010"></a>00010 <span class="comment">/*local functions*/</span>
-<a name="l00011"></a>00011 <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ac6367dd3c6b1a3715b8d10e7071975d8">eol_config_deinit</a>(<span class="keywordtype">void</span>);
-<a name="l00012"></a>00012 <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(yaml_parser_t *parser, <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *cfg);
-<a name="l00013"></a>00013 
-<a name="l00014"></a>00014 <span class="comment">/*function definitions*/</span>
-<a name="l00015"></a>00015 
-<a name="l00016"></a><a class="code" href="eol__config_8h.html#a64a9bc02e28f6e8d6613d68353bc6618">00016</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#a64a9bc02e28f6e8d6613d68353bc6618" title="initializes config system">eol_config_init</a>()
-<a name="l00017"></a>00017 {
-<a name="l00018"></a>00018   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;eol_config: initializing\n&quot;</span>);
-<a name="l00019"></a>00019   <a class="code" href="eol__config_8c.html#a6985b3c190c10aa16f9062320752be31">_eol_config_initialized</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
-<a name="l00020"></a>00020   atexit(<a class="code" href="eol__config_8c.html#ac6367dd3c6b1a3715b8d10e7071975d8">eol_config_deinit</a>);
-<a name="l00021"></a>00021   <a class="code" href="eol__logger_8c.html#a3c1f790b9cdb98835da33bbb7ab4383c" title="loads up configuration from file or if no file available it will set defaults.">eol_logger_load_config</a>();
-<a name="l00022"></a>00022   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;eol_config: initialized\n&quot;</span>);
-<a name="l00023"></a>00023 }
-<a name="l00024"></a>00024 
-<a name="l00025"></a><a class="code" href="eol__config_8c.html#ac6367dd3c6b1a3715b8d10e7071975d8">00025</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ac6367dd3c6b1a3715b8d10e7071975d8">eol_config_deinit</a>(<span class="keywordtype">void</span>)
-<a name="l00026"></a>00026 {
-<a name="l00027"></a>00027   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;eol_config: closing\n&quot;</span>);
-<a name="l00028"></a>00028   <a class="code" href="eol__config_8c.html#a6985b3c190c10aa16f9062320752be31">_eol_config_initialized</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00029"></a>00029   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;eol_config: closed\n&quot;</span>);
-<a name="l00030"></a>00030 }
-<a name="l00031"></a>00031 
-<a name="l00032"></a><a class="code" href="eol__config_8h.html#ada9ae50380760f6af3fd596ff533b52d">00032</a> <a class="code" href="structeolConfig.html">eolConfig</a> *<a class="code" href="eol__config_8c.html#ada9ae50380760f6af3fd596ff533b52d" title="loads a configuration file into a eolConfig struct">eol_config_load</a>(<span class="keywordtype">char</span>* filename)
-<a name="l00033"></a>00033 {
-<a name="l00034"></a>00034   yaml_parser_t parser;
-<a name="l00035"></a>00035   FILE *input;
-<a name="l00036"></a>00036   <a class="code" href="structeolConfig.html">eolConfig</a> *config;
-<a name="l00037"></a>00037   
-<a name="l00038"></a>00038   <span class="keywordflow">if</span>(!yaml_parser_initialize(&amp;parser))
-<a name="l00039"></a>00039   {
-<a name="l00040"></a>00040     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;eol_config: Failed to initialize yaml parser\n&quot;</span>);
-<a name="l00041"></a>00041     <span class="keywordflow">return</span> NULL;
-<a name="l00042"></a>00042   }
-<a name="l00043"></a>00043   
-<a name="l00044"></a>00044   config = malloc(<span class="keyword">sizeof</span>(<a class="code" href="structeolConfig.html">eolConfig</a>));
-<a name="l00045"></a>00045   <span class="keywordflow">if</span> (config == NULL)
-<a name="l00046"></a>00046   {
-<a name="l00047"></a>00047     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;eol_config: Unable to allocate config!\n&quot;</span>);
-<a name="l00048"></a>00048     <span class="keywordflow">return</span> NULL;
-<a name="l00049"></a>00049   }
-<a name="l00050"></a>00050   
-<a name="l00051"></a>00051   <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(config-&gt;<a class="code" href="structeolConfig.html#a20baf49766b8373d6d67613d391bbace">filename</a>, filename);
-<a name="l00052"></a>00052   config-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a> = <a class="code" href="eol__keychain_8c.html#a20059c5684722e54fece7ae67e7eb3c2" title="allocated and sets up a pointer to an Empty GHash.">eol_keychain_new_hash</a>();
-<a name="l00053"></a>00053   <span class="keywordflow">if</span>(config-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a> == NULL)
-<a name="l00054"></a>00054   {
-<a name="l00055"></a>00055     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;eol_config: Unable to allocate keychain for config\n&quot;</span>);
-<a name="l00056"></a>00056     <span class="keywordflow">return</span> NULL;
-<a name="l00057"></a>00057   }
-<a name="l00058"></a>00058   input = fopen(filename, <span class="stringliteral">&quot;r&quot;</span>);
-<a name="l00059"></a>00059   <span class="keywordflow">if</span>(input == NULL)
-<a name="l00060"></a>00060   {
-<a name="l00061"></a>00061     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;eol_config: Can&#39;t open config file %s\n&quot;</span>, filename );
-<a name="l00062"></a>00062     <span class="keywordflow">return</span> NULL;
-<a name="l00063"></a>00063   }
-<a name="l00064"></a>00064   yaml_parser_set_input_file(&amp;parser, input);
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066   <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(&amp;parser, config-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>);
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068   yaml_parser_delete(&amp;parser);
-<a name="l00069"></a>00069   fclose(input);
-<a name="l00070"></a>00070   <span class="keywordflow">return</span> config;
-<a name="l00071"></a>00071 }
-<a name="l00072"></a>00072 
-<a name="l00073"></a><a class="code" href="eol__config_8c.html#a0fb35d3b58117bd19120136270dc7745">00073</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#a0fb35d3b58117bd19120136270dc7745">eol_config_destroy</a>(<a class="code" href="structeolConfig.html">eolConfig</a> *config)
-<a name="l00074"></a>00074 {
-<a name="l00075"></a>00075   <span class="keywordflow">if</span> (!config)<span class="keywordflow">return</span>;
-<a name="l00076"></a>00076   <a class="code" href="eol__keychain_8c.html#ab6b6e6c6c7c48d523bdea73a1d51b668" title="destroys the typed pointer passed">eol_keychain_destroy</a>(config-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>);
-<a name="l00077"></a>00077   free(config);
-<a name="l00078"></a>00078 }
-<a name="l00079"></a>00079 
-<a name="l00080"></a><a class="code" href="eol__config_8h.html#add43978a550fba94fa63292207c41cc5">00080</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#add43978a550fba94fa63292207c41cc5" title="returns the config back to the system.">eol_config_free</a>(<a class="code" href="structeolConfig.html">eolConfig</a> **config)
-<a name="l00081"></a>00081 {
-<a name="l00082"></a>00082   <span class="keywordflow">if</span> (!config)<span class="keywordflow">return</span>;
-<a name="l00083"></a>00083   <span class="keywordflow">if</span> (!*config)<span class="keywordflow">return</span>;
-<a name="l00084"></a>00084   <a class="code" href="eol__config_8c.html#a0fb35d3b58117bd19120136270dc7745">eol_config_destroy</a>(*config);
-<a name="l00085"></a>00085   *config = NULL;
-<a name="l00086"></a>00086 }
-<a name="l00087"></a>00087 
-<a name="l00088"></a><a class="code" href="eol__config_8c.html#a0bbb480dc906a76f0509bfc9152688cf">00088</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#a0bbb480dc906a76f0509bfc9152688cf">eol_config_parse_sequence</a>(yaml_parser_t *parser, <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *chain)
-<a name="l00089"></a>00089 {
-<a name="l00090"></a>00090   <span class="keywordtype">int</span> done = 0;
-<a name="l00091"></a>00091   <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *next = NULL;
-<a name="l00092"></a>00092   yaml_event_t event;
-<a name="l00093"></a>00093   <span class="comment">/* First element must be a variable, or we&#39;ll change states to SEQ */</span>
-<a name="l00094"></a>00094   <span class="keywordtype">int</span> <a class="code" href="structeolComponent__S.html#a25926b12650c19838f45bcfb2e9e1228">state</a> = <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea147e71049e3285d642d0d5268dba260f">KEY</a>;
-<a name="l00095"></a>00095   <span class="keywordflow">do</span>
-<a name="l00096"></a>00096   {
-<a name="l00097"></a>00097     yaml_parser_parse(parser, &amp;event);
-<a name="l00098"></a>00098     <span class="keywordflow">switch</span>(event.type)
-<a name="l00099"></a>00099     {
-<a name="l00100"></a>00100       <span class="keywordflow">case</span> YAML_MAPPING_START_EVENT:
-<a name="l00101"></a>00101         next = <a class="code" href="eol__keychain_8c.html#a20059c5684722e54fece7ae67e7eb3c2" title="allocated and sets up a pointer to an Empty GHash.">eol_keychain_new_hash</a>();
-<a name="l00102"></a>00102         <a class="code" href="eol__keychain_8c.html#ac14eb5ffa574b3a1dc86ce8bd1317cea" title="appends a list item to the eolKeychain list value. if its not a pointer to a list...">eol_keychain_list_append</a>(chain,next);
-<a name="l00103"></a>00103         state ^= <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea990a2861a2fe6b95a4008a9ec07ab519">VAL</a>;
-<a name="l00104"></a>00104         <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(parser, next);
-<a name="l00105"></a>00105         <span class="keywordflow">break</span>;
-<a name="l00106"></a>00106       <span class="keywordflow">case</span> YAML_SEQUENCE_END_EVENT:
-<a name="l00107"></a>00107       <span class="keywordflow">case</span> YAML_MAPPING_END_EVENT:
-<a name="l00108"></a>00108       <span class="keywordflow">case</span> YAML_STREAM_END_EVENT:
-<a name="l00109"></a>00109         done = 1;
-<a name="l00110"></a>00110         <span class="comment">/* terminate the while loop, see below */</span>
-<a name="l00111"></a>00111         <span class="keywordflow">break</span>;
-<a name="l00112"></a>00112       <span class="keywordflow">default</span>:
-<a name="l00113"></a>00113         <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;unhandled YAML event %d\n&quot;</span>, event.type);
-<a name="l00114"></a>00114     }
-<a name="l00115"></a>00115     <span class="keywordflow">if</span>(parser-&gt;error != YAML_NO_ERROR)
-<a name="l00116"></a>00116     {
-<a name="l00117"></a>00117       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n&quot;</span>,
-<a name="l00118"></a>00118                           parser-&gt;error, parser-&gt;context, parser-&gt;problem, parser-&gt;problem_mark.line,
-<a name="l00119"></a>00119                           parser-&gt;problem_mark.column);
-<a name="l00120"></a>00120                           <span class="keywordflow">return</span>;
-<a name="l00121"></a>00121     }
-<a name="l00122"></a>00122     yaml_event_delete(&amp;event);
-<a name="l00123"></a>00123   }<span class="keywordflow">while</span> (!done);
-<a name="l00124"></a>00124 }
-<a name="l00125"></a>00125 
-<a name="l00126"></a><a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">00126</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(yaml_parser_t *parser, <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *chain)
-<a name="l00127"></a>00127 {
-<a name="l00128"></a>00128   <span class="keywordtype">int</span> done = 0;
-<a name="l00129"></a>00129   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> last_key;
-<a name="l00130"></a>00130   <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *next = NULL;
-<a name="l00131"></a>00131   yaml_event_t event;
-<a name="l00132"></a>00132   <span class="comment">/* First element must be a variable, or we&#39;ll change states to SEQ */</span>
-<a name="l00133"></a>00133   <span class="keywordtype">int</span> <a class="code" href="structeolComponent__S.html#a25926b12650c19838f45bcfb2e9e1228">state</a> = <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea147e71049e3285d642d0d5268dba260f">KEY</a>;
-<a name="l00134"></a>00134   <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(last_key,<span class="stringliteral">&quot;&quot;</span>);
-<a name="l00135"></a>00135   <span class="keywordflow">do</span>
-<a name="l00136"></a>00136   {
-<a name="l00137"></a>00137     yaml_parser_parse(parser, &amp;event);
-<a name="l00138"></a>00138     <span class="keywordflow">switch</span>(event.type)
-<a name="l00139"></a>00139     {
-<a name="l00140"></a>00140       <span class="keywordflow">case</span> YAML_SCALAR_EVENT:
-<a name="l00141"></a>00141         <span class="keywordflow">if</span> (state == <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea147e71049e3285d642d0d5268dba260f">KEY</a>)
-<a name="l00142"></a>00142         {
-<a name="l00143"></a>00143           <span class="comment">/* new key, hold on to it until we get a value as well */</span>
-<a name="l00144"></a>00144           <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(last_key,(<span class="keywordtype">char</span> *)event.data.scalar.value);
-<a name="l00145"></a>00145         }
-<a name="l00146"></a>00146         <span class="keywordflow">else</span>
-<a name="l00147"></a>00147         {
-<a name="l00148"></a>00148           <span class="comment">/* state is VAL or SEQ */</span>
-<a name="l00149"></a>00149           <span class="comment">/* TODO data type logic should go here */</span>
-<a name="l00150"></a>00150           <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;eol_config: adding key -&gt; value (%s -&gt; %s)\n&quot;</span>, last_key, event.data.scalar.value);
-<a name="l00151"></a>00151           next = <a class="code" href="eol__keychain_8c.html#afd625a41933788081d50eaf7eb2c5adf" title="allocated and sets up a pointer to a GString filled with the default text">eol_keychain_new_string</a>((<span class="keywordtype">char</span> *)event.data.scalar.value);
-<a name="l00152"></a>00152           <a class="code" href="eol__keychain_8c.html#a0cb5e74a908c4fc40d6d9e1e42ee8475">eol_keychain_hash_insert</a>(chain,last_key,next);
-<a name="l00153"></a>00153         }
-<a name="l00154"></a>00154         state ^= <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea990a2861a2fe6b95a4008a9ec07ab519">VAL</a>; <span class="comment">/* Toggles KEY/VAL, avoids touching SEQ */</span>
-<a name="l00155"></a>00155         <span class="keywordflow">break</span>;
-<a name="l00156"></a>00156       <span class="keywordflow">case</span> YAML_SEQUENCE_START_EVENT:
-<a name="l00157"></a>00157         <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(<a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,<span class="stringliteral">&quot;eol_config: adding sequence %s...\n&quot;</span>,last_key);
-<a name="l00158"></a>00158         next = <a class="code" href="eol__keychain_8c.html#a2389674e231793f280c14a078c68852f" title="allocated and sets up a pointer to an Empty GList.">eol_keychain_new_list</a>();
-<a name="l00159"></a>00159         <a class="code" href="eol__keychain_8c.html#a0cb5e74a908c4fc40d6d9e1e42ee8475">eol_keychain_hash_insert</a>(chain,last_key,
-<a name="l00160"></a>00160                                  next);
-<a name="l00161"></a>00161         <a class="code" href="eol__config_8c.html#a0bbb480dc906a76f0509bfc9152688cf">eol_config_parse_sequence</a>(parser, next);
-<a name="l00162"></a>00162         <span class="keywordflow">break</span>;
-<a name="l00163"></a>00163       <span class="keywordflow">case</span> YAML_MAPPING_START_EVENT:
-<a name="l00164"></a>00164         <span class="keywordflow">if</span> (strlen(last_key) == 0)<span class="keywordflow">break</span>;<span class="comment">/*first level is implied hash.*/</span>
-<a name="l00165"></a>00165         <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(<a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,<span class="stringliteral">&quot;eol_config: adding hash %s...\n&quot;</span>,last_key);
-<a name="l00166"></a>00166         next = <a class="code" href="eol__keychain_8c.html#a20059c5684722e54fece7ae67e7eb3c2" title="allocated and sets up a pointer to an Empty GHash.">eol_keychain_new_hash</a>();
-<a name="l00167"></a>00167         <a class="code" href="eol__keychain_8c.html#a0cb5e74a908c4fc40d6d9e1e42ee8475">eol_keychain_hash_insert</a>(chain,last_key,next);
-<a name="l00168"></a>00168         state ^= <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea990a2861a2fe6b95a4008a9ec07ab519">VAL</a>;
-<a name="l00169"></a>00169         <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(parser, next);
-<a name="l00170"></a>00170         <span class="keywordflow">break</span>;
-<a name="l00171"></a>00171       <span class="keywordflow">case</span> YAML_MAPPING_END_EVENT:
-<a name="l00172"></a>00172       <span class="keywordflow">case</span> YAML_STREAM_END_EVENT:
-<a name="l00173"></a>00173       <span class="keywordflow">case</span> YAML_SEQUENCE_END_EVENT:
-<a name="l00174"></a>00174         done = 1;
-<a name="l00175"></a>00175         <span class="comment">/* terminate the while loop, see below */</span>
-<a name="l00176"></a>00176         <span class="keywordflow">break</span>;
-<a name="l00177"></a>00177       <span class="keywordflow">default</span>:
-<a name="l00178"></a>00178         <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;unhandled YAML event %d\n&quot;</span>, event.type);
-<a name="l00179"></a>00179     }
-<a name="l00180"></a>00180     <span class="keywordflow">if</span>(parser-&gt;error != YAML_NO_ERROR)
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011 <span class="comment">/*local functions*/</span>
+<a name="l00012"></a>00012 <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ac6367dd3c6b1a3715b8d10e7071975d8">eol_config_deinit</a>(<span class="keywordtype">void</span>);
+<a name="l00013"></a>00013 <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(yaml_parser_t *parser, <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *cfg);
+<a name="l00014"></a>00014 
+<a name="l00015"></a>00015 <span class="comment">/*function definitions*/</span>
+<a name="l00016"></a>00016 
+<a name="l00017"></a><a class="code" href="eol__config_8h.html#a64a9bc02e28f6e8d6613d68353bc6618">00017</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#a64a9bc02e28f6e8d6613d68353bc6618" title="initializes config system">eol_config_init</a>()
+<a name="l00018"></a>00018 {
+<a name="l00019"></a>00019   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;eol_config: initializing\n&quot;</span>);
+<a name="l00020"></a>00020   <a class="code" href="eol__config_8c.html#a6985b3c190c10aa16f9062320752be31">_eol_config_initialized</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
+<a name="l00021"></a>00021   atexit(<a class="code" href="eol__config_8c.html#ac6367dd3c6b1a3715b8d10e7071975d8">eol_config_deinit</a>);
+<a name="l00022"></a>00022   <a class="code" href="eol__logger_8c.html#a3c1f790b9cdb98835da33bbb7ab4383c" title="loads up configuration from file or if no file available it will set defaults.">eol_logger_load_config</a>();
+<a name="l00023"></a>00023   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;eol_config: initialized\n&quot;</span>);
+<a name="l00024"></a>00024 }
+<a name="l00025"></a>00025 
+<a name="l00026"></a><a class="code" href="eol__config_8c.html#ac6367dd3c6b1a3715b8d10e7071975d8">00026</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ac6367dd3c6b1a3715b8d10e7071975d8">eol_config_deinit</a>(<span class="keywordtype">void</span>)
+<a name="l00027"></a>00027 {
+<a name="l00028"></a>00028   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;eol_config: closing\n&quot;</span>);
+<a name="l00029"></a>00029   <a class="code" href="eol__config_8c.html#a6985b3c190c10aa16f9062320752be31">_eol_config_initialized</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00030"></a>00030   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;eol_config: closed\n&quot;</span>);
+<a name="l00031"></a>00031 }
+<a name="l00032"></a>00032 
+<a name="l00033"></a><a class="code" href="eol__config_8c.html#abd161b4d10d4a39f485ef594bd07d5c6">00033</a> <a class="code" href="structeolConfig.html">eolConfig</a> *<a class="code" href="eol__config_8c.html#abd161b4d10d4a39f485ef594bd07d5c6">eol_config_new</a>()
+<a name="l00034"></a>00034 {
+<a name="l00035"></a>00035   <a class="code" href="structeolConfig.html">eolConfig</a> *config = NULL;
+<a name="l00036"></a>00036   config = malloc(<span class="keyword">sizeof</span>(<a class="code" href="structeolConfig.html">eolConfig</a>));
+<a name="l00037"></a>00037   <span class="keywordflow">if</span> (config == NULL)
+<a name="l00038"></a>00038   {
+<a name="l00039"></a>00039     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;eol_config: Unable to allocate config!\n&quot;</span>);
+<a name="l00040"></a>00040     <span class="keywordflow">return</span> NULL;
+<a name="l00041"></a>00041   }
+<a name="l00042"></a>00042   memset(config,0,<span class="keyword">sizeof</span>(<a class="code" href="structeolConfig.html">eolConfig</a>));
+<a name="l00043"></a>00043   <span class="keywordflow">return</span> config;
+<a name="l00044"></a>00044 }
+<a name="l00045"></a>00045 
+<a name="l00046"></a><a class="code" href="eol__config_8h.html#a1b7a33b596b7061e64fc81cc179adfb6">00046</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#a1b7a33b596b7061e64fc81cc179adfb6">eol_config_save_binary</a>(<a class="code" href="structeolConfig.html">eolConfig</a> *conf, <span class="keywordtype">char</span>* filename)
+<a name="l00047"></a>00047 {
+<a name="l00048"></a>00048   <a class="code" href="structeolFile.html">eolFile</a> *file = NULL;
+<a name="l00049"></a>00049   <span class="keywordflow">if</span> (!conf)<span class="keywordflow">return</span>;
+<a name="l00050"></a>00050   file = <a class="code" href="eol__loader_8c.html#a7f551be0a62c18576bf44e999d00ad50" title="opens a file for writing">eol_loader_write_file_binary</a>(filename);
+<a name="l00051"></a>00051   <span class="keywordflow">if</span> (file == NULL)<span class="keywordflow">return</span>;
+<a name="l00052"></a>00052   <a class="code" href="eol__loader_8c.html#a6b55496451fbdff249ef48cdeebd3731">eol_loader_write_keychain_link</a>(conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>,file);
+<a name="l00053"></a>00053   <a class="code" href="eol__loader_8c.html#a596175db4f50da5bdd08b64f7049421d" title="closes an eolFile handle and cleans up allocated memory">eol_loader_close_file</a>(&amp;file);
+<a name="l00054"></a>00054 }
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="eol__config_8h.html#ab17810866fafd2be7ae42289b056a400">00056</a> <a class="code" href="structeolConfig.html">eolConfig</a> *<a class="code" href="eol__config_8c.html#ab17810866fafd2be7ae42289b056a400">eol_config_load_binary</a>(<span class="keywordtype">char</span>* filename)
+<a name="l00057"></a>00057 {
+<a name="l00058"></a>00058   <a class="code" href="structeolConfig.html">eolConfig</a> *config = NULL;
+<a name="l00059"></a>00059   <a class="code" href="structeolFile.html">eolFile</a> *file = NULL;
+<a name="l00060"></a>00060   file = <a class="code" href="eol__loader_8c.html#a211f99d8dc5ba118b3dd1dcc922dd389" title="opens a file for reading from the filesystem or a pak file">eol_loader_read_file_binary</a>(filename);
+<a name="l00061"></a>00061   <span class="keywordflow">if</span> (file == NULL)<span class="keywordflow">return</span> NULL;
+<a name="l00062"></a>00062   config = <a class="code" href="eol__config_8c.html#abd161b4d10d4a39f485ef594bd07d5c6">eol_config_new</a>();
+<a name="l00063"></a>00063   <span class="keywordflow">if</span> (config == NULL)
+<a name="l00064"></a>00064   {
+<a name="l00065"></a>00065     <a class="code" href="eol__loader_8c.html#a596175db4f50da5bdd08b64f7049421d" title="closes an eolFile handle and cleans up allocated memory">eol_loader_close_file</a>(&amp;file);
+<a name="l00066"></a>00066     <span class="keywordflow">return</span> NULL;
+<a name="l00067"></a>00067   }
+<a name="l00068"></a>00068   <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(config-&gt;<a class="code" href="structeolConfig.html#a20baf49766b8373d6d67613d391bbace">filename</a>,filename);
+<a name="l00069"></a>00069   config-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a> = <a class="code" href="eol__loader_8c.html#ac84a45c664b0c0107dc63ebdb82fa7bf">eol_loader_read_keychain_link</a>(file);
+<a name="l00070"></a>00070   <a class="code" href="eol__loader_8c.html#a596175db4f50da5bdd08b64f7049421d" title="closes an eolFile handle and cleans up allocated memory">eol_loader_close_file</a>(&amp;file);
+<a name="l00071"></a>00071   <span class="keywordflow">return</span> config;
+<a name="l00072"></a>00072 }
+<a name="l00073"></a>00073 
+<a name="l00074"></a><a class="code" href="eol__config_8h.html#ada9ae50380760f6af3fd596ff533b52d">00074</a> <a class="code" href="structeolConfig.html">eolConfig</a> *<a class="code" href="eol__config_8c.html#ada9ae50380760f6af3fd596ff533b52d" title="loads a configuration file into a eolConfig struct">eol_config_load</a>(<span class="keywordtype">char</span>* filename)
+<a name="l00075"></a>00075 {
+<a name="l00076"></a>00076   yaml_parser_t parser;
+<a name="l00077"></a>00077   <a class="code" href="structeolFile.html">eolFile</a> *input = NULL;
+<a name="l00078"></a>00078   <a class="code" href="structeolConfig.html">eolConfig</a> *config = NULL;
+<a name="l00079"></a>00079   
+<a name="l00080"></a>00080   <span class="keywordflow">if</span>(!yaml_parser_initialize(&amp;parser))
+<a name="l00081"></a>00081   {
+<a name="l00082"></a>00082     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;eol_config: Failed to initialize yaml parser\n&quot;</span>);
+<a name="l00083"></a>00083     <span class="keywordflow">return</span> NULL;
+<a name="l00084"></a>00084   }
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086   config= <a class="code" href="eol__config_8c.html#abd161b4d10d4a39f485ef594bd07d5c6">eol_config_new</a>();
+<a name="l00087"></a>00087   <span class="keywordflow">if</span> (config == NULL)<span class="keywordflow">return</span> NULL;
+<a name="l00088"></a>00088   
+<a name="l00089"></a>00089   <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(config-&gt;<a class="code" href="structeolConfig.html#a20baf49766b8373d6d67613d391bbace">filename</a>, filename);
+<a name="l00090"></a>00090   config-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a> = <a class="code" href="eol__keychain_8c.html#a20059c5684722e54fece7ae67e7eb3c2" title="allocated and sets up a pointer to an Empty GHash.">eol_keychain_new_hash</a>();
+<a name="l00091"></a>00091   <span class="keywordflow">if</span>(config-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a> == NULL)
+<a name="l00092"></a>00092   {
+<a name="l00093"></a>00093     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;eol_config: Unable to allocate keychain for config\n&quot;</span>);
+<a name="l00094"></a>00094     <span class="keywordflow">return</span> NULL;
+<a name="l00095"></a>00095   }
+<a name="l00096"></a>00096   input = <a class="code" href="eol__loader_8c.html#a586062eecc8f44725397193caaa2ce54" title="opens a file for reading from the filesystem or a pak file">eol_loader_read_file</a>(filename);
+<a name="l00097"></a>00097   <span class="keywordflow">if</span>(input == NULL)
+<a name="l00098"></a>00098   {
+<a name="l00099"></a>00099     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;eol_config: Can&#39;t open config file %s\n&quot;</span>, filename );
+<a name="l00100"></a>00100     <span class="keywordflow">return</span> NULL;
+<a name="l00101"></a>00101   }
+<a name="l00102"></a>00102   <span class="comment">/*</span>
+<a name="l00103"></a>00103 <span class="comment">  </span>
+<a name="l00104"></a>00104 <span class="comment">    yaml_parser_set_input_file(&amp;parser, input-&gt;file);</span>
+<a name="l00105"></a>00105 <span class="comment">  */</span>
+<a name="l00106"></a>00106   <span class="comment">/*TODO: test the following on alternate endianness architectures before deleting the above*/</span>
+<a name="l00107"></a>00107   yaml_parser_set_input_string(&amp;parser,(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *)input-&gt;<a class="code" href="structeolFile.html#ab2df8d57e3c1e690f043473066fdc581">_buffer</a>,input-&gt;<a class="code" href="structeolFile.html#a9fd095226894c5d8d82e349aebc4b82d">size</a>);
+<a name="l00108"></a>00108   <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(&amp;parser, config-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>);
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110   yaml_parser_delete(&amp;parser);
+<a name="l00111"></a>00111   <a class="code" href="eol__loader_8c.html#a596175db4f50da5bdd08b64f7049421d" title="closes an eolFile handle and cleans up allocated memory">eol_loader_close_file</a>(&amp;input);
+<a name="l00112"></a>00112   <span class="keywordflow">return</span> config;
+<a name="l00113"></a>00113 }
+<a name="l00114"></a>00114 
+<a name="l00115"></a><a class="code" href="eol__config_8c.html#a0fb35d3b58117bd19120136270dc7745">00115</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#a0fb35d3b58117bd19120136270dc7745">eol_config_destroy</a>(<a class="code" href="structeolConfig.html">eolConfig</a> *config)
+<a name="l00116"></a>00116 {
+<a name="l00117"></a>00117   <span class="keywordflow">if</span> (!config)<span class="keywordflow">return</span>;
+<a name="l00118"></a>00118   <a class="code" href="eol__keychain_8c.html#ab6b6e6c6c7c48d523bdea73a1d51b668" title="destroys the typed pointer passed">eol_keychain_destroy</a>(config-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>);
+<a name="l00119"></a>00119   free(config);
+<a name="l00120"></a>00120 }
+<a name="l00121"></a>00121 
+<a name="l00122"></a><a class="code" href="eol__config_8h.html#add43978a550fba94fa63292207c41cc5">00122</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#add43978a550fba94fa63292207c41cc5" title="returns the config back to the system.">eol_config_free</a>(<a class="code" href="structeolConfig.html">eolConfig</a> **config)
+<a name="l00123"></a>00123 {
+<a name="l00124"></a>00124   <span class="keywordflow">if</span> (!config)<span class="keywordflow">return</span>;
+<a name="l00125"></a>00125   <span class="keywordflow">if</span> (!*config)<span class="keywordflow">return</span>;
+<a name="l00126"></a>00126   <a class="code" href="eol__config_8c.html#a0fb35d3b58117bd19120136270dc7745">eol_config_destroy</a>(*config);
+<a name="l00127"></a>00127   *config = NULL;
+<a name="l00128"></a>00128 }
+<a name="l00129"></a>00129 
+<a name="l00130"></a><a class="code" href="eol__config_8c.html#a0bbb480dc906a76f0509bfc9152688cf">00130</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#a0bbb480dc906a76f0509bfc9152688cf">eol_config_parse_sequence</a>(yaml_parser_t *parser, <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *chain)
+<a name="l00131"></a>00131 {
+<a name="l00132"></a>00132   <span class="keywordtype">int</span> done = 0;
+<a name="l00133"></a>00133   <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *next = NULL;
+<a name="l00134"></a>00134   yaml_event_t event;
+<a name="l00135"></a>00135   <span class="comment">/* First element must be a variable, or we&#39;ll change states to SEQ */</span>
+<a name="l00136"></a>00136   <span class="keywordtype">int</span> <a class="code" href="structeolComponent__S.html#a25926b12650c19838f45bcfb2e9e1228">state</a> = <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea147e71049e3285d642d0d5268dba260f">KEY</a>;
+<a name="l00137"></a>00137   <span class="keywordflow">do</span>
+<a name="l00138"></a>00138   {
+<a name="l00139"></a>00139     yaml_parser_parse(parser, &amp;event);
+<a name="l00140"></a>00140     <span class="keywordflow">switch</span>(event.type)
+<a name="l00141"></a>00141     {
+<a name="l00142"></a>00142       <span class="keywordflow">case</span> YAML_MAPPING_START_EVENT:
+<a name="l00143"></a>00143         next = <a class="code" href="eol__keychain_8c.html#a20059c5684722e54fece7ae67e7eb3c2" title="allocated and sets up a pointer to an Empty GHash.">eol_keychain_new_hash</a>();
+<a name="l00144"></a>00144         <a class="code" href="eol__keychain_8c.html#ac14eb5ffa574b3a1dc86ce8bd1317cea" title="appends a list item to the eolKeychain list value. if its not a pointer to a list...">eol_keychain_list_append</a>(chain,next);
+<a name="l00145"></a>00145         state ^= <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea990a2861a2fe6b95a4008a9ec07ab519">VAL</a>;
+<a name="l00146"></a>00146         <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(parser, next);
+<a name="l00147"></a>00147         <span class="keywordflow">break</span>;
+<a name="l00148"></a>00148       <span class="keywordflow">case</span> YAML_SEQUENCE_END_EVENT:
+<a name="l00149"></a>00149       <span class="keywordflow">case</span> YAML_MAPPING_END_EVENT:
+<a name="l00150"></a>00150       <span class="keywordflow">case</span> YAML_STREAM_END_EVENT:
+<a name="l00151"></a>00151         done = 1;
+<a name="l00152"></a>00152         <span class="comment">/* terminate the while loop, see below */</span>
+<a name="l00153"></a>00153         <span class="keywordflow">break</span>;
+<a name="l00154"></a>00154       <span class="keywordflow">default</span>:
+<a name="l00155"></a>00155         <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;unhandled YAML event %d\n&quot;</span>, event.type);
+<a name="l00156"></a>00156     }
+<a name="l00157"></a>00157     <span class="keywordflow">if</span>(parser-&gt;error != YAML_NO_ERROR)
+<a name="l00158"></a>00158     {
+<a name="l00159"></a>00159       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n&quot;</span>,
+<a name="l00160"></a>00160                           parser-&gt;error, parser-&gt;context, parser-&gt;problem, parser-&gt;problem_mark.line,
+<a name="l00161"></a>00161                           parser-&gt;problem_mark.column);
+<a name="l00162"></a>00162                           <span class="keywordflow">return</span>;
+<a name="l00163"></a>00163     }
+<a name="l00164"></a>00164     yaml_event_delete(&amp;event);
+<a name="l00165"></a>00165   }<span class="keywordflow">while</span> (!done);
+<a name="l00166"></a>00166 }
+<a name="l00167"></a>00167 
+<a name="l00168"></a><a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">00168</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(yaml_parser_t *parser, <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *chain)
+<a name="l00169"></a>00169 {
+<a name="l00170"></a>00170   <span class="keywordtype">int</span> done = 0;
+<a name="l00171"></a>00171   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> last_key;
+<a name="l00172"></a>00172   <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *next = NULL;
+<a name="l00173"></a>00173   yaml_event_t event;
+<a name="l00174"></a>00174   <span class="comment">/* First element must be a variable, or we&#39;ll change states to SEQ */</span>
+<a name="l00175"></a>00175   <span class="keywordtype">int</span> <a class="code" href="structeolComponent__S.html#a25926b12650c19838f45bcfb2e9e1228">state</a> = <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea147e71049e3285d642d0d5268dba260f">KEY</a>;
+<a name="l00176"></a>00176   <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(last_key,<span class="stringliteral">&quot;&quot;</span>);
+<a name="l00177"></a>00177   <span class="keywordflow">do</span>
+<a name="l00178"></a>00178   {
+<a name="l00179"></a>00179     yaml_parser_parse(parser, &amp;event);
+<a name="l00180"></a>00180     <span class="keywordflow">switch</span>(event.type)
 <a name="l00181"></a>00181     {
-<a name="l00182"></a>00182       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n&quot;</span>,
-<a name="l00183"></a>00183                           parser-&gt;error, parser-&gt;context, parser-&gt;problem, parser-&gt;problem_mark.line,
-<a name="l00184"></a>00184                           parser-&gt;problem_mark.column);
-<a name="l00185"></a>00185                           <span class="keywordflow">return</span>;
-<a name="l00186"></a>00186     }
-<a name="l00187"></a>00187     yaml_event_delete(&amp;event);
-<a name="l00188"></a>00188   }
-<a name="l00189"></a>00189   <span class="keywordflow">while</span> (!done);
-<a name="l00190"></a>00190 }
-<a name="l00191"></a>00191 
-<a name="l00192"></a><a class="code" href="eol__config_8h.html#acfa6e79bcae428d9c04146035857045f">00192</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#acfa6e79bcae428d9c04146035857045f">eol_config_get_keychain</a>(<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *output,
-<a name="l00193"></a>00193                                 <a class="code" href="structeolConfig.html">eolConfig</a> *conf)
-<a name="l00194"></a>00194 {
-<a name="l00195"></a>00195   g_return_val_if_fail(conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00196"></a>00196   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00197"></a>00197   output = conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>;
-<a name="l00198"></a>00198   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
-<a name="l00199"></a>00199 }
-<a name="l00200"></a>00200 
-<a name="l00201"></a><a class="code" href="eol__config_8h.html#a7421347b5b87738585f4c9b34f5546c2">00201</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a7421347b5b87738585f4c9b34f5546c2" title="gets the element by tag as a keychain.">eol_config_get_keychain_by_tag</a>(<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> **output,
-<a name="l00202"></a>00202                                        <a class="code" href="structeolConfig.html">eolConfig</a> *conf,
-<a name="l00203"></a>00203                                        <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
-<a name="l00204"></a>00204 {
-<a name="l00205"></a>00205   g_return_val_if_fail(conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00206"></a>00206   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00207"></a>00207   *output = <a class="code" href="eol__keychain_8c.html#a03f8d756446e773e06a4280033414168" title="looks up the key in the hash. checks type before any operation">eol_keychain_get_hash_value</a>(conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
-<a name="l00208"></a>00208   <span class="keywordflow">if</span> (*output == NULL)<span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00209"></a>00209   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
-<a name="l00210"></a>00210 }
-<a name="l00211"></a>00211 
-<a name="l00212"></a>00212 
-<a name="l00213"></a><a class="code" href="eol__config_8h.html#a08380f149757490db94be24109167d06">00213</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a08380f149757490db94be24109167d06">eol_config_get_vec3d_by_tag</a>(
-<a name="l00214"></a>00214   <a class="code" href="structeolVec3D.html">eolVec3D</a>  *output,
-<a name="l00215"></a>00215   <a class="code" href="structeolConfig.html">eolConfig</a> *conf,
-<a name="l00216"></a>00216   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>    tag
-<a name="l00217"></a>00217 )
-<a name="l00218"></a>00218 {
-<a name="l00219"></a>00219   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00220"></a>00220   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00221"></a>00221   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#a007eac9d89c9c8f46600aa41930ba7ce">eol_keychain_get_hash_value_as_vec3d</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
-<a name="l00222"></a>00222 }
-<a name="l00223"></a>00223 
-<a name="l00224"></a><a class="code" href="eol__config_8h.html#a2119d828a77a4720ca626776dc26a5ae">00224</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a2119d828a77a4720ca626776dc26a5ae">eol_config_get_float_by_tag</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> *output, <a class="code" href="structeolConfig.html">eolConfig</a> *conf, <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
-<a name="l00225"></a>00225 {
-<a name="l00226"></a>00226   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00227"></a>00227   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00228"></a>00228   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#a5766ea1b8f17a5e40649276b803a2846">eol_keychain_get_hash_value_as_float</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
-<a name="l00229"></a>00229 }
-<a name="l00230"></a>00230 
-<a name="l00231"></a><a class="code" href="eol__config_8h.html#aef032ebdb0d5cbb965f9f38b64ab009b">00231</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#aef032ebdb0d5cbb965f9f38b64ab009b">eol_config_get_int_by_tag</a>(<a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> *output, <a class="code" href="structeolConfig.html">eolConfig</a> *conf, <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
-<a name="l00232"></a>00232 {
-<a name="l00233"></a>00233   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00234"></a>00234   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00235"></a>00235   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#ab7b92deaa0eda88b1ef51eddc1cd3898">eol_keychain_get_hash_value_as_int</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
-<a name="l00236"></a>00236 }
-<a name="l00237"></a>00237 
-<a name="l00238"></a><a class="code" href="eol__config_8h.html#a9560706954a7d65917d81dd2cfbba284">00238</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a9560706954a7d65917d81dd2cfbba284">eol_config_get_uint_by_tag</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> *output, <a class="code" href="structeolConfig.html">eolConfig</a> *conf, <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
-<a name="l00239"></a>00239 {
-<a name="l00240"></a>00240   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00241"></a>00241   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00242"></a>00242   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#a02cfa40cf9582aa9df8e2e566f21c1af">eol_keychain_get_hash_value_as_uint</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
-<a name="l00243"></a>00243 }
-<a name="l00244"></a>00244 
-<a name="l00245"></a><a class="code" href="eol__config_8h.html#a8915c3df691facf2f94bd0c07ce0f3ab">00245</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a8915c3df691facf2f94bd0c07ce0f3ab">eol_config_get_bool_by_tag</a>(<a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> *output, <a class="code" href="structeolConfig.html">eolConfig</a> *conf, <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
+<a name="l00182"></a>00182       <span class="keywordflow">case</span> YAML_SCALAR_EVENT:
+<a name="l00183"></a>00183         <span class="keywordflow">if</span> (state == <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea147e71049e3285d642d0d5268dba260f">KEY</a>)
+<a name="l00184"></a>00184         {
+<a name="l00185"></a>00185           <span class="comment">/* new key, hold on to it until we get a value as well */</span>
+<a name="l00186"></a>00186           <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(last_key,(<span class="keywordtype">char</span> *)event.data.scalar.value);
+<a name="l00187"></a>00187         }
+<a name="l00188"></a>00188         <span class="keywordflow">else</span>
+<a name="l00189"></a>00189         {
+<a name="l00190"></a>00190           <span class="comment">/* state is VAL or SEQ */</span>
+<a name="l00191"></a>00191           <span class="comment">/* TODO data type logic should go here */</span>
+<a name="l00192"></a>00192           <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;eol_config: adding key -&gt; value (%s -&gt; %s)\n&quot;</span>, last_key, event.data.scalar.value);
+<a name="l00193"></a>00193           next = <a class="code" href="eol__keychain_8c.html#afd625a41933788081d50eaf7eb2c5adf" title="allocated and sets up a pointer to a GString filled with the default text">eol_keychain_new_string</a>((<span class="keywordtype">char</span> *)event.data.scalar.value);
+<a name="l00194"></a>00194           <a class="code" href="eol__keychain_8c.html#a0cb5e74a908c4fc40d6d9e1e42ee8475">eol_keychain_hash_insert</a>(chain,last_key,next);
+<a name="l00195"></a>00195         }
+<a name="l00196"></a>00196         state ^= <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea990a2861a2fe6b95a4008a9ec07ab519">VAL</a>; <span class="comment">/* Toggles KEY/VAL, avoids touching SEQ */</span>
+<a name="l00197"></a>00197         <span class="keywordflow">break</span>;
+<a name="l00198"></a>00198       <span class="keywordflow">case</span> YAML_SEQUENCE_START_EVENT:
+<a name="l00199"></a>00199         <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(<a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,<span class="stringliteral">&quot;eol_config: adding sequence %s...\n&quot;</span>,last_key);
+<a name="l00200"></a>00200         next = <a class="code" href="eol__keychain_8c.html#a2389674e231793f280c14a078c68852f" title="allocated and sets up a pointer to an Empty GList.">eol_keychain_new_list</a>();
+<a name="l00201"></a>00201         <a class="code" href="eol__keychain_8c.html#a0cb5e74a908c4fc40d6d9e1e42ee8475">eol_keychain_hash_insert</a>(chain,last_key,
+<a name="l00202"></a>00202                                  next);
+<a name="l00203"></a>00203         <a class="code" href="eol__config_8c.html#a0bbb480dc906a76f0509bfc9152688cf">eol_config_parse_sequence</a>(parser, next);
+<a name="l00204"></a>00204         <span class="keywordflow">break</span>;
+<a name="l00205"></a>00205       <span class="keywordflow">case</span> YAML_MAPPING_START_EVENT:
+<a name="l00206"></a>00206         <span class="keywordflow">if</span> (strlen(last_key) == 0)<span class="keywordflow">break</span>;<span class="comment">/*first level is implied hash.*/</span>
+<a name="l00207"></a>00207         <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(<a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,<span class="stringliteral">&quot;eol_config: adding hash %s...\n&quot;</span>,last_key);
+<a name="l00208"></a>00208         next = <a class="code" href="eol__keychain_8c.html#a20059c5684722e54fece7ae67e7eb3c2" title="allocated and sets up a pointer to an Empty GHash.">eol_keychain_new_hash</a>();
+<a name="l00209"></a>00209         <a class="code" href="eol__keychain_8c.html#a0cb5e74a908c4fc40d6d9e1e42ee8475">eol_keychain_hash_insert</a>(chain,last_key,next);
+<a name="l00210"></a>00210         state ^= <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea990a2861a2fe6b95a4008a9ec07ab519">VAL</a>;
+<a name="l00211"></a>00211         <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(parser, next);
+<a name="l00212"></a>00212         <span class="keywordflow">break</span>;
+<a name="l00213"></a>00213       <span class="keywordflow">case</span> YAML_MAPPING_END_EVENT:
+<a name="l00214"></a>00214       <span class="keywordflow">case</span> YAML_STREAM_END_EVENT:
+<a name="l00215"></a>00215       <span class="keywordflow">case</span> YAML_SEQUENCE_END_EVENT:
+<a name="l00216"></a>00216         done = 1;
+<a name="l00217"></a>00217         <span class="comment">/* terminate the while loop, see below */</span>
+<a name="l00218"></a>00218         <span class="keywordflow">break</span>;
+<a name="l00219"></a>00219       <span class="keywordflow">default</span>:
+<a name="l00220"></a>00220         <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;unhandled YAML event %d\n&quot;</span>, event.type);
+<a name="l00221"></a>00221     }
+<a name="l00222"></a>00222     <span class="keywordflow">if</span>(parser-&gt;error != YAML_NO_ERROR)
+<a name="l00223"></a>00223     {
+<a name="l00224"></a>00224       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n&quot;</span>,
+<a name="l00225"></a>00225                           parser-&gt;error, parser-&gt;context, parser-&gt;problem, parser-&gt;problem_mark.line,
+<a name="l00226"></a>00226                           parser-&gt;problem_mark.column);
+<a name="l00227"></a>00227                           <span class="keywordflow">return</span>;
+<a name="l00228"></a>00228     }
+<a name="l00229"></a>00229     yaml_event_delete(&amp;event);
+<a name="l00230"></a>00230   }
+<a name="l00231"></a>00231   <span class="keywordflow">while</span> (!done);
+<a name="l00232"></a>00232 }
+<a name="l00233"></a>00233 
+<a name="l00234"></a><a class="code" href="eol__config_8h.html#acfa6e79bcae428d9c04146035857045f">00234</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#acfa6e79bcae428d9c04146035857045f">eol_config_get_keychain</a>(<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *output,
+<a name="l00235"></a>00235                                 <a class="code" href="structeolConfig.html">eolConfig</a> *conf)
+<a name="l00236"></a>00236 {
+<a name="l00237"></a>00237   g_return_val_if_fail(conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00238"></a>00238   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00239"></a>00239   output = conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>;
+<a name="l00240"></a>00240   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
+<a name="l00241"></a>00241 }
+<a name="l00242"></a>00242 
+<a name="l00243"></a><a class="code" href="eol__config_8h.html#a7421347b5b87738585f4c9b34f5546c2">00243</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a7421347b5b87738585f4c9b34f5546c2" title="gets the element by tag as a keychain.">eol_config_get_keychain_by_tag</a>(<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> **output,
+<a name="l00244"></a>00244                                        <a class="code" href="structeolConfig.html">eolConfig</a> *conf,
+<a name="l00245"></a>00245                                        <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
 <a name="l00246"></a>00246 {
-<a name="l00247"></a>00247   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00247"></a>00247   g_return_val_if_fail(conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
 <a name="l00248"></a>00248   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00249"></a>00249   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#a1f6323c4395c5ae73bf11aaf92620160">eol_keychain_get_hash_value_as_bool</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
-<a name="l00250"></a>00250 }
-<a name="l00251"></a>00251 
-<a name="l00252"></a><a class="code" href="eol__config_8h.html#a0e519bfc9b4d76f1030d0eaef21fa4c7">00252</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a0e519bfc9b4d76f1030d0eaef21fa4c7">eol_config_get_line_by_tag</a>( <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> output,  <a class="code" href="structeolConfig.html">eolConfig</a> *conf, <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
-<a name="l00253"></a>00253 {
-<a name="l00254"></a>00254   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00255"></a>00255   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
-<a name="l00256"></a>00256 }
-<a name="l00257"></a>00257 
-<a name="l00258"></a><a class="code" href="eol__config_8h.html#ad60b1715e0b5aa4d06714f0f45fafc3e">00258</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#ad60b1715e0b5aa4d06714f0f45fafc3e">eol_config_get_rectfloat_by_tag</a>( <a class="code" href="structeolRectFloat.html">eolRectFloat</a> * output,  <a class="code" href="structeolConfig.html">eolConfig</a> *conf, <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
-<a name="l00259"></a>00259 {
-<a name="l00260"></a>00260   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
-<a name="l00261"></a>00261   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#ad3d4dd888b65c5b4900405ba39d9b1e4">eol_keychain_get_hash_value_as_rectfloat</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
-<a name="l00262"></a>00262 }
-<a name="l00263"></a>00263 
-<a name="l00264"></a>00264 <span class="comment">/*eol@eof*/</span>
+<a name="l00249"></a>00249   *output = <a class="code" href="eol__keychain_8c.html#a03f8d756446e773e06a4280033414168" title="looks up the key in the hash. checks type before any operation">eol_keychain_get_hash_value</a>(conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
+<a name="l00250"></a>00250   <span class="keywordflow">if</span> (*output == NULL)<span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00251"></a>00251   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
+<a name="l00252"></a>00252 }
+<a name="l00253"></a>00253 
+<a name="l00254"></a>00254 
+<a name="l00255"></a><a class="code" href="eol__config_8h.html#a08380f149757490db94be24109167d06">00255</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a08380f149757490db94be24109167d06">eol_config_get_vec3d_by_tag</a>(
+<a name="l00256"></a>00256   <a class="code" href="structeolVec3D.html">eolVec3D</a>  *output,
+<a name="l00257"></a>00257   <a class="code" href="structeolConfig.html">eolConfig</a> *conf,
+<a name="l00258"></a>00258   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>    tag
+<a name="l00259"></a>00259 )
+<a name="l00260"></a>00260 {
+<a name="l00261"></a>00261   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00262"></a>00262   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00263"></a>00263   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#a007eac9d89c9c8f46600aa41930ba7ce">eol_keychain_get_hash_value_as_vec3d</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
+<a name="l00264"></a>00264 }
 <a name="l00265"></a>00265 
+<a name="l00266"></a><a class="code" href="eol__config_8h.html#a2119d828a77a4720ca626776dc26a5ae">00266</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a2119d828a77a4720ca626776dc26a5ae">eol_config_get_float_by_tag</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> *output, <a class="code" href="structeolConfig.html">eolConfig</a> *conf, <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
+<a name="l00267"></a>00267 {
+<a name="l00268"></a>00268   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00269"></a>00269   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00270"></a>00270   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#a5766ea1b8f17a5e40649276b803a2846">eol_keychain_get_hash_value_as_float</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
+<a name="l00271"></a>00271 }
+<a name="l00272"></a>00272 
+<a name="l00273"></a><a class="code" href="eol__config_8h.html#aef032ebdb0d5cbb965f9f38b64ab009b">00273</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#aef032ebdb0d5cbb965f9f38b64ab009b">eol_config_get_int_by_tag</a>(<a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> *output, <a class="code" href="structeolConfig.html">eolConfig</a> *conf, <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
+<a name="l00274"></a>00274 {
+<a name="l00275"></a>00275   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00276"></a>00276   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00277"></a>00277   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#ab7b92deaa0eda88b1ef51eddc1cd3898">eol_keychain_get_hash_value_as_int</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
+<a name="l00278"></a>00278 }
+<a name="l00279"></a>00279 
+<a name="l00280"></a><a class="code" href="eol__config_8h.html#a9560706954a7d65917d81dd2cfbba284">00280</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a9560706954a7d65917d81dd2cfbba284">eol_config_get_uint_by_tag</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> *output, <a class="code" href="structeolConfig.html">eolConfig</a> *conf, <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
+<a name="l00281"></a>00281 {
+<a name="l00282"></a>00282   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00283"></a>00283   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00284"></a>00284   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#a02cfa40cf9582aa9df8e2e566f21c1af">eol_keychain_get_hash_value_as_uint</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
+<a name="l00285"></a>00285 }
+<a name="l00286"></a>00286 
+<a name="l00287"></a><a class="code" href="eol__config_8h.html#a8915c3df691facf2f94bd0c07ce0f3ab">00287</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a8915c3df691facf2f94bd0c07ce0f3ab">eol_config_get_bool_by_tag</a>(<a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> *output, <a class="code" href="structeolConfig.html">eolConfig</a> *conf, <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
+<a name="l00288"></a>00288 {
+<a name="l00289"></a>00289   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00290"></a>00290   g_return_val_if_fail(output, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00291"></a>00291   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#a1f6323c4395c5ae73bf11aaf92620160">eol_keychain_get_hash_value_as_bool</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
+<a name="l00292"></a>00292 }
+<a name="l00293"></a>00293 
+<a name="l00294"></a><a class="code" href="eol__config_8h.html#a0e519bfc9b4d76f1030d0eaef21fa4c7">00294</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a0e519bfc9b4d76f1030d0eaef21fa4c7">eol_config_get_line_by_tag</a>( <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> output,  <a class="code" href="structeolConfig.html">eolConfig</a> *conf, <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
+<a name="l00295"></a>00295 {
+<a name="l00296"></a>00296   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00297"></a>00297   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
+<a name="l00298"></a>00298 }
+<a name="l00299"></a>00299 
+<a name="l00300"></a><a class="code" href="eol__config_8h.html#ad60b1715e0b5aa4d06714f0f45fafc3e">00300</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#ad60b1715e0b5aa4d06714f0f45fafc3e">eol_config_get_rectfloat_by_tag</a>( <a class="code" href="structeolRectFloat.html">eolRectFloat</a> * output,  <a class="code" href="structeolConfig.html">eolConfig</a> *conf, <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
+<a name="l00301"></a>00301 {
+<a name="l00302"></a>00302   g_return_val_if_fail(conf, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
+<a name="l00303"></a>00303   <span class="keywordflow">return</span> <a class="code" href="eol__keychain_8c.html#ad3d4dd888b65c5b4900405ba39d9b1e4">eol_keychain_get_hash_value_as_rectfloat</a>(output, conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, tag);
+<a name="l00304"></a>00304 }
+<a name="l00305"></a>00305 
+<a name="l00306"></a>00306 
+<a name="l00307"></a>00307 <span class="comment">/*eol@eof*/</span>
+<a name="l00308"></a>00308 
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:54 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:23 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

@@ -58,6 +58,8 @@
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#a250e73fdf9277ecb9d0494efc7d36ba9">eol_config_get_list_count_by_tag</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#a4b84006b15aa27b9d8b5f3d2b0aa6656">eol_config_get_list_by_tag</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#ad60b1715e0b5aa4d06714f0f45fafc3e">eol_config_get_rectfloat_by_tag</a> (<a class="el" href="structeolRectFloat.html">eolRectFloat</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolConfig.html">eolConfig</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#ab17810866fafd2be7ae42289b056a400">eol_config_load_binary</a> (char *filename)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#a1b7a33b596b7061e64fc81cc179adfb6">eol_config_save_binary</a> (<a class="el" href="structeolConfig.html">eolConfig</a> *conf, char *filename)</td></tr>
 </table>
 <hr/><h2>Enumeration Type Documentation</h2>
 <a class="anchor" id="acf77357bbb5b48a3b161fe56f93c952e"></a><!-- doxytag: member="eol_config.h::eolConfigState" ref="acf77357bbb5b48a3b161fe56f93c952e" args="" -->
@@ -110,7 +112,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00080">80</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00122">122</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
 
 </div>
 </div>
@@ -145,7 +147,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00245">245</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00287">287</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
 
 </div>
 </div>
@@ -180,7 +182,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00224">224</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00266">266</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
 
 </div>
 </div>
@@ -215,7 +217,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00231">231</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00273">273</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
 
 </div>
 </div>
@@ -244,7 +246,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00192">192</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00234">234</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
 
 </div>
 </div>
@@ -290,7 +292,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if found, eolFalse otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00201">201</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00243">243</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
 
 </div>
 </div>
@@ -325,7 +327,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00252">252</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00294">294</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
 
 </div>
 </div>
@@ -426,7 +428,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00258">258</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00300">300</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
 
 </div>
 </div>
@@ -461,7 +463,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00238">238</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00280">280</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
 
 </div>
 </div>
@@ -496,7 +498,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00213">213</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00255">255</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
 
 </div>
 </div>
@@ -517,7 +519,7 @@
 
 <p>initializes config system </p>
 
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00016">16</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00017">17</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
 
 </div>
 </div>
@@ -565,12 +567,61 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>a <a class="el" href="structeolConfig.html">eolConfig</a> pointer with the config structure </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00032">32</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00074">74</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab17810866fafd2be7ae42289b056a400"></a><!-- doxytag: member="eol_config.h::eol_config_load_binary" ref="ab17810866fafd2be7ae42289b056a400" args="(char *filename)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolConfig.html">eolConfig</a>* eol_config_load_binary </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>filename</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00056">56</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1b7a33b596b7061e64fc81cc179adfb6"></a><!-- doxytag: member="eol_config.h::eol_config_save_binary" ref="a1b7a33b596b7061e64fc81cc179adfb6" args="(eolConfig *conf, char *filename)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_config_save_binary </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolConfig.html">eolConfig</a> *&nbsp;</td>
+          <td class="paramname"> <em>conf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>filename</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00046">46</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:56 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:26 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

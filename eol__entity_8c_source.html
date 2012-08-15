@@ -408,13 +408,13 @@
 <a name="l00384"></a>00384   <span class="keywordflow">if</span> (!ent)<span class="keywordflow">return</span>;
 <a name="l00385"></a>00385   <span class="keywordflow">if</span> (ent-&gt;<a class="code" href="structEntity__S.html#a2dd91b03871e96bca0361c72aab3e031">shown</a> == <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>)
 <a name="l00386"></a>00386   {
-<a name="l00387"></a>00387     fprintf(stdout,<span class="stringliteral">&quot;skipping draw re: not shown\n&quot;</span>);
+<a name="l00387"></a>00387     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(<a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,<span class="stringliteral">&quot;eol_entity:skipping draw re: not shown\n&quot;</span>);
 <a name="l00388"></a>00388     <span class="keywordflow">return</span>;
 <a name="l00389"></a>00389   }
 <a name="l00390"></a>00390   <span class="comment">/*NOTE: may end up drawing other effects...*/</span>
 <a name="l00391"></a>00391   <span class="keywordflow">if</span> (ent-&gt;<a class="code" href="structEntity__S.html#a787ec1dd949e18bf8d5f75311ecd45b0">ori</a>.<a class="code" href="structeolOrientation.html#af6a92f9497c2530b06e7e938524c54a3">alpha</a> == 0.0f)
 <a name="l00392"></a>00392   {
-<a name="l00393"></a>00393     fprintf(stdout,<span class="stringliteral">&quot;skipping draw re: 0 alpha\n&quot;</span>);
+<a name="l00393"></a>00393     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(<a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,<span class="stringliteral">&quot;eol_entity:skipping draw re: 0 alpha\n&quot;</span>);
 <a name="l00394"></a>00394     <span class="keywordflow">return</span>;
 <a name="l00395"></a>00395   }
 <a name="l00396"></a>00396   <span class="keywordflow">if</span> (<a class="code" href="eol__entity_8c.html#af22273012ec2b8be1f26b2e7c0c2bce9">_eol_entity_draw_func</a> != NULL)
@@ -650,7 +650,7 @@
 <a name="l00626"></a>00626 
 <a name="l00627"></a>00627 <span class="comment">/*eol@eof*/</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:54 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:23 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

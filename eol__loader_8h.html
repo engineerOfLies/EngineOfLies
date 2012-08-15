@@ -26,6 +26,7 @@
 <div class="contents">
 <h1>eol_loader.h File Reference</h1><code>#include &quot;<a class="el" href="eol__types_8h_source.html">eol_types.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="eol__matrix_8h_source.html">eol_matrix.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="eol__keychain_8h_source.html">eol_keychain.h</a>&quot;</code><br/>
 <code>#include &lt;stdio.h&gt;</code><br/>
 <code>#include &lt;physfs.h&gt;</code><br/>
 
@@ -55,17 +56,23 @@
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolFile.html">eolFile</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a586062eecc8f44725397193caaa2ce54">eol_loader_read_file</a> (char *filename)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">opens a file for reading from the filesystem or a pak file  <a href="#a586062eecc8f44725397193caaa2ce54"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolFile.html">eolFile</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a7f551be0a62c18576bf44e999d00ad50">eol_loader_write_file_binary</a> (char *filename)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">opens a file for writing from the filesystem or a pak file  <a href="#a7f551be0a62c18576bf44e999d00ad50"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">opens a file for writing  <a href="#a7f551be0a62c18576bf44e999d00ad50"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolFile.html">eolFile</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a211f99d8dc5ba118b3dd1dcc922dd389">eol_loader_read_file_binary</a> (char *filename)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">opens a file for reading from the filesystem or a pak file  <a href="#a211f99d8dc5ba118b3dd1dcc922dd389"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a596175db4f50da5bdd08b64f7049421d">eol_loader_close_file</a> (<a class="el" href="structeolFile.html">eolFile</a> **file)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">closes an <a class="el" href="structeolFile.html">eolFile</a> handle and cleans up allocated memory  <a href="#a596175db4f50da5bdd08b64f7049421d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a83203ce91a9a900ab183fde550c1d8f2">eol_loader_write_uint_to_file</a> (<a class="el" href="structeolFile.html">eolFile</a> *file, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">write data to an open <a class="el" href="structeolFile.html">eolFile</a> buffer. does nothing if the file handle is NULL or opened for reading.  <a href="#a83203ce91a9a900ab183fde550c1d8f2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a34d099071ae871dcdc2511b3d8efd664">eol_loader_read_uint_from_file</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> *<a class="el" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>, <a class="el" href="structeolFile.html">eolFile</a> *file)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">read data from an open <a class="el" href="structeolFile.html">eolFile</a> buffer. does nothing if the file handle is NULL or opened for writing.  <a href="#a34d099071ae871dcdc2511b3d8efd664"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a1af67f312ab66c3198e2b7c558a7281b">eol_loader_write_int_to_file</a> (<a class="el" href="structeolFile.html">eolFile</a> *file, <a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> <a class="el" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">write data to an open <a class="el" href="structeolFile.html">eolFile</a> buffer. does nothing if the file handle is NULL or opened for reading.  <a href="#a1af67f312ab66c3198e2b7c558a7281b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a8cb4648825ca23719dfc8786b539dbbd">eol_loader_write_line_to_file</a> (<a class="el" href="structeolFile.html">eolFile</a> *file, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> <a class="el" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">write data to an open <a class="el" href="structeolFile.html">eolFile</a> buffer. does nothing if the file handle is NULL or opened for reading.  <a href="#a8cb4648825ca23719dfc8786b539dbbd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#ad8236cbf11eda7f6607071f4e91c9e8a">eol_loader_write_string_to_file</a> (<a class="el" href="structeolFile.html">eolFile</a> *file, char *<a class="el" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">write data to an open <a class="el" href="structeolFile.html">eolFile</a> buffer. does nothing if the file handle is NULL or opened for reading.  <a href="#ad8236cbf11eda7f6607071f4e91c9e8a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#abc79bea8fdbb3ffe07c2894df6e43e40">eol_loader_read_string_from_file</a> (char **<a class="el" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>, <a class="el" href="structeolFile.html">eolFile</a> *file)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">read string data from an open <a class="el" href="structeolFile.html">eolFile</a> buffer. does nothing if the file handle is NULL or opened for writing.  <a href="#abc79bea8fdbb3ffe07c2894df6e43e40"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a6af15f0461e6282c672a751678693474">eol_loader_write_float_to_file</a> (<a class="el" href="structeolFile.html">eolFile</a> *file, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">write data to an open <a class="el" href="structeolFile.html">eolFile</a> buffer. does nothing if the file handle is NULL or opened for reading.  <a href="#a6af15f0461e6282c672a751678693474"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a6acafdb311dbc8cd215474eeafeedf6b">eol_loader_write_vec3D_to_file</a> (<a class="el" href="structeolFile.html">eolFile</a> *file, <a class="el" href="structeolVec3D.html">eolVec3D</a> <a class="el" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)</td></tr>
@@ -78,6 +85,12 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">write data to an open <a class="el" href="structeolFile.html">eolFile</a> buffer. does nothing if the file handle is NULL or opened for reading.  <a href="#a0d0d6d380b56cba9ec69eb59a6df72c2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#aa90604ac5ef54c6de600c1ca98a8638b">eol_loader_write_orientation_to_file</a> (<a class="el" href="structeolFile.html">eolFile</a> *file, <a class="el" href="structeolOrientation.html">eolOrientation</a> <a class="el" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">write data to an open <a class="el" href="structeolFile.html">eolFile</a> buffer. does nothing if the file handle is NULL or opened for reading.  <a href="#aa90604ac5ef54c6de600c1ca98a8638b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a5e8d7532fddc7336e63e44854a47ba80">eol_loader_write_keychain_to_file</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *link, <a class="el" href="structeolFile.html">eolFile</a> *file)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Saves the entire keychain passed to the open file.  <a href="#a5e8d7532fddc7336e63e44854a47ba80"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a4cedd31c2f2d182635fa483147e05b96">eol_loader_read_keychain_from_file</a> (<a class="el" href="structeolFile.html">eolFile</a> *file)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a6e1702af6ef80d53bdff2e2ea8f3abc2">eol_loader_keychain_load</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> **chain, char *filename)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#ac84a45c664b0c0107dc63ebdb82fa7bf">eol_loader_read_keychain_link</a> (<a class="el" href="structeolFile.html">eolFile</a> *file)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__loader_8h.html#a6b55496451fbdff249ef48cdeebd3731">eol_loader_write_keychain_link</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *link, <a class="el" href="structeolFile.html">eolFile</a> *file)</td></tr>
 </table>
 <hr/><h2>Define Documentation</h2>
 <a class="anchor" id="a02c176227f98d11f147a74d376525c27"></a><!-- doxytag: member="eol_loader.h::EOLFILEBIGENDIAN" ref="a02c176227f98d11f147a74d376525c27" args="" -->
@@ -93,7 +106,7 @@
 
 <p>To keep the assets made by eol consistent across platforms, all saving to file will be a set Endian-nes, regardless of platform. </p>
 
-<p>Definition at line <a class="el" href="eol__loader_8h_source.html#l00030">30</a> of file <a class="el" href="eol__loader_8h_source.html">eol_loader.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8h_source.html#l00031">31</a> of file <a class="el" href="eol__loader_8h_source.html">eol_loader.h</a>.</p>
 
 </div>
 </div>
@@ -108,7 +121,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__loader_8h_source.html#l00032">32</a> of file <a class="el" href="eol__loader_8h_source.html">eol_loader.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8h_source.html#l00033">33</a> of file <a class="el" href="eol__loader_8h_source.html">eol_loader.h</a>.</p>
 
 </div>
 </div>
@@ -123,7 +136,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__loader_8h_source.html#l00031">31</a> of file <a class="el" href="eol__loader_8h_source.html">eol_loader.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8h_source.html#l00032">32</a> of file <a class="el" href="eol__loader_8h_source.html">eol_loader.h</a>.</p>
 
 </div>
 </div>
@@ -149,7 +162,7 @@
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__loader_8h_source.html#l00034">34</a> of file <a class="el" href="eol__loader_8h_source.html">eol_loader.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8h_source.html#l00035">35</a> of file <a class="el" href="eol__loader_8h_source.html">eol_loader.h</a>.</p>
 
 </div>
 </div>
@@ -171,7 +184,7 @@
 
 <p>loads config for the loader. Unlike other system config functions, this MUST be called AFTR <a class="el" href="eol__loader_8c.html#a137653f1a9074818762bf514dce92ce6" title="sets up the physFS internal system">eol_loader_init()</a> is called. </p>
 
-<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00020">20</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00023">23</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
 
 </div>
 </div>
@@ -209,7 +222,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00025">25</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00028">28</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
 
 </div>
 </div>
@@ -237,7 +250,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00147">147</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00200">200</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
 
 </div>
 </div>
@@ -258,7 +271,7 @@
 
 <p>sets up the physFS internal system </p>
 
-<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00013">13</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00015">15</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
 
 </div>
 </div>
@@ -280,7 +293,34 @@
 <p>checks initialization status of the loader </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if initialized, eolFalse otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00008">8</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00010">10</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6e1702af6ef80d53bdff2e2ea8f3abc2"></a><!-- doxytag: member="eol_loader.h::eol_loader_keychain_load" ref="a6e1702af6ef80d53bdff2e2ea8f3abc2" args="(eolKeychain **chain, char *filename)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_loader_keychain_load </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> **&nbsp;</td>
+          <td class="paramname"> <em>chain</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>filename</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
 
 </div>
 </div>
@@ -309,7 +349,150 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to the opened <a class="el" href="structeolFile.html">eolFile</a> handle or NULL on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00077">77</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00129">129</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a211f99d8dc5ba118b3dd1dcc922dd389"></a><!-- doxytag: member="eol_loader.h::eol_loader_read_file_binary" ref="a211f99d8dc5ba118b3dd1dcc922dd389" args="(char *filename)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolFile.html">eolFile</a>* eol_loader_read_file_binary </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>filename</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>opens a file for reading from the filesystem or a pak file </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>filename</em>&nbsp;</td><td>the file to load. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to the opened <a class="el" href="structeolFile.html">eolFile</a> handle or NULL on failure </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00036">36</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4cedd31c2f2d182635fa483147e05b96"></a><!-- doxytag: member="eol_loader.h::eol_loader_read_keychain_from_file" ref="a4cedd31c2f2d182635fa483147e05b96" args="(eolFile *file)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolKeychain.html">eolKeychain</a>* eol_loader_read_keychain_from_file </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolFile.html">eolFile</a> *&nbsp;</td>
+          <td class="paramname"> <em>file</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac84a45c664b0c0107dc63ebdb82fa7bf"></a><!-- doxytag: member="eol_loader.h::eol_loader_read_keychain_link" ref="ac84a45c664b0c0107dc63ebdb82fa7bf" args="(eolFile *file)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolKeychain.html">eolKeychain</a>* eol_loader_read_keychain_link </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolFile.html">eolFile</a> *&nbsp;</td>
+          <td class="paramname"> <em>file</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00559">559</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abc79bea8fdbb3ffe07c2894df6e43e40"></a><!-- doxytag: member="eol_loader.h::eol_loader_read_string_from_file" ref="abc79bea8fdbb3ffe07c2894df6e43e40" args="(char **data, eolFile *file)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_loader_read_string_from_file </td>
+          <td>(</td>
+          <td class="paramtype">char **&nbsp;</td>
+          <td class="paramname"> <em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolFile.html">eolFile</a> *&nbsp;</td>
+          <td class="paramname"> <em>file</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>read string data from an open <a class="el" href="structeolFile.html">eolFile</a> buffer. does nothing if the file handle is NULL or opened for writing. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>a pointer to a char pointer. If the char pointer is not null, it will be used otherwise a buffer will be allocated for the string in question and must be freed separately. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>file</em>&nbsp;</td><td>the file handle to read from </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00350">350</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a34d099071ae871dcdc2511b3d8efd664"></a><!-- doxytag: member="eol_loader.h::eol_loader_read_uint_from_file" ref="a34d099071ae871dcdc2511b3d8efd664" args="(eolUint *data, eolFile *file)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_loader_read_uint_from_file </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> *&nbsp;</td>
+          <td class="paramname"> <em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolFile.html">eolFile</a> *&nbsp;</td>
+          <td class="paramname"> <em>file</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>read data from an open <a class="el" href="structeolFile.html">eolFile</a> buffer. does nothing if the file handle is NULL or opened for writing. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>output. Left alone on error or eof </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>file</em>&nbsp;</td><td>the file handle to read from </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00308">308</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
 
 </div>
 </div>
@@ -329,7 +512,7 @@
 </div>
 <div class="memdoc">
 
-<p>opens a file for writing from the filesystem or a pak file </p>
+<p>opens a file for writing </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>filename</em>&nbsp;</td><td>the file to load. </td></tr>
@@ -338,7 +521,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to the opened <a class="el" href="structeolFile.html">eolFile</a> handle or NULL on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00033">33</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00082">82</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
 
 </div>
 </div>
@@ -412,7 +595,72 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00183">183</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00236">236</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6b55496451fbdff249ef48cdeebd3731"></a><!-- doxytag: member="eol_loader.h::eol_loader_write_keychain_link" ref="a6b55496451fbdff249ef48cdeebd3731" args="(eolKeychain *link, eolFile *file)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_loader_write_keychain_link </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramname"> <em>link</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolFile.html">eolFile</a> *&nbsp;</td>
+          <td class="paramname"> <em>file</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00454">454</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5e8d7532fddc7336e63e44854a47ba80"></a><!-- doxytag: member="eol_loader.h::eol_loader_write_keychain_to_file" ref="a5e8d7532fddc7336e63e44854a47ba80" args="(eolKeychain *link, eolFile *file)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_loader_write_keychain_to_file </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramname"> <em>link</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolFile.html">eolFile</a> *&nbsp;</td>
+          <td class="paramname"> <em>file</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Saves the entire keychain passed to the open file. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>link</em>&nbsp;</td><td>the root of the keychain you wish to save </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>file</em>&nbsp;</td><td>the file to save it to. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -450,7 +698,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00203">203</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00256">256</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
 
 </div>
 </div>
@@ -632,7 +880,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00227">227</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00280">280</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
 
 </div>
 </div>
@@ -670,7 +918,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00163">163</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__loader_8c_source.html#l00216">216</a> of file <a class="el" href="eol__loader_8c_source.html">eol_loader.c</a>.</p>
 
 </div>
 </div>
@@ -711,7 +959,7 @@
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Aug 7 21:31:57 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:27 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
