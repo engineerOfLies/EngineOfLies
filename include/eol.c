@@ -13,7 +13,7 @@
 #include "eol_model.h"
 #include "eol_particle.h"
 #include "eol_window.h"
-
+#include <glib.h>
 eolUint             _eol_major_version = 0;
 eolUint             _eol_minor_version = 1;
 

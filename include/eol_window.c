@@ -159,6 +159,7 @@ void eol_window_update_all()
     if (update != NULL)
     {
       g_list_free(update);
+      update = NULL;
     }
     if ((updateHandled) || (!win->passesInput))break;
   }

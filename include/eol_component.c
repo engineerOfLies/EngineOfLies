@@ -1268,14 +1268,35 @@ void eol_component_button_new(eolComponent *component)
 void eol_label_set_text(eolComponent *comp,char *text)
 {
   eolComponentLabel * label = NULL;
-  if ((!comp) || (!text))return;
+  if (!text)return;
   label = eol_component_get_label_data(comp);
-  if (label == NULL)
-  {
-    return;
-  }
+  if (label == NULL)return;
   label->buffer = g_string_assign(label->buffer,text);
 }
+
+eolFloat eol_slider_get_position(eolComponent *comp)
+{
+  eolComponentSlider * slider = NULL;
+  slider = eol_component_get_slider_data(comp);
+  if (!slider)return 0;
+  return slider->position;
+}
+
+void eol_slider_set_position(eolComponent *comp, eolFloat newPos)
+{
+  eolComponentSlider * slider = NULL;
+  slider = eol_component_get_slider_data(comp);
+  if (!slider)return;
+  if (newPos < 0)newPos = 0;
+  if (newPos > 1)newPos = 1;
+  slider->position = newPos;
+}
+
+/*
+
+  ******* new components *******
+
+ */
 
 eolComponent *eol_slider_common_new(
     eolUint        id,
