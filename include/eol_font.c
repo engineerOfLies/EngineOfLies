@@ -1,6 +1,7 @@
 #include "eol_font.h"
 #include "eol_logger.h"
 #include "eol_graphics.h"
+#include "eol_config.h"
 
 /*local global variables*/
 eolBool   _eol_font_initialized = eolFalse;
@@ -45,9 +46,12 @@ eolBool eol_font_initialized()
 
 void eol_font_config()
 {
-  /*TODO: load config from file*/
+  eolConfig *conf = NULL;
   _eol_font_max = 10;
-  strncpy(_eol_default_font,"fonts/default.ttf",EOLLINELEN);
+  strncpy(_eol_default_font,"fonts/default.ttf",EOLLINELEN);  
+  conf = eol_config_load("system/font.cfg");
+  if (conf == NULL)return;
+  eol_config_get_line_by_tag(_eol_default_font,conf,"default");
 }
 
 void eol_font_close()

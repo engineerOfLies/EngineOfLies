@@ -103,6 +103,7 @@ eolLine     _eol_component_slider_files[4];
 eolVec3D    _eol_component_button_color[3];
 eolInt      _eol_component_button_offset_x = 0;
 eolInt      _eol_component_button_offset_y = 0;
+eolBool     _eol_component_button_text_outline = eolTrue;
 
 /*local function prototypes*/
 void eol_component_button_new(eolComponent *component);
@@ -191,6 +192,7 @@ void eol_component_config()
     eol_config_get_vec3d_by_tag(&_eol_component_button_color[0],conf,"button_text_color");
     eol_config_get_vec3d_by_tag(&_eol_component_button_color[1],conf,"button_high_text_color");
     eol_config_get_vec3d_by_tag(&_eol_component_button_color[2],conf,"button_hit_text_color");
+    eol_config_get_bool_by_tag(&_eol_component_button_text_outline,conf,"button_text_outline");
     
     eol_config_get_line_by_tag(buf,conf,"slider_verticle");
     if (strlen(buf) > 0)
@@ -1110,7 +1112,9 @@ void eol_component_button_draw(eolComponent *component,eolRect bounds)
       button->fontSize,
       button->justify
     );
-    if ((button->buttonType == eolButtonText) && (component->state == eolButtonHighlight))
+    if ((button->buttonType == eolButtonText) && 
+        (component->state == eolButtonHighlight) &&
+        (_eol_component_button_text_outline))
     {
       eol_draw_rect(component->bounds,_eol_component_button_color[component->state],button->alpha);
     }
