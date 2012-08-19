@@ -24,7 +24,8 @@ SDL_CFLAGS = `sdl-config --cflags`
 SDL_LDFLAGS = `sdl-config --libs` -lSDL_image -lSDL_ttf -lSDL_mixer -lSDL_net -lGLU -lz -lphysfs -lglib-2.0
 EOL_CFLAGS = -I../include
 EOL_LDFLAGS = ../lib/libeol.a
-YAML_LDFLAGS = /usr/lib/libyaml.so
+YAML_LDFLAGS = `pkg-config --libs yaml-0.1`
+YAML_CFLAGS = `pkg-config --cflags yaml-0.1`
 LFLAGS = -g  -o ../$(PROJECT) -lphysfs
 CFLAGS = -g -Wall -pedantic -std=gnu99 -fgnu89-inline -Wno-unknown-pragmas 
 # -ffast-math for relase version
@@ -63,5 +64,5 @@ include makefile.dep
 #
 
 .c.o:
-	$(CC) $(CFLAGS) $(EOL_CFLAGS) $(SDL_CFLAGS) $(GLIB_CFLAGS) -c $<
+	$(CC) $(CFLAGS) $(EOL_CFLAGS) $(SDL_CFLAGS) $(GLIB_CFLAGS) $(YAML_CFLAGS) -c $<
 
