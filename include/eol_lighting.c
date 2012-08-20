@@ -146,7 +146,7 @@ void eol_lighting_filter_for_position(eolVec3D pos)
   {
     if (!light->on)continue;
     if (light->type > eolLightSpot)continue;
-    if (eol_distance_between_less_than(pos,light->position,light->radius))
+    if (eol_distance_between_less_than3d(pos,light->position,light->radius))
     {
       eol_light_enable(light,eolTrue);
     }

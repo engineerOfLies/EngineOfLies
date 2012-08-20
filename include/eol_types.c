@@ -45,7 +45,7 @@ eolBool  eol_vec3d_magnatude_less_than(eolVec3D V,eolFloat size)
   return (eol_vec3d_magnatude_squared(V) < (size * size));
 }
 
-eolBool eol_distance_between_less_than(eolVec3D p1,eolVec3D p2,eolFloat size)
+eolBool eol_distance_between_less_than3d(eolVec3D p1,eolVec3D p2,eolFloat size)
 {
   return eol_vec3d_magnatude_less_than(eol_vec3d(p1.x - p2.x,
                                                  p1.y - p2.y,
@@ -168,10 +168,10 @@ void eol_orientation_add(eolOrientation * out,
                          eolOrientation   in2)
 {
   if (!out)return;
-  eol_vector_add_3D(in1.position,in2.position,out->position);
-  eol_vector_add_3D(in1.rotation,in2.rotation,out->rotation);
-  eol_vector_add_3D(in1.scale,in2.scale,out->scale);
-  eol_vector_add_3D(in1.color,in2.color,out->color);
+  eol_vec3d_add(in1.position,in2.position,out->position);
+  eol_vec3d_add(in1.rotation,in2.rotation,out->rotation);
+  eol_vec3d_add(in1.scale,in2.scale,out->scale);
+  eol_vec3d_add(in1.color,in2.color,out->color);
   out->alpha = in1.alpha + in2.alpha;
 
   if (out->alpha < 0)out->alpha = 0;
@@ -192,9 +192,9 @@ void eol_orientation_mix(eolOrientation * out,
                          eolOrientation   in2)
 {
   if (!out)return;
-  eol_vector_add_3D(in1.position,in2.position,out->position);
-  eol_vector_add_3D(in1.rotation,in2.rotation,out->rotation);
-  eol_vector_add_3D(in1.scale,in2.scale,out->scale);
+  eol_vec3d_add(in1.position,in2.position,out->position);
+  eol_vec3d_add(in1.rotation,in2.rotation,out->rotation);
+  eol_vec3d_add(in1.scale,in2.scale,out->scale);
 
   out->scale.x = in1.scale.x * in2.scale.x;
   out->scale.y = in1.scale.y * in2.scale.y;

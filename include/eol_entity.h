@@ -126,8 +126,10 @@ typedef struct Entity_S
   /*spawn candidate data*/
   eolSpawn  * spawn;  /**<points to the data in the level.  It should not change*/
   eolConfig * config; /**<points to the config data for this entity*/
+
   /*pointer to game-specific data to be handled by individual games*/
-  void *customData;   /**<pointer to the custom game data packed with the entity.*/
+  void *customData;   /**<pointer to the custom game data packed with the entity.
+                          !!!THIS MUST REMAIN THE LAST ELEMENT IN THIS STRUCT!!!!*/
 }eolEntity;
 
 typedef struct

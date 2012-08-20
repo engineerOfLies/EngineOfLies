@@ -31,10 +31,50 @@ void eol_entity_draw_box(eolEntity *ent);
 /*function definitions*/
 void eol_entity_config()
 {
-  /*TODO: load from config*/
+  eolConfig *conf = NULL;
+  eolLine    buf;
   _eol_entity_max = 1024;
   _eol_entity_draw_mode = eolEntityDrawBounds;
-  /*TODO support these draw modes*/
+
+  conf = eol_config_load("system/entity.cfg");
+  if (conf != NULL)
+  {
+    eol_config_get_uint_by_tag(&_eol_entity_max,conf,"entityMax");
+    eol_config_get_line_by_tag(buf,conf,"entityMax");
+    if (strlen(buf))
+    {
+      if ((eol_line_cmp(buf,"box")==0) ||
+          (eol_line_cmp(buf,"bounds")==0))
+      {
+        _eol_entity_draw_mode = eolEntityDrawBounds;
+      }
+      else if ((eol_line_cmp(buf,"wire")==0) ||
+               (eol_line_cmp(buf,"wireframe")==0))
+      {
+        _eol_entity_draw_mode = eolEntityDrawWireframe;
+      }
+      else if ((eol_line_cmp(buf,"flat")==0) ||
+               (eol_line_cmp(buf,"mesh")==0))
+      {
+        _eol_entity_draw_mode = eolEntityDrawMesh;
+      }
+      else if ((eol_line_cmp(buf,"skin")==0) ||
+               (eol_line_cmp(buf,"texture")==0))
+      {
+        _eol_entity_draw_mode = eolEntityDrawTextured;
+      }
+      else if (eol_line_cmp(buf,"light")==0)
+      {
+        _eol_entity_draw_mode = eolEntityDrawLighting;
+      }
+      else if ((eol_line_cmp(buf,"shader")==0) ||
+               (eol_line_cmp(buf,"full")==0))
+      {
+        _eol_entity_draw_mode = eolEntityDrawShaded;
+      }
+    }
+    eol_config_free(&conf);
+  }
   switch(_eol_entity_draw_mode)
   {
     case eolEntityDrawBounds:
@@ -152,10 +192,9 @@ void eol_entity_delete(void *entityData)
   /*physics*/
   if (ent->body)cpBodyFree(ent->body);
   if (ent->shape)cpShapeFree(ent->shape);
-  /*
-  TODO: make this happen from the config
   eol_config_free(&ent->config);
-  */
+ 
+  memset(ent,0,sizeof(eolEntity));
 }
 
 void eol_entity_free(eolEntity **ent)
@@ -183,11 +222,12 @@ eolEntity *eol_entity_new()
       "eol_entity:failed to get new resource\n");
     return NULL;
   }
-  /*
   if (_eol_entity_custom_data_size > 0)
   {
+    /*the resource system has allocated the custom data in the same continuous block
+      as this entity*/
     ent->customData = (void *)(ent + 1);
-  }*/
+  }
   /*set some sane defaults:*/
   ent->self = ent;
   ent->collisionMask = CP_ALL_LAYERS;
@@ -325,7 +365,7 @@ void eol_entity_draw_box(eolEntity *ent)
       rect.w = ent->boundingBox.w;
       rect.h = ent->boundingBox.h;
       eol_orientation_copy(&ori,ent->ori);
-      eol_vector_clear_3D(ori.rotation);
+      eol_vec3d_clear(ori.rotation);
       eol_draw_rect_3D(rect, ori);
       break;
     case eolEntityCircle:

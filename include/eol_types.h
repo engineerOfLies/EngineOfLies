@@ -216,6 +216,14 @@ typedef struct
   eolDouble z;
 }eolVec3D;
 
+typedef struct
+{
+  eolDouble x;
+  eolDouble y;
+  eolDouble z;
+  eolDouble w;
+}eolVec4D;
+
 #define eol_vec_in_rect(v, r)  ((v.x >= r.x)&&(v.x < (r.x + r.w))&&(v.y >= r.y)&&(v.y < (r.y + r.h)))
 
 /**
@@ -223,6 +231,10 @@ typedef struct
  */
 eolVec3D eol_vec3d(eolDouble x, eolDouble y, eolDouble z);
 
+/**
+ * @brief create and return an eolVec4D
+ */
+eolVec4D eol_vec4d(eolDouble x, eolDouble y, eolDouble z, eolDouble w);
 
 /**
  * @brief sets the outvector to a unit vector pointing at the angle specified
@@ -230,6 +242,9 @@ eolVec3D eol_vec3d(eolDouble x, eolDouble y, eolDouble z);
  * @param radians specify the angle of the vector to be set.
  */
 void eol_vec3d_set_angle_by_radians(eolVec3D *out,eolFloat radians);
+
+void eol_vec2d_set_angle_by_radians(eolVec2D *out,eolFloat radians);
+
 /*
   Time Handling
 */
@@ -338,6 +353,7 @@ eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
  * These macros handle most of the common operations for vector math.
  */
 
+#define eol_vec4d_into_array(ar,vec)   (ar[0] = vec.x,ar[1] = vec.y,ar[2] = vec.z,ar[3] = vec.w)
 #define eol_vec3d_into_array(ar,vec)   (ar[0] = vec.x,ar[1] = vec.y,ar[2] = vec.z)
 #define eol_vec2d_into_array(ar,vec)   (ar[0] = vec.x,ar[1] = vec.y)
 
@@ -349,6 +365,7 @@ eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
  *
  * @return the calculated dot product
  */
+#define eol_vec4d_dot_product(a,b)      (a.x*b.x+a.y*b.y+a.z*b.z+a.w*b.w)
 #define eol_vec3d_dot_product(a,b)      (a.x*b.x+a.y*b.y+a.z*b.z)
 #define eol_vec2d_dot_product(a,b)      (a.x*b.x+a.y*b.y)
 
@@ -358,97 +375,98 @@ eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
  * @param dst the destination vector
  * @param src the source vector
  */
+#define eol_vec2d_copy(dst,src)  (dst.x = src.x,dst.y = src.y)
 #define eol_vec3d_copy(dst,src)  (dst.x = src.x,dst.y = src.y,dst.z = src.z)
+#define eol_vec4d_copy(dst,src)  (dst.x = src.x,dst.y = src.y,dst.z = src.z,dst.w=src.w)
 
 /**
  * @brief Macro to subtract two vectors
  * varient ending in p takes a pointer to eolVect3D instead.
  * Varients ending with 2D only operate on the x an y components of vectors
  *
+ * @param dst result eolVect3D output
  * @param a eolVect3D input
  * @param b eolVect3D input
- * @param c result eolVect3D output
  */
-#define eol_vector_sub_3D(a,b,c)     (c.x=a.x-b.x,c.y=a.y-b.y,c.z=a.z-b.z)
-#define eol_vector_sub_3D_p(a,b,c)     (c->x=a->x-b->x,c->y=a->y-b->y,c->z=a->z-b->z)
-#define eol_vector_sub_2D(a,b,c)     (c.x=a.x-b.x,c.y=a.y-b.y)
-#define eol_vector_sub_2D_p(a,b,c)     (c->x=a->x-b->x,c->y=a->y-b->y)
+#define eol_vec2d_sub(dst,a,b)     (dst.x=a.x-b.x,dst.y=a.y-b.y)
+#define eol_vec3d_sub(dst,a,b)     (dst.x=a.x-b.x,dst.y=a.y-b.y,dst.z=a.z-b.z)
+#define eol_vec4d_sub(dst,a,b)     (dst.x=a.x-b.x,dst.y=a.y-b.y,dst.z=a.z-b.z,dst.w=a.w-b.w)
 
 /**
  * @brief Macro to add two vectors
  * varient ending in p takes a pointer to eolVect3D instead.
  * Varients ending with 2D only operate on the x an y components of vectors
  *
+ * @param dst result eolVect3D output
  * @param a eolVect3D input
  * @param b eolVect3D input
- * @param c result eolVect3D output
  */
-#define eol_vector_add_3D(a,b,c)     (c.x=a.x+b.x,c.y=a.y+b.y,c.z=a.z+b.z)
-#define eol_vec3d_add(out,in1,in2)   (out.x = in1.x+in2.x,out.y = in1.y+in2.y,out.z = in1.z+in2.z)
-#define eol_vector_add_3D_p(a,b,c)     (c->x=a->x+b->x,c->y=a->y+b->y,c->z=a->z+b->z)
-#define eol_vector_add_2D(a,b,c)     (c.x=a.x+b.x,c.y=a.y+b.y)
-#define eol_vector_add_2D_p(a,b,c)     (c->x=a->x+b->x,c->y=a->y+b->y)
+#define eol_vec2d_add(dst,a,b)   (dst.x = a.x+b.x,dst.y = a.y+b.y)
+#define eol_vec3d_add(dst,a,b)   (dst.x = a.x+b.x,dst.y = a.y+b.y,dst.z = a.z+b.z)
+#define eol_vec4d_add(dst,a,b)   (dst.x = a.x+b.x,dst.y = a.y+b.y,dst.z = a.z+b.z,dst.w = a.w+b.w)
 
 /**
  * @brief Macro to scale a vector by a scalar value
  * varient ending in p takes a pointer to eolVect3D instead.
  * Varients ending with 2D only operate on the x an y components of vectors
  *
- * @param a eolVect3D input
- * @Param b the scalar value to scale the vector by.
- * @param c result eolVect3D output
+ * @param dst result eolVect3D output
+ * @param src eolVect3D input
+ * @Param factpr the scalar value to scale the vector by.
  */
-#define eol_vector_scale_3D(a,b,c)  (c.x=a.x*b,c.y=a.y*b,c.z=a.z*b)
-#define eol_vector_scale_3D_p(a,b,c)  (c->x=a->x*b,c->y=a->y*b,c->z=a->z*b)
-#define eol_vector_scale_2D(a,b,c)  (c.x=a.x*b,c.y=a.y*b)
-#define eol_vector_scale_2D_p(a,b,c)  (c->x=a->x*b,c->y=a->y*b)
-
+#define eol_vec2d_scale(dst,src,factor) (dst.x = src.x *factor,\
+                                         dst.y = src.y *factor)
+#define eol_vec3d_scale(dst,src,factor) (dst.x = src.x *factor,\
+                                         dst.y = src.y *factor,\
+                                         dst.z = src.z *factor)
+#define eol_vec4d_scale(dst,src,factor) (dst.x = src.x *factor,\
+                                         dst.y = src.y *factor,\
+                                         dst.z = src.z *factor,\
+                                         dst.w = src.w *factor)
 /**
  * @brief Macro that sets vector to zero.
- * varient ending in p takes a pointer to eolVect3D instead.
- * Varients ending with 2D only operate on the x an y components of vectors
- *
- * @param a eolVect3D input
+ * @param a eolVect[2D|3D|4D] input
  */
-#define eol_vector_clear_3D(a)       (a.x=a.y=a.z=0)
-#define eol_vector_clear_3D_p(a)       (a->x=a->y=a->z=0)
-#define eol_vector_clear_2D(a)       (a.x=a.y=0)
-#define eol_vector_clear_2D_p(a)       (a->x=a->y=0)
+
+#define eol_vec2d_clear(a)       (a.x=a.y=0)
+#define eol_vec3d_clear(a)       (a.x=a.y=a.z=0)
+#define eol_vec4d_clear(a)       (a.x=a.y=a.z=a.w=0)
 
 /**
  * @brief Macro to get the negative of a vector
- * varient ending in p takes a pointer to eolVect3D instead.
- * Varients ending with 2D only operate on the x an y components of vectors
  *
- * @param a eolVect3D input
- * @param b eolVect3D negated output
+ * @param src eolVect[2D|3D|4D] input
+ * @param dst eolVect[2D|3D|4D] negated output
  */
-#define eol_vector_negate_3D(a,b)      (b.x=-a.x,b.y=-a.y,b.z=-a.z)
-#define eol_vector_negate_3D_p(a,b)      (b->x=-a->x,b->y=-a->y,b->z=-a->z)
-#define eol_vector_negate_2D(a,b)      (b.x=-a.x,b.y=-a.y)
-#define eol_vector_negate_2D_p(a,b)      (b->x=-a->x,b->y=-a->y)
+#define eol_vec2d_negate(dst,src)      (dst.x = -src.x,dst.y = -src.y)
+#define eol_vec3d_negate(dst,src)      (dst.x = -src.x,dst.y = -src.y,dst.z = -src.z)
+#define eol_vec4d_negate(dst,src)      (dst.x = -src.x,dst.y = -src.y,dst.z = -src.z,dst.w = -src.w)
 
 /**
  * @brief Macro to set the components of the vector
- * varient ending in p takes a pointer to eolVect3D instead.
- * Varients ending with 2D only operate on the x an y components of vectors
  *
  * @param v eolVect3D output
  * @param a eolFloat x component
  * @param b eolFloat y component
- * @param c eolFloat z componenta (only in 3D version)
+ * @param c eolFloat z component (only in 3D & 4D version)
+ * @param d eolFloat w component (only in 4D version)
  */
-#define eol_vec3d_set(v, a, b, c)  (v.x=(a), v.y=(b), v.z=(c))
 #define eol_vec2d_set(v, a, b)  (v.x=(a), v.y=(b))
+#define eol_vec3d_set(v, a, b, c)  (v.x=(a), v.y=(b), v.z=(c))
+#define eol_vec4d_set(v, a, b, c,d)  (v.x=(a), v.y=(b), v.z=(c), v.w=(d))
 
 /**
  * @brief normalizes the vector passed.  does nothing for a zero length vector.
  *
  * @param v pointer to the vector to be normalized.
  */
-void eol_vector_normalize(eolVec3D *v);
+eolFloat eol_vec2d_magnitude(eolVec2D V);
 eolFloat eol_vec3d_magnitude(eolVec3D V);
+eolFloat eol_vec4d_magnitude(eolVec4D V);
+
+void eol_vec2d_normalize (eolVec2D *V);
 void eol_vec3d_normalize (eolVec3D *V);
+void eol_vec4d_normalize (eolVec4D *V);
 
 /**
  * @brief returns the magnitude squared, which is faster than getting the magnitude
@@ -456,7 +474,9 @@ void eol_vec3d_normalize (eolVec3D *V);
  * @param V the vector to get the magnitude for
  * @return the square of the magnitude of V
  */
+eolFloat eol_vec2d_magnitude_squared(eolVec2D V);
 eolFloat eol_vec3d_magnitude_squared(eolVec3D V);
+eolFloat eol_vec4d_magnitude_squared(eolVec4D V);
 
 /**
  * @brief checks if the magnitude of V is less than size.  It does this without
@@ -465,7 +485,9 @@ eolFloat eol_vec3d_magnitude_squared(eolVec3D V);
  * @param size the magnitude to check against
  * @return eolTrue if the magnitude of V is less than size or eolFalse otherwise
  */
+eolBool  eol_vec2d_magnitude_less_than(eolVec2D V,eolFloat size);
 eolBool  eol_vec3d_magnitude_less_than(eolVec3D V,eolFloat size);
+eolBool  eol_vec4d_magnitude_less_than(eolVec4D V,eolFloat size);
 
 /**
  * @brief checks if the distance between the two points provided is less than size.
@@ -474,7 +496,9 @@ eolBool  eol_vec3d_magnitude_less_than(eolVec3D V,eolFloat size);
  * @param size the value to check against
  * @return eolTrue if the distance between P1 and P2 is less than size, false otherwise
  */
-eolBool eol_distance_between_less_than(eolVec3D p1,eolVec3D p2,eolFloat size);
+eolBool eol_distance_between_less_than2d(eolVec3D p1,eolVec3D p2,eolFloat size);
+eolBool eol_distance_between_less_than3d(eolVec3D p1,eolVec3D p2,eolFloat size);
+eolBool eol_distance_between_less_than4d(eolVec3D p1,eolVec3D p2,eolFloat size);
 
 #endif
 
