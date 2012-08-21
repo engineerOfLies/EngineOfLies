@@ -1,0 +1,8 @@
+Make eol pkg-config ready
+
+eol should support pkg-config on linux systems.  This will help developers get up
+to speed on compiling eol.
+
+Assigned:
+estimate: a few hours
+reward: Cheem and Meaf Burrito
