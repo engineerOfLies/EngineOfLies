@@ -1,0 +1,10 @@
+Add Drop Shadow Rendering for font
+
+Make a simple wrapper for rendering menu text with a drop shadow.
+Should support shadow offset and transparency as parameters, but have functions
+that wrap typical calls (ie: always drop 2 pixels down and the left at 0.8 alpha
+
+assigned:
+completed:
+estimate: 2 hours
+reward: an invisible cloak

@@ -171,6 +171,7 @@ eolEntity *eol_entity_new();
 
 /**
  * @brief sync entity states with the collision space.  Update desired forces,
+ * note that position and velocity are updated automatically here.
  * add and remove entities from the space. delete entities marked for death.
  */
 void eol_entity_presync_all();
@@ -257,5 +258,7 @@ void eol_entity_add_to_collision_mask(eolEntity *ent,cpLayers collisionmask);
 void eol_entity_remove_entity_from_collision_mask(eolEntity *ent,cpLayers collisionmask);
 
 void eol_entity_add_actor(eolEntity *ent,eolActor *act);
+
+void eol_entity_set_actor_bounds(eolEntity *ent);
 
 #endif

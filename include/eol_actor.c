@@ -6,8 +6,16 @@
 
 /*local function prototypes*/
 
+eolActor * eol_actor_load(char  *filename)
+{
+  eolActor * act;
+  act = eol_actor_new();
+  if (!act)return NULL;
+  act->model = eol_model_load(filename);
+  return act;
+}
 
-void eol_actor_load(
+void eol_actor_load_in_place(
     eolActor *act,
     char     *filename
   )

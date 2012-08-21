@@ -654,6 +654,21 @@ void eol_entity_remove_entity_from_collision_mask(eolEntity *ent,cpLayers collis
 }
 
 /*entity data*/
+void eol_entity_set_actor_bounds(eolEntity *ent)
+{
+  eolActor * act;
+  if ((!ent) || (!ent->actor))return;
+  act = ent->actor;
+  if ((act->model != NULL )&&(act->model->_mesh != NULL))
+  {
+    ent->boundingBox.x = -act->model->_mesh->bounds.x/2;
+    ent->boundingBox.y = -act->model->_mesh->bounds.y/2;
+    ent->boundingBox.w = act->model->_mesh->bounds.x;
+    ent->boundingBox.h = act->model->_mesh->bounds.y;
+    ent->radius = act->model->_mesh->bounds.y/2 * 0.6;
+  }
+}
+
 void eol_entity_add_actor(eolEntity *ent,eolActor *act)
 {
   if ((!ent)||(!act))return;

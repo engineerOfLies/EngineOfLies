@@ -13,24 +13,12 @@ void testEntThink(eolEntity *self)
 
 void spawnTestEnt(eolVec3D position)
 {
-  eolActor *act;
   eolEntity *self;
   self = eol_entity_new();
   if (!self)return;
-  act = eol_actor_new();
-  if (act)
-  {
-    eol_actor_load(act, "models/cell.actor");
-    eol_entity_add_actor(self,act);
-    if ((act->model != NULL )&&(act->model->_mesh != NULL))
-    {
-      self->boundingBox.x = -act->model->_mesh->bounds.x/2;
-      self->boundingBox.y = -act->model->_mesh->bounds.y/2;
-      self->boundingBox.w = act->model->_mesh->bounds.x;
-      self->boundingBox.h = act->model->_mesh->bounds.y;
-      self->radius = act->model->_mesh->bounds.y/2 * 0.6;
-    }
-  }
+  eol_entity_add_actor(self,eol_actor_load("models/cell.actor"));
+  eol_entity_set_actor_bounds(self);
+
   eol_line_cpy(self->name,"TESTENTNAME");
   self->update = testEntUpdate;
   self->think = testEntThink;

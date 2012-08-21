@@ -40,11 +40,19 @@ typedef struct
 /**
  * @brief loads an actor from file and returns a pointer to it.
  * based on the file information, it will also load up mesh, sprite, etc data.
+ * Actor is a specific instance of a model;
+ * @param the actor file to load.
+ */
+eolActor * eol_actor_load(char  *filename);
+
+/**
+ * @brief loads an actor from file and saves it into the actor data provided.
+ * based on the file information, it will also load up mesh, sprite, etc data.
  *
  * @param act the actor data to load into.  It will clear any existing data.
  * @param filename the model file to load
  */
-void eol_actor_load(eolActor *act, char *filename);
+void eol_actor_load_in_place(eolActor *act, char *filename);
 
 /**
  * @brief clears any of the actor information at the location specified
