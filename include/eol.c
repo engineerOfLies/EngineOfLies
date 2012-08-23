@@ -29,6 +29,7 @@ void eol_init(eolUint components)
   eol_logger_init();
   eol_config_init();
   eol_loader_init();
+  eol_logger_load_config();
   if (components & EOL_GRAPHICS)
   {
     eol_graphics_config();

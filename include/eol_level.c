@@ -10,6 +10,11 @@ eolResourceManager * _eol_level_manager = NULL;
 eolLevel * _eol_level_list = NULL;
 eolLevel * _eol_level_current = NULL;
 eolUint    _eol_level_max_layers = 1;
+eolUint    _eol_level_clip_iterations = 10;
+eolFloat   _eol_level_clip_step = 0.1;
+eolFloat   _eol_level_clip_thickness = 0.5;
+eolFloat   _eol_level_slop = 0.1;
+eolFloat   _eol_level_bias = 0.1;
 eolUint    _eol_level_layer_draw_range = 0;
 eolUint    _eol_level_draw_mode = 0;
 eolUint    _eol_level_max = 0; /**<maximum number of levels that can be loaded
@@ -62,6 +67,12 @@ void eol_level_config()
   if (conf == NULL)return;
   eol_config_get_uint_by_tag(&_eol_level_draw_mode,conf,"drawLevel");
   eol_config_get_uint_by_tag(&_eol_level_layer_draw_range,conf,"drawDepth");
+  eol_config_get_uint_by_tag(&_eol_level_clip_iterations ,conf,"iterations");
+  eol_config_get_float_by_tag(&_eol_level_clip_step ,conf,"clipStep");
+  eol_config_get_float_by_tag(&_eol_level_clip_thickness ,conf,"clipThickness");
+  eol_config_get_float_by_tag(&_eol_level_slop,conf,"clipSlop");
+  eol_config_get_float_by_tag(&_eol_level_bias,conf,"clipBias");
+  
 }
 
 void eol_level_set_draw_mode(eolUint mode)
@@ -193,8 +204,10 @@ eolLevelLayer *eol_level_add_layer(eolLevel *level)
     eol_level_delete_layer(layer);
     return NULL;
   }
-  layer->space->iterations = 10;/*NOTE: make configurable*/
+  layer->space->iterations = _eol_level_clip_iterations;
   layer->space->sleepTimeThreshold = 999999;
+  cpSpaceSetCollisionSlop(layer->space, _eol_level_slop);
+  cpSpaceSetCollisionBias(layer->space, _eol_level_bias);
   
   level->layers = g_list_append(level->layers,layer);
   level->layerCount++;
@@ -382,7 +395,7 @@ cpShape *eol_level_add_segment_to_space(eolFloat sx,
   cpShape *shape;
   float friction = 0.1;
   if(space == NULL)return NULL;
-  shape = cpSegmentShapeNew(cpSpaceGetStaticBody(space), cpv(sx,sy), cpv(ex,ey), 0.0);
+  shape = cpSegmentShapeNew(cpSpaceGetStaticBody(space), cpv(sx,sy), cpv(ex,ey), _eol_level_clip_thickness);
   if (sx == ex)
   {
     friction = 0;
@@ -456,7 +469,7 @@ void eol_level_update(eolLevel *level)
   /*presync*/
   eol_entity_presync_all();
 
-  cpSpaceStep(layer->space,0.01);/*TODO: make configurable*/
+  cpSpaceStep(layer->space,_eol_level_clip_step);
 
   /*post sync*/
   eol_entity_postsync_all();

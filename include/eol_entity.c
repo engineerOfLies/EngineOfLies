@@ -40,7 +40,7 @@ void eol_entity_config()
   if (conf != NULL)
   {
     eol_config_get_uint_by_tag(&_eol_entity_max,conf,"entityMax");
-    eol_config_get_line_by_tag(buf,conf,"entityMax");
+    eol_config_get_line_by_tag(buf,conf,"entityDraw");
     if (strlen(buf))
     {
       if ((eol_line_cmp(buf,"box")==0) ||

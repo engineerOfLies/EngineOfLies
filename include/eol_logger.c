@@ -75,7 +75,7 @@ void eol_logger_message(eolLogLevel level,char *msg,...)
   if (_eol_logger_file == NULL)
   {
     fprintf(stderr,"eol_logger: no log file found! Redirecting logs to stdout\n");
-	_eol_logger_file = stdout;
+    _eol_logger_file = stdout;
     return;
   }
   va_start(ap,msg);

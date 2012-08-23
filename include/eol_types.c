@@ -25,9 +25,16 @@ eolBool eol_equals(eolDouble a, eolDouble b)
 
 eolVec3D eol_vec3d(eolDouble x, eolDouble y, eolDouble z)
 {
-	eolVec3D vec;
+  eolVec3D vec;
   eol_vec3d_set(vec,x, y, z);
-	return vec;
+  return vec;
+}
+
+eolVec4D eol_vec4d(eolDouble x, eolDouble y, eolDouble z, eolDouble w)
+{
+  eolVec4D vec;
+  eol_vec4d_set(vec,x, y, z, w);
+  return vec;
 }
 
 eolFloat eol_vec3d_magnitude (eolVec3D V)
@@ -54,6 +61,13 @@ eolBool eol_distance_between_less_than3d(eolVec3D p1,eolVec3D p2,eolFloat size)
 }
 
 void eol_vec3d_set_angle_by_radians(eolVec3D *out,eolFloat radians)
+{
+  if(!out)return;
+  out->x = cos(radians);
+  out->y = sin(radians);
+}
+
+void eol_vec4d_set_angle_by_radians(eolVec4D *out,eolFloat radians)
 {
   if(!out)return;
   out->x = cos(radians);
