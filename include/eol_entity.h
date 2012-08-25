@@ -54,8 +54,9 @@ enum eolEntityDrawModes {
   eolEntityDrawShaded    = 5
 };
 
-enum eolEntityClipLayers {
-  eolEntityClipLevel = 1
+enum eolEntityClipTypes {
+  eolEntityClipLevel = 1,
+  eolEntityClipEntities = 2
 };
 
 

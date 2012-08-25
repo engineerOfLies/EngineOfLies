@@ -206,6 +206,7 @@ eolLevelLayer *eol_level_add_layer(eolLevel *level)
   }
   layer->space->iterations = _eol_level_clip_iterations;
   layer->space->sleepTimeThreshold = 999999;
+  cpSpaceSetEnableContactGraph(layer->space,eolTrue);
   cpSpaceSetCollisionSlop(layer->space, _eol_level_slop);
   cpSpaceSetCollisionBias(layer->space, _eol_level_bias);
   
@@ -386,6 +387,15 @@ void eol_level_set_current_level(eolLevel *level)
  *** physics ***
 */
 
+cpBody *eol_level_get_active_layer_body()
+{
+  eolLevelLayer *layer;
+  if (!_eol_level_current)return NULL;
+  layer = g_list_nth_data(_eol_level_current->layers,_eol_level_current->active);
+  if (!layer)return NULL;
+  return cpSpaceGetStaticBody(layer->space);
+}
+
 cpShape *eol_level_add_segment_to_space(eolFloat sx,
                                         eolFloat sy,
                                         eolFloat ex,
@@ -406,7 +416,7 @@ cpShape *eol_level_add_segment_to_space(eolFloat sx,
     shape->u = friction;
     shape->collision_type = eolEntityClipLevel;
     cpShapeSetLayers (shape, eolEntityClipLevel);
-    cpSpaceAddStaticShape(space, shape);
+    cpSpaceAddShape(space, shape);
   }
   return shape;
 }

@@ -164,8 +164,7 @@ void eol_entity_delete(void *entityData)
   if (!eol_entity_initialized())return;
   if (!entityData)return;
   ent = (eolEntity *)entityData;
-  if ((ent->customData != NULL) &&
-      (_eol_entity_custom_delete != NULL) &&
+  if ((_eol_entity_custom_delete != NULL) &&
       (_eol_entity_custom_data_size != 0))
   {
     _eol_entity_custom_delete(ent->customData);
@@ -190,8 +189,8 @@ void eol_entity_delete(void *entityData)
   ent->actor = NULL;
   ent->actorList = NULL;
   /*physics*/
-  if (ent->body)cpBodyFree(ent->body);
-  if (ent->shape)cpShapeFree(ent->shape);
+  if (ent->body != NULL)cpBodyFree(ent->body);
+  if (ent->shape != NULL)cpShapeFree(ent->shape);
   eol_config_free(&ent->config);
  
   memset(ent,0,sizeof(eolEntity));
@@ -270,12 +269,18 @@ void eol_entity_postsync(eolEntity * ent)
   p = cpBodyGetPos(ent->body);
   ent->ori.position.x = p.x;
   ent->ori.position.y = p.y;
+  /*entity-entity collisions are most important...*/
   cpBodyEachArbiter(ent->body, (cpBodyArbiterIteratorFunc)eol_entity_handle_touch, ent);
 }
 
 void eol_entity_presync(eolEntity *ent)
 {
   if (!ent)return;
+  if (ent->state == eolEntityDead)
+  {
+    eol_entity_free(&ent);
+    return;
+  }
   eol_orientation_add(&ent->ori,
                       ent->ori,
                       ent->vector);
@@ -457,52 +462,50 @@ void eol_entity_draw_all()
 /*physics sync*/
 static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data)
 {
+  eolUint count = 0;
+  int i;
   eolEntity *self = (eolEntity *)data;
   eolEntity *other = NULL;
-  cpBody *a,*b;
+  cpBody *counterParty = NULL;
+  cpShape *s1,*s2;
   if (self == NULL)
   {
     eol_logger_message(
       EOL_LOG_ERROR,"Given bad pointer to self in HandleEntityTouch.\n");
     return;
   }
-  if (self->touch == NULL)
+  if ((self->touch == NULL) && (self->levelTouch == NULL))
   {
     /*no need to do any more work here*/
     return;
   }
-  cpArbiterGetBodies(arbiter, &a, &b);
-  if ((a == NULL)||(b == NULL))
+  count = cpArbiterGetCount(arbiter);
+  cpArbiterGetShapes(arbiter, &s1, &s2);
+  for (i = 0; i < count;i++)
   {
-    eol_logger_message(
-      EOL_LOG_ERROR,
-      "Arbiter returned bad participants!\n");
-    return;
-  }
-  if (a->data == (void *)self)
-  {
-    if (b->data == NULL)
+    if (s1[i].body == body)
     {
+      counterParty = s2[i].body;
+    }
+    else
+    {
+      counterParty = s1[i].body;
+    }
+    if(cpBodyIsStatic(counterParty))
+    {
+      /*world collision handler*/
+      if (self->levelTouch != NULL)
+      {
+        self->levelTouch(self,NULL);
+      }
       return;
     }
-    other = (eolEntity *)b->data;
-  }
-  else if (b->data == self)
-  {
-    if (a->data == NULL)
+    if (self->touch != NULL)
     {
-      return;
+      other = (eolEntity *)counterParty->data;
+      self->touch(self,other);
     }
-    other = (eolEntity *)a->data;
   }
-  else
-  {
-    eol_logger_message(
-      EOL_LOG_ERROR,
-      "neither body attached to this arbiter is self!\n");
-    return;
-  }
-  self->touch(self,other);
 }
 
 /*space stuff*/
@@ -539,6 +542,7 @@ void eol_entity_add_to_space(eolEntity *ent,cpSpace *space)
       ent->name);
     return;
   }
+  ent->shape->collision_type = eolEntityClipEntities;
   if (cpSpaceAddShape(space, ent->shape) == NULL)
   {
     eol_logger_message(
@@ -563,15 +567,20 @@ void eol_entity_remove_from_space(eolEntity *ent)
   {
     return;
   }
-  if (ent->body == NULL)
+  if (ent->body != NULL)
   {
-    eol_logger_message(
-      EOL_LOG_WARN,
-      "eol_entity:entity does not have a body!\n");
-    return;
+    cpSpaceRemoveBody(ent->_space, ent->body);
+    cpBodyFree(ent->body);
+    ent->body = NULL;
   }
-  cpSpaceRemoveShape(ent->_space, ent->shape);
-  cpSpaceRemoveBody(ent->_space, ent->body);
+  if (ent->shape != NULL)
+  {
+    cpSpaceRemoveShape(ent->_space, ent->shape);
+    cpShapeFree(ent->shape);
+    ent->shape = NULL;
+  }
+  ent->_space = NULL;
+  printf("removed entity %i from space\n",ent->id);
 }
 
 void eol_entity_shape_make_circle(eolEntity *ent)
@@ -583,24 +592,19 @@ void eol_entity_shape_make_circle(eolEntity *ent)
       "eol_entity:passed NULL data to shape make circle.\n");
     return;
   }
+  /*cleanup any potential old space data*/
   eol_entity_remove_from_space(ent);
-  if (ent->shape != NULL)
-  {
-    cpShapeFree(ent->shape);
-  }
+  ent->body = cpBodyNew(ent->mass, INFINITY);
   if (ent->body == NULL)
   {
-    ent->body = cpBodyNew(ent->mass, INFINITY);
-    if (ent->body == NULL)
-    {
-      eol_logger_message(
-      EOL_LOG_ERROR,
-      "eol_entity:failed to create a new body for physics entity.\n");
-      return;
-    }
+    eol_logger_message(
+    EOL_LOG_ERROR,
+    "eol_entity:failed to create a new body for physics entity.\n");
+    return;
   }
   ent->shapeType = eolEntityCircle;
   ent->shape = cpCircleShapeNew(ent->body, ent->radius, cpvzero);
+  ent->body->data = ent;
   cpShapeSetLayers(ent->shape, ent->collisionMask);
 }
 
@@ -631,6 +635,7 @@ void eol_entity_shape_make_rect(eolEntity *ent)
   }
   ent->shapeType = eolEntityRect;
   ent->shape = cpBoxShapeNew(ent->body, ent->boundingBox.w, ent->boundingBox.h);
+  ent->body->data = ent;
   cpShapeSetLayers(ent->shape, ent->collisionMask);
 }
 

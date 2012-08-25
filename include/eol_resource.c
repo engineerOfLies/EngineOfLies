@@ -16,6 +16,13 @@ eolResourceHeader *eol_resource_get_header_by_data(void *data);
 eolResourceHeader * eol_resource_get_next_element(eolResourceManager *manager,eolResourceHeader *element);
 eolBool eol_resource_validate_header_range(eolResourceManager *manager,eolResourceHeader *element);
 
+eolResourceHeader *eol_resource_get_header_by_index(eolResourceManager *manager,eolUint i)
+{
+  if (!manager)return NULL;
+  if (i >= manager->_data_max)return NULL;
+  return (eolResourceHeader *)&manager->_data_list[(i * manager->_data_size)];
+}
+
 void *eol_resource_manager_load_resource(eolResourceManager *manager,char *filename)
 {
   eolResourceHeader * element = NULL;
@@ -67,7 +74,7 @@ void eol_resource_manager_free(eolResourceManager **manager_pp)
   {
     for (i = 0 ; i < manager->_data_max;i++)
     {
-      element = (eolResourceHeader *)&manager->_data_list[(i * manager->_data_size)];
+      element = eol_resource_get_header_by_index(manager,i);
       manager->data_delete(eol_resource_get_data_by_header(element));
     }
   }
@@ -129,7 +136,7 @@ eolResourceManager * eol_resource_manager_init(
   memset(manager->_data_list,0,manager->_data_size * max);
   for (i = 0 ; i < manager->_data_max;i++)
   {
-    element = (eolResourceHeader *)&manager->_data_list[(i * manager->_data_size)];
+    element = eol_resource_get_header_by_index(manager,i);
     element->index = i;
     element->refCount = 0;
     element->timeFree = 0;
@@ -213,7 +220,7 @@ eolResourceHeader * eol_resource_find_element_by_filename(eolResourceManager *ma
   }
   for (i = 0 ; i < manager->_data_max;i++)
   {
-    element = (eolResourceHeader *)&manager->_data_list[(i * manager->_data_size)];
+    element = eol_resource_get_header_by_index(manager,i);
     if (strncmp(filename,element->filename,EOLLINELEN) == 0)
     {
       return element;
@@ -247,7 +254,7 @@ void * eol_resource_new_element(eolResourceManager *manager)
 
   for (i = 0 ; i < manager->_data_max;i++)
   {
-    element = (eolResourceHeader *)&manager->_data_list[(i * manager->_data_size)];
+    element = eol_resource_get_header_by_index(manager,i);
     if (element->refCount == 0)
     {
       if (element->timeFree <= oldestTime)
@@ -267,7 +274,12 @@ void * eol_resource_new_element(eolResourceManager *manager)
   {
     element = oldest;
     eol_resource_delete_element(manager,element);
-    element->index = oldestIndex;
+    if (element->index != oldestIndex)
+    {
+     // printf("OUT OF SYNC INDICES!!!!\n");
+      assert(0);
+    }
+    element->id = manager->_data_id_pool++;
     element->refCount = 1;
     manager->_data_count++;
     return eol_resource_get_data_by_header(element);
@@ -286,23 +298,26 @@ void eol_resource_free_element(eolResourceManager *manager,void **data)
   if (!manager)return;
   if (!data)return;
   if (!*data)return;
-  element = (eolResourceHeader *)(*data);
-  element--;
-  element->refCount--;
-  if (element->refCount == 0)
-  {
-    manager->_data_count--;
-  }
+  element = eol_resource_get_header_by_data(*data);
   if (manager->_data_unique)
   {
+//    printf("deleting index %i, id %i\n",element->index,element->id);
     if (manager->data_delete != NULL)
     {
       manager->data_delete(*data);
     }
+    eol_resource_delete_element(manager,element);
     element->timeFree = 0;
+    manager->_data_count--;
+    element->refCount = 0;
   }
   else
   {
+    element->refCount--;
+    if (element->refCount == 0)
+    {
+      manager->_data_count--;
+    }
     element->timeFree = eol_graphics_get_now();
   }
   *data = NULL;
@@ -337,7 +352,7 @@ void eol_resource_manager_clear(eolResourceManager *manager)
   }
   for (i = 0 ; i < manager->_data_max;i++)
   {
-    element = (eolResourceHeader *)&manager->_data_list[(i * manager->_data_size)];
+    element = eol_resource_get_header_by_index(manager,i);
     manager->data_delete(&element[1]);
   }
   manager->_data_count = 0;
@@ -372,7 +387,7 @@ void eol_resource_manager_clean(eolResourceManager *manager)
   }
   for (i = 0 ; i < manager->_data_max;i++)
   {
-    element = (eolResourceHeader *)&manager->_data_list[(i * manager->_data_size)];
+    element = eol_resource_get_header_by_index(manager,i);
     if (element->refCount == 0)
     {
       manager->data_delete(&element[1]);
@@ -382,13 +397,16 @@ void eol_resource_manager_clean(eolResourceManager *manager)
 
 void eol_resource_delete_element(eolResourceManager *manager,eolResourceHeader *element)
 {
+  eolUint index;
   if (!manager)return;
   if (!element)return;
   if (manager->data_delete != NULL)
   {
     manager->data_delete(&element[1]);
   }
+  index = element->index;
   memset(element,0,manager->_data_size);
+  element->index = index;
 }
 
 eolResourceHeader *eol_resource_get_header_by_data(void *data)
@@ -430,8 +448,7 @@ eolInt eol_resource_element_get_id(eolResourceManager *manager,void *element)
       "eol_resource:passed a NULL element\n");
     return -1;
   }
-  header = (eolResourceHeader *)element;
-  header--;
+  header = eol_resource_get_header_by_data(element);
   /*range verification*/
   if (!eol_resource_validate_header_range(manager,header))
   {
@@ -458,8 +475,7 @@ eolUint eol_resource_element_get_refcount(eolResourceManager *manager,void *elem
                        "eol_resource:passed a NULL element\n");
                        return 0;
   }
-  header = (eolResourceHeader *)element;
-  header--;
+  header = eol_resource_get_header_by_data(element);
   /*range verification*/
   if (!eol_resource_validate_header_range(manager,header))
   {
@@ -486,8 +502,7 @@ void eol_resource_element_get_filename(eolLine filename, eolResourceManager *man
                        "eol_resource:passed a NULL element\n");
                        return ;
   }
-  header = (eolResourceHeader *)element;
-  header--;
+  header = eol_resource_get_header_by_data(element);
   /*range verification*/
   if (!eol_resource_validate_header_range(manager,header))
   {
@@ -514,8 +529,7 @@ eolInt eol_resource_element_get_index(eolResourceManager *manager,void *element)
       "eol_resource:passed a NULL element\n");
     return -1;
   }
-  header = (eolResourceHeader *)element;
-  header--;
+  header = eol_resource_get_header_by_data(element);
   /*range verification*/
   if (!eol_resource_validate_header_range(manager,header))
   {

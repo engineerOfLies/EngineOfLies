@@ -220,4 +220,6 @@ void eol_level_add_entity_to_layer(eolLevelLayer *layer, eolEntity *ent);
 
 void eol_level_add_entity_to_active_layer(eolEntity *ent);
 
+cpBody *eol_level_get_active_layer_body();
+
 #endif
