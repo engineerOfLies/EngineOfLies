@@ -106,7 +106,7 @@ void eol_entity_init()
   _eol_entity_manager = eol_resource_manager_init(
     "eol_entity_manager",
     _eol_entity_max,
-    sizeof(eolEntity)/* + _eol_entity_custom_data_size*/,
+    sizeof(eolEntity) + _eol_entity_custom_data_size,
     eolTrue,
     eol_entity_delete,
     eol_entity_load_data_from_file
@@ -258,6 +258,11 @@ void eol_entity_register_custom_data_size(eolUint customSize)
   _eol_entity_custom_data_size = customSize;
 }
 
+eolUint eol_entity_get_ref_count(eolEntity * ent)
+{
+  return eol_resource_element_get_refcount(_eol_entity_manager ,ent);
+}
+
 /*sync with physics system*/
 
 void eol_entity_postsync(eolEntity * ent)
@@ -270,7 +275,9 @@ void eol_entity_postsync(eolEntity * ent)
   ent->ori.position.x = p.x;
   ent->ori.position.y = p.y;
   /*entity-entity collisions are most important...*/
+  ent->touchcount = 0;
   cpBodyEachArbiter(ent->body, (cpBodyArbiterIteratorFunc)eol_entity_handle_touch, ent);
+  if (ent->touchcount > 1)printf("body touch count = %i\n",ent->touchcount);
 }
 
 void eol_entity_presync(eolEntity *ent)
@@ -291,6 +298,9 @@ void eol_entity_presync(eolEntity *ent)
   {
     eol_trail_append(&ent->trail,ent->ori);
   }
+  ent->grounded = eolFalse;
+  ent->bounced = eolFalse;
+  ent->wallTouch = eolFalse;
 
   if (ent->body != NULL)
   {
@@ -460,14 +470,32 @@ void eol_entity_draw_all()
 
 
 /*physics sync*/
+
+void eol_entity_handle_world_touch(eolEntity *ent, cpShape *world,eolVec3D normal,eolVec3D point)
+{
+  if ((!ent)||(!world))return;
+  if (ent->bounces)
+  {
+    eol_vec3d_reflect(&ent->vector.position, normal,ent->vector.position);
+    ent->bounced = eolTrue;
+  }
+  if (ent->levelTouch != NULL)
+  {
+    ent->levelTouch(ent,NULL);
+  }
+}
+
 static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data)
 {
   eolUint count = 0;
   int i;
   eolEntity *self = (eolEntity *)data;
   eolEntity *other = NULL;
-  cpBody *counterParty = NULL;
+  cpBody *counterBody = NULL;
+  cpShape *counterShape = NULL;
   cpShape *s1,*s2;
+  cpVect cpnormal,cppoint;
+  eolVec3D normal,point;
   if (self == NULL)
   {
     eol_logger_message(
@@ -479,30 +507,34 @@ static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data
     /*no need to do any more work here*/
     return;
   }
+  self->touchcount++;
   count = cpArbiterGetCount(arbiter);
   cpArbiterGetShapes(arbiter, &s1, &s2);
   for (i = 0; i < count;i++)
   {
+    cpnormal = cpArbiterGetNormal(arbiter, i);
+    cppoint = cpArbiterGetPoint(arbiter, i);
+    eol_vec3d_set(normal,cpnormal.x,cpnormal.y,0);
+    eol_vec3d_set(point,cppoint.x,cppoint.y,0);
     if (s1[i].body == body)
     {
-      counterParty = s2[i].body;
+      counterBody = s2[i].body;
+      counterShape = &s2[i];
     }
     else
     {
-      counterParty = s1[i].body;
+      counterBody = s1[i].body;
+      counterShape = &s1[i];
     }
-    if(cpBodyIsStatic(counterParty))
+    if(cpBodyIsStatic(counterBody))
     {
       /*world collision handler*/
-      if (self->levelTouch != NULL)
-      {
-        self->levelTouch(self,NULL);
-      }
+      eol_entity_handle_world_touch(self,counterShape,normal,point);
       return;
     }
     if (self->touch != NULL)
     {
-      other = (eolEntity *)counterParty->data;
+      other = (eolEntity *)counterBody->data;
       self->touch(self,other);
     }
   }
@@ -580,7 +612,6 @@ void eol_entity_remove_from_space(eolEntity *ent)
     ent->shape = NULL;
   }
   ent->_space = NULL;
-  printf("removed entity %i from space\n",ent->id);
 }
 
 void eol_entity_shape_make_circle(eolEntity *ent)

@@ -84,6 +84,8 @@ typedef struct Entity_S
   cpShape         * shape;      /**<link to physics engine*/
   cpSpace         * _space;     /**<pointer to the space this entity is a part of*/
   cpLayers          collisionMask;/**<collision mask for space.  Not the same as level layer.*/
+  eolBool           bounces;    /**<set to true if you want the entity to bounce off of walls*/
+  eolVec3D          gravity;    /**<set to the direction of gravity for this entity*/
   
   eolTrail          trail;     /**<the last so many orientations of the entity*/
   eolBool           trackTrail;/**<if the trail should be tracked.*/
@@ -98,6 +100,8 @@ typedef struct Entity_S
 
   eolBool           grounded; /**<set true by the physics pass if the entity is touching the ground*/
   eolBool           wallTouch;/**<set true by the physics pass if the entity is touching a wall*/
+  eolBool           bounced;
+  eolUint           touchcount;
 
   /*function pointers*/
   /**<the custom draw function, if defined will override standard draw function*/
@@ -261,5 +265,7 @@ void eol_entity_remove_entity_from_collision_mask(eolEntity *ent,cpLayers collis
 void eol_entity_add_actor(eolEntity *ent,eolActor *act);
 
 void eol_entity_set_actor_bounds(eolEntity *ent);
+
+eolUint eol_entity_get_ref_count(eolEntity * ent);
 
 #endif

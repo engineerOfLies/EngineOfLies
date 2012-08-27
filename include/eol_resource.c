@@ -274,11 +274,6 @@ void * eol_resource_new_element(eolResourceManager *manager)
   {
     element = oldest;
     eol_resource_delete_element(manager,element);
-    if (element->index != oldestIndex)
-    {
-     // printf("OUT OF SYNC INDICES!!!!\n");
-      assert(0);
-    }
     element->id = manager->_data_id_pool++;
     element->refCount = 1;
     manager->_data_count++;
@@ -301,7 +296,6 @@ void eol_resource_free_element(eolResourceManager *manager,void **data)
   element = eol_resource_get_header_by_data(*data);
   if (manager->_data_unique)
   {
-//    printf("deleting index %i, id %i\n",element->index,element->id);
     if (manager->data_delete != NULL)
     {
       manager->data_delete(*data);

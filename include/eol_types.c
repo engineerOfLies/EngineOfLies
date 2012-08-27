@@ -88,6 +88,34 @@ void eol_vec3d_normalize (eolVec3D *V)
   V->z *= M;
 }
 
+void eol_vec2d_reflect(eolVec2D *out, eolVec2D normal,eolVec2D in)
+{
+  eolFloat f;
+  f = eol_vec2d_dot_product(in,normal);
+  out->x = in.x - (2 * normal.x * f);
+  out->y = in.y - (2 * normal.y * f);
+}
+
+void eol_vec3d_reflect(eolVec3D *out, eolVec3D normal,eolVec3D in)
+{
+  eolFloat f;
+  f = eol_vec3d_dot_product(in,normal);
+  out->x = in.x - (2 * normal.x * f);
+  out->y = in.y - (2 * normal.y * f);
+  out->z = in.z - (2 * normal.z * f);
+}
+
+void eol_vec4d_reflect(eolVec4D *out, eolVec4D normal,eolVec4D in)
+{
+  eolFloat f;
+  f = eol_vec4d_dot_product(in,normal);
+  out->x = in.x - (2 * normal.x * f);
+  out->y = in.y - (2 * normal.y * f);
+  out->z = in.z - (2 * normal.z * f);
+  out->w = in.w - (2 * normal.w * f);
+}
+
+
 eolRect eol_rect(
   eolInt  x,
   eolInt  y,

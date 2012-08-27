@@ -459,6 +459,17 @@ eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
 #define eol_vec4d_set(v, a, b, c,d)  (v.x=(a), v.y=(b), v.z=(c), v.w=(d))
 
 /**
+ * @brief reflect a vector about a normal.  Simulates "Bounce"
+ * @param out the resultant vector
+ * @param normal the normal vector for the surface that is providing the bounce
+ * @param in the input vector that will bounce off of the normal
+ */
+void eol_vec2d_reflect(eolVec2D *out, eolVec2D normal,eolVec2D in);
+void eol_vec3d_reflect(eolVec3D *out, eolVec3D normal,eolVec3D in);
+void eol_vec4d_reflect(eolVec4D *out, eolVec4D normal,eolVec4D in);
+
+
+/**
  * @brief normalizes the vector passed.  does nothing for a zero length vector.
  *
  * @param v pointer to the vector to be normalized.
