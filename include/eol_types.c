@@ -16,6 +16,7 @@
     along with the EOL game engine.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "eol_types.h"
+#include "eol_logger.h"
 #include <math.h>
 
 eolBool eol_equals(eolDouble a, eolDouble b)
@@ -86,6 +87,78 @@ void eol_vec3d_normalize (eolVec3D *V)
   V->x *= M;
   V->y *= M;
   V->z *= M;
+}
+
+eolVec2D *eol_vec2d_dup(eolVec2D old)
+{
+  eolVec2D *duped = NULL;
+  duped = eol_vec2d_new();
+  if (!duped)return NULL;
+  eol_vec2d_copy((*duped),old);
+  return duped;
+}
+
+eolVec3D *eol_vec3d_dup(eolVec3D old)
+{
+  eolVec3D *duped = NULL;
+  duped = eol_vec3d_new();
+  if (!duped)return NULL;
+  eol_vec3d_copy((*duped),old);
+  return duped;
+}
+
+eolVec4D *eol_vec4d_dup(eolVec4D old)
+{
+  eolVec4D *duped = NULL;
+  duped = eol_vec4d_new();
+  if (!duped)return NULL;
+  eol_vec4d_copy((*duped),old);
+  return duped;
+}
+
+eolVec2D *eol_vec2d_new()
+{
+  eolVec2D *vec = NULL;
+  vec = (eolVec2D *)malloc(sizeof(eolVec2D));
+  if (vec == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_types:failed to allocate a new vector!\n");
+    return NULL;
+  }
+  eol_vec2d_clear((*vec));
+  return vec;
+}
+
+eolVec3D *eol_vec3d_new()
+{
+  eolVec3D *vec = NULL;
+  vec = (eolVec3D *)malloc(sizeof(eolVec3D));
+  if (vec == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_types:failed to allocate a new vector!\n");
+    return NULL;
+  }
+  eol_vec3d_clear((*vec));
+  return vec;
+}
+
+eolVec4D *eol_vec4d_new()
+{
+  eolVec4D *vec = NULL;
+  vec = (eolVec4D *)malloc(sizeof(eolVec4D));
+  if (vec == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_types:failed to allocate a new vector!\n");
+    return NULL;
+  }
+  eol_vec4d_clear((*vec));
+  return vec;
 }
 
 void eol_vec2d_reflect(eolVec2D *out, eolVec2D normal,eolVec2D in)

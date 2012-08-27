@@ -458,6 +458,15 @@ eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
 #define eol_vec3d_set(v, a, b, c)  (v.x=(a), v.y=(b), v.z=(c))
 #define eol_vec4d_set(v, a, b, c,d)  (v.x=(a), v.y=(b), v.z=(c), v.w=(d))
 
+
+eolVec2D *eol_vec2d_new();
+eolVec3D *eol_vec3d_new();
+eolVec4D *eol_vec4d_new();
+
+eolVec2D *eol_vec2d_dup(eolVec2D old);
+eolVec3D *eol_vec3d_dup(eolVec3D old);
+eolVec4D *eol_vec4d_dup(eolVec4D old);
+
 /**
  * @brief reflect a vector about a normal.  Simulates "Bounce"
  * @param out the resultant vector

@@ -71,11 +71,14 @@ typedef struct Entity_S
   eolUint           parentId;   /**<unique id of the parent entity.  if this doesnt match, parent died.*/
 
   GList           * children;   /**<this will be a list of eolEntityPointer*/
+  GList           * normals;    /**<aggregated each frame for all the normals of touching objects*/
+  eolVec3D          normal;     /**<average normal of touching objects*/
 
   eolBool           shown;      /**<if the entity should be drawn*/
   eolBool           physical;   /**<if the entity should be added to physics space*/
   eolUint           state;      /**<see eolEntityState for details*/
 
+  eolUint           team;       /**<entities on the same team will not clip each other*/
   eolUint           shapeType;  /**<see eolEntityShapes for supported shape types*/
   eolRectFloat      boundingBox;/**<bounding box offset from orientation*/
   eolFloat          radius;     /**<for circle based collisions*/
@@ -101,7 +104,6 @@ typedef struct Entity_S
   eolBool           grounded; /**<set true by the physics pass if the entity is touching the ground*/
   eolBool           wallTouch;/**<set true by the physics pass if the entity is touching a wall*/
   eolBool           bounced;
-  eolUint           touchcount;
 
   /*function pointers*/
   /**<the custom draw function, if defined will override standard draw function*/

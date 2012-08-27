@@ -22,6 +22,7 @@ void eol_entity_close();
 void eol_entity_delete(void *entityData);
 eolBool eol_entity_load_data_from_file(char * filename,void *data);
 static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data);
+void eol_entity_handle_world_touch(eolEntity *ent);
 
 void eol_entity_draw_textured(eolEntity *ent);
 void eol_entity_draw_wire(eolEntity *ent);
@@ -232,6 +233,7 @@ eolEntity *eol_entity_new()
   ent->collisionMask = CP_ALL_LAYERS;
   eol_orientation_clear(&ent->ori);
   ent->shown = eolTrue;
+  ent->team = CP_NO_GROUP;
   ent->id = eol_resource_element_get_id(_eol_entity_manager,ent);
   return ent;
 }
@@ -268,6 +270,10 @@ eolUint eol_entity_get_ref_count(eolEntity * ent)
 void eol_entity_postsync(eolEntity * ent)
 {
   cpVect p;
+  eolUint count = 0;
+  eolFloat factor = 0;
+  eolVec3D * tempVec;
+  GList *it;
   if (!ent)return;
   /*sync with the physics body*/
   if (ent->body == NULL)return;
@@ -275,9 +281,31 @@ void eol_entity_postsync(eolEntity * ent)
   ent->ori.position.x = p.x;
   ent->ori.position.y = p.y;
   /*entity-entity collisions are most important...*/
-  ent->touchcount = 0;
+  for (it = ent->normals;it != NULL;it = it->next)
+  {
+    if (it->data)free(it->data);
+  }
+  g_list_free(ent->normals);
+  ent->normals = NULL;
+  
   cpBodyEachArbiter(ent->body, (cpBodyArbiterIteratorFunc)eol_entity_handle_touch, ent);
-  if (ent->touchcount > 1)printf("body touch count = %i\n",ent->touchcount);
+  eol_vec3d_clear(ent->normal);
+  for (it = ent->normals,count = 0;it != NULL;it = it->next,count++)
+  {
+    if (it->data != NULL)
+    {
+      tempVec = (eolVec3D *)it->data;
+      eol_vec3d_add(ent->normal,
+                    (*tempVec),
+                    ent->normal);
+    }
+  }
+  if (count > 0)
+  {
+    factor = 1.0f/(float)count;
+    eol_vec3d_scale(ent->normal,ent->normal,factor);
+    eol_entity_handle_world_touch(ent);
+  }
 }
 
 void eol_entity_presync(eolEntity *ent)
@@ -471,12 +499,12 @@ void eol_entity_draw_all()
 
 /*physics sync*/
 
-void eol_entity_handle_world_touch(eolEntity *ent, cpShape *world,eolVec3D normal,eolVec3D point)
+void eol_entity_handle_world_touch(eolEntity *ent)
 {
-  if ((!ent)||(!world))return;
+  if (!ent)return;
   if (ent->bounces)
   {
-    eol_vec3d_reflect(&ent->vector.position, normal,ent->vector.position);
+    eol_vec3d_reflect(&ent->vector.position, ent->normal,ent->vector.position);
     ent->bounced = eolTrue;
   }
   if (ent->levelTouch != NULL)
@@ -507,7 +535,6 @@ static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data
     /*no need to do any more work here*/
     return;
   }
-  self->touchcount++;
   count = cpArbiterGetCount(arbiter);
   cpArbiterGetShapes(arbiter, &s1, &s2);
   for (i = 0; i < count;i++)
@@ -529,7 +556,7 @@ static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data
     if(cpBodyIsStatic(counterBody))
     {
       /*world collision handler*/
-      eol_entity_handle_world_touch(self,counterShape,normal,point);
+      self->normals = g_list_append(self->normals,eol_vec3d_dup(normal));
       return;
     }
     if (self->touch != NULL)
@@ -636,6 +663,7 @@ void eol_entity_shape_make_circle(eolEntity *ent)
   ent->shapeType = eolEntityCircle;
   ent->shape = cpCircleShapeNew(ent->body, ent->radius, cpvzero);
   ent->body->data = ent;
+  cpShapeSetGroup(ent->shape, ent->team);
   cpShapeSetLayers(ent->shape, ent->collisionMask);
 }
 
@@ -667,6 +695,7 @@ void eol_entity_shape_make_rect(eolEntity *ent)
   ent->shapeType = eolEntityRect;
   ent->shape = cpBoxShapeNew(ent->body, ent->boundingBox.w, ent->boundingBox.h);
   ent->body->data = ent;
+  cpShapeSetGroup(ent->shape, ent->team);
   cpShapeSetLayers(ent->shape, ent->collisionMask);
 }
 
