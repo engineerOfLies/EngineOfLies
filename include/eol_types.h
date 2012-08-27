@@ -248,6 +248,14 @@ void eol_vec3d_set_angle_by_radians(eolVec3D *out,eolFloat radians);
 
 void eol_vec2d_set_angle_by_radians(eolVec2D *out,eolFloat radians);
 
+/**
+ * @brief returns the angle of a vector in 2D space.
+ * @param x the x component of the vector
+ * @param y the y component of the vector
+ * @return the angle of the vector in radians.
+ */
+eolFloat eol_vector_angle(eolFloat x,eolFloat y);
+
 /*
   Time Handling
 */

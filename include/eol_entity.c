@@ -14,6 +14,7 @@ eolResourceManager  * _eol_entity_manager = NULL;
 eolEntity           * _eol_entity_list = NULL;
 eolUint               _eol_entity_max = 1024;
 eolEntityCustomDelete _eol_entity_custom_delete = NULL;
+eolUint               _eol_entity_trail_max = 16;
 eolUint               _eol_entity_draw_mode = 0;
 eolEntityDrawType     _eol_entity_draw_func = NULL; /*we bring the func*/
 
@@ -35,12 +36,14 @@ void eol_entity_config()
   eolConfig *conf = NULL;
   eolLine    buf;
   _eol_entity_max = 1024;
+  _eol_entity_trail_max = 16;
   _eol_entity_draw_mode = eolEntityDrawBounds;
 
   conf = eol_config_load("system/entity.cfg");
   if (conf != NULL)
   {
     eol_config_get_uint_by_tag(&_eol_entity_max,conf,"entityMax");
+    eol_config_get_uint_by_tag(&_eol_entity_trail_max,conf,"trailLenth");
     eol_config_get_line_by_tag(buf,conf,"entityDraw");
     if (strlen(buf))
     {
@@ -232,6 +235,7 @@ eolEntity *eol_entity_new()
   ent->self = ent;
   ent->collisionMask = CP_ALL_LAYERS;
   eol_orientation_clear(&ent->ori);
+  eol_trail_new(&ent->trail,_eol_entity_trail_max);
   ent->shown = eolTrue;
   ent->team = CP_NO_GROUP;
   ent->id = eol_resource_element_get_id(_eol_entity_manager,ent);
@@ -483,6 +487,13 @@ void eol_entity_draw(eolEntity *ent)
   else
   {
     eol_entity_draw_textured(ent);
+  }
+  if (ent->drawTrail)
+  {
+    eol_draw_trail(&ent->trail,
+                   ent->radius,
+                   eolFalse,
+                   eolFalse);
   }
 }
 

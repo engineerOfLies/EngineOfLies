@@ -161,6 +161,18 @@ eolVec4D *eol_vec4d_new()
   return vec;
 }
 
+eolFloat eol_vector_angle(eolFloat x,eolFloat y)
+{
+  eolFloat angle = atan2(y, x) + M_PI;
+  eolFloat fraction = angle * 0.5 / M_PI;
+  if (fraction >= 1.0)
+  {
+    fraction -= 1.0;
+  }
+  return (fraction * 360);
+}
+
+
 void eol_vec2d_reflect(eolVec2D *out, eolVec2D normal,eolVec2D in)
 {
   eolFloat f;
