@@ -5,6 +5,6 @@ the resource manager should be used to maintain access to loaded files.
 since in games sounds come in sets or packs, support for loading whole packs
 should be added.
 
-assigned:
-estiamte:
+assigned: rabtom
+estimate:
 reward: scroll of cure blindness

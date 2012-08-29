@@ -106,13 +106,15 @@ void eol_draw_line_3D(eolVec3D p1,
   glColor4f(color.x,color.y,color.z,alpha);
   glPushMatrix();
 
-/*  glLineWidth(radius);*/
+  glLineWidth(1 + radius);
 
   glBegin( GL_LINES );
   glVertex3f(p1.x,p1.y,p1.z);
   glVertex3f(p2.x,p2.y,p2.z);
   glEnd( );
-  
+
+  glLineWidth(1);
+
   glPopMatrix();
   glColor4f(1,1,1,1);
   glDisable(GL_BLEND);

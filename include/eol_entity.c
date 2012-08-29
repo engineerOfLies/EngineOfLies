@@ -492,7 +492,7 @@ void eol_entity_draw(eolEntity *ent)
   if (ent->drawTrail)
   {
     eol_draw_trail(&ent->trail,
-                   ent->radius,
+                   ent->radius * 5,
                    eolFalse,
                    eolFalse);
   }
