@@ -348,6 +348,8 @@ void eol_trail_append(eolTrail *trail,eolOrientation orientation);
 */
 eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori);
 
+eolUint eol_trail_get_length(eolTrail *trail);
+
 /**
  * basic operations
  */

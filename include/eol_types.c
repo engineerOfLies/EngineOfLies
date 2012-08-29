@@ -43,19 +43,19 @@ eolFloat eol_vec3d_magnitude (eolVec3D V)
   return sqrt (V.x * V.x + V.y * V.y + V.z * V.z);
 }
 
-eolFloat eol_vec3d_magnatude_squared(eolVec3D V)
+eolFloat eol_vec3d_magnitude_squared(eolVec3D V)
 {
   return (V.x * V.x + V.y * V.y + V.z * V.z);
 }
 
-eolBool  eol_vec3d_magnatude_less_than(eolVec3D V,eolFloat size)
+eolBool  eol_vec3d_magnitude_less_than(eolVec3D V,eolFloat size)
 {
-  return (eol_vec3d_magnatude_squared(V) < (size * size));
+  return (eol_vec3d_magnitude_squared(V) < (size * size));
 }
 
 eolBool eol_distance_between_less_than3d(eolVec3D p1,eolVec3D p2,eolFloat size)
 {
-  return eol_vec3d_magnatude_less_than(eol_vec3d(p1.x - p2.x,
+  return eol_vec3d_magnitude_less_than(eol_vec3d(p1.x - p2.x,
                                                  p1.y - p2.y,
                                                  p1.z - p2.z),
                                        size);
@@ -386,6 +386,12 @@ void eol_trail_append(eolTrail *trail,eolOrientation orientation)
   }
   memcpy(trail->head,&orientation,sizeof(eolOrientation));
   if (trail->len < trail->maxLen)trail->len++;
+}
+
+eolUint eol_trail_get_length(eolTrail *trail)
+{
+  if (!trail)return 0;
+  return trail->len;
 }
 
 eolBool eol_trail_get_nth(eolTrail *trail, eolUint n, eolOrientation *ori)

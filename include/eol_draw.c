@@ -10,24 +10,24 @@ void eol_draw_trail(eolTrail * trail,
   eolFloat fadeFactor = 1;
   eolFloat taperFactor = 1;
   eolFloat alpha = 1;
-  eolOrientation ori[2];
+  eolOrientation head,tail;
   if (!trail)return;
   if (!trail->trail)return;
   if (trail->len <= 1)return;
   if (fade)fadeFactor = 0.75;
   if (taper)taperFactor = 0.75;
   i = 1;
-  if (!eol_trail_get_nth(trail, i, &ori[0]))return;
-  while (!eol_trail_get_nth(trail, i, &ori[1]))
+  if (!eol_trail_get_nth(trail, 0, &head))return;
+  while (eol_trail_get_nth(trail, i++, &tail))
   {
-    eol_draw_line_3D(ori[0].position,
-                     ori[1].position,
+    eol_draw_line_3D(head.position,
+                     tail.position,
                      radius,
-                     ori[0].color,
-                     (alpha * ori[0].alpha));
+                     head.color,
+                     (alpha * head.alpha));
     radius *= taperFactor;
     alpha *= fadeFactor;
-    memcpy(&ori[0],&ori[1],sizeof(eolOrientation));
+    memcpy(&head,&tail,sizeof(eolOrientation));
   }
 }
 
@@ -105,7 +105,9 @@ void eol_draw_line_3D(eolVec3D p1,
   glEnable(GL_BLEND);
   glColor4f(color.x,color.y,color.z,alpha);
   glPushMatrix();
-  glLineWidth(radius);
+
+/*  glLineWidth(radius);*/
+
   glBegin( GL_LINES );
   glVertex3f(p1.x,p1.y,p1.z);
   glVertex3f(p2.x,p2.y,p2.z);

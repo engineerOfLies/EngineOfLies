@@ -308,6 +308,7 @@ void eol_entity_postsync(eolEntity * ent)
   {
     factor = 1.0f/(float)count;
     eol_vec3d_scale(ent->normal,ent->normal,factor);
+    eol_vec3d_normalize(&ent->normal);
     eol_entity_handle_world_touch(ent);
   }
 }
@@ -567,7 +568,8 @@ static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data
     if(cpBodyIsStatic(counterBody))
     {
       /*world collision handler*/
-      self->normals = g_list_append(self->normals,eol_vec3d_dup(normal));
+      if (eol_equals(eol_vec3d_magnitude_squared(normal),1))
+        self->normals = g_list_append(self->normals,eol_vec3d_dup(normal));
       return;
     }
     if (self->touch != NULL)
