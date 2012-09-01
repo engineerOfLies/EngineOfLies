@@ -100,8 +100,9 @@ eolBool eol_config_get_list_count_by_tag(
   eolLine     tag
 );
 
+/*TODO; THIS*/
 eolBool eol_config_get_list_by_tag(
-  eolKeychain * output,
+  eolKeychain ** output,
   eolConfig   * conf,
   eolLine       tag
 );

@@ -88,7 +88,6 @@ typedef struct Entity_S
   cpSpace         * _space;     /**<pointer to the space this entity is a part of*/
   cpLayers          collisionMask;/**<collision mask for space.  Not the same as level layer.*/
   eolBool           bounces;    /**<set to true if you want the entity to bounce off of walls*/
-  eolVec3D          gravity;    /**<set to the direction of gravity for this entity*/
   
   eolTrail          trail;     /**<the last so many orientations of the entity*/
   eolBool           trackTrail;/**<if the trail should be tracked.*/
@@ -96,7 +95,13 @@ typedef struct Entity_S
   eolOrientation    ori;       /**<orientation now*/
   eolOrientation    vector;    /**<orientation change vector*/
   eolOrientation    accel;     /**<orientation change vector change vector*/
-
+  eolVec3D          gravity;   /**<accumulated acceleration due to gravity*/
+  eolVec3D          gravityAccel;
+  eolFloat          moveSpeed; /**<how fast the entity accelerates*/
+  eolFloat          topSpeed;     /**<top speed of intent*/ 
+  eolFloat          terminalSpeed;/**<top speed of movement, period!*/
+  eolFloat          dampening; /**<this is normal slowdown factor*/
+  
   eolActor        * actor;     /**<most common use case is only have 1 actor, this will point to first*/
   GList           * actorList; /**<general use will have only 1 actor, but its possible to have
                                    composite entities*/

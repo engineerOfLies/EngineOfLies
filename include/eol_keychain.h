@@ -144,6 +144,13 @@ eolBool eol_keychain_get_hash_value_as_rectfloat(eolRectFloat *output, eolKeycha
 eolKeychain *eol_keychain_get_list_nth(eolKeychain *list, eolUint n);
 
 /**
+ * @brief retrieve the count of items in a list keychain
+ * @param list the keychain that is a a list
+ * @return the number of items in the list (note that any sub items are not counted))
+ */
+eolUint eol_keychain_get_list_count(eolKeychain *list);
+
+/**
  * @brief removed the nth item from the list
  * checks type before any operation
  * calls eol_keychain_destroy on the item found.

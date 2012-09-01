@@ -284,6 +284,11 @@ void eol_entity_postsync(eolEntity * ent)
   p = cpBodyGetPos(ent->body);
   ent->ori.position.x = p.x;
   ent->ori.position.y = p.y;
+  if (ent->trackTrail)
+  {
+    eol_trail_append(&ent->trail,ent->ori);
+  }
+
   /*entity-entity collisions are most important...*/
   for (it = ent->normals;it != NULL;it = it->next)
   {
@@ -309,6 +314,12 @@ void eol_entity_postsync(eolEntity * ent)
     factor = 1.0f/(float)count;
     eol_vec3d_scale(ent->normal,ent->normal,factor);
     eol_vec3d_normalize(&ent->normal);
+    /*TODO this needs to compare based on local gravity direction*/
+    if (ent->normal.y < -0.5)ent->grounded = eolTrue;
+    if (ent->grounded)
+    {
+      eol_vec3d_clear(ent->gravity);
+    }
     eol_entity_handle_world_touch(ent);
   }
 }
@@ -321,16 +332,50 @@ void eol_entity_presync(eolEntity *ent)
     eol_entity_free(&ent);
     return;
   }
-  eol_orientation_add(&ent->ori,
-                      ent->ori,
-                      ent->vector);
-  eol_orientation_add(&ent->vector,
-                      ent->vector,
-                      ent->accel);
-  if (ent->trackTrail)
+
+  if (ent->dampening)
   {
-    eol_trail_append(&ent->trail,ent->ori);
+    if (fabs(ent->vector.position.x) > ent->dampening)
+    {
+      if (ent->vector.position.x < 0)ent->vector.position.x += ent->dampening;
+      else ent->vector.position.x -= ent->dampening;
+    }
+    else ent->vector.position.x = 0;
+    if (fabs(ent->vector.position.y) > ent->dampening)
+    {
+      if (ent->vector.position.y < 0)ent->vector.position.y += ent->dampening;
+      else ent->vector.position.y -= ent->dampening;
+    }
+    else ent->vector.position.y = 0;
+    if (fabs(ent->vector.position.z) > ent->dampening)
+    {
+      if (ent->vector.position.z < 0)ent->vector.position.z += ent->dampening;
+      else ent->vector.position.z -= ent->dampening;
+    }
+    else ent->vector.position.z = 0;
+
   }
+
+  eol_orientation_add(&ent->vector,
+                        ent->vector,
+                        ent->accel);
+
+  if ( !eol_vec3d_magnitude_less_than(ent->vector.position,ent->topSpeed))
+  {
+    eol_vec3d_set_magnitude(&ent->vector.position,ent->topSpeed);
+  }
+  /*always apply gravity after personal vector movement*/
+  if (!ent->grounded)
+  {
+    eol_vec3d_add(ent->gravity,ent->gravity,ent->gravityAccel);
+    eol_vec3d_add(ent->vector.position,ent->vector.position,ent->gravity);
+
+    if ( !eol_vec3d_magnitude_less_than(ent->gravity,ent->terminalSpeed))
+    {
+      eol_vec3d_set_magnitude(&ent->gravity,ent->terminalSpeed);
+    }
+  }
+  
   ent->grounded = eolFalse;
   ent->bounced = eolFalse;
   ent->wallTouch = eolFalse;
@@ -388,7 +433,7 @@ void eol_entity_think_all()
     if (ent->think != NULL)
     {
       if ((ent->thinkRate == -1) ||
-          (ent->thinkNext > now))
+          (ent->thinkNext < now))
       {
         ent->think(ent);
         if (ent->thinkRate != -1)

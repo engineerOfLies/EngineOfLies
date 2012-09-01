@@ -1,16 +1,13 @@
 #include "eol_input.h"
 #include "eol_logger.h"
-#ifdef __APPLE__
-#include "fmemopen.h"
-#endif
+#include "eol_config.h"
 #include <SDL.h>
-#include <physfs.h>
 
-eolInput * _input_list = NULL;
-eolUint    _num_inputs = 0;
+eolInput * _eol_input_list = NULL;
+eolUint    _eol_input_count = 0;
 eolBool    _eol_input_initialized = eolFalse;
-eolUint    _held_threshold = 0;
-eolUint    _double_tap_threshold = 0;
+eolUint    _eol_input_held_threshold = 0;
+eolUint    _eol_input_double_tap_threshold = 0;
 eolUint    _this_frame_keyboard_mod = 0;
 eolUint    _last_frame_keyboard_mod = 0;
 Uint8    * _this_frame_keyboard = NULL;
@@ -37,10 +34,10 @@ void eol_input_close()
 {
   eol_logger_message(EOL_LOG_INFO,"eol_input: closing\n");
   eol_input_keyboard_close();
-  if (_input_list != NULL)
+  if (_eol_input_list != NULL)
   {
-    free(_input_list);
-    _input_list = NULL;
+    free(_eol_input_list);
+    _eol_input_list = NULL;
   }
   _eol_input_initialized = eolFalse;
   eol_logger_message(EOL_LOG_INFO,"eol_input: closed\n");
@@ -60,27 +57,27 @@ void eol_input_update()
   updateKeyboard();
   SDL_PumpEvents();
   mod = SDL_GetModState();
-  for(i = 0;i < _num_inputs;i++)
+  for(i = 0;i < _eol_input_count;i++)
   {
-    _input_list[i].oldvalue = _input_list[i].value;
-    if(strcmp(_input_list[i].type,"key") == 0)
+    _eol_input_list[i].oldvalue = _eol_input_list[i].value;
+    if(strcmp(_eol_input_list[i].type,"key") == 0)
     {
-      _input_list[i].value = _this_frame_keyboard[_input_list[i].id];
+      _eol_input_list[i].value = _this_frame_keyboard[_eol_input_list[i].id];
     }
-    else if(strcmp(_input_list[i].type,"mod") == 0)
+    else if(strcmp(_eol_input_list[i].type,"mod") == 0)
     {
-      if(mod & _input_list[i].id)
+      if(mod & _eol_input_list[i].id)
       {
-        _input_list[i].value = 1;
+        _eol_input_list[i].value = 1;
       }
-      else _input_list[i].value = 0;
+      else _eol_input_list[i].value = 0;
     }
     /*TODO:mouse section*/
     /*TODO:joystick section*/
-    if(_input_list[i].value == 1)
+    if(_eol_input_list[i].value == 1)
     {
-      _input_list[i].lastPress = _input_list[i].timePress;
-      _input_list[i].timePress = SDL_GetTicks();
+      _eol_input_list[i].lastPress = _eol_input_list[i].timePress;
+      _eol_input_list[i].timePress = SDL_GetTicks();
     }
   }
 }
@@ -169,78 +166,57 @@ eolInt eol_input_parse(char *type, char *input)
   return -1;
 }
 
+void eol_input_add_input_from_link(eolKeychain *link,eolUint i)
+{
+  eolLine temp;
+  if (i >= _eol_input_count)return;
+  eol_keychain_get_hash_value_as_line(_eol_input_list[i].name,link,"name");
+  eol_keychain_get_hash_value_as_line(temp,link,"type");
+  eol_word_cpy(_eol_input_list[i].type,temp);
+  eol_keychain_get_hash_value_as_line(temp,link,"id");
+  _eol_input_list[i].id = eol_input_parse(_eol_input_list[i].type, temp);
+}
+
 void eol_input_load_config()
 {
-  eolSI64 size;
-  char *buffer;
-  char buf[512];
-  char input[16];
-  eolInt s;
-  eolUint in = 0;
-  PHYSFS_File *PSfile;
-  FILE *file;
-  PSfile = PHYSFS_openRead("system/controls.cfg");
-  if(PSfile == NULL)
+  int i;
+  eolKeychain *chain;
+  eolConfig *conf;
+  eolUint count;
+  conf = eol_config_load("system/controls.cfg");
+  if (conf == NULL)
   {
-    eol_logger_message(EOL_LOG_ERROR,"Unable to open control configuration file!\n");
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_input:failed to load control configuration\n");
     return;
   }
-  size = PHYSFS_fileLength(PSfile);
-  buffer = (char *)malloc(size);
-  if(buffer == NULL)
+  if (!eol_config_get_keychain_by_tag(&chain,conf,"primary"))
   {
-    eol_logger_message(EOL_LOG_ERROR,"Unable to allocate space for control configuration file\n");
-    PHYSFS_close(PSfile);
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_input:no primary inputs in config\n");
+    eol_config_free(&conf);
     return;
   }
-  PHYSFS_read(PSfile, buffer, size, 1);
-  file = fmemopen (buffer, size, "r");
-  /*Dry run to count inputs:*/
-  if (_input_list != NULL)
+  count = eol_keychain_get_list_count(chain);
+  /*TODO: support secondary input methods*/
+  _eol_input_count = count;
+  _eol_input_list = (eolInput *)malloc(sizeof(eolInput) * count);
+  if (_eol_input_list == NULL)
   {
-    free(_input_list);
-    _input_list = NULL;
+    eol_logger_message(
+      EOL_LOG_FATAL,
+      "eol_input:failed to allocate input list\n");
+    eol_config_free(&conf);
+    return;
   }
-  _num_inputs = 0;
-  while(fscanf(file, "%s", buf) != EOF)
+  memset(_eol_input_list,0,sizeof(eolInput) * count);
+  for (i = 0; i < count; i++)
   {
-    if(strcmp(buf,"#") ==0)
-    {
-      fgets(buf, sizeof(buf), file);
-      continue;/*ignore the rest of the line.*/
-    }
-    if(strcmp(buf,"<input>") ==0)
-    {
-      _num_inputs++;
-      continue;
-    } 
+    eol_input_add_input_from_link(eol_keychain_get_list_nth(chain, i),i);
   }
-
-  _input_list = (eolInput *)malloc(sizeof(eolInput)*_num_inputs);
-  in = 0;
-  while(fscanf(file, "%s", buf) != EOF)
-  {
-    if(strcmp(buf,"#") ==0)
-    {
-      fgets(buf, sizeof(buf), file);
-      continue;/*ignore the rest of the line.*/
-    }
-    if(strcmp(buf,"<input>") ==0)
-    {
-      fscanf(file, "%s %s %s",_input_list[in].name,_input_list[in].type,input);
-      s = eol_input_parse(_input_list[in].type,input);
-      if(s != -1)
-      {
-        _input_list[in].id = s;
-        in++;
-      }
-      continue;
-    }
-    
-  }
-  fclose(file);
-  PHYSFS_close(PSfile);
-  free(buffer);
+  eol_config_free(&conf);
 }
 
 void eol_input_keyboard_close()
@@ -415,23 +391,55 @@ eolBool eol_input_quit_check()
 eolInput *eol_input_get_by_name(char *input)
 {
   int i;
-  for (i = 0;i < _num_inputs;i++)
+  for (i = 0;i < _eol_input_count;i++)
   {
-    if (strncmp(input,_input_list[i].name,EOLLINELEN) == 0)
+    if (strncmp(input,_eol_input_list[i].name,EOLLINELEN) == 0)
     {
-      return &_input_list[i];
+      return &_eol_input_list[i];
     }
   }
+  eol_logger_message(
+    EOL_LOG_WARN,
+    "eol_input:failed to find input %s\n",
+    input);
   return NULL;
 }
 
-eolBool eol_input_is_input_down(char *inputName)
+eolFloat eol_input_is_input_down(char *inputName)
+{
+  eolInput *input = NULL;
+  input = eol_input_get_by_name(inputName);
+  if (input == NULL)return 0;
+  if (input->value != 0)return input->value;
+  return 0;
+}
+
+eolBool eol_input_is_input_pressed(char *inputName)
 {
   eolInput *input = NULL;
   input = eol_input_get_by_name(inputName);
   if (input == NULL)return eolFalse;
-  if (input->value != 0)return eolTrue;
+  if ((input->value == 0) && (input->oldvalue != 0))return eolTrue;
   return eolFalse;
 }
+
+eolBool eol_input_is_input_released(char *inputName)
+{
+  eolInput *input = NULL;
+  input = eol_input_get_by_name(inputName);
+  if (input == NULL)return eolFalse;
+  if ((input->value != 0) && (input->oldvalue == 0))return eolTrue;
+  return eolFalse;
+}
+
+eolFloat eol_input_is_input_held(char *inputName)
+{
+  eolInput *input = NULL;
+  input = eol_input_get_by_name(inputName);
+  if (input == NULL)return 0;
+  if ((input->value != 0) && (input->oldvalue != 0))return input->value;
+  return 0;
+}
+
 /*eol@eof*/
 

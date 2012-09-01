@@ -135,9 +135,9 @@ eolInput *eol_input_get_nth_input(char *name,eolInt n);
  *
  * @param input the name of the input in question.  eg: "jump"
  *
- * @return true if it is down.
+ * @return the value of the input (if analog a float, if not 1 or 0) 
  */
-eolBool   eol_input_is_input_down(char *input);
+eolFloat   eol_input_is_input_down(char *input);
 
 /**
  * @brief determines the if the named input has been down continuously for set
@@ -145,9 +145,9 @@ eolBool   eol_input_is_input_down(char *input);
  *
  * @param input the name of the input in question.  eg: "jump"
  *
- * @return true if it is held
+ * @return the value of the input (if analog a float, if not 1) if it is held, 0 otherwise
  */
-eolBool   eol_input_is_input_held(char *input);
+eolFloat   eol_input_is_input_held(char *input);
 
 /**
  * @brief determines the if the named input was just pressed this frame

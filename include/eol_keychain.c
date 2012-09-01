@@ -230,6 +230,14 @@ eolKeychain *eol_keychain_get_hash_value(eolKeychain *hash,eolLine key)
   return g_hash_table_lookup(hashtable,key);
 }
 
+eolUint eol_keychain_get_list_count(eolKeychain *list)
+{
+  if (!list)return 0;
+  if (list->keyType != eolKeychainList)return 0;
+  if (list->keyValue == NULL)return 0;
+  return list->itemCount;
+}
+
 eolKeychain *eol_keychain_get_list_nth(eolKeychain *list, eolUint n)
 {
   if (!list)return NULL;

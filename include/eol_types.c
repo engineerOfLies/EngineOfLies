@@ -38,14 +38,52 @@ eolVec4D eol_vec4d(eolDouble x, eolDouble y, eolDouble z, eolDouble w)
   return vec;
 }
 
+eolFloat eol_vec2d_magnitude (eolVec2D V)
+{
+  return sqrt (V.x * V.x + V.y * V.y);
+}
+
 eolFloat eol_vec3d_magnitude (eolVec3D V)
 {
   return sqrt (V.x * V.x + V.y * V.y + V.z * V.z);
 }
 
+eolFloat eol_vec4d_magnitude (eolVec4D V)
+{
+  return sqrt (V.x * V.x + V.y * V.y + V.z * V.z + V.w * V.w);
+}
+
+
 eolFloat eol_vec3d_magnitude_squared(eolVec3D V)
 {
   return (V.x * V.x + V.y * V.y + V.z * V.z);
+}
+
+void eol_vec2d_set_magnitude(eolVec2D * V,eolFloat magnitude)
+{
+  if (!V)return;
+  eol_vec2d_normalize(V);
+  V->x *= magnitude;
+  V->y *= magnitude;
+}
+
+void eol_vec3d_set_magnitude(eolVec3D * V,eolFloat magnitude)
+{
+  if (!V)return;
+  eol_vec3d_normalize(V);
+  V->x *= magnitude;
+  V->y *= magnitude;
+  V->z *= magnitude;
+}
+
+void eol_vec4d_set_magnitude(eolVec4D * V,eolFloat magnitude)
+{
+  if (!V)return;
+  eol_vec4d_normalize(V);
+  V->x *= magnitude;
+  V->y *= magnitude;
+  V->z *= magnitude;
+  V->w *= magnitude;
 }
 
 eolBool  eol_vec3d_magnitude_less_than(eolVec3D V,eolFloat size)
@@ -75,10 +113,25 @@ void eol_vec4d_set_angle_by_radians(eolVec4D *out,eolFloat radians)
   out->y = sin(radians);
 }
 
+void eol_vec2d_normalize (eolVec2D *V)
+{
+  eolFloat M;
+  if (!V)return;
+  M = eol_vec2d_magnitude (*V);
+  if (M == 0.0f)
+  {
+    return;
+  }
+  M = 1/M;
+  V->x *= M;
+  V->y *= M;
+}
+
 void eol_vec3d_normalize (eolVec3D *V)
 {
-  eolFloat M = eol_vec3d_magnitude (*V);
-  
+  eolFloat M;
+  if (!V)return;
+  M= eol_vec3d_magnitude (*V);
   if (M == 0.0f)
   {
     return;
@@ -87,6 +140,22 @@ void eol_vec3d_normalize (eolVec3D *V)
   V->x *= M;
   V->y *= M;
   V->z *= M;
+}
+
+void eol_vec4d_normalize (eolVec4D *V)
+{
+  eolFloat M;
+  if (!V)return;
+  M = eol_vec4d_magnitude (*V);
+  if (M == 0.0f)
+  {
+    return;
+  }
+  M = 1/M;
+  V->x *= M;
+  V->y *= M;
+  V->z *= M;
+  V->w *= M;
 }
 
 eolVec2D *eol_vec2d_dup(eolVec2D old)
@@ -295,10 +364,10 @@ void eol_orientation_add(eolOrientation * out,
                          eolOrientation   in2)
 {
   if (!out)return;
-  eol_vec3d_add(in1.position,in2.position,out->position);
-  eol_vec3d_add(in1.rotation,in2.rotation,out->rotation);
-  eol_vec3d_add(in1.scale,in2.scale,out->scale);
-  eol_vec3d_add(in1.color,in2.color,out->color);
+  eol_vec3d_add(out->position,in1.position,in2.position);
+  eol_vec3d_add(out->rotation,in1.rotation,in2.rotation);
+  eol_vec3d_add(out->scale,in1.scale,in2.scale);
+  eol_vec3d_add(out->color,in1.color,in2.color);
   out->alpha = in1.alpha + in2.alpha;
 
   if (out->alpha < 0)out->alpha = 0;

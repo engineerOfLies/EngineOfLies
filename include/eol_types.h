@@ -523,6 +523,16 @@ eolBool  eol_vec3d_magnitude_less_than(eolVec3D V,eolFloat size);
 eolBool  eol_vec4d_magnitude_less_than(eolVec4D V,eolFloat size);
 
 /**
+ * @brief scales the vector to the specified length without changing direction
+ * No op is magnitude is 0 or V is NULL
+ * @param V a pointer to the vector to scale
+ * @param magnitude the new length for the vector
+ */
+void eol_vec2d_set_magnitude(eolVec2D * V,eolFloat magnitude);
+void eol_vec3d_set_magnitude(eolVec3D * V,eolFloat magnitude);
+void eol_vec4d_set_magnitude(eolVec4D * V,eolFloat magnitude);
+
+/**
  * @brief checks if the distance between the two points provided is less than size.
  * @param p1 one point for the distance check
  * @param p2 another point for the distance check
