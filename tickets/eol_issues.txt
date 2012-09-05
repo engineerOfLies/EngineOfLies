@@ -1,0 +1,9 @@
+Convert Tickets into github issues
+
+I used these tickets because I was offline and I wanted a centralized way to maintain development issues.
+It looks like the github issues system is worth using instead.
+Convert all tickets into github issues, even the ones that are closed out.
+
+assigned: rabtom
+estimate: 1 hour
+reward: eternal thanks

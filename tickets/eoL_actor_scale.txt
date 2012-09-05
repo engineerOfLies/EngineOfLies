@@ -1,0 +1,9 @@
+add a scale field to actor
+
+allow for an actor to have a custom scale factor.  This will help to tweak the size of models without
+going back into the 3d modeling program.  It should work as a factor on provided draw scales
+ie: eol_actor_draw(.....scale)  should take configured (confScale * drawScale) to determine overall scale
+
+assigned:
+estimate:
+reward: better sizing for actors

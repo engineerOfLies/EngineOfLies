@@ -1,0 +1,5 @@
+have actor use the resource manager
+
+Actors are resources, but unique ones.  It should be handled by the resource manager
+
+assigned:
