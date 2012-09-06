@@ -137,6 +137,20 @@ EXPORT_APPLY_MODIFIERS=True, EXPORT_ROTX90=True):
 				continue
 			
 			faceuv= me.faceUV
+			has_quads = False
+			for f in me.faces:
+				if len(f) == 4:
+					has_quads = True
+					break
+			if has_quads:
+				oldmode = Mesh.Mode()
+				Mesh.Mode(Mesh.SelectModes['FACE'])
+				me.sel = True
+				tempob = scn.objects.new(me)
+				me.quadToTriangle(0) # more=0 shortest length
+				oldmode = Mesh.Mode(oldmode)
+				scn.objects.unlink(tempob)
+				Mesh.Mode(oldmode)
 			edges = me.edges
 			
 			faces = [ f for f in me.faces ]

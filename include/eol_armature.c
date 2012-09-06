@@ -105,7 +105,7 @@ void eol_armature_get_bone_count(FILE *file,eolArmature *arm)
   rewind(file);
   while(fscanf(file, "%s", buf) != EOF)
   {
-    if(strcmp(buf,"bonecount") == 0)
+    if(strcmp(buf,"bonecount:") == 0)
     {
       fscanf(file, "%i",&numbones);
       break;
@@ -127,7 +127,7 @@ void eol_armature_get_frame_count(FILE *file,eolArmature *arm)
   rewind(file);
   while(fscanf(file, "%s", buf) != EOF)
   {
-    if(strcmp(buf,"framecount") == 0)
+    if(strcmp(buf,"framecount:") == 0)
     {
       fscanf(file, "%i",&numframes);
       break;
@@ -214,7 +214,7 @@ int eol_armature_load_bones(FILE *file,eolArmature *arm)
   rewind(file);
   while(fscanf(file, "%s", buf) != EOF)
   {
-    if(strcmp(buf,"armature") == 0)
+    if(strcmp(buf,"armature:") == 0)
     {
       fscanf(file, "%s",arm->name);
       armindex = 0;
@@ -273,7 +273,7 @@ int eol_armature_load_bones(FILE *file,eolArmature *arm)
       bone->parentIndex = index;
       continue;
     }
-    if(strcmp(buf,"childcount") == 0)
+    if(strcmp(buf,"childcount:") == 0)
     {
       if (bone == NULL)
       {

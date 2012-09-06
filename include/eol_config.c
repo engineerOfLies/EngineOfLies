@@ -152,11 +152,11 @@ void eol_config_parse_sequence(yaml_parser_t *parser, eolKeychain *chain)
         /* terminate the while loop, see below */
         break;
       default:
-        eol_logger_message( EOL_LOG_INFO, "unhandled YAML event %d\n", event.type);
+        eol_logger_message( EOL_LOG_INFO, "eol_config: unhandled YAML event %d\n", event.type);
     }
     if(parser->error != YAML_NO_ERROR)
     {
-      eol_logger_message( EOL_LOG_ERROR, "yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n",
+      eol_logger_message( EOL_LOG_ERROR, "eol_config: yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n",
                           parser->error, parser->context, parser->problem, parser->problem_mark.line,
                           parser->problem_mark.column);
                           return;
@@ -217,11 +217,11 @@ void eol_config_parse_tier(yaml_parser_t *parser, eolKeychain *chain)
         /* terminate the while loop, see below */
         break;
       default:
-        eol_logger_message( EOL_LOG_INFO, "unhandled YAML event %d\n", event.type);
+        eol_logger_message( EOL_LOG_INFO, "eol_config: unhandled YAML event %d\n", event.type);
     }
     if(parser->error != YAML_NO_ERROR)
     {
-      eol_logger_message( EOL_LOG_ERROR, "yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n",
+      eol_logger_message( EOL_LOG_ERROR, "eol_config: yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n",
                           parser->error, parser->context, parser->problem, parser->problem_mark.line,
                           parser->problem_mark.column);
                           return;

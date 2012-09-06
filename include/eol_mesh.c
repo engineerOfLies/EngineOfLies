@@ -413,7 +413,7 @@ void eol_mesh_get_groups(eolMesh *model, FILE *file)
       g++;
       continue;
     }
-    if(strcmp(buf,"GroupName:") == 0)
+    if(strcmp(buf,"groupname:") == 0)
     {
       fscanf(file, "%s",name);
       group = eol_mesh_get_group_by_name(name,model);
@@ -467,7 +467,7 @@ void eol_mesh_get_groups(eolMesh *model, FILE *file)
   group = NULL;
   while(fscanf(file, "%s", buf) != EOF)
   {
-    if(strcmp(buf,"GroupName:") == 0)/*select active bone for addition*/
+    if(strcmp(buf,"groupname:") == 0)/*select active bone for addition*/
     {
       fscanf(file, "%s",name);
       group = eol_mesh_get_group_by_name(name,model);
@@ -478,7 +478,7 @@ void eol_mesh_get_groups(eolMesh *model, FILE *file)
       }
       continue;
     }
-    if(strcmp(buf,"Weight:") == 0)/*select active bone for addition*/
+    if(strcmp(buf,"weight:") == 0)/*select active bone for addition*/
     {
       if (group != NULL)
       {

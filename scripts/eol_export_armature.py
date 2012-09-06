@@ -84,19 +84,19 @@ def copy_file(source, dest):
 def write_armature(file, ob):
 	if ob.getType() != "Armature":
 		return
-	file.write('armature %s\n' % ob.name)
+	file.write('armature: %s\n' % ob.name)
 	arm = ob.getData()
 	armobmat = ob.getMatrix()
 	for i in armobmat:
 		file.write('armmat: %.6f %.6f %.6f %.6f\n' % tuple(i))
 	bones = arm.bones.values()
-	file.write('bonecount %i\n' % len(bones))
+	file.write('bonecount: %i\n' % len(bones))
 	for bone in bones:
 		file.write('bone: %s\n' % bone.name)
 		if bone.hasParent():
 			file.write('parent: %s\n' % bone.parent.name)
 		if bone.hasChildren():
-			file.write('childcount %i\n' % len(bone.children))
+			file.write('childcount: %i\n' % len(bone.children))
 			for child in bone.children:
 				file.write('child: %s\n' % child.name)
 		head = bone.head
@@ -113,7 +113,7 @@ def write_poses(file,ob):
 	scn = Scene.GetCurrent()
 	context = scn.getRenderingContext()
 	scene_frames = xrange(context.startFrame(), context.endFrame()+1)
-	file.write('framecount %i\n' % len(scene_frames))
+	file.write('framecount: %i\n' % len(scene_frames))
 	for frame in scene_frames:
 		Blender.Set('curframe', frame)
 		file.write('frame: %i\n' % frame)
