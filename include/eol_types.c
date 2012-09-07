@@ -241,6 +241,22 @@ eolFloat eol_vector_angle(eolFloat x,eolFloat y)
   return (fraction * 360);
 }
 
+void eol_angle_clamp_degrees(eolFloat *a)
+{
+  if (!a)return;
+  while (*a >= 360)*a -= 360;
+  while (*a < 0)*a += 360;
+}
+
+eolFloat eol_angle_between_degrees(eolFloat a, eolFloat b)
+{
+  eolFloat angle;
+  angle = fabs(a - b);
+  while (angle >= 360)angle -= 360;
+  while (angle < 0)angle += 360;
+  if (angle > 180)angle -= 180;
+  return angle;
+}
 
 void eol_vec2d_reflect(eolVec2D *out, eolVec2D normal,eolVec2D in)
 {

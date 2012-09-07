@@ -713,7 +713,6 @@ eol_armature_link_mesh(
   )
 {
   int i;
-  eolMat4 rot90matrix;
  
   if ((arm == NULL) || 
       (mesh == NULL))
@@ -728,36 +727,12 @@ eol_armature_link_mesh(
     arm->_bones[i].meshGroup =
         eol_mesh_get_group_by_name(arm->_bones[i].name,mesh);
   }
-  rot90matrix[0][0]=1.0f;
-  rot90matrix[1][0]=0.0f;
-  rot90matrix[2][0]=0.0f;
-  rot90matrix[3][0]=0.0f;
-  
-  rot90matrix[0][1]=0.0f;
-  rot90matrix[1][1]=0.0f;
-  rot90matrix[2][1]=1.0f;
-  rot90matrix[3][1]=0.0f;
-  
-  rot90matrix[0][2]=0.0f;
-  rot90matrix[1][2]=-1.0f;
-  rot90matrix[2][2]=0.0f;
-  rot90matrix[3][2]=0.0f;
-  
-  rot90matrix[0][3]=0.0f;
-  rot90matrix[1][3]=0.0f;
-  rot90matrix[2][3]=0.0f;
-  rot90matrix[3][3]=0.0f;
 
   for (i = 0; i < mesh->_numVertices; i++)
   {
       eol_mat4_mult_vert(
           &mesh->_rest[i],
           arm->matrix,
-          mesh->_rest[i]
-      );
-      eol_mat4_mult_vert(
-          &mesh->_rest[i],
-          rot90matrix,
           mesh->_rest[i]
       );
   }

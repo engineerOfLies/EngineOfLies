@@ -170,6 +170,7 @@ eolBool eol_model_load_data_from_file(char * filename,void *data)
   
   rewind(file->file);
   actionIndex = -1;
+	eol_vec3d_set(model->scale,1,1,1);
   while(fscanf(file->file, "%s", buf) != EOF)
   {
     if(strcmp(buf,"action:") == 0)
@@ -253,6 +254,21 @@ eolBool eol_model_load_data_from_file(char * filename,void *data)
     if(strcmp(buf,"skin:") == 0)
     {
       fscanf(file->file, "%s",model->_skinFile);
+      continue;
+    }
+    if(strcmp(buf,"scale:") == 0)
+    {
+      fscanf(file->file, "%lf,%lf,%lf",&model->scale.x,&model->scale.y,&model->scale.z);
+      continue;
+    }
+    if(strcmp(buf,"offset:") == 0)
+    {
+      fscanf(file->file, "%lf,%lf,%lf",&model->offset.x,&model->offset.y,&model->offset.z);
+      continue;
+    }
+    if(strcmp(buf,"rotation:") == 0)
+    {
+      fscanf(file->file, "%lf,%lf,%lf",&model->rotation.x,&model->rotation.y,&model->rotation.z);
       continue;
     }
     if(strcmp(buf,"arm:") == 0)
@@ -347,6 +363,11 @@ void eol_model_draw(
     /*cannot draw a clear model, so don't waste the math*/
     return;
   }
+  scale.x *= model->scale.x;
+  scale.y *= model->scale.y;
+  scale.z *= model->scale.z;
+  eol_vec3d_add(position,model->offset,position);
+  eol_vec3d_add(rotation,model->rotation,rotation);
   if ((scale.x == 0) &&
       (scale.y == 0) &&
       (scale.z == 0))
@@ -420,6 +441,11 @@ void eol_model_draw_wire(
     /*cannot draw a clear model, so don't waste the math*/
     return;
   }
+  scale.x *= model->scale.x;
+  scale.y *= model->scale.y;
+  scale.z *= model->scale.z;
+  eol_vec3d_add(position,model->offset,position);
+  eol_vec3d_add(rotation,model->rotation,rotation);
   if ((scale.x == 0) &&
       (scale.y == 0) &&
       (scale.z == 0))

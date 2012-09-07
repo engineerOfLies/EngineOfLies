@@ -286,8 +286,8 @@ def write_ui(filename):
 	if not BPyMessages.Warning_SaveOver(filename):
 		return
 	
-	EXPORT_APPLY_MODIFIERS = Draw.Create(1)
-	EXPORT_ROTX90 = Draw.Create(1)
+	EXPORT_APPLY_MODIFIERS = Draw.Create(0)
+	EXPORT_ROTX90 = Draw.Create(0)
 	EXPORT_SEL_ONLY = Draw.Create(1)
 	
 	# removed too many options are bad!

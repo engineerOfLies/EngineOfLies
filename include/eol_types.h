@@ -256,6 +256,18 @@ void eol_vec2d_set_angle_by_radians(eolVec2D *out,eolFloat radians);
  */
 eolFloat eol_vector_angle(eolFloat x,eolFloat y);
 
+/**
+ * @brief returns the angle between the two angles.
+ * Takes into account wraping around 0 and 360
+ * units are degrees
+ * @Param a one of the angles in question
+ * @Param b one of the angles in question
+ * @return the angle, in degrees, between the two angles
+ */
+eolFloat eol_angle_between_degrees(eolFloat a, eolFloat b);
+
+void eol_angle_clamp_degrees(eolFloat *a);
+
 /*
   Time Handling
 */

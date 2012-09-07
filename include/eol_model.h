@@ -50,6 +50,9 @@ typedef struct
 typedef struct
 {
   eolLine        name;               /**<name of the model, likely the filename*/
+  eolVec3D       scale;              /**<default scaling applied to the model*/
+  eolVec3D       offset;             /**<default position offset for drawing*/
+  eolVec3D       rotation;           /**<default rotation for drawing*/
   eolMesh      * _mesh;              /**<optional pointer to the 3d Mesh data*/
   eolLine        _meshFile;          /**<file to load for a mesh*/
   eolSprite    * _skin;              /**<optional pointer to the mesh skin sprite*/

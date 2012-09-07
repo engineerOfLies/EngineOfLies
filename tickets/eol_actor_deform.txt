@@ -1,0 +1,3 @@
+eol_armature deform seems to break if there are unused bones
+
+assigned: engineerOfLies

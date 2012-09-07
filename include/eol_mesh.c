@@ -740,6 +740,7 @@ void eol_mesh_draw(
   }
   glEnd();
 
+  glColor4f(1,1,1,1);
   glDisable(GL_LIGHTING);
   glDisable(GL_COLOR_MATERIAL);
   glDisable(GL_BLEND);
@@ -820,6 +821,7 @@ void eol_mesh_draw_wire(
   }
   glEnd();
 
+  glColor4f(1,1,1,1);
   glDisable(GL_COLOR_MATERIAL);
   glDisable(GL_BLEND);
   glDisable(GL_NORMALIZE);

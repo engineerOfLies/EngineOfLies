@@ -1,0 +1,3 @@
+eol_export_mesh and eol_export_armature break with subsurface modifier applied
+
+assigned:
