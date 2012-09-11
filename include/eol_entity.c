@@ -367,13 +367,7 @@ void eol_entity_presync(eolEntity *ent)
   /*always apply gravity after personal vector movement*/
   if (!ent->grounded)
   {
-    eol_vec3d_add(ent->gravity,ent->gravity,ent->gravityAccel);
-    eol_vec3d_add(ent->vector.position,ent->vector.position,ent->gravity);
-
-    if ( !eol_vec3d_magnitude_less_than(ent->gravity,ent->terminalSpeed))
-    {
-      eol_vec3d_set_magnitude(&ent->gravity,ent->terminalSpeed);
-    }
+    eol_vec3d_add(ent->vector.position,ent->vector.position,ent->gravityAccel);
   }
   
   ent->grounded = eolFalse;

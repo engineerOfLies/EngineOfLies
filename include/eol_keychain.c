@@ -168,10 +168,10 @@ eolKeychain *eol_keychain_new_hash()
   link->itemCount = 0;
   link->keyFree = (eolKeychainFree)eol_keychain_hash_free;
   link->keyValue =
-  g_hash_table_new_full(g_str_hash,
-                        g_str_equal,
-                        (GDestroyNotify)eol_g_string_free,
-                        (GDestroyNotify)eol_keychain_destroy);
+    g_hash_table_new_full(g_str_hash,
+                          g_str_equal,
+                          (GDestroyNotify)eol_g_string_free,
+                          (GDestroyNotify)eol_keychain_destroy);
   return link;
 }
 
