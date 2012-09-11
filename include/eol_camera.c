@@ -81,9 +81,10 @@ void eol_camera_editor_update(eolCamera *cam, void *data)
 void eol_camera_2d_update(eolCamera *cam, void *data)
 {
   eolOrientation ori;
-  if ((_eol_camera.getOri == NULL) ||
-      (_eol_camera.target == NULL))return;
+  if (_eol_camera.getOri == NULL)return;
   ori = _eol_camera.getOri(_eol_camera.target);
+  _eol_camera.position.x = ori.position.x;
+  _eol_camera.position.y = ori.position.y;
 }
 
 void eol_camera_third_update(eolCamera *cam, void *data)
@@ -114,6 +115,16 @@ void eol_camera_setup()
 void eol_camera_set_height(eolFloat dist)
 {
   _eol_camera.position.z = _eol_camera.followHeight = dist;
+}
+
+void eol_camera_set_target_orientation(eolCameraGetTargetOri targetFunc)
+{
+  _eol_camera.getOri = targetFunc;
+}
+
+void eol_camera_set_target(void *target)
+{
+  _eol_camera.target = target;
 }
 
 eolUint eol_camera_get_type_by_string(char *camtype)
