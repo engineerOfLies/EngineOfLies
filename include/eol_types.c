@@ -285,6 +285,19 @@ void eol_vec4d_reflect(eolVec4D *out, eolVec4D normal,eolVec4D in)
   out->w = in.w - (2 * normal.w * f);
 }
 
+void eol_vec3d_cross_product(eolVec3D *out, eolVec3D v1, eolVec3D v2)
+{
+  out->x = v1.y*v2.z - v1.z*v2.y;
+  out->y = v1.z*v2.x - v1.x*v2.z;
+  out->z = v1.x*v2.y - v1.y*v2.x;
+}
+
+void eol_vec3d_rotate_point(eolVec3D *dst, eolVec3D point, eolVec3D origin, eolVec3D rotation)
+{
+  
+}
+
+
 
 eolRect eol_rect(
   eolInt  x,

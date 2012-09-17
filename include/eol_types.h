@@ -383,7 +383,15 @@ eolUint eol_trail_get_length(eolTrail *trail);
 #define eol_vec2d_into_array(ar,vec)   (ar[0] = vec.x,ar[1] = vec.y)
 
 /**
- * @brief Macro to get the crossproduct from a vector.
+ * @brief calculates the cross product of the two input vectors
+ * @param out the resultant cross product
+ * @param v1 one of the components
+ * @param v2 one of the components
+ */
+void eol_vec3d_cross_product(eolVec3D *out, eolVec3D v1, eolVec3D v2);
+
+/**
+ * @brief Macro to get the dot product from a vector.
  *
  * @param a eolVect3D component of the dot product
  * @param b eolVect3D component of the dot product

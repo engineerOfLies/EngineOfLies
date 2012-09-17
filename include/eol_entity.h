@@ -46,12 +46,13 @@ enum eolEntityShapes {
 };
 
 enum eolEntityDrawModes {
-  eolEntityDrawBounds    = 0,
-  eolEntityDrawWireframe = 1,
-  eolEntityDrawMesh      = 2,
-  eolEntityDrawTextured  = 3,
-  eolEntityDrawLighting  = 4,
-  eolEntityDrawShaded    = 5
+  eolEntityDrawBounds        = 0,
+  eolEntityDrawWireframe     = 1,
+  eolEntityDrawMesh          = 2,
+  eolEntityDrawTextured      = 3,
+  eolEntityDrawLighting      = 4,
+  eolEntityDrawShaded        = 5,
+  eolEntityDrawTexturedBound = 6
 };
 
 enum eolEntityClipTypes {
@@ -92,6 +93,7 @@ typedef struct Entity_S
   eolTrail          trail;     /**<the last so many orientations of the entity*/
   eolBool           trackTrail;/**<if the trail should be tracked.*/
   eolBool           drawTrail; /**<if the trail should be drawn*/
+  eolFloat          trailWidth;/**<how thick the trail should be drawn*/
   eolOrientation    ori;       /**<orientation now*/
   eolOrientation    vector;    /**<orientation change vector*/
   eolOrientation    accel;     /**<orientation change vector change vector*/

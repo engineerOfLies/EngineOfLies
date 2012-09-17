@@ -99,4 +99,5 @@ void eol_particle_make_point(eolVec3D position,
                              eolFloat alpha,
                              eolUint  lifetime);
 
+
 #endif

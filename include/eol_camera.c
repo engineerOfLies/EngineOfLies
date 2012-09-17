@@ -83,8 +83,8 @@ void eol_camera_2d_update(eolCamera *cam, void *data)
   eolOrientation ori;
   if (_eol_camera.getOri == NULL)return;
   ori = _eol_camera.getOri(_eol_camera.target);
-  _eol_camera.position.x = ori.position.x;
-  _eol_camera.position.y = ori.position.y;
+  _eol_camera.position.x = (ori.position.x + _eol_camera.position.x) * 0.5;
+  _eol_camera.position.y = (ori.position.y + _eol_camera.position.y) * 0.5;
 }
 
 void eol_camera_third_update(eolCamera *cam, void *data)

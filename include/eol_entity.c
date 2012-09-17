@@ -28,6 +28,7 @@ void eol_entity_handle_world_touch(eolEntity *ent);
 void eol_entity_draw_textured(eolEntity *ent);
 void eol_entity_draw_wire(eolEntity *ent);
 void eol_entity_draw_box(eolEntity *ent);
+void eol_entity_draw_textured_bound(eolEntity *ent);
 
 
 /*function definitions*/
@@ -76,6 +77,11 @@ void eol_entity_config()
       {
         _eol_entity_draw_mode = eolEntityDrawShaded;
       }
+      else if ((eol_line_cmp(buf,"texture_bounds")==0) ||
+               (eol_line_cmp(buf,"bounds_texture")==0))
+      {
+        _eol_entity_draw_mode = eolEntityDrawTexturedBound;
+      }
     }
     eol_config_free(&conf);
   }
@@ -98,6 +104,9 @@ void eol_entity_config()
       break;
     case eolEntityDrawShaded:
       _eol_entity_draw_func = eol_entity_draw_textured;
+      break;
+    case eolEntityDrawTexturedBound:
+      _eol_entity_draw_func = eol_entity_draw_textured_bound;
       break;
   }
 }
@@ -506,6 +515,25 @@ void eol_entity_draw_textured(eolEntity *ent)
   }
 }
 
+void eol_entity_draw_textured_bound(eolEntity *ent)
+{
+  GList *list;
+  if (!ent)return;
+  for (list = ent->actorList;list != NULL;list = list->next)
+  {
+    if (list->data != NULL)
+    {
+      eol_entity_draw_box(ent);
+      eol_actor_draw((eolActor *)list->data,
+                    ent->ori.position,
+                    ent->ori.rotation,
+                    ent->ori.scale,
+                    ent->ori.color,
+                    ent->ori.alpha);
+    }
+  }
+}
+
 void eol_entity_draw(eolEntity *ent)
 {
   if (!ent)return;
@@ -531,7 +559,7 @@ void eol_entity_draw(eolEntity *ent)
   if (ent->drawTrail)
   {
     eol_draw_trail(&ent->trail,
-                   ent->radius * 5,
+                   ent->trailWidth,
                    eolFalse,
                    eolFalse);
   }
