@@ -86,14 +86,17 @@ typedef struct
 
 typedef struct
 {
-  eolUint   listCount;
-  eolInt    focusItem;
-  eolUint   listType;
+  eolUint   listType;   /**<see list type enumaration in header*/
+  eolUint   listCount;  /**<number of items in the list*/
   eolVec2D  itemBounds; /**<width (x) and height limit of items in the list*/
-  eolVec2D  displayItems;
+  eolVec2D  displayItems;/**<dimensions for drawing items*/
   GList   * itemList;   /**<list of eolComponent's*/
-  GList   * topItem;
-  GList   * selection;
+  GList   * topItem;    /**<the top left most item*/
+  GList   * selection;  /**<the list item that is selected*/
+  eolBool   showHSlider;/**<if true, shows the Horizontal slider*/
+  eolBool   showVSlider;/**<if true, shows the Vertical slider*/
+  eolComponent *hSlider;/**<the horizontal slider*/
+  eolComponent *vSlider;/**<the vertical slider*/
 }eolComponentList;
 
 /*local global variables*/
@@ -124,6 +127,7 @@ void eol_component_actor_new(eolComponent *component);
 void eol_component_actor_load(eolComponent *component,char * filename);
 
 eolComponentButton *eol_component_get_button_data(eolComponent *component);
+void eol_component_get_rect_from_bounds(eolRect *rect,eolRect canvas, eolRectFloat bounds);
 
 void eol_component_button_free(eolComponent *component);
 void eol_component_label_free(eolComponent *component);
@@ -467,6 +471,14 @@ void eol_component_image_free(eolComponent *component)
 
 */
 
+void eol_component_list_draw(eolComponent *component, eolRect bounds)
+{
+  eolComponentList *list = eol_component_get_list_data(component);
+  if (list == NULL)return;
+  /*TODO: draw sliders
+   draw list items*/
+}
+
 
 void eol_component_slider_draw(eolComponent *component, eolRect bounds)
 {
@@ -669,6 +681,16 @@ void eol_component_draw(eolComponent *component,eolRect bounds)
   
  */
 
+eolBool eol_component_list_update(eolComponent *component)
+{
+  eolComponentList *list;
+  list = eol_component_get_list_data(component);
+  if (list == NULL)return eolFalse;
+  /*Update Sliders if visible*/
+  /*iterate through glist and update elements*/
+  return eolFalse;
+}
+
 eolBool eol_component_slider_update(eolComponent *component)
 {
   eolComponentSlider *slider;
@@ -819,8 +841,7 @@ eolBool eol_component_entry_update(eolComponent *component)
   {
     if (eol_input_is_key_released(key))
     {
-      if (eol_input_is_input_down("LShift") ||
-          eol_input_is_input_down("RShift"))
+      if (eol_input_is_mod_down(KMOD_SHIFT))
       {
         let = key - SDLK_a + 'A';
       }
@@ -857,6 +878,42 @@ void eol_entry_assign_output(eolComponent *component)
   ****** Makers ******
 
 */
+
+void eol_component_make_list(
+    eolComponent * component,
+    eolUint   listType,
+    eolBool   showHSlider,
+    eolBool   showVSlider,
+    eolVec2D  displayItems
+  )
+{
+  eolComponentList * list = NULL;
+  if (!component)return;
+  eol_component_list_new(component);
+  list = eol_component_get_list_data(component);
+  if (list == NULL)
+  {
+    return;
+  }
+  switch(listType)
+  {
+    default:
+    case eolListLines:
+      break;
+    case eolListBlock:
+      break;
+    case eolListDock:
+      break;
+  }
+  list->listType = listType;
+  eol_vec2d_copy(list->displayItems,displayItems);
+  list->showVSlider = showVSlider;
+  list->showHSlider = showHSlider;
+
+  component->data_free = eol_component_list_free;
+  component->data_draw = eol_component_list_draw;
+  component->data_update = eol_component_list_update;
+}
 
 void eol_component_make_slider(
     eolComponent * component,
@@ -1220,11 +1277,32 @@ void eol_component_slider_new(eolComponent *component)
   {
     eol_logger_message(
       EOL_LOG_ERROR,
-      "eol_actor: failed to allocate data for new label\n");
+      "eol_actor: failed to allocate data for new slider\n");
     return;
   }
   memset(component->componentData,0,sizeof(eolComponentSlider));
   component->type = eolSliderComponent;
+}
+
+void eol_component_list_new(eolComponent *component)
+{
+  if (component->componentData != NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_component:tried to make a list out of an existing component\n");
+    return;
+  }
+  component->componentData = malloc(sizeof(eolComponentList));
+  if (component->componentData == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_actor: failed to allocate data for new list\n");
+    return;
+  }
+  memset(component->componentData,0,sizeof(eolComponentList));
+  component->type = eolListComponent;
 }
 
 void eol_component_label_new(eolComponent *component)
@@ -1309,8 +1387,7 @@ eolComponent *eol_slider_common_new(
     eolRect        bounds,
     eolBool        vertical,
     eolVec3D       barColor,
-    eolFloat       startPosition,
-    eolUint        sliderType
+    eolFloat       startPosition
   )
 {
   if (vertical)
@@ -1350,6 +1427,71 @@ eolComponent *eol_slider_common_new(
                           eolSliderCommon
                           );
   }
+}
+
+eolComponent *eol_list_new(
+    eolUint       id,
+    eolWord       name,
+    eolRectFloat  rect,
+    eolRect       bounds,
+    eolUint       listType,
+    eolVec2D      itemDimensions,
+    eolBool       showVSlider,
+    eolBool       showHSlider
+  )
+{
+  eolComponent *component = NULL;
+  eolComponentList *list = NULL;
+  component = eol_component_new();
+  if (!component)return NULL;
+
+  eol_component_make_list(
+    component,
+    listType,
+    showHSlider,
+    showVSlider,
+    itemDimensions
+  );
+
+  list = eol_component_get_list_data(component);
+  if (list == NULL)
+  {
+    eol_component_free(&component);
+    return NULL;
+  }
+  component->id = id;
+  eol_word_cpy(component->name,name);
+  component->canHasFocus = eolTrue;
+  component->type = eolSliderComponent;
+  eol_rectf_copy(&component->rect,rect);
+
+  component->bounds.x = bounds.x + (bounds.w * rect.x);
+  component->bounds.y = bounds.y + (bounds.h * rect.y);
+  if (rect.w <= 1)
+    component->bounds.w = bounds.w * rect.w;
+  else component->bounds.w = rect.w;
+  if (rect.h <= 1)
+    component->bounds.h = bounds.h * rect.h;
+  else component->bounds.h = rect.h;
+
+  if (showVSlider)
+  {
+    list->vSlider = eol_slider_common_new(
+      0,
+      "vertical_scroll",
+      rect,
+      bounds,
+      eolTrue,
+      eol_vec3d(0,0,0),
+      0
+    );
+
+  }
+  else
+  {
+    list->itemBounds.x = component->bounds.x;
+  }
+  return component;
 }
 
 eolComponent *eol_slider_new(
@@ -1634,12 +1776,63 @@ eolComponent *eol_entry_new(
   eol_rectf_copy(&component->rect,rect);
   component->canHasFocus = eolTrue;
   component->type = eolEntryComponent;
+  /*
   component->bounds.w = bounds.w;
   component->bounds.h = bounds.h;
   component->bounds.x = bounds.x + (bounds.w * rect.x);
-  component->bounds.y = bounds.y + (bounds.h * rect.y);
-  
+  component->bounds.y = bounds.y + (bounds.h * rect.y);*/
+  eol_component_get_rect_from_bounds(&component->bounds,bounds, rect);
   return component;
+}
+
+/*utility functions*/
+void eol_component_get_rect_from_bounds(eolRect *rect,eolRect canvas, eolRectFloat bounds)
+{
+  if (!rect)return;
+  if (bounds.x < 0)
+  {
+    rect->x = (canvas.x + canvas.w) + (bounds.x * canvas.w);
+  }
+  else
+  {
+    rect->x = canvas.x + (canvas.w * bounds.x);
+  }
+  if (bounds.y < 0)
+  {
+    rect->y = (canvas.y + canvas.h) + (bounds.y * canvas.h);
+  }
+  else
+  {
+    rect->y = canvas.y + (canvas.h * bounds.y);
+  }
+
+  if (bounds.w <= 0)
+  {
+    rect->w = 1 - rect->x;
+  }
+  else
+  {
+    rect->w = bounds.w;
+    if ((rect->w + rect->x) > 1)
+    {
+      rect->w = 1 - rect->x;
+    }
+  }
+
+  if (bounds.h <= 0)
+  {
+    rect->h = 1 - rect->y;
+  }
+  else
+  {
+    rect->h = bounds.h;
+    if ((rect->h + rect->y) > 1)
+    {
+      rect->h = 1 - rect->y;
+    }
+  }
+  rect->w *= canvas.w;
+  rect->h *= canvas.h;
 }
 
 /*eol@eof*/

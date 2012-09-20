@@ -110,6 +110,15 @@ eolBool eol_input_is_key_held(eolInt key);
 eolBool eol_input_is_mod_held(eolUint mod);
 
 /**
+ * @brief determines if the keyboard modifier key is down during this frame
+ * Uses SDLMod enumerations, ex: KMOD_LSHIFT, KMOD_ALT, etc.
+ * @param key the SDLMod value of the mod of interest.
+ *
+ * @return eolTrue if held, eolFalse otherwise
+ */
+eolBool eol_input_is_mod_down(eolUint mod);
+
+/**
  * @brief determines if the keyboard modifier key is pressed during this frame
  * Uses SDLMod enumerations, ex: KMOD_LSHIFT, KMOD_ALT, etc.
  * @param key the SDLMod value of the mod of interest.  

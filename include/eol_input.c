@@ -341,6 +341,22 @@ eolBool eol_input_is_mod_held(eolUint mod)
   return eolFalse;
 }
 
+eolBool eol_input_is_mod_down(eolUint mod)
+{
+  if((_eol_input_initialized == eolFalse) ||
+    (_last_frame_keyboard == NULL) ||
+    (_this_frame_keyboard == NULL))
+  {
+    eol_logger_message(EOL_LOG_ERROR,"eol_input: uninitialized.");
+    return 0;
+  }
+  if (_this_frame_keyboard_mod & mod)
+  {
+    return eolTrue;
+  }
+  return eolFalse;
+}
+
 eolBool eol_input_is_mod_pressed(eolUint mod)
 {
   if((_eol_input_initialized == eolFalse) ||

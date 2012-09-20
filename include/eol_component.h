@@ -72,6 +72,16 @@ enum eolListTypes {
   eolListDock   = 2  /**<items are drawn left to right.  fit within bounding rect*/
 };
 
+/**
+ * @note the relative float rect for all components follows this convention:
+ * x or y should be from 0-1, 0 being at the far left/top, 1 meaning far right/bottom.
+ * if x or y is negative it is taken in relative postiton from the right/bottom.
+ * w and h are widths relative to the size of the bounding canvas.  So 0.5 means the
+ * width should take up half of the space.
+ * 0 or negative w or h means SNAP to edge.  Just like a 0 would mean for x or y.
+ * @example rect {0.25,-0.25,-1,0.2} means that the top left corner will be at
+ * (0.25,0.75) and the bottom right corner will be at (1,0.95)
+*/
 
 /**
   @brief this structure serves as a header for all components
@@ -80,8 +90,8 @@ typedef struct eolComponent_S
 {
   eolUint       id;
   eolWord       name;
-  eolRectFloat  rect;
-  eolRect       bounds;
+  eolRectFloat  rect;           /**<relative position to draw*/
+  eolRect       bounds;         /**<calculated position to draw*/
   eolBool       canHasFocus;    /**<I apologize for the lolcat reference*/
   eolBool       hasFocus;
   eolInt        state;
@@ -210,8 +220,7 @@ eolComponent *eol_slider_common_new(
     eolRect        bounds,
     eolBool        vertical,
     eolVec3D       barColor,
-    eolFloat       startPosition,
-    eolUint        sliderType
+    eolFloat       startPosition
 );
 
 /**
