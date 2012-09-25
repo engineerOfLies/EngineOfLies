@@ -279,6 +279,38 @@ void eol_window_load_label(eolWindow *win,eolKeychain *def)
   eol_window_add_component(win,comp);
 }
 
+void eol_window_load_list(eolWindow *win,eolKeychain *def)
+{
+  eolComponent *comp = NULL;
+  eolUint       id;
+  eolLine       name;
+  eolRectFloat  rect;
+  eolUint       listType = 0;
+  eolVec2D      itemDim;
+
+  if ((!win) || (!def))return;
+  eol_keychain_get_hash_value_as_line(name, def, "name");
+  eol_keychain_get_hash_value_as_uint(&id, def, "id");
+  eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
+
+  comp = eol_list_new(
+    id,
+    name,
+    rect,
+    win->rect,
+    listType,
+    itemDim,
+    1,
+    1,
+    3,
+    eol_vec3d(1,1,1),
+    1
+  );
+
+
+  eol_window_add_component(win,comp);
+}
+
 void eol_window_load_slider(eolWindow *win,eolKeychain *def)
 {
   eolComponent *comp = NULL;
@@ -299,7 +331,6 @@ void eol_window_load_slider(eolWindow *win,eolKeychain *def)
   
   if (eol_line_cmp(sliderType,"COMMON") == 0)
   {
-    
     comp = eol_slider_common_new(
       id,
       name,
@@ -307,8 +338,7 @@ void eol_window_load_slider(eolWindow *win,eolKeychain *def)
       win->rect,
       eol_true_from_string(vertical),
       barColor,
-      0,
-      eolSliderCommon
+      0
     );
     eol_window_add_component(win,comp);
   }
@@ -463,6 +493,11 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
             if (eol_line_cmp(typecheck,"SLIDER") == 0)
             {
               eol_window_load_slider(window,item);
+              continue;
+            }
+            if (eol_line_cmp(typecheck,"LIST") == 0)
+            {
+              eol_window_load_list(window,item);
               continue;
             }
           }

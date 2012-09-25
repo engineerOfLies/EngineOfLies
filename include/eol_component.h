@@ -414,9 +414,36 @@ eolComponent *eol_line_entry_new(
 );
 
 /**
+ * @brief creates a new entry component set up with common options for single line input
+ * @param id the id for this component. This should be unique per window.
+ * @param name the name of this component.  This should be unique per window.
+ * @param rect the component position relative to the window bounds
+ * @param bounds the window rect.
+ */
+eolComponent *eol_list_new(
+    eolUint       id,
+    eolWord       name,
+    eolRectFloat  rect,
+    eolRect       bounds,
+    eolUint       listType,
+    eolVec2D      itemDimensions,
+    eolBool       showVSlider,
+    eolBool       showHSlider,
+    eolUint       fontSize,
+    eolVec3D      textColor,
+    eolFloat      alpha
+  );
+
+
+/**
  * @brief changes what is in the output buffer for the entry.
  * @param component the component to set.
  */
 void eol_entry_assign_output(eolComponent *component);
+
+/**
+ * @brief utility to calculate draw rect from bounds and canvas rect
+ */
+void eol_component_get_rect_from_bounds(eolRect *rect,eolRect canvas, eolRectFloat bounds);
 
 #endif
