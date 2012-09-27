@@ -24,7 +24,6 @@
 
 typedef struct
 {
-  eolRectFloat  placement;
   eolBool       selected;
   eolComponent *item;
 }eolComponentListItem;
@@ -46,6 +45,7 @@ typedef struct
   eolRect   hSliderBounds;
   eolComponent *hSlider;/**<the horizontal slider*/
   eolComponent *vSlider;/**<the vertical slider*/
+  eolBool    multiSelection;/**<if more than one item can be selected*/
   eolUint    fontSize;
   eolVec3D   textColor;
   eolFloat   alpha;
@@ -53,6 +53,5 @@ typedef struct
 
 void eol_component_list_free(eolComponent *component);
 void eol_component_list_new(eolComponent *component);
-
 
 #endif

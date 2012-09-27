@@ -13,21 +13,29 @@ void eol_component_make_list(
     eolBool   showVSlider,
     eolVec2D  displayItems
   );
-
+  
+void eol_component_list_select_item(
+    eolComponent *component,
+    eolComponentListItem *item
+  );
+  
 /*function definitions*/
 
 eolVec2D eol_component_list_get_item_position(eolComponent *list,eolUint position)
 {
   eolComponentList *ldata;
   eolVec2D pos = {0,0};
-  eolUint  row = 0,col = 0;
+  eolUint  row = position,col = 0;
   ldata = eol_component_get_list_data(list);
   if (!ldata)return pos;
   /*TODO: offset based on scroll position*/
-  col = position % ldata->numPerRow;
-  row = position / ldata->numPerRow;
-  pos.x = row * (ldata->displayItems.x + ldata->itemPadding.x);
-  pos.y = col * (ldata->displayItems.y + ldata->itemPadding.y);
+  if (ldata->numPerRow > 1)
+  {
+    col = position % ldata->numPerRow;
+    row = position / ldata->numPerRow;
+  }
+  pos.x = (col * (ldata->displayItems.x + ldata->itemPadding.x)) + list->bounds.x;
+  pos.y = (row * (ldata->displayItems.y + ldata->itemPadding.y)) + list->bounds.y;
   return pos;
 }
 
@@ -62,6 +70,9 @@ eolComponent *eol_list_new(
   component = eol_component_new();
   if (!component)return NULL;
 
+  eol_rectf_copy(&component->rect,rect);
+  eol_component_get_rect_from_bounds(&component->bounds,bounds, rect);
+
   eol_component_make_list(
     component,
     listType,
@@ -79,10 +90,9 @@ eolComponent *eol_list_new(
   component->id = id;
   eol_word_cpy(component->name,name);
   component->canHasFocus = eolTrue;
-  eol_rectf_copy(&component->rect,rect);
-  eol_component_get_rect_from_bounds(&component->bounds,bounds, rect);
   list->itemBounds.x = component->bounds.w;
   list->itemBounds.y = component->bounds.h;
+
   if (showVSlider)
   {
     list->vSliderBounds.h = component->bounds.h;
@@ -144,7 +154,10 @@ void eol_component_list_free(eolComponent *component)
 void eol_component_list_draw(eolComponent *component, eolRect bounds)
 {
   eolRect r;
+  eolVec2D itemPos = {0,0};
+  int position = 0;
   GList *it = NULL;
+  eolComponentListItem *item = NULL;
   eolComponentList *list = eol_component_get_list_data(component);
   if (list == NULL)return;
   r.x = component->bounds.x - 1;
@@ -155,18 +168,27 @@ void eol_component_list_draw(eolComponent *component, eolRect bounds)
   eol_draw_solid_rect(component->bounds,eol_vec3d(0.1,0.1,0.1),1);
   eol_component_draw(list->vSlider,list->vSliderBounds);
   eol_component_draw(list->hSlider,list->hSliderBounds);
-  /*TODO: draw sliders
-    draw list items*/
-  
-  for (it = list->itemList;it != NULL;it = it->next)
+  /*draw list items*/
+  /*TODO make the iterator start at the top position of the scroll
+    TODO check for visibility*/
+  printf("items:\n");
+  for (it = list->itemList,position = 0;it != NULL;it = it->next,position++)
   {
-
+    if (!it->data)continue;
+    item = (eolComponentListItem*)it->data;
+    itemPos = eol_component_list_get_item_position(component,position);
+    item->item->bounds.x = itemPos.x;
+    item->item->bounds.y = itemPos.y;
+    eol_component_draw(item->item,item->item->bounds);
+    printf("\tdrawn item %i (%f,%f)\n",position,itemPos.x,itemPos.y);
   }
 }
 
 eolBool eol_component_list_update(eolComponent *component)
 {
+  GList *it = NULL;
   eolComponentList *list;
+  eolComponentListItem *item = NULL;
   eolBool updated = eolFalse;
   list = eol_component_get_list_data(component);
   if (list == NULL)return eolFalse;
@@ -174,6 +196,13 @@ eolBool eol_component_list_update(eolComponent *component)
   updated = (eol_component_update(list->vSlider) || updated);
   updated = (eol_component_update(list->hSlider) || updated);
   /*iterate through glist and update elements*/
+  /*TODO: check for visibility*/
+  for (it = list->itemList;it != NULL;it = it->next)
+  {
+    if (!it->data)continue;
+    item = (eolComponentListItem*)it->data;
+    updated = eol_component_update(item->item) || updated;
+  }
   return updated;
 }
 
@@ -193,34 +222,75 @@ void eol_component_make_list(
   {
     return;
   }
+  list->numPerRow = 1;
+  list->itemPadding.x = 8;
+  list->itemPadding.y = 8;
   switch(listType)
   {
     default:
+    case eolListText:
+      displayItems.y = eol_font_get_text_height_average(list->fontSize);
+      displayItems.x = component->bounds.w;
     case eolListLines:
       break;
     case eolListBlock:
       break;
     case eolListDock:
+      list->numPerRow = -1;
       break;
   }
   list->listType = listType;
   eol_vec2d_copy(list->displayItems,displayItems);
   list->showVSlider = showVSlider;
   list->showHSlider = showHSlider;
-
   component->data_free = eol_component_list_free;
   component->data_draw = eol_component_list_draw;
   component->data_update = eol_component_list_update;
 }
 
+eolComponentListItem * eol_list_item_new()
+{
+  eolComponentListItem *item = NULL;
+  item = (eolComponentListItem *)malloc(sizeof(eolComponentListItem));
+  if (item == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_component_list: failed to allocate list item\n");
+    return NULL;
+  }
+  memset(item,0,sizeof(eolComponentListItem));
+  return item;
+}
+
+void eol_list_item_free(eolComponentListItem **item)
+{
+  if ((!item)||(!item))return;
+  eol_component_free(&(*item)->item);
+  free(*item);
+  *item = NULL;
+}
 
 void eol_list_add_item(eolComponent *list,eolComponent *item)
 {
+  eolVec2D itemPos;
   eolComponentList * ldata;
+  eolComponentListItem *listItem;
   ldata = eol_component_get_list_data(list);
   if ((!ldata) || (!item))return;/*no op*/
+  listItem = eol_list_item_new();
+  if (!listItem)return;/*couldn't add, BAD*/
+    listItem->item = item;
+  eol_rectf_set(&item->rect,0,0,1,1);
+  
+  itemPos = eol_component_list_get_item_position(list,ldata->itemCount);
+  item->bounds.w = ldata->displayItems.x;
+  item->bounds.h = ldata->displayItems.y;
+  item->bounds.x = itemPos.x;
+  item->bounds.y = itemPos.y;
+  /*x position will be set at draw*/
+  ldata->itemList = g_list_append(ldata->itemList,listItem);
   ldata->itemCount++;
-  ldata->itemList = g_list_append(ldata->itemList,item);
   /*Update item's rect and bounds to reflect position in list*/
 }
 
@@ -272,5 +342,60 @@ void eol_component_list_new(eolComponent *component)
   component->type = eolListComponent;
 }
 
+void eol_component_list_select_item_n(
+    eolComponent *component,
+    eolUint       n
+  )
+{
+  eolComponentListItem *item;
+  eolComponentList * ldata;
+  ldata = eol_component_get_list_data(component);
+  if (!ldata)return;
+  item = (eolComponentListItem *)g_list_nth(ldata->itemList,n);
+  eol_component_list_select_item(
+    component,
+    item
+  );
+}
+
+void eol_component_list_select_item(
+    eolComponent *component,
+    eolComponentListItem *item
+  )
+{
+  eolComponentList * ldata;
+  ldata = eol_component_get_list_data(component);
+  if (!ldata)return;
+  ldata->selection = g_list_find(ldata->itemList,item);
+  if (!ldata->selection)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "failed to find item in list for selection!\n");
+    return;
+  }
+  if (!ldata->multiSelection)
+  {
+    eol_component_list_deselect_all(component);
+  }
+  item->selected = eolTrue;
+}
+
+void eol_component_list_deselect_all(
+    eolComponent *component
+  )
+{
+  GList *it = NULL;
+  eolComponentListItem *item;
+  eolComponentList * ldata;
+  ldata = eol_component_get_list_data(component);
+  if (!ldata)return;
+  for (it = ldata->itemList;it != NULL;it = it->next)
+  {
+    if (!it->data)continue;
+    item = (eolComponentListItem *)it->data;
+    item->selected = eolFalse;
+  }
+}
 
 /*eol@eof*/

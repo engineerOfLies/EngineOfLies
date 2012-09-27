@@ -65,11 +65,12 @@ enum eolButtonStates {
 #define eolButtonStateMax 4
 
 enum eolListTypes {
-  eolListLines  = 0, /**<items are drawn from top to bottom fit within bounding
+  eolListText   = 0, /**<items are text and drawn from top to bottom*/
+  eolListLines  = 1, /**<items are drawn from top to bottom fit within bounding
                          rect*/
-  eolListBlock  = 1, /**<items are drawn left to right, then top to bottom fit
+  eolListBlock  = 2, /**<items are drawn left to right, then top to bottom fit
                          within bounding rect*/
-  eolListDock   = 2  /**<items are drawn left to right.  fit within bounding rect*/
+  eolListDock   = 3  /**<items are drawn left to right.  fit within bounding rect*/
 };
 
 /**
@@ -434,6 +435,20 @@ eolComponent *eol_list_new(
     eolFloat      alpha
   );
 
+void eol_list_add_text_item(
+    eolComponent  * list,
+    eolUint         itemId,
+    eolLine         text
+  );
+
+void eol_component_list_deselect_all(
+    eolComponent *component
+  );
+
+void eol_component_list_select_item_n(
+    eolComponent *component,
+    eolUint       n
+  );
 
 /**
  * @brief changes what is in the output buffer for the entry.
