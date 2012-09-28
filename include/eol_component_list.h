@@ -24,31 +24,34 @@
 
 typedef struct
 {
-  eolBool       selected;
-  eolComponent *item;
+  eolBool         selected;
+  eolBool         highlight;
+  eolComponent  * item;
 }eolComponentListItem;
 
 typedef struct
 {
-  eolUint   listType;   /**<see list type enumaration in header*/
-  eolUint   itemCount;  /**<number of items in the list*/
+  eolUint     listType;   /**<see list type enumaration in header*/
+  eolUint     itemCount;  /**<number of items in the list*/
   eolRectFloat itemBounds; /**<sub area for drawing items*/
-  eolVec2D  itemPadding;
-  eolVec2D  displayItems;/**<dimensions for drawing items*/
-  eolUint   numPerRow;  /**<how many items appear per row*/
-  GList   * itemList;   /**<list of eolComponent's*/
-  GList   * topItem;    /**<the top left most item*/
-  GList   * selection;  /**<the list item that is selected*/
-  eolBool   showHSlider;/**<if true, shows the Horizontal slider*/
-  eolBool   showVSlider;/**<if true, shows the Vertical slider*/
-  eolRect   vSliderBounds;
-  eolRect   hSliderBounds;
+  eolVec2D    itemPadding;
+  eolVec2D    displayItems;/**<dimensions for drawing items*/
+  eolUint     numPerRow;  /**<how many items appear per row*/
+  eolVec2D    topOffset;
+  GList     * itemList;   /**<list of eolComponent's*/
+  GList     * topItem;    /**<the top left most item*/
+  GList     * selection;  /**<the list item that is selected*/
+  eolBool     showHSlider;/**<if true, shows the Horizontal slider*/
+  eolBool     showVSlider;/**<if true, shows the Vertical slider*/
+  eolRect     vSliderBounds;
+  eolRect     hSliderBounds;
   eolComponent *hSlider;/**<the horizontal slider*/
   eolComponent *vSlider;/**<the vertical slider*/
-  eolBool    multiSelection;/**<if more than one item can be selected*/
-  eolUint    fontSize;
-  eolVec3D   textColor;
-  eolFloat   alpha;
+  eolBool     multiSelection;/**<if more than one item can be selected*/
+  eolUint     fontSize;
+  eolVec3D    highlightColor;
+  eolVec3D    textColor;
+  eolFloat    alpha;
 }eolComponentList;
 
 void eol_component_list_free(eolComponent *component);

@@ -202,6 +202,14 @@ void eol_rectf_set(
     eolFloat       h
   );
 
+/**
+ * @brief checks if the two rects are overlapping
+ * @param a one of the rects to check
+ * @param b the other rect to check
+ * @return eolTrue if they overlap, eolFalse otherwise
+ */
+eolBool eol_rect_lap_rect(eolRect a, eolRect b);
+
 /*
  * The Vector Types
  * Not to be confused with the vector lists from STL

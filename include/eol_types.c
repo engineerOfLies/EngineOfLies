@@ -368,6 +368,14 @@ void eol_rect_copy(
   d->h = s.h;
 }
 
+eolBool eol_rect_lap_rect(eolRect a, eolRect b)
+{
+  if ((a.x > (b.x + b.w)) || (a.y > (b.y + b.h)) || (b.x > (a.x + a.w)) || (b.y > (a.y + a.h)))
+    return eolFalse;
+  return eolTrue;
+}
+
+
 void eol_orientation_copy(eolOrientation *dst,eolOrientation src)
 {
   if (!dst)return;

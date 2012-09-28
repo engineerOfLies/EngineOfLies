@@ -2,16 +2,21 @@
 #include "eol_font.h"
 #include "eol_logger.h"
 #include "eol_draw.h"
+#include "eol_mouse.h"
 
 /*local function prototypes*/
 eolComponentList *eol_component_get_list_data(eolComponent *component);
+eolVec2D eol_component_list_get_total_area(eolComponentList *list);
+eolVec2D eol_component_list_get_item_position(eolComponent *list,eolUint position);
+eolVec2D eol_component_list_scaleable_area(eolComponentList *list);
 
 void eol_component_make_list(
     eolComponent * component,
     eolUint   listType,
     eolBool   showHSlider,
     eolBool   showVSlider,
-    eolVec2D  displayItems
+    eolVec2D  displayItems,
+    eolUint   fontSize
   );
   
 void eol_component_list_select_item(
@@ -20,24 +25,6 @@ void eol_component_list_select_item(
   );
   
 /*function definitions*/
-
-eolVec2D eol_component_list_get_item_position(eolComponent *list,eolUint position)
-{
-  eolComponentList *ldata;
-  eolVec2D pos = {0,0};
-  eolUint  row = position,col = 0;
-  ldata = eol_component_get_list_data(list);
-  if (!ldata)return pos;
-  /*TODO: offset based on scroll position*/
-  if (ldata->numPerRow > 1)
-  {
-    col = position % ldata->numPerRow;
-    row = position / ldata->numPerRow;
-  }
-  pos.x = (col * (ldata->displayItems.x + ldata->itemPadding.x)) + list->bounds.x;
-  pos.y = (row * (ldata->displayItems.y + ldata->itemPadding.y)) + list->bounds.y;
-  return pos;
-}
 
 eolComponentList *eol_component_get_list_data(eolComponent *component)
 {
@@ -78,7 +65,8 @@ eolComponent *eol_list_new(
     listType,
     showHSlider,
     showVSlider,
-    itemDimensions
+    itemDimensions,
+    fontSize
   );
 
   list = eol_component_get_list_data(component);
@@ -90,8 +78,10 @@ eolComponent *eol_list_new(
   component->id = id;
   eol_word_cpy(component->name,name);
   component->canHasFocus = eolTrue;
-  list->itemBounds.x = component->bounds.w;
-  list->itemBounds.y = component->bounds.h;
+  list->itemBounds.x = component->bounds.x;
+  list->itemBounds.y = component->bounds.y;
+  list->itemBounds.w = component->bounds.w;
+  list->itemBounds.h = component->bounds.h;
 
   if (showVSlider)
   {
@@ -125,7 +115,6 @@ eolComponent *eol_list_new(
       0
     );
   }
-  list->fontSize = fontSize;
   eol_vec3d_copy(list->textColor,textColor);
   list->alpha = alpha;
   return component;
@@ -151,10 +140,21 @@ void eol_component_list_free(eolComponent *component)
   component->componentData = NULL;
 }
 
+eolBool eol_list_item_bound_check(eolComponentList *list,eolRect item)
+{
+  eolRect b;
+  b.x = list->itemBounds.x + list->displayItems.x;
+  b.y = list->itemBounds.y + list->displayItems.y;
+  b.w = list->itemBounds.w - (list->displayItems.x * 2);
+  b.h = list->itemBounds.h - (list->displayItems.y * 2);
+  return (eol_rect_lap_rect(b, item));
+}
+
 void eol_component_list_draw(eolComponent *component, eolRect bounds)
 {
   eolRect r;
   eolVec2D itemPos = {0,0};
+  eolVec2D scaleArea;
   int position = 0;
   GList *it = NULL;
   eolComponentListItem *item = NULL;
@@ -164,14 +164,10 @@ void eol_component_list_draw(eolComponent *component, eolRect bounds)
   r.y = component->bounds.y - 1;
   r.w = component->bounds.w + 2;
   r.h = component->bounds.h + 2;
-  eol_draw_solid_rect(r,eol_vec3d(1,1,1),1);
   eol_draw_solid_rect(component->bounds,eol_vec3d(0.1,0.1,0.1),1);
-  eol_component_draw(list->vSlider,list->vSliderBounds);
-  eol_component_draw(list->hSlider,list->hSliderBounds);
   /*draw list items*/
-  /*TODO make the iterator start at the top position of the scroll
-    TODO check for visibility*/
-  printf("items:\n");
+  scaleArea = eol_component_list_scaleable_area(list);
+  /*TODO make the iterator start at the top position of the scroll*/
   for (it = list->itemList,position = 0;it != NULL;it = it->next,position++)
   {
     if (!it->data)continue;
@@ -179,29 +175,78 @@ void eol_component_list_draw(eolComponent *component, eolRect bounds)
     itemPos = eol_component_list_get_item_position(component,position);
     item->item->bounds.x = itemPos.x;
     item->item->bounds.y = itemPos.y;
+    if (!eol_list_item_bound_check(list,item->item->bounds))continue;
+    if (item->selected)
+    {
+      eol_draw_solid_rect(item->item->bounds,list->highlightColor,0.9);
+    }
+    if (item->highlight)
+    {
+      eol_draw_rect(item->item->bounds,list->highlightColor,1);
+    }
     eol_component_draw(item->item,item->item->bounds);
-    printf("\tdrawn item %i (%f,%f)\n",position,itemPos.x,itemPos.y);
+  }
+  eol_draw_rect(r,eol_vec3d(1,1,1),1);
+  if (scaleArea.y > 1)
+  {
+    eol_component_draw(list->vSlider,list->vSliderBounds);
+  }
+  if (scaleArea.x > 1)
+  {
+    eol_component_draw(list->hSlider,list->hSliderBounds);
   }
 }
 
 eolBool eol_component_list_update(eolComponent *component)
 {
   GList *it = NULL;
+  eolVec2D scaleArea;
+  eolFloat slide = 0;
   eolComponentList *list;
   eolComponentListItem *item = NULL;
   eolBool updated = eolFalse;
   list = eol_component_get_list_data(component);
   if (list == NULL)return eolFalse;
   /*Update Sliders if visible*/
-  updated = (eol_component_update(list->vSlider) || updated);
-  updated = (eol_component_update(list->hSlider) || updated);
+  scaleArea = eol_component_list_scaleable_area(list);
+  if (scaleArea.y > 1)
+  {
+    if (eol_component_update(list->vSlider))
+    {
+      updated = eolTrue;
+      slide = eol_slider_get_position(list->vSlider);
+      list->topOffset.y = -(scaleArea.y * slide);
+    }
+    slide = eol_slider_get_position(list->vSlider);
+    list->topOffset.y = -(scaleArea.y * slide);
+  }
+  slide = 0;
+  if (scaleArea.x > 1)
+  {
+    if (eol_component_update(list->hSlider) || updated)
+    {
+      updated = eolTrue;
+    }
+    slide = eol_slider_get_position(list->hSlider);
+    list->topOffset.x = -(scaleArea.x * slide);
+  }
   /*iterate through glist and update elements*/
-  /*TODO: check for visibility*/
   for (it = list->itemList;it != NULL;it = it->next)
   {
     if (!it->data)continue;
     item = (eolComponentListItem*)it->data;
-    updated = eol_component_update(item->item) || updated;
+    if ((eol_mouse_in_rect(item->item->bounds)) &&
+        (eol_list_item_bound_check(list,item->item->bounds)))
+    {
+      item->highlight = eolTrue;
+      if (eol_mouse_input_released(eolMouseLeft))
+      {
+        eol_component_list_select_item(component,item);
+        list->selection = it;
+        updated = eolTrue;
+      }
+    }
+    else item->highlight = eolFalse;
   }
   return updated;
 }
@@ -211,7 +256,8 @@ void eol_component_make_list(
     eolUint   listType,
     eolBool   showHSlider,
     eolBool   showVSlider,
-    eolVec2D  displayItems
+    eolVec2D  displayItems,
+    eolUint   fontSize
   )
 {
   eolComponentList * list = NULL;
@@ -225,12 +271,14 @@ void eol_component_make_list(
   list->numPerRow = 1;
   list->itemPadding.x = 8;
   list->itemPadding.y = 8;
+  eol_vec3d_set(list->highlightColor,0,1,1);
+  list->fontSize = fontSize;
   switch(listType)
   {
     default:
     case eolListText:
       displayItems.y = eol_font_get_text_height_average(list->fontSize);
-      displayItems.x = component->bounds.w;
+      displayItems.x = component->bounds.w - (list->itemPadding.x * 2);
     case eolListLines:
       break;
     case eolListBlock:
@@ -390,6 +438,7 @@ void eol_component_list_deselect_all(
   eolComponentList * ldata;
   ldata = eol_component_get_list_data(component);
   if (!ldata)return;
+  ldata->selection = NULL;
   for (it = ldata->itemList;it != NULL;it = it->next)
   {
     if (!it->data)continue;
@@ -397,5 +446,54 @@ void eol_component_list_deselect_all(
     item->selected = eolFalse;
   }
 }
+
+eolVec2D eol_component_list_scaleable_area(eolComponentList *list)
+{
+  eolVec2D listArea;
+  eolVec2D scaleArea = {0,0};
+  if (!list)return scaleArea;
+  listArea = eol_component_list_get_total_area(list);
+  scaleArea.x = listArea.x - list->itemBounds.w;
+  scaleArea.y = listArea.y - list->itemBounds.h;
+  return scaleArea;
+}
+
+eolVec2D eol_component_list_get_total_area(eolComponentList *list)
+{
+  eolVec2D area = {0,0};
+  eolUint rows = 1,cols = 1;
+  if (!list)return area;
+  if (list->numPerRow)
+  {
+    rows = list->itemCount / list->numPerRow;
+    cols = list->itemCount % list->numPerRow;
+  }
+  else
+  {
+    rows = list->itemCount;
+  }
+  area.x = (list->displayItems.x + list->itemPadding.x) * cols;
+  area.y = (list->displayItems.y + list->itemPadding.y) * rows;
+  return area;
+}
+
+eolVec2D eol_component_list_get_item_position(eolComponent *list,eolUint position)
+{
+  eolComponentList *ldata;
+  eolVec2D pos = {0,0};
+  eolUint  row = position,col = 0;
+  ldata = eol_component_get_list_data(list);
+  if (!ldata)return pos;
+  /*TODO: offset based on scroll position*/
+  if (ldata->numPerRow > 1)
+  {
+    col = position % ldata->numPerRow;
+    row = position / ldata->numPerRow;
+  }
+  pos.x = (col * (ldata->displayItems.x + ldata->itemPadding.x)) + ldata->itemBounds.x + ldata->topOffset.x;
+  pos.y = (row * (ldata->displayItems.y + ldata->itemPadding.y)) + ldata->itemBounds.y + ldata->topOffset.y;
+  return pos;
+}
+
 
 /*eol@eof*/
