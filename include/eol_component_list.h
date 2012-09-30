@@ -54,7 +54,4 @@ typedef struct
   eolFloat    alpha;
 }eolComponentList;
 
-void eol_component_list_free(eolComponent *component);
-void eol_component_list_new(eolComponent *component);
-
 #endif

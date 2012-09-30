@@ -286,12 +286,15 @@ void eol_window_load_list(eolWindow *win,eolKeychain *def)
   eolLine       name;
   eolRectFloat  rect;
   eolUint       listType = 0;
+  eolBool       showVslider = eolTrue,showHslider = eolTrue;
   eolVec2D      itemDim;
 
   if ((!win) || (!def))return;
   eol_keychain_get_hash_value_as_line(name, def, "name");
   eol_keychain_get_hash_value_as_uint(&id, def, "id");
   eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
+  eol_keychain_get_hash_value_as_bool(&showVslider, def, "showVSlider");
+  eol_keychain_get_hash_value_as_bool(&showHslider, def, "showHSlider");
 
   comp = eol_list_new(
     id,
@@ -300,8 +303,8 @@ void eol_window_load_list(eolWindow *win,eolKeychain *def)
     win->rect,
     listType,
     itemDim,
-    1,
-    1,
+    showVslider,
+    showHslider,
     3,
     eol_vec3d(1,1,1),
     1

@@ -106,7 +106,9 @@ typedef struct eolComponent_S
   eolBool       (*data_changed)(struct eolComponent_S *component);
 }eolComponent;
 
-/**@brief loads default component assets.*/
+/**
+ * @brief loads default component assets.
+ */
 void eol_component_config();
 
 /*Generic Component functions*/
@@ -435,20 +437,53 @@ eolComponent *eol_list_new(
     eolFloat      alpha
   );
 
+/**
+ * @brief adds a text item to the list.
+ * @param list the list to add an item to
+ * @param itemId the id of the item to add
+ * @param text the text to display for the item
+ */
 void eol_list_add_text_item(
     eolComponent  * list,
     eolUint         itemId,
     eolLine         text
   );
 
+/**
+ * @brief deselects any items in the list that may be selected
+ * @param component the list component to deselect from
+ */
 void eol_component_list_deselect_all(
     eolComponent *component
   );
 
+/**
+ * @brief Selects the item at index n in the list.  If the list does not allow multiple
+ * selections, then all other items are deselected.
+ * @param component the list component
+ * @param n the list item to select
+ */
 void eol_component_list_select_item_n(
     eolComponent *component,
     eolUint       n
   );
+
+/**
+ * @brief Get the id of the selected item if there is one.
+ * @param id output parameter, the id of the selected item is returned through this.
+ * @param list the list to get the selection from
+ * @return eolTrue if an item was selected and its ID retrieved.  eolFalse otherwise.
+ */
+eolBool eol_component_list_get_selected_id(eolUint *id,eolComponent *list);
+
+/**
+ * @brief Get the item component of the selected item if there is one.
+ * @param itemOut output parameter, a pointer to the selected item is returned through this.
+ * @param list the list to get the selection from
+ * @return eolTrue if an item was selected and it was retrieved.  eolFalse otherwise.
+ */
+eolBool eol_component_list_get_selected_item(eolComponent **itemOut,eolComponent *list);
+
 
 /**
  * @brief changes what is in the output buffer for the entry.

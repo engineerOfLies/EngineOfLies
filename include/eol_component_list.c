@@ -5,6 +5,8 @@
 #include "eol_mouse.h"
 
 /*local function prototypes*/
+void eol_component_list_free(eolComponent *component);
+void eol_component_list_new(eolComponent *component);
 eolComponentList *eol_component_get_list_data(eolComponent *component);
 eolVec2D eol_component_list_get_total_area(eolComponentList *list);
 eolVec2D eol_component_list_get_item_position(eolComponent *list,eolUint position);
@@ -187,11 +189,11 @@ void eol_component_list_draw(eolComponent *component, eolRect bounds)
     eol_component_draw(item->item,item->item->bounds);
   }
   eol_draw_rect(r,eol_vec3d(1,1,1),1);
-  if (scaleArea.y > 1)
+  if ((list->showVSlider) && (scaleArea.y > 1))
   {
     eol_component_draw(list->vSlider,list->vSliderBounds);
   }
-  if (scaleArea.x > 1)
+  if ((list->showHSlider) && (scaleArea.x > 1))
   {
     eol_component_draw(list->hSlider,list->hSliderBounds);
   }
@@ -209,7 +211,7 @@ eolBool eol_component_list_update(eolComponent *component)
   if (list == NULL)return eolFalse;
   /*Update Sliders if visible*/
   scaleArea = eol_component_list_scaleable_area(list);
-  if (scaleArea.y > 1)
+  if ((list->showVSlider) && (scaleArea.y > 1))
   {
     if (eol_component_update(list->vSlider))
     {
@@ -221,7 +223,7 @@ eolBool eol_component_list_update(eolComponent *component)
     list->topOffset.y = -(scaleArea.y * slide);
   }
   slide = 0;
-  if (scaleArea.x > 1)
+  if ((list->showHSlider) && (scaleArea.x > 1))
   {
     if (eol_component_update(list->hSlider) || updated)
     {
@@ -447,6 +449,30 @@ void eol_component_list_deselect_all(
   }
 }
 
+eolBool eol_component_list_get_selected_item(eolComponent **itemOut,eolComponent *list)
+{
+  eolComponentListItem *item;
+  eolComponentList * ldata;
+  if (!itemOut)return eolFalse;
+  ldata = eol_component_get_list_data(list);
+  if (!ldata)return eolFalse;
+  if (ldata->selection == NULL)return eolFalse;
+  item = (eolComponentListItem *)ldata->selection->data;
+  if (!item)return eolFalse;
+  *itemOut = item->item;
+  return eolTrue;
+}
+
+eolBool eol_component_list_get_selected_id(eolUint *id,eolComponent *list)
+{
+  eolComponent *item;
+  if (!id)return eolFalse;
+  if (!eol_component_list_get_selected_item(&item,list))return eolFalse;
+  if (item == NULL)return eolFalse;
+  *id = item->id;
+  return eolTrue;
+}
+
 eolVec2D eol_component_list_scaleable_area(eolComponentList *list)
 {
   eolVec2D listArea;
@@ -490,8 +516,8 @@ eolVec2D eol_component_list_get_item_position(eolComponent *list,eolUint positio
     col = position % ldata->numPerRow;
     row = position / ldata->numPerRow;
   }
-  pos.x = (col * (ldata->displayItems.x + ldata->itemPadding.x)) + ldata->itemBounds.x + ldata->topOffset.x;
-  pos.y = (row * (ldata->displayItems.y + ldata->itemPadding.y)) + ldata->itemBounds.y + ldata->topOffset.y;
+  pos.x = (col * (ldata->displayItems.x + ldata->itemPadding.x)) + ldata->itemBounds.x + ldata->topOffset.x + ldata->itemPadding.x;
+  pos.y = (row * (ldata->displayItems.y + ldata->itemPadding.y)) + ldata->itemBounds.y + ldata->topOffset.y + ldata->itemPadding.y;
   return pos;
 }
 
