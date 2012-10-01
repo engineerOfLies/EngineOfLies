@@ -1,4 +1,5 @@
 #include "eol_component_list.h"
+#include "eol_component_percent_bar.h"
 #include "eol_component.h"
 #include "eol_logger.h"
 #include "eol_font.h"

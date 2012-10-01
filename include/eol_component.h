@@ -27,14 +27,15 @@
  */
 
 enum eolComponentTypes {
-  eolNullComponent   = 0,  /**<this type is set by default*/
-  eolLabelComponent  = 1,  /**<For text string labels*/
-  eolButtonComponent = 2,  /**<for buttons*/
-  eolEntryComponent  = 3,  /**<for text input entries*/
-  eolSliderComponent = 4,  /**<for slider controls and scroll bars*/
-  eolImageComponent  = 5,  /**<for static images and icons*/
-  eolActorComponent  = 6,  /**<for animated images and 3D models*/
-  eolListComponent   = 7   /**<for lists of stuff*/
+  eolNullComponent      = 0,  /**<this type is set by default*/
+  eolLabelComponent     = 1,  /**<For text string labels*/
+  eolButtonComponent    = 2,  /**<for buttons*/
+  eolEntryComponent     = 3,  /**<for text input entries*/
+  eolSliderComponent    = 4,  /**<for slider controls and scroll bars*/
+  eolImageComponent     = 5,  /**<for static images and icons*/
+  eolActorComponent     = 6,  /**<for animated images and 3D models*/
+  eolListComponent      = 7,  /**<for lists of stuff*/
+  eolPercentBarComponent= 8   /**<for a percent bar*/
 };
 
 enum eolSliderTypes {
@@ -495,5 +496,23 @@ void eol_entry_assign_output(eolComponent *component);
  * @brief utility to calculate draw rect from bounds and canvas rect
  */
 void eol_component_get_rect_from_bounds(eolRect *rect,eolRect canvas, eolRectFloat bounds);
+
+
+eolComponent *eol_percent_bar_new(
+    eolUint       id,
+    eolWord       name,
+    eolRectFloat  rect,
+    eolRect       bounds,
+    eolBool       vertical,
+    eolBool       ascending,
+    eolFloat      percent,
+    eolVec3D      statusColor,
+    eolVec3D      backgroundColor,
+    eolFloat      statusAlpha,
+    eolFloat      backgroundAlpha
+    );
+
+void eol_component_percent_bar_set(eolComponent *component,eolFloat percent);
+void eol_component_percent_bar_assign_values(eolComponent *component,eolFloat *max,eolFloat *value);
 
 #endif

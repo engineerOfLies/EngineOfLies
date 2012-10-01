@@ -135,7 +135,6 @@ void eol_component_list_free(eolComponent *component)
   {
     eol_component_free((eolComponent**)&l->data);
   }
-  free(list);
   g_list_free(list->itemList);
   list->itemList = NULL;
   free(list);

@@ -279,6 +279,50 @@ void eol_window_load_label(eolWindow *win,eolKeychain *def)
   eol_window_add_component(win,comp);
 }
 
+void eol_window_load_percent_bar(eolWindow *win,eolKeychain *def)
+{
+  eolComponent *comp = NULL;
+  eolUint       id;
+  eolLine       name;
+  eolRectFloat  rect;
+  eolBool     vertical = eolFalse;
+  eolBool     ascending = eolFalse;
+  eolFloat    percent = 0;
+  eolVec3D    statusColor = {1,1,1};
+  eolVec3D    backgroundColor = {0,0,0};
+  eolFloat    statusAlpha = 1;
+  eolFloat    backgroundAlpha = 1;
+
+  if ((!win) || (!def))return;
+
+  eol_keychain_get_hash_value_as_line(name, def, "name");
+  eol_keychain_get_hash_value_as_uint(&id, def, "id");
+  eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
+  eol_keychain_get_hash_value_as_bool(&vertical, def, "vertical");
+  eol_keychain_get_hash_value_as_bool(&ascending, def, "ascending");
+  eol_keychain_get_hash_value_as_float(&percent, def, "percent");
+  eol_keychain_get_hash_value_as_vec3d(&statusColor, def, "statusColor");
+  eol_keychain_get_hash_value_as_vec3d(&backgroundColor, def, "backgroundColor");
+  eol_keychain_get_hash_value_as_float(&statusAlpha, def, "statusAlpha");
+  eol_keychain_get_hash_value_as_float(&backgroundAlpha, def, "backgroundAlpha");
+
+  comp = eol_percent_bar_new(
+    id,
+    name,
+    rect,
+    win->rect,
+    vertical,
+    ascending,
+    percent,
+    statusColor,
+    backgroundColor,
+    statusAlpha,
+    backgroundAlpha
+  );
+  
+  eol_window_add_component(win,comp);
+}
+
 void eol_window_load_list(eolWindow *win,eolKeychain *def)
 {
   eolComponent *comp = NULL;
@@ -496,6 +540,11 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
             if (eol_line_cmp(typecheck,"SLIDER") == 0)
             {
               eol_window_load_slider(window,item);
+              continue;
+            }
+            if (eol_line_cmp(typecheck,"PERCENT") == 0)
+            {
+              eol_window_load_percent_bar(window,item);
               continue;
             }
             if (eol_line_cmp(typecheck,"LIST") == 0)
