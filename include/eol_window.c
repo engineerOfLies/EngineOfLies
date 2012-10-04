@@ -394,84 +394,9 @@ void eol_window_load_slider(eolWindow *win,eolKeychain *def)
 void eol_window_load_button(eolWindow *win,eolKeychain *def)
 {
   eolComponent *comp;
-  eolLine buttonType;
-  eolUint id;
-  eolRectFloat rect;
-  eolLine justify;
-  eolLine buttonText;
-  eolLine name;
-  eolLine hotkey;
-  eolLine hotmod;
-  eolInt hotkeybutton;
-  eolInt hotkeymod;
-  eolLine buttonFile;
-  eolLine buttonHighFile;
-  eolLine buttonHitFile;
-  
-  if ((!win) || (!def))return;
-  eol_keychain_get_hash_value_as_line(buttonType, def, "buttonType");
-  eol_keychain_get_hash_value_as_line(name, def, "name");
-  eol_keychain_get_hash_value_as_uint(&id, def, "id");
-  eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
-  eol_keychain_get_hash_value_as_line(justify, def, "justify");/*NOTE: not used*/
-  eol_keychain_get_hash_value_as_line(buttonText, def, "buttonText");
-  
-  eol_keychain_get_hash_value_as_line(hotkey, def, "hotkey");
-  eol_keychain_get_hash_value_as_line(hotmod, def, "hotkeymod");
-  
-  eol_keychain_get_hash_value_as_line(buttonFile, def, "buttonImage");
-  eol_keychain_get_hash_value_as_line(buttonHighFile, def, "buttonHigh");
-  eol_keychain_get_hash_value_as_line(buttonHitFile, def, "buttonHit");
-  
-  hotkeybutton = eol_input_parse("key", hotkey);
-  hotkeymod = eol_input_parse("mod",hotmod);
-  if (hotkeymod < 0)hotkeymod = 0;
-  if (eol_line_cmp(buttonType,"STOCK") == 0)
-  {
-    comp = eol_button_stock_new(
-      id,
-      name,
-      rect,
-      win->rect,
-      buttonText,
-      hotkeybutton,
-      hotkeymod,
-      eolFalse
-    );
-    eol_window_add_component(win,comp);
-  }
-  else if (eol_line_cmp(buttonType,"TEXT") == 0)
-  {
-    comp = eol_button_text_new(
-      id,
-      name,
-      rect,
-      win->rect,
-      buttonText,
-      hotkeybutton,
-      hotkeymod,
-      eolFalse
-    );
-    eol_window_add_component(win,comp);
-  }
-  else if (eol_line_cmp(buttonType,"CUSTOM") == 0)
-  {
-    comp = eol_button_new(
-      id,
-      name,
-      rect,
-      win->rect,
-      buttonText,
-      eolButtonCustom,
-      hotkeybutton,
-      hotkeymod,
-      eolFalse,
-      buttonFile,
-      buttonHighFile,
-      buttonHitFile
-    );
-    eol_window_add_component(win,comp);
-  }
+  comp = eol_component_button_load(win->rect,def);
+  eol_window_add_component(win,comp);
+  return;
 }
 
 eolBool eol_window_load_data_from_file(char * filename,void *data)

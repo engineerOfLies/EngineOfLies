@@ -45,6 +45,7 @@ void eol_component_make_percent_bar(
   bar->statusAlpha = statusAlpha;
   bar->backgroundAlpha = backgroundAlpha;
   bar->vertical = vertical;
+  bar->percent = percent;
   bar->ascending = ascending;
   eol_vec3d_copy(bar->statusColor,statusColor);
   eol_vec3d_copy(bar->backgroundColor,backgroundColor);

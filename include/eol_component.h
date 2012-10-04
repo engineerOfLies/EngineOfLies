@@ -19,7 +19,7 @@
 */
 
 #include "eol_types.h"
-
+#include "eol_keychain.h"
 /**
  * @purpose This will create the components used for window construction.
     Similar in concept to a gtkWidget, but severely limited to the components
@@ -54,8 +54,9 @@ enum eolSliderStates {
 enum eolButtonTypes {
   eolButtonStock  = 0,  /**<use the common stock button graphics*/
   eolButtonText   = 1,  /**<doesnt use button graphics, but highlights text*/
-  eolButtonHidden = 2,  /**<does not draw the button, but it can still get hotkey input*/
-  eolButtonCustom = 3   /**<same as stock, but uses custom graphics*/
+  eolButtonRect   = 2,  /**<does not use a sprite, is drawn functionally*/
+  eolButtonHidden = 3,  /**<does not draw the button, but it can still get hotkey input*/
+  eolButtonCustom = 4   /**<same as stock, but uses custom graphics*/
 };
 
 enum eolButtonStates {
@@ -283,6 +284,15 @@ eolComponent *eol_label_new(
 void eol_label_set_text(eolComponent *comp,char *text);
 
 /* Button Functions*/
+
+/**
+ * @brief creates a new button component based on the config provided
+ * @param winrect the position and size of the parent window
+ * @param def a pointer to the config information for this component
+ * @return a pointer to the created and configured button component, or NULL on error.
+ */
+eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def);
+
 /**
  * @brief creates a new button component
  * @param id the id for this component. This should be unique per window.
@@ -297,6 +307,10 @@ void eol_label_set_text(eolComponent *comp,char *text);
  * @param buttonFileUp if specified it will attempt to load this file as the button idle image
  * @param buttonFileHigh if specified it will attempt to load this file as the button highligh image
  * @param buttonFileDown if specified it will attempt to load this file as the button pressed image
+ * @param backgroundColor used to set the background color for a rect button
+ * @param backgroundAlpha used to set the background alpha for a rect button
+ * @param highlightColor used to set the highlight color for a rect button
+ * @param pressColor used to set the pressed color for a rect button
  */
 eolComponent *eol_button_new(
     eolUint        id,
@@ -310,7 +324,11 @@ eolComponent *eol_button_new(
     eolBool        center,
     char         * buttonFileUp,
     char         * buttonFileHigh,
-    char         * buttonFileDown
+    char         * buttonFileDown,
+    eolVec3D       backgroundColor,
+    eolFloat       backgroundAlpha,
+    eolVec3D       highlightColor,
+    eolVec3D       pressColor
   );
 
 /**
