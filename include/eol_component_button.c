@@ -163,7 +163,6 @@ void eol_component_button_draw_rect(eolComponent *component,eolRect bounds)
   eolComponentButton *button = NULL;
   button = eol_component_get_button_data(component);
   if (!button)return;
-  eol_component_get_rect_from_bounds(&component->bounds,bounds,component->rect);
   eol_draw_solid_rect(component->bounds,button->backgroundColor,button->backgroundAlpha);
   switch (component->state)
   {
@@ -176,6 +175,17 @@ void eol_component_button_draw_rect(eolComponent *component,eolRect bounds)
       eol_draw_solid_rect(component->bounds,button->pressColor,0.3);
       break;
   }
+  
+  eol_font_draw_text_justify(
+    button->buttonText,
+    component->bounds.x + 2,
+    component->bounds.y + 2,
+    _eol_component_button_color[component->state],
+    button->alpha,
+    button->fontSize,
+    button->justify
+  );
+
   eol_rect_copy(&r,component->bounds);
   r.x++;
   r.y++;
@@ -305,6 +315,7 @@ void eol_component_make_button(
       component->data_draw = eol_component_button_draw_rect;
       eol_vec3d_copy(button->backgroundColor,backgroundColor);
       button->backgroundAlpha = backgroundAlpha;
+      button->justify = eolJustifyLeft;
       eol_vec3d_copy(button->highlightColor,highlightColor);
       eol_vec3d_copy(button->pressColor,pressColor);
       break;
@@ -413,6 +424,7 @@ eolComponent *eol_button_new(
     eolVec3D       pressColor
   )
 {
+  eolComponentButton *button = NULL;
   eolComponent *component = NULL;
   component = eol_component_new();
   if (!component)return NULL;
@@ -431,7 +443,8 @@ eolComponent *eol_button_new(
     highlightColor,
     pressColor
   );
-  if (component->componentData == NULL)
+  button = eol_component_get_button_data(component);
+  if (button == NULL)
   {
     eol_component_free(&component);
     return NULL;
@@ -443,6 +456,7 @@ eolComponent *eol_button_new(
   component->type = eolButtonComponent;
   if (center)
   {
+    button->centered = center;
     component->bounds.x -= component->bounds.w/2;
     component->bounds.y -= component->bounds.h/2;
     if (bounds.w != 0)
@@ -468,8 +482,8 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
   eolLine name;
   eolLine hotkey;
   eolLine hotmod;
-  eolInt hotkeybutton;
-  eolInt hotkeymod;
+  eolInt hotkeybutton = 0;
+  eolInt hotkeymod = 0;
   eolLine buttonFile;
   eolLine buttonHighFile;
   eolLine buttonHitFile;
@@ -477,6 +491,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
   eolFloat backgroundAlpha;
   eolVec3D highlightColor;
   eolVec3D pressColor;
+  eolBool  center = eolFalse;
 
   if (!def)return NULL;
   
@@ -487,8 +502,14 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
   eol_keychain_get_hash_value_as_line(justify, def, "justify");
   eol_keychain_get_hash_value_as_line(buttonText, def, "buttonText");
 
-  eol_keychain_get_hash_value_as_line(hotkey, def, "hotkey");
-  eol_keychain_get_hash_value_as_line(hotmod, def, "hotkeymod");
+  if (eol_keychain_get_hash_value_as_line(hotkey, def, "hotkey"))
+  {
+    hotkeybutton = eol_input_parse("key", hotkey);
+  }
+  if (eol_keychain_get_hash_value_as_line(hotmod, def, "hotkeymod"))
+  {
+    hotkeymod = eol_input_parse("mod",hotmod);
+  }
 
   eol_keychain_get_hash_value_as_line(buttonFile, def, "buttonImage");
   eol_keychain_get_hash_value_as_line(buttonHighFile, def, "buttonHigh");
@@ -499,9 +520,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
   eol_keychain_get_hash_value_as_vec3d(&highlightColor, def, "highlightColor");
   eol_keychain_get_hash_value_as_vec3d(&pressColor, def, "pressColor");
 
-  hotkeybutton = eol_input_parse("key", hotkey);
-  hotkeymod = eol_input_parse("mod",hotmod);
-  if (hotkeymod < 0)hotkeymod = 0;
+  if (eol_line_cmp(justify,"CENTER") == 0)center = eolTrue;
   if (eol_line_cmp(buttonType,"STOCK") == 0)
   {
     comp = eol_button_stock_new(
@@ -539,7 +558,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
       eolButtonRect,
       hotkeybutton,
       hotkeymod,
-      eolFalse,
+      center,
       buttonFile,
       buttonHighFile,
       buttonHitFile,
@@ -560,7 +579,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
       eolButtonCustom,
       hotkeybutton,
       hotkeymod,
-      eolFalse,
+      center,
       buttonFile,
       buttonHighFile,
       buttonHitFile,

@@ -128,6 +128,7 @@ void eol_window_draw_all()
     }
   }
 }
+
 void eol_window_update_all()
 {
   GList *l = NULL;

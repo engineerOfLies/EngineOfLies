@@ -29,6 +29,7 @@ typedef struct
   eolUint     input;                    /**<if defined, the input will operate as a hotkey*/
   eolUint     hotkeymod;
   eolInt      justify;
+  eolBool     centered;
   eolUint     fontSize;
   eolFloat    alpha;
   eolLine     buttonText;               /**<text to display over button...should it be a label component?*/

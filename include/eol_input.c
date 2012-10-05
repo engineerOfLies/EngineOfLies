@@ -110,6 +110,8 @@ eolInt eol_input_parse(char *type, char *input)
     if(input[0] == '=')return SDLK_EQUALS;
     if(input[0] == '`')return SDLK_CARET;
     if(input[0] == ',')return SDLK_COMMA;
+    if(input[0] == ';')return SDLK_SEMICOLON;
+    if(input[0] == ':')return SDLK_COLON;
     if(input[0] == '.')return SDLK_PERIOD;
     if(strcmp(input,"TAB")==0)return SDLK_TAB;
     if(strcmp(input,"ESC")==0)return SDLK_ESCAPE;
