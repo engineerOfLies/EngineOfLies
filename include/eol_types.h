@@ -238,6 +238,11 @@ typedef struct
 #define eol_vec_in_rect(v, r)  ((v.x >= r.x)&&(v.x < (r.x + r.w))&&(v.y >= r.y)&&(v.y < (r.y + r.h)))
 
 /**
+ * @brief create and return an eolVec2D
+ */
+eolVec2D eol_vec2d(eolDouble x, eolDouble y);
+
+/**
  * @brief create and return an eolVec3D
  */
 eolVec3D eol_vec3d(eolDouble x, eolDouble y, eolDouble z);

@@ -103,6 +103,7 @@ typedef struct eolComponent_S
   void        * componentData;
   void          (*data_free)(struct eolComponent_S *component);
   void          (*data_draw)(struct eolComponent_S *component,eolRect bounds);
+  void          (*data_move)(struct eolComponent_S *component,eolRect bounds);
   eolBool       (*data_update)(struct eolComponent_S *component);
   eolInt        (*data_get_state)(struct eolComponent_S *component);
   eolBool       (*data_changed)(struct eolComponent_S *component);
@@ -170,6 +171,13 @@ eolInt eol_component_get_state(eolComponent *component);
  * @param bounds the window bounds that the component belongs to.
  */
 void eol_component_draw(eolComponent *component,eolRect bounds);
+
+/**
+ * @brief updates the draw positioning for the component
+ * @param component the component to move.
+ * @param bounds the new window bounds that the component has been moved to
+ */
+void eol_component_move(eolComponent *component,eolRect newbounds);
 
 /* Slider Component */
 /**

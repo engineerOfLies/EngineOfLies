@@ -56,10 +56,15 @@ eolBool eol_window_initialized();
 void eol_window_draw_all();
 void eol_window_update_all();
 
+eolWindow * eol_window_load_from_file_to(eolLine file,eolVec2D position);
 eolWindow * eol_window_load_from_file(eolLine file);
-eolWindow *eol_window_new();
+eolWindow * eol_window_new();
+
+void eol_window_move_to(eolWindow *win,eolVec2D position);
+
 void eol_window_free(eolWindow **win);
 void eol_window_free_if_outside_click(eolWindow **win);
+
 void eol_window_add_component(eolWindow *win,eolComponent *comp);
 eolComponent *eol_window_get_component_by_id(eolWindow *win,eolUint id);
 void eol_window_allocat_callbacks(eolWindow *win,eolUint count);

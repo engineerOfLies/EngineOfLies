@@ -190,6 +190,19 @@ void eol_component_free(eolComponent **component)
   *component = NULL;
 }
 
+void eol_component_move(eolComponent *component,eolRect newbounds)
+{
+  if (!component)return;
+  if (component->data_move != NULL)
+  {
+    component->data_move(component,newbounds);
+  }
+  else
+  {
+    eol_component_get_rect_from_bounds(&component->bounds,newbounds,component->rect);
+  }
+}
+
 eolBool eol_component_update(eolComponent *component)
 {
   if (!component)return eolFalse;

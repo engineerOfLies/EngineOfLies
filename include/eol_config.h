@@ -58,9 +58,6 @@ eolConfig *eol_config_load(char* filename);
  */
 void eol_config_free(eolConfig **config);
 
-eolBool eol_config_get_keychain(eolKeychain *output,
-                                eolConfig *conf);
-
 /**
  * @brief gets the element by tag as a keychain.
  * @param output a pointer to a keychain pointer.  Set to the key if found. Null otherwise.
@@ -113,6 +110,7 @@ eolBool eol_config_get_rectfloat_by_tag(eolRectFloat *output,
 
 eolConfig *eol_config_load_binary(char* filename);
 void eol_config_save_binary(eolConfig *conf, char* filename);
+
 
 #endif
 

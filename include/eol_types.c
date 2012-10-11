@@ -21,7 +21,14 @@
 
 eolBool eol_equals(eolDouble a, eolDouble b)
 {
-	return (fabs(a-b) < EOL_EPSILON)?eolTrue:eolFalse;
+  return (fabs(a-b) < EOL_EPSILON)?eolTrue:eolFalse;
+}
+
+eolVec2D eol_vec2d(eolDouble x, eolDouble y)
+{
+  eolVec2D vec;
+  eol_vec2d_set(vec,x, y);
+  return vec;
 }
 
 eolVec3D eol_vec3d(eolDouble x, eolDouble y, eolDouble z)

@@ -674,6 +674,27 @@ eolUint eol_window_get_refcount(eolWindow * window)
   return eol_resource_element_get_refcount(_eol_window_manager,window);
 }
 
+void eol_window_move_to(eolWindow *win,eolVec2D position)
+{
+  GList *c = NULL;
+  if (!win)return;
+  win->rect.x = position.x;
+  win->rect.y = position.y;
+  for (c = win->components;c != NULL;c = c->next)
+  {
+    if (c->data == NULL)continue;
+    eol_component_move((eolComponent *)c->data,win->rect);
+  }
+}
+
+eolWindow * eol_window_load_from_file_to(eolLine file,eolVec2D position)
+{
+  eolWindow * win;
+  win = eol_window_load_from_file(file);
+  eol_window_move_to(win,position);
+  return win;
+}
+
 eolWindow * eol_window_load_from_file(eolLine file)
 {
   eolWindow *window;
