@@ -39,6 +39,25 @@ eolComponentList *eol_component_get_list_data(eolComponent *component)
   return (eolComponentList*)component->componentData;
 }
 
+void eol_list_move(eolComponent *component,eolRect newbounds)
+{
+  eolComponentList * list;
+  eol_component_get_rect_from_bounds(&component->bounds,newbounds, component->rect);
+  list = eol_component_get_list_data(component);
+  if (list == NULL)return;
+  
+  list->itemBounds.x = component->bounds.x;
+  list->itemBounds.y = component->bounds.y;
+  list->itemBounds.w = component->bounds.w;
+  list->itemBounds.h = component->bounds.h;
+    list->vSliderBounds.h = component->bounds.h;
+    list->vSliderBounds.y = component->bounds.y;
+    list->vSliderBounds.x = component->bounds.x + component->bounds.w;
+    list->hSliderBounds.w = component->bounds.w;
+    list->hSliderBounds.x = component->bounds.x;
+    list->hSliderBounds.y = component->bounds.y + component->bounds.h;
+}
+
 eolComponent *eol_list_new(
     eolUint       id,
     eolWord       name,
@@ -295,6 +314,7 @@ void eol_component_make_list(
   component->data_free = eol_component_list_free;
   component->data_draw = eol_component_list_draw;
   component->data_update = eol_component_list_update;
+  component->data_move = eol_list_move;
 }
 
 eolComponentListItem * eol_list_item_new()
