@@ -361,6 +361,21 @@ eolBool eol_keychain_get_hash_value_as_line(eolLine output, eolKeychain *hash, e
   return eolTrue;
 }
 
+eolBool eol_keychain_get_hash_value_as_vec4d(eolVec4D *output, eolKeychain *hash, eolLine key)
+{
+  eolVec4D temp = {0,0,0,0};
+  eolLine keyValue;
+  eolKeychain *chain;
+  if ((!hash) || (!output) || (strlen(key) == 0))return eolFalse;
+  chain = eol_keychain_get_hash_value(hash,key);
+  if (!chain)return eolFalse;
+  if (chain->keyType != eolKeychainString)return eolFalse;
+  eol_line_cpy(keyValue,chain->keyValue);
+  if (sscanf(keyValue,"%lf,%lf,%lf,%lf",&temp.x,&temp.y,&temp.z,&temp.w) != 3)return eolFalse;
+  eol_vec4d_copy((*output),temp);
+  return eolTrue;
+}
+
 eolBool eol_keychain_get_hash_value_as_vec3d(eolVec3D *output, eolKeychain *hash, eolLine key)
 {
   eolVec3D temp = {0,0,0};

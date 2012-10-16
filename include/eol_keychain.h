@@ -131,6 +131,7 @@ eolBool eol_keychain_get_hash_value_as_int(eolInt *output, eolKeychain *hash, eo
 eolBool eol_keychain_get_hash_value_as_float(eolFloat *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_line(eolLine output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_vec3d(eolVec3D *output, eolKeychain *hash, eolLine key);
+eolBool eol_keychain_get_hash_value_as_vec4d(eolVec4D *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_rect(eolRect *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_rectfloat(eolRectFloat *output, eolKeychain *hash, eolLine key);
 
