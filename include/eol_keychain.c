@@ -175,6 +175,15 @@ eolKeychain *eol_keychain_new_hash()
   return link;
 }
 
+eolBool eol_keychain_get_line(eolLine output,eolKeychain *key)
+{
+  if (!key)return eolFalse;
+  if (key->keyType != eolKeychainString)return eolFalse;
+  if (key->keyValue == NULL)return eolFalse;
+  eol_line_cpy(output,key->keyValue);
+  return eolTrue;
+}
+
 void eol_keychain_hash_remove(eolKeychain *hash,char *key)
 {
   GHashTable*hashtable = NULL;

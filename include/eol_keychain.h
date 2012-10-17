@@ -90,6 +90,15 @@ eolKeychain *eol_keychain_new_list();
 eolKeychain *eol_keychain_new_hash();
 
 /**
+* @brief Retrieves the string information for a string keychain.
+* if its not a pointer to a string, it will return without doing anything.
+* @param output the output eolLine.  Untouched on error
+* @param key the eolKeychain string to retrieve
+* @return eolTrue if found and returned correctly, eolFalse otherwise
+*/
+eolBool eol_keychain_get_line(eolLine output,eolKeychain *key);
+
+/**
 * @brief appends a list item to the eolKeychain list value.
 * if its not a pointer to a list, it will return without doing anything.
 * @param list the typed pointer of a glist
