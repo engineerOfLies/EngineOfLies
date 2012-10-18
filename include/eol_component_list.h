@@ -47,6 +47,8 @@ typedef struct
   eolRect     hSliderBounds;
   eolComponent *hSlider;/**<the horizontal slider*/
   eolComponent *vSlider;/**<the vertical slider*/
+  eolBool     allowSelection;
+  eolBool     showBackground;
   eolBool     multiSelection;/**<if more than one item can be selected*/
   eolUint     fontSize;
   eolVec3D    highlightColor;

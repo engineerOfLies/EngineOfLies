@@ -67,6 +67,8 @@ eolComponent *eol_list_new(
     eolVec2D      itemDimensions,
     eolBool       showVSlider,
     eolBool       showHSlider,
+    eolBool       allowSelection,
+    eolBool       showBackground,
     eolUint       fontSize,
     eolVec3D      textColor,
     eolFloat      alpha
@@ -96,6 +98,8 @@ eolComponent *eol_list_new(
     eol_component_free(&component);
     return NULL;
   }
+  list->allowSelection = allowSelection;
+  list->showBackground = showBackground;
   component->id = id;
   eol_word_cpy(component->name,name);
   component->canHasFocus = eolTrue;
@@ -184,7 +188,8 @@ void eol_component_list_draw(eolComponent *component, eolRect bounds)
   r.y = component->bounds.y - 1;
   r.w = component->bounds.w + 2;
   r.h = component->bounds.h + 2;
-  eol_draw_solid_rect(component->bounds,eol_vec3d(0.1,0.1,0.1),1);
+  if (list->showBackground)
+    eol_draw_solid_rect(component->bounds,eol_vec3d(0.1,0.1,0.1),1);
   /*draw list items*/
   scaleArea = eol_component_list_scaleable_area(list);
   /*TODO make the iterator start at the top position of the scroll*/
@@ -206,7 +211,8 @@ void eol_component_list_draw(eolComponent *component, eolRect bounds)
     }
     eol_component_draw(item->item,item->item->bounds);
   }
-  eol_draw_rect(r,eol_vec3d(1,1,1),1);
+  if (list->showBackground)
+    eol_draw_rect(r,eol_vec3d(1,1,1),1);
   if ((list->showVSlider) && (scaleArea.y > 1))
   {
     eol_component_draw(list->vSlider,list->vSliderBounds);
@@ -251,22 +257,25 @@ eolBool eol_component_list_update(eolComponent *component)
     list->topOffset.x = -(scaleArea.x * slide);
   }
   /*iterate through glist and update elements*/
-  for (it = list->itemList;it != NULL;it = it->next)
+  if (list->allowSelection)
   {
-    if (!it->data)continue;
-    item = (eolComponentListItem*)it->data;
-    if ((eol_mouse_in_rect(item->item->bounds)) &&
-        (eol_list_item_bound_check(list,item->item->bounds)))
+    for (it = list->itemList;it != NULL;it = it->next)
     {
-      item->highlight = eolTrue;
-      if (eol_mouse_input_released(eolMouseLeft))
+      if (!it->data)continue;
+      item = (eolComponentListItem*)it->data;
+      if ((eol_mouse_in_rect(item->item->bounds)) &&
+          (eol_list_item_bound_check(list,item->item->bounds)))
       {
-        eol_component_list_select_item(component,item);
-        list->selection = it;
-        updated = eolTrue;
+        item->highlight = eolTrue;
+        if (eol_mouse_input_released(eolMouseLeft))
+        {
+          eol_component_list_select_item(component,item);
+          list->selection = it;
+          updated = eolTrue;
+        }
       }
+      else item->highlight = eolFalse;
     }
-    else item->highlight = eolFalse;
   }
   return updated;
 }
@@ -540,5 +549,42 @@ eolVec2D eol_component_list_get_item_position(eolComponent *list,eolUint positio
   return pos;
 }
 
+eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
+{
+  eolUint       id;
+  eolLine       name;
+  eolUint       fontSize = 3;
+  eolRectFloat  rect;
+  eolUint       listType = 0;
+  eolBool       allowSelection = eolTrue;
+  eolBool       showBackground = eolTrue;
+  eolBool       showVslider = eolTrue,showHslider = eolTrue;
+  eolVec2D      itemDim;
+
+  if (!def)return NULL;
+  eol_keychain_get_hash_value_as_line(name, def, "name");
+  eol_keychain_get_hash_value_as_uint(&id, def, "id");
+  eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
+  eol_keychain_get_hash_value_as_bool(&showVslider, def, "showVSlider");
+  eol_keychain_get_hash_value_as_bool(&showHslider, def, "showHSlider");
+  eol_keychain_get_hash_value_as_uint(&fontSize, def, "fontSize");
+  eol_keychain_get_hash_value_as_bool(&showBackground, def, "showBackground");
+  eol_keychain_get_hash_value_as_bool(&allowSelection, def, "allowSelection");
+  return eol_list_new(
+    id,
+    name,
+    rect,
+    winRect,
+    listType,
+    itemDim,
+    showVslider,
+    showHslider,
+    allowSelection,
+    showBackground,
+    fontSize,
+    eol_vec3d(1,1,1),
+    1
+  );
+}
 
 /*eol@eof*/

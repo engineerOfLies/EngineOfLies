@@ -327,35 +327,10 @@ void eol_window_load_percent_bar(eolWindow *win,eolKeychain *def)
 void eol_window_load_list(eolWindow *win,eolKeychain *def)
 {
   eolComponent *comp = NULL;
-  eolUint       id;
-  eolLine       name;
-  eolRectFloat  rect;
-  eolUint       listType = 0;
-  eolBool       showVslider = eolTrue,showHslider = eolTrue;
-  eolVec2D      itemDim;
 
-  if ((!win) || (!def))return;
-  eol_keychain_get_hash_value_as_line(name, def, "name");
-  eol_keychain_get_hash_value_as_uint(&id, def, "id");
-  eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
-  eol_keychain_get_hash_value_as_bool(&showVslider, def, "showVSlider");
-  eol_keychain_get_hash_value_as_bool(&showHslider, def, "showHSlider");
-
-  comp = eol_list_new(
-    id,
-    name,
-    rect,
-    win->rect,
-    listType,
-    itemDim,
-    showVslider,
-    showHslider,
-    3,
-    eol_vec3d(1,1,1),
-    1
-  );
-
-
+  if (!win)return;
+  comp = eol_list_create_from_config(win->rect,def);
+  if (!comp)return;
   eol_window_add_component(win,comp);
 }
 

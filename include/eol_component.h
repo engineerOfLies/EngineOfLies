@@ -459,10 +459,20 @@ eolComponent *eol_list_new(
     eolVec2D      itemDimensions,
     eolBool       showVSlider,
     eolBool       showHSlider,
+    eolBool       allowSelection,
+    eolBool       showBackground,
     eolUint       fontSize,
     eolVec3D      textColor,
     eolFloat      alpha
   );
+
+/**
+ * @brief created a list component, grabbing parameters from the supplied keychain config.
+ * @param winRect the bounding rectangle of the parent window
+ * @param def the keychain component from the window config
+ * @return a pointer to the created and configured component or NULL on error.
+ */
+eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def);
 
 /**
  * @brief adds a text item to the list.
