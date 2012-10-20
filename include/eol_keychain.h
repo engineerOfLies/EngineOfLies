@@ -39,15 +39,17 @@ enum eolKeychainTypes {
 };
 
 typedef void (*eolKeychainFree)(void *data);
+
 /**
 * @brief his structure wraps description information for a pointer to a container type
 * it will be used in spawn and config types where we deal with pointers to unknown types.
 */
-typedef struct
+typedef struct keychain_S
 {
   eolUint keyType;
   eolUint itemCount;  /*in the case of list or hash*/
   eolKeychainFree keyFree;
+  struct keychain_S * (*keyClone)(struct keychain_S *src);
   void *keyValue;
 }eolKeychain;
 
@@ -68,6 +70,13 @@ void eol_keychain_destroy(eolKeychain *point);
 * @return NULL on allocation error or a zero'd out eolKeychain
 */
 eolKeychain *eol_keychain_new();
+
+/**
+ * @brief duplicate a keychain
+ * @param src the original keychain to be duplicated
+ * @return a pointer to the duplicated keychain or NULL on error
+ */
+eolKeychain *eol_keychain_clone(eolKeychain *src);
 
 /**
 * @brief allocated and sets up a pointer to a GString filled with the default text
@@ -105,6 +114,10 @@ eolBool eol_keychain_get_line(eolLine output,eolKeychain *key);
 * @param item the eolKeychain to the item to be added to the list.
 */
 void eol_keychain_list_append(eolKeychain *list,eolKeychain *item);
+
+
+eolUint eol_keychain_get_hash_count(eolKeychain *list);
+eolKeychain *eol_keychain_get_hash_nth(eolLine key, eolKeychain *hash, eolUint n);
 
 /**
 * @brief Insert or replace a key in the eolKeychain of a hash.
@@ -192,6 +205,5 @@ void eol_keychain_print_string(eolLine key, eolKeychain *chain,eolUint level);
 * @param string the string to free.
 */
 void eol_g_string_free(char *string);
-
 
 #endif

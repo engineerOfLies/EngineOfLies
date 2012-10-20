@@ -66,6 +66,56 @@ void eol_keychain_free(eolKeychain **link)
   *link = NULL;
 }
 
+eolKeychain *eol_keychain_clone(eolKeychain *src)
+{
+  if (!src)return NULL;
+  if (!src->keyClone)return NULL;
+  return src->keyClone(src);
+}
+
+eolKeychain *eol_keychain_clone_string(eolKeychain *src)
+{
+  eolLine str;
+  if (!eol_keychain_get_line(str,src))return NULL;
+  return eol_keychain_new_string(str);
+}
+
+eolKeychain *eol_keychain_clone_list(eolKeychain *src)
+{
+  eolUint count,i;
+  eolKeychain *item, *list = NULL;
+  if (!src)return NULL;
+  list = eol_keychain_new_list();
+  if (!list)return NULL;
+  count = eol_keychain_get_list_count(src);
+  for (i = 0;i < count;i++)
+  {
+    item = eol_keychain_get_list_nth(src, i);
+    if (!item)continue;
+    eol_keychain_list_append(list,eol_keychain_clone(item));
+  }
+  return list;
+}
+
+eolKeychain *eol_keychain_clone_hash(eolKeychain *src)
+{
+  eolUint count,i;
+  eolKeychain *hash;
+  eolLine keystring;
+  eolKeychain * value;
+  if (!src)return NULL;
+  hash = eol_keychain_new_hash();
+  if (!hash)return NULL;
+  count = eol_keychain_get_hash_count(src);
+  for (i = 0;i < count;i++)
+  {
+    value = eol_keychain_get_hash_nth(keystring,src, i);
+    if (!value)continue;
+    eol_keychain_hash_insert(hash,keystring,eol_keychain_clone(value));
+  }
+  return hash;
+}
+
 eolKeychain *eol_keychain_new()
 {
   eolKeychain *link = NULL;
@@ -77,6 +127,8 @@ eolKeychain *eol_keychain_new()
   memset(link,0,sizeof(eolKeychain));
   return link;
 }
+
+
 
 eolKeychain *eol_keychain_new_int(eolInt value)
 {
@@ -143,6 +195,7 @@ eolKeychain *eol_keychain_new_string(char *text)
   link->keyType = eolKeychainString;
   link->itemCount = strlen(text);
   link->keyFree = (eolKeychainFree)eol_g_string_free;
+  link->keyClone = eol_keychain_clone_string;
   link->keyValue = g_strdup(text);
   return link;
 }
@@ -155,6 +208,7 @@ eolKeychain *eol_keychain_new_list()
   link->keyType = eolKeychainList;
   link->itemCount = 0;
   link->keyFree = (eolKeychainFree)eol_keychain_list_free;
+  link->keyClone = eol_keychain_clone_list;
   link->keyValue = NULL;
   return link;
 }
@@ -167,6 +221,7 @@ eolKeychain *eol_keychain_new_hash()
   link->keyType = eolKeychainHash;
   link->itemCount = 0;
   link->keyFree = (eolKeychainFree)eol_keychain_hash_free;
+  link->keyClone = eol_keychain_clone_hash;
   link->keyValue =
     g_hash_table_new_full(g_str_hash,
                           g_str_equal,
@@ -239,12 +294,35 @@ eolKeychain *eol_keychain_get_hash_value(eolKeychain *hash,eolLine key)
   return g_hash_table_lookup(hashtable,key);
 }
 
+eolUint eol_keychain_get_hash_count(eolKeychain *list)
+{
+  if (!list)return 0;
+  if (list->keyType != eolKeychainHash)return 0;
+  if (list->keyValue == NULL)return 0;
+  return list->itemCount;
+}
+
 eolUint eol_keychain_get_list_count(eolKeychain *list)
 {
   if (!list)return 0;
   if (list->keyType != eolKeychainList)return 0;
   if (list->keyValue == NULL)return 0;
   return list->itemCount;
+}
+
+eolKeychain *eol_keychain_get_hash_nth(eolLine key, eolKeychain *hash, eolUint n)
+{
+  GHashTable *hashtable = NULL;
+  GList *keys = NULL, *values = NULL;
+  if (!hash)return NULL;
+  if (hash->keyType != eolKeychainHash)return NULL;
+  if (hash->keyValue == NULL)return NULL;
+  hashtable = (GHashTable*)hash->keyValue;
+  keys = g_hash_table_get_keys(hashtable);
+  values = g_hash_table_get_values(hashtable);
+  if ((!keys)||(!values))return NULL;
+  eol_line_cpy(key,g_list_nth_data(keys,n));
+  return g_list_nth_data(values,n);
 }
 
 eolKeychain *eol_keychain_get_list_nth(eolKeychain *list, eolUint n)
