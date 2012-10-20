@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -129,7 +130,7 @@
 <a name="l00105"></a>00105   rewind(file);
 <a name="l00106"></a>00106   <span class="keywordflow">while</span>(fscanf(file, <span class="stringliteral">&quot;%s&quot;</span>, buf) != EOF)
 <a name="l00107"></a>00107   {
-<a name="l00108"></a>00108     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;bonecount&quot;</span>) == 0)
+<a name="l00108"></a>00108     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;bonecount:&quot;</span>) == 0)
 <a name="l00109"></a>00109     {
 <a name="l00110"></a>00110       fscanf(file, <span class="stringliteral">&quot;%i&quot;</span>,&amp;numbones);
 <a name="l00111"></a>00111       <span class="keywordflow">break</span>;
@@ -151,7 +152,7 @@
 <a name="l00127"></a>00127   rewind(file);
 <a name="l00128"></a>00128   <span class="keywordflow">while</span>(fscanf(file, <span class="stringliteral">&quot;%s&quot;</span>, buf) != EOF)
 <a name="l00129"></a>00129   {
-<a name="l00130"></a>00130     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;framecount&quot;</span>) == 0)
+<a name="l00130"></a>00130     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;framecount:&quot;</span>) == 0)
 <a name="l00131"></a>00131     {
 <a name="l00132"></a>00132       fscanf(file, <span class="stringliteral">&quot;%i&quot;</span>,&amp;numframes);
 <a name="l00133"></a>00133       <span class="keywordflow">break</span>;
@@ -238,7 +239,7 @@
 <a name="l00214"></a>00214   rewind(file);
 <a name="l00215"></a>00215   <span class="keywordflow">while</span>(fscanf(file, <span class="stringliteral">&quot;%s&quot;</span>, buf) != EOF)
 <a name="l00216"></a>00216   {
-<a name="l00217"></a>00217     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;armature&quot;</span>) == 0)
+<a name="l00217"></a>00217     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;armature:&quot;</span>) == 0)
 <a name="l00218"></a>00218     {
 <a name="l00219"></a>00219       fscanf(file, <span class="stringliteral">&quot;%s&quot;</span>,arm-&gt;<a class="code" href="structeolArmature.html#a2f00f959523d5a97e46b1c848eaa3069">name</a>);
 <a name="l00220"></a>00220       armindex = 0;
@@ -297,7 +298,7 @@
 <a name="l00273"></a>00273       bone-&gt;<a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">parentIndex</a> = index;
 <a name="l00274"></a>00274       <span class="keywordflow">continue</span>;
 <a name="l00275"></a>00275     }
-<a name="l00276"></a>00276     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;childcount&quot;</span>) == 0)
+<a name="l00276"></a>00276     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;childcount:&quot;</span>) == 0)
 <a name="l00277"></a>00277     {
 <a name="l00278"></a>00278       <span class="keywordflow">if</span> (bone == NULL)
 <a name="l00279"></a>00279       {
@@ -737,232 +738,207 @@
 <a name="l00713"></a>00713   )
 <a name="l00714"></a>00714 {
 <a name="l00715"></a>00715   <span class="keywordtype">int</span> i;
-<a name="l00716"></a>00716   <a class="code" href="eol__matrix_8h.html#a61b9867642d7c9db7eb535b88205fd2f" title="a 4x4 double matrix useful in a lot of 3D programming.">eolMat4</a> rot90matrix;
-<a name="l00717"></a>00717  
-<a name="l00718"></a>00718   <span class="keywordflow">if</span> ((arm == NULL) || 
-<a name="l00719"></a>00719       (mesh == NULL))
-<a name="l00720"></a>00720   {
-<a name="l00721"></a>00721     <a class="code" href="eol__logger_8c.html#a8ec371dd9a9cb5b69c84a879b211deca" title="log a message at the &amp;quot;warning&amp;quot; warning level. It will ignore warning levels...">eol_logger_warn</a>(
-<a name="l00722"></a>00722       <span class="stringliteral">&quot;eol_armature: passed null parameter to link_mesh\n&quot;</span>
-<a name="l00723"></a>00723       );
-<a name="l00724"></a>00724     <span class="keywordflow">return</span>;
-<a name="l00725"></a>00725   }
-<a name="l00726"></a>00726   <span class="keywordflow">for</span> (i = 0; i &lt; arm-&gt;<a class="code" href="structeolArmature.html#a89c8f90d845b93ea95aeb008c4956ff2">boneCount</a>; i++)
-<a name="l00727"></a>00727   {
-<a name="l00728"></a>00728     arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[i].<a class="code" href="structS__Bone.html#ab77d7244cbf26545d33934f3566af09e">meshGroup</a> =
-<a name="l00729"></a>00729         <a class="code" href="eol__mesh_8c.html#af93b0bf3fb99a738352039db35b14bb6" title="searches the mesh provided for the vertex group by the name.">eol_mesh_get_group_by_name</a>(arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[i].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>,mesh);
-<a name="l00730"></a>00730   }
-<a name="l00731"></a>00731   rot90matrix[0][0]=1.0f;
-<a name="l00732"></a>00732   rot90matrix[1][0]=0.0f;
-<a name="l00733"></a>00733   rot90matrix[2][0]=0.0f;
-<a name="l00734"></a>00734   rot90matrix[3][0]=0.0f;
-<a name="l00735"></a>00735   
-<a name="l00736"></a>00736   rot90matrix[0][1]=0.0f;
-<a name="l00737"></a>00737   rot90matrix[1][1]=0.0f;
-<a name="l00738"></a>00738   rot90matrix[2][1]=1.0f;
-<a name="l00739"></a>00739   rot90matrix[3][1]=0.0f;
-<a name="l00740"></a>00740   
-<a name="l00741"></a>00741   rot90matrix[0][2]=0.0f;
-<a name="l00742"></a>00742   rot90matrix[1][2]=-1.0f;
-<a name="l00743"></a>00743   rot90matrix[2][2]=0.0f;
-<a name="l00744"></a>00744   rot90matrix[3][2]=0.0f;
-<a name="l00745"></a>00745   
-<a name="l00746"></a>00746   rot90matrix[0][3]=0.0f;
-<a name="l00747"></a>00747   rot90matrix[1][3]=0.0f;
-<a name="l00748"></a>00748   rot90matrix[2][3]=0.0f;
-<a name="l00749"></a>00749   rot90matrix[3][3]=0.0f;
-<a name="l00750"></a>00750 
-<a name="l00751"></a>00751   <span class="keywordflow">for</span> (i = 0; i &lt; mesh-&gt;<a class="code" href="structeolMesh.html#a4f91c21b651ac86d8820e437e952e3ca">_numVertices</a>; i++)
-<a name="l00752"></a>00752   {
-<a name="l00753"></a>00753       <a class="code" href="eol__matrix_8c.html#a50bd1a794cf5bfbe1d3297e7e4a1cd26" title="multiply the vertex by the matrix">eol_mat4_mult_vert</a>(
-<a name="l00754"></a>00754           &amp;mesh-&gt;<a class="code" href="structeolMesh.html#ae61865f281d5bd1e91d6804ddc2f8f9f">_rest</a>[i],
-<a name="l00755"></a>00755           arm-&gt;<a class="code" href="structeolArmature.html#a18879a6a2bcb549cd8fe688043663650">matrix</a>,
-<a name="l00756"></a>00756           mesh-&gt;<a class="code" href="structeolMesh.html#ae61865f281d5bd1e91d6804ddc2f8f9f">_rest</a>[i]
-<a name="l00757"></a>00757       );
-<a name="l00758"></a>00758       <a class="code" href="eol__matrix_8c.html#a50bd1a794cf5bfbe1d3297e7e4a1cd26" title="multiply the vertex by the matrix">eol_mat4_mult_vert</a>(
-<a name="l00759"></a>00759           &amp;mesh-&gt;<a class="code" href="structeolMesh.html#ae61865f281d5bd1e91d6804ddc2f8f9f">_rest</a>[i],
-<a name="l00760"></a>00760           rot90matrix,
-<a name="l00761"></a>00761           mesh-&gt;<a class="code" href="structeolMesh.html#ae61865f281d5bd1e91d6804ddc2f8f9f">_rest</a>[i]
-<a name="l00762"></a>00762       );
-<a name="l00763"></a>00763   }
-<a name="l00764"></a>00764   arm-&gt;<a class="code" href="structeolArmature.html#a8898827341fbed1d383f8316538bc4ec">_isLinked</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
-<a name="l00765"></a>00765 }
-<a name="l00766"></a>00766 
-<a name="l00767"></a>00767 <span class="keywordtype">void</span>
-<a name="l00768"></a><a class="code" href="eol__armature_8h.html#a9d2b7aaf4e717768a089cbb53de44ee8">00768</a> <a class="code" href="eol__armature_8c.html#a9d2b7aaf4e717768a089cbb53de44ee8" title="deforms the drawing vertices of the model based on the bone pose for the specified...">eol_armature_deform_mesh</a>(<a class="code" href="structeolArmature.html">eolArmature</a> *arm,<a class="code" href="structeolMesh.html">eolMesh</a> *mesh, <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> frame)
-<a name="l00769"></a>00769 {
-<a name="l00770"></a>00770   <a class="code" href="structeolPoseBone.html">eolPoseBone</a> *tempframe = NULL;
-<a name="l00771"></a>00771   <a class="code" href="structeolGroup.html">eolGroup</a> *tempGroup = NULL;
-<a name="l00772"></a>00772   <span class="keywordtype">int</span> i,j,<a class="code" href="eol__opengl_8h.html#a14cfbe2fc2234f5504618905b69d1e06">v</a>;
-<a name="l00773"></a>00773 
-<a name="l00774"></a>00774   <span class="keywordflow">if</span>((mesh == NULL) ||
-<a name="l00775"></a>00775      (arm == NULL))
-<a name="l00776"></a>00776   {
-<a name="l00777"></a>00777     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00778"></a>00778       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
-<a name="l00779"></a>00779       <span class="stringliteral">&quot;eol_armature: passed null information to deform mesh.\n&quot;</span>
-<a name="l00780"></a>00780       );
-<a name="l00781"></a>00781     <span class="keywordflow">return</span>;
-<a name="l00782"></a>00782   }
-<a name="l00783"></a>00783   <span class="keywordflow">if</span> (!arm-&gt;<a class="code" href="structeolArmature.html#a8898827341fbed1d383f8316538bc4ec">_isLinked</a>)
-<a name="l00784"></a>00784   {
-<a name="l00785"></a>00785     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00786"></a>00786       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00787"></a>00787       <span class="stringliteral">&quot;eol_armature: armature %s is not linked.\n&quot;</span>,
-<a name="l00788"></a>00788       arm-&gt;<a class="code" href="structeolArmature.html#a5a46cfc07e11410a3ec1f10e3a63f666">filename</a>
-<a name="l00789"></a>00789     );
-<a name="l00790"></a>00790     <span class="keywordflow">return</span>;
-<a name="l00791"></a>00791   }
-<a name="l00792"></a>00792   <span class="keywordflow">if</span>(frame &gt;= arm-&gt;<a class="code" href="structeolArmature.html#aedd8c52f67696ad1c7d2f02960b726ba">frameCount</a>)
-<a name="l00793"></a>00793   {
-<a name="l00794"></a>00794     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00795"></a>00795       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00796"></a>00796       <span class="stringliteral">&quot;eol_armature: passed in frame %i, but armature only has %i frames.\n&quot;</span>,
-<a name="l00797"></a>00797       frame,
-<a name="l00798"></a>00798       arm-&gt;<a class="code" href="structeolArmature.html#aedd8c52f67696ad1c7d2f02960b726ba">frameCount</a>
-<a name="l00799"></a>00799       );
-<a name="l00800"></a>00800   }
-<a name="l00801"></a>00801   <span class="keywordflow">if</span> (frame == mesh-&gt;<a class="code" href="structeolMesh.html#a9c6e2bd9e5525c96c0ae7394e7ee9cd7">_curFrame</a>)<span class="keywordflow">return</span>;
-<a name="l00802"></a>00802   mesh-&gt;<a class="code" href="structeolMesh.html#a9c6e2bd9e5525c96c0ae7394e7ee9cd7">_curFrame</a> = frame;
-<a name="l00803"></a>00803   tempframe = arm-&gt;<a class="code" href="structeolArmature.html#ae5247767324856b7ac238e19256c7242">_poses</a>[frame].<a class="code" href="structeolPose.html#a2042c331eece26d002533712efc17784">bones</a>;
-<a name="l00804"></a>00804   <span class="keywordflow">for</span>(j = 0; j &lt; arm-&gt;<a class="code" href="structeolArmature.html#a89c8f90d845b93ea95aeb008c4956ff2">boneCount</a>; j++)
-<a name="l00805"></a>00805   {
-<a name="l00806"></a>00806     tempGroup = arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[tempframe[j].<a class="code" href="structeolPoseBone.html#a4a098996b38750767ee12f1d25ce099f">boneIndex</a>].<a class="code" href="structS__Bone.html#ab77d7244cbf26545d33934f3566af09e">meshGroup</a>;
-<a name="l00807"></a>00807     <span class="keywordflow">if</span> (tempGroup == NULL)
-<a name="l00808"></a>00808     {
-<a name="l00809"></a>00809       <span class="keywordflow">continue</span>;
-<a name="l00810"></a>00810     }
-<a name="l00811"></a>00811     <span class="keywordflow">if</span> (strcmp(tempframe[j].<a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>,tempGroup-&gt;<a class="code" href="structeolGroup.html#a3e3e1a3bb70a39f16e17928b68464261">name</a>) != 0)
-<a name="l00812"></a>00812     {
-<a name="l00813"></a>00813       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00814"></a>00814         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
-<a name="l00815"></a>00815         <span class="stringliteral">&quot;eol_armature: posebone/group mismatch - posebone: %s, group %s\n&quot;</span>,
-<a name="l00816"></a>00816         tempframe[j].name,
-<a name="l00817"></a>00817         arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[tempframe[j].<a class="code" href="structeolPoseBone.html#a4a098996b38750767ee12f1d25ce099f">boneIndex</a>].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>
-<a name="l00818"></a>00818         );
-<a name="l00819"></a>00819     }
-<a name="l00820"></a>00820     <span class="keywordflow">if</span> (strcmp(tempGroup-&gt;<a class="code" href="structeolGroup.html#a3e3e1a3bb70a39f16e17928b68464261">name</a>,arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[tempframe[j].<a class="code" href="structeolPoseBone.html#a4a098996b38750767ee12f1d25ce099f">boneIndex</a>].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>) != 0)
-<a name="l00821"></a>00821     {
-<a name="l00822"></a>00822       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00823"></a>00823         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
-<a name="l00824"></a>00824         <span class="stringliteral">&quot;eol_armature: bone/group mismatch - bone: %s, group %s\n&quot;</span>,
-<a name="l00825"></a>00825         tempGroup-&gt;<a class="code" href="structeolGroup.html#a3e3e1a3bb70a39f16e17928b68464261">name</a>,
-<a name="l00826"></a>00826         arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[tempframe[j].<a class="code" href="structeolPoseBone.html#a4a098996b38750767ee12f1d25ce099f">boneIndex</a>].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>
-<a name="l00827"></a>00827         );
-<a name="l00828"></a>00828     }
-<a name="l00829"></a>00829     <span class="keywordflow">for</span>(i = 0; i &lt; tempGroup-&gt;<a class="code" href="structeolGroup.html#aaf89092f7d1b5c5935078a0e8016c845">numVerts</a>; i++)
-<a name="l00830"></a>00830     {
-<a name="l00831"></a>00831       v = tempGroup-&gt;<a class="code" href="structeolGroup.html#a21411cd81cce491a88b0e2202b2ca8c9">vertices</a>[i];
-<a name="l00832"></a>00832       <span class="keywordflow">if</span> (v &lt; 0)
-<a name="l00833"></a>00833       {
-<a name="l00834"></a>00834         <a class="code" href="eol__logger_8c.html#a5ff3fd9e93a31adae78937d3a7a5bbbe" title="log a message at the error warning level. It will ignore warning levels below the...">eol_logger_error</a>(
-<a name="l00835"></a>00835           <span class="stringliteral">&quot;eol_armature: underseeking in group %s\n&quot;</span>,
-<a name="l00836"></a>00836           tempGroup-&gt;<a class="code" href="structeolGroup.html#a3e3e1a3bb70a39f16e17928b68464261">name</a>);
-<a name="l00837"></a>00837         <span class="keywordflow">continue</span>;
-<a name="l00838"></a>00838       }
-<a name="l00839"></a>00839       <span class="keywordflow">if</span> (v &gt;= mesh-&gt;<a class="code" href="structeolMesh.html#a4f91c21b651ac86d8820e437e952e3ca">_numVertices</a>)
-<a name="l00840"></a>00840       {
-<a name="l00841"></a>00841         <a class="code" href="eol__logger_8c.html#a5ff3fd9e93a31adae78937d3a7a5bbbe" title="log a message at the error warning level. It will ignore warning levels below the...">eol_logger_error</a>(
-<a name="l00842"></a>00842           <span class="stringliteral">&quot;eol_armature: overseeking in group %s\n&quot;</span>,
-<a name="l00843"></a>00843           tempGroup-&gt;<a class="code" href="structeolGroup.html#a3e3e1a3bb70a39f16e17928b68464261">name</a>);
-<a name="l00844"></a>00844         <span class="keywordflow">continue</span>;
-<a name="l00845"></a>00845       }
-<a name="l00846"></a>00846       <a class="code" href="eol__matrix_8c.html#acfdfbe18d8cd6b99d1a49ec60b47dfda">eol_mat4_mult_vert_factor</a>(
-<a name="l00847"></a>00847           &amp;mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[tempGroup-&gt;<a class="code" href="structeolGroup.html#a21411cd81cce491a88b0e2202b2ca8c9">vertices</a>[i]],
-<a name="l00848"></a>00848           tempframe[j].<a class="code" href="structeolPoseBone.html#a0c3ef8079418b71a2ae0422052f12817">matrix</a>,
-<a name="l00849"></a>00849           mesh-&gt;<a class="code" href="structeolMesh.html#ae61865f281d5bd1e91d6804ddc2f8f9f">_rest</a>[tempGroup-&gt;<a class="code" href="structeolGroup.html#a21411cd81cce491a88b0e2202b2ca8c9">vertices</a>[i]],
-<a name="l00850"></a>00850           tempGroup-&gt;<a class="code" href="structeolGroup.html#a944b22fc10bf1df3178a8f36f01814bd">weights</a>[i]
-<a name="l00851"></a>00851       );
-<a name="l00852"></a>00852     }
-<a name="l00853"></a>00853   }
-<a name="l00854"></a>00854 }
-<a name="l00855"></a>00855 
-<a name="l00856"></a>00856 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>
-<a name="l00857"></a><a class="code" href="eol__armature_8c.html#a79111924c48f9ac9ff40342f53969e53">00857</a> <a class="code" href="eol__armature_8c.html#a79111924c48f9ac9ff40342f53969e53">eol_armature_descendant_of</a>(
-<a name="l00858"></a>00858     <a class="code" href="structeolArmature.html">eolArmature</a> *arm,
-<a name="l00859"></a>00859     <a class="code" href="structS__Bone.html" title="this composes the skeletal structure of the armature at rest.">eolBone</a> *ancestor,
-<a name="l00860"></a>00860     <a class="code" href="structS__Bone.html" title="this composes the skeletal structure of the armature at rest.">eolBone</a> *descendant
-<a name="l00861"></a>00861   )
-<a name="l00862"></a>00862 {
-<a name="l00863"></a>00863   <span class="keywordtype">int</span> p;
-<a name="l00864"></a>00864   <span class="keywordflow">if</span> ((descendant == NULL) ||
-<a name="l00865"></a>00865       (arm == NULL) ||
-<a name="l00866"></a>00866       (ancestor == NULL))
-<a name="l00867"></a>00867   {
-<a name="l00868"></a>00868     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00869"></a>00869       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
-<a name="l00870"></a>00870       <span class="stringliteral">&quot;eol_armature: descendant_of passed NULL parameter\n&quot;</span>
-<a name="l00871"></a>00871     );
-<a name="l00872"></a>00872     <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00873"></a>00873   }
-<a name="l00874"></a>00874   <span class="keywordflow">if</span> (descendant-&gt;<a class="code" href="structS__Bone.html#a0c4898c73eeabdfda740bbfc2daa2cc0">hasParent</a> == <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>)
-<a name="l00875"></a>00875   {
-<a name="l00876"></a>00876     <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00877"></a>00877   }
-<a name="l00878"></a>00878   p = descendant-&gt;<a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">parentIndex</a>;
-<a name="l00879"></a>00879   <span class="keywordflow">while</span> ((p != -1) &amp;&amp; (p &lt; arm-&gt;boneCount))
-<a name="l00880"></a>00880   {
-<a name="l00881"></a>00881     <span class="keywordflow">if</span> (&amp;arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[p] == ancestor)
-<a name="l00882"></a>00882     {
-<a name="l00883"></a>00883       <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
-<a name="l00884"></a>00884     }
-<a name="l00885"></a>00885     <span class="keywordflow">if</span> (!arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[p].<a class="code" href="structS__Bone.html#a0c4898c73eeabdfda740bbfc2daa2cc0">hasParent</a>)<span class="keywordflow">break</span>;
-<a name="l00886"></a>00886     p = arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[p].<a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">parentIndex</a>;
-<a name="l00887"></a>00887   }
-<a name="l00888"></a>00888   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00889"></a>00889 }
-<a name="l00890"></a>00890 
-<a name="l00891"></a>00891 <span class="keywordtype">void</span>
-<a name="l00892"></a><a class="code" href="eol__armature_8h.html#ac730e7a4d1e36fd8d0d6369569d681f1">00892</a> <a class="code" href="eol__armature_8c.html#ac730e7a4d1e36fd8d0d6369569d681f1" title="prints out to log the bone structure">eol_armature_print_bone_hierarchy</a>(
-<a name="l00893"></a>00893   <a class="code" href="structeolArmature.html">eolArmature</a> *arm
-<a name="l00894"></a>00894   )
-<a name="l00895"></a>00895 {
-<a name="l00896"></a>00896   <span class="keywordtype">int</span> b,c;
-<a name="l00897"></a>00897   <span class="keywordflow">if</span> (arm == NULL)<span class="keywordflow">return</span>;
-<a name="l00898"></a>00898   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00899"></a>00899   <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00900"></a>00900   <span class="stringliteral">&quot;eol_armature: Bone Hierarchy for armature %s\n&quot;</span>,
-<a name="l00901"></a>00901   arm-&gt;<a class="code" href="structeolArmature.html#a5a46cfc07e11410a3ec1f10e3a63f666">filename</a>);
-<a name="l00902"></a>00902   <span class="keywordflow">for</span> (b = 0; b &lt; arm-&gt;<a class="code" href="structeolArmature.html#a89c8f90d845b93ea95aeb008c4956ff2">boneCount</a>; b++)
-<a name="l00903"></a>00903   {
-<a name="l00904"></a>00904     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00905"></a>00905       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00906"></a>00906       <span class="stringliteral">&quot;bone %s has\n&quot;</span>,
-<a name="l00907"></a>00907       arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[b].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>);
-<a name="l00908"></a>00908     <span class="keywordflow">if</span> (arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[b].<a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">parentIndex</a> != -1)
-<a name="l00909"></a>00909     {
-<a name="l00910"></a>00910       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00911"></a>00911         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00912"></a>00912         <span class="stringliteral">&quot;\tparent: %s\n&quot;</span>,
-<a name="l00913"></a>00913         arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[b].<a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">parentIndex</a>].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>);
-<a name="l00914"></a>00914     }
-<a name="l00915"></a>00915     <span class="keywordflow">else</span>
-<a name="l00916"></a>00916     {
-<a name="l00917"></a>00917       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00918"></a>00918         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00919"></a>00919         <span class="stringliteral">&quot;\t&lt;no parent&gt;\n&quot;</span>);
-<a name="l00920"></a>00920     }
-<a name="l00921"></a>00921     <span class="keywordflow">if</span> (arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[b].<a class="code" href="structS__Bone.html#a237cf1f265c1de3b882847f61c311c4a">numChildren</a> &lt;= 0)
-<a name="l00922"></a>00922     {
-<a name="l00923"></a>00923       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00924"></a>00924         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00925"></a>00925         <span class="stringliteral">&quot;\t\t&lt;no children&gt;\n&quot;</span>);
-<a name="l00926"></a>00926       <span class="keywordflow">continue</span>;
-<a name="l00927"></a>00927     }
-<a name="l00928"></a>00928     <span class="keywordflow">for</span> (c = 0; c &lt; arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[b].<a class="code" href="structS__Bone.html#a237cf1f265c1de3b882847f61c311c4a">numChildren</a>; c++)
-<a name="l00929"></a>00929     {
-<a name="l00930"></a>00930       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00931"></a>00931         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00932"></a>00932         <span class="stringliteral">&quot;\t\tchild %s\n&quot;</span>,
-<a name="l00933"></a>00933         arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[b].<a class="code" href="structS__Bone.html#a2ed4804f8f61f3b8fc4cb8276f96c7b0">children</a>[c]].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>);
-<a name="l00934"></a>00934       <span class="keywordflow">continue</span>;         
-<a name="l00935"></a>00935     }
-<a name="l00936"></a>00936   }
-<a name="l00937"></a>00937 }
-<a name="l00938"></a>00938 <span class="comment">/*eol@eof*/</span>
-<a name="l00939"></a>00939 
+<a name="l00716"></a>00716  
+<a name="l00717"></a>00717   <span class="keywordflow">if</span> ((arm == NULL) || 
+<a name="l00718"></a>00718       (mesh == NULL))
+<a name="l00719"></a>00719   {
+<a name="l00720"></a>00720     <a class="code" href="eol__logger_8c.html#a8ec371dd9a9cb5b69c84a879b211deca" title="log a message at the &amp;quot;warning&amp;quot; warning level. It will ignore warning levels...">eol_logger_warn</a>(
+<a name="l00721"></a>00721       <span class="stringliteral">&quot;eol_armature: passed null parameter to link_mesh\n&quot;</span>
+<a name="l00722"></a>00722       );
+<a name="l00723"></a>00723     <span class="keywordflow">return</span>;
+<a name="l00724"></a>00724   }
+<a name="l00725"></a>00725   <span class="keywordflow">for</span> (i = 0; i &lt; arm-&gt;<a class="code" href="structeolArmature.html#a89c8f90d845b93ea95aeb008c4956ff2">boneCount</a>; i++)
+<a name="l00726"></a>00726   {
+<a name="l00727"></a>00727     arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[i].<a class="code" href="structS__Bone.html#ab77d7244cbf26545d33934f3566af09e">meshGroup</a> =
+<a name="l00728"></a>00728         <a class="code" href="eol__mesh_8c.html#af93b0bf3fb99a738352039db35b14bb6" title="searches the mesh provided for the vertex group by the name.">eol_mesh_get_group_by_name</a>(arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[i].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>,mesh);
+<a name="l00729"></a>00729   }
+<a name="l00730"></a>00730 
+<a name="l00731"></a>00731   <span class="keywordflow">for</span> (i = 0; i &lt; mesh-&gt;<a class="code" href="structeolMesh.html#a4f91c21b651ac86d8820e437e952e3ca">_numVertices</a>; i++)
+<a name="l00732"></a>00732   {
+<a name="l00733"></a>00733       <a class="code" href="eol__matrix_8c.html#a50bd1a794cf5bfbe1d3297e7e4a1cd26" title="multiply the vertex by the matrix">eol_mat4_mult_vert</a>(
+<a name="l00734"></a>00734           &amp;mesh-&gt;<a class="code" href="structeolMesh.html#ae61865f281d5bd1e91d6804ddc2f8f9f">_rest</a>[i],
+<a name="l00735"></a>00735           arm-&gt;<a class="code" href="structeolArmature.html#a18879a6a2bcb549cd8fe688043663650">matrix</a>,
+<a name="l00736"></a>00736           mesh-&gt;<a class="code" href="structeolMesh.html#ae61865f281d5bd1e91d6804ddc2f8f9f">_rest</a>[i]
+<a name="l00737"></a>00737       );
+<a name="l00738"></a>00738   }
+<a name="l00739"></a>00739   arm-&gt;<a class="code" href="structeolArmature.html#a8898827341fbed1d383f8316538bc4ec">_isLinked</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
+<a name="l00740"></a>00740 }
+<a name="l00741"></a>00741 
+<a name="l00742"></a>00742 <span class="keywordtype">void</span>
+<a name="l00743"></a><a class="code" href="eol__armature_8h.html#a9d2b7aaf4e717768a089cbb53de44ee8">00743</a> <a class="code" href="eol__armature_8c.html#a9d2b7aaf4e717768a089cbb53de44ee8" title="deforms the drawing vertices of the model based on the bone pose for the specified...">eol_armature_deform_mesh</a>(<a class="code" href="structeolArmature.html">eolArmature</a> *arm,<a class="code" href="structeolMesh.html">eolMesh</a> *mesh, <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> frame)
+<a name="l00744"></a>00744 {
+<a name="l00745"></a>00745   <a class="code" href="structeolPoseBone.html">eolPoseBone</a> *tempframe = NULL;
+<a name="l00746"></a>00746   <a class="code" href="structeolGroup.html">eolGroup</a> *tempGroup = NULL;
+<a name="l00747"></a>00747   <span class="keywordtype">int</span> i,j,<a class="code" href="eol__opengl_8h.html#a14cfbe2fc2234f5504618905b69d1e06">v</a>;
+<a name="l00748"></a>00748 
+<a name="l00749"></a>00749   <span class="keywordflow">if</span>((mesh == NULL) ||
+<a name="l00750"></a>00750      (arm == NULL))
+<a name="l00751"></a>00751   {
+<a name="l00752"></a>00752     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00753"></a>00753       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
+<a name="l00754"></a>00754       <span class="stringliteral">&quot;eol_armature: passed null information to deform mesh.\n&quot;</span>
+<a name="l00755"></a>00755       );
+<a name="l00756"></a>00756     <span class="keywordflow">return</span>;
+<a name="l00757"></a>00757   }
+<a name="l00758"></a>00758   <span class="keywordflow">if</span> (!arm-&gt;<a class="code" href="structeolArmature.html#a8898827341fbed1d383f8316538bc4ec">_isLinked</a>)
+<a name="l00759"></a>00759   {
+<a name="l00760"></a>00760     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00761"></a>00761       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00762"></a>00762       <span class="stringliteral">&quot;eol_armature: armature %s is not linked.\n&quot;</span>,
+<a name="l00763"></a>00763       arm-&gt;<a class="code" href="structeolArmature.html#a5a46cfc07e11410a3ec1f10e3a63f666">filename</a>
+<a name="l00764"></a>00764     );
+<a name="l00765"></a>00765     <span class="keywordflow">return</span>;
+<a name="l00766"></a>00766   }
+<a name="l00767"></a>00767   <span class="keywordflow">if</span>(frame &gt;= arm-&gt;<a class="code" href="structeolArmature.html#aedd8c52f67696ad1c7d2f02960b726ba">frameCount</a>)
+<a name="l00768"></a>00768   {
+<a name="l00769"></a>00769     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00770"></a>00770       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00771"></a>00771       <span class="stringliteral">&quot;eol_armature: passed in frame %i, but armature only has %i frames.\n&quot;</span>,
+<a name="l00772"></a>00772       frame,
+<a name="l00773"></a>00773       arm-&gt;<a class="code" href="structeolArmature.html#aedd8c52f67696ad1c7d2f02960b726ba">frameCount</a>
+<a name="l00774"></a>00774       );
+<a name="l00775"></a>00775   }
+<a name="l00776"></a>00776   <span class="keywordflow">if</span> (frame == mesh-&gt;<a class="code" href="structeolMesh.html#a9c6e2bd9e5525c96c0ae7394e7ee9cd7">_curFrame</a>)<span class="keywordflow">return</span>;
+<a name="l00777"></a>00777   mesh-&gt;<a class="code" href="structeolMesh.html#a9c6e2bd9e5525c96c0ae7394e7ee9cd7">_curFrame</a> = frame;
+<a name="l00778"></a>00778   tempframe = arm-&gt;<a class="code" href="structeolArmature.html#ae5247767324856b7ac238e19256c7242">_poses</a>[frame].<a class="code" href="structeolPose.html#a2042c331eece26d002533712efc17784">bones</a>;
+<a name="l00779"></a>00779   <span class="keywordflow">for</span>(j = 0; j &lt; arm-&gt;<a class="code" href="structeolArmature.html#a89c8f90d845b93ea95aeb008c4956ff2">boneCount</a>; j++)
+<a name="l00780"></a>00780   {
+<a name="l00781"></a>00781     tempGroup = arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[tempframe[j].<a class="code" href="structeolPoseBone.html#a4a098996b38750767ee12f1d25ce099f">boneIndex</a>].<a class="code" href="structS__Bone.html#ab77d7244cbf26545d33934f3566af09e">meshGroup</a>;
+<a name="l00782"></a>00782     <span class="keywordflow">if</span> (tempGroup == NULL)
+<a name="l00783"></a>00783     {
+<a name="l00784"></a>00784       <span class="keywordflow">continue</span>;
+<a name="l00785"></a>00785     }
+<a name="l00786"></a>00786     <span class="keywordflow">if</span> (strcmp(tempframe[j].<a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>,tempGroup-&gt;<a class="code" href="structeolGroup.html#a3e3e1a3bb70a39f16e17928b68464261">name</a>) != 0)
+<a name="l00787"></a>00787     {
+<a name="l00788"></a>00788       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00789"></a>00789         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
+<a name="l00790"></a>00790         <span class="stringliteral">&quot;eol_armature: posebone/group mismatch - posebone: %s, group %s\n&quot;</span>,
+<a name="l00791"></a>00791         tempframe[j].name,
+<a name="l00792"></a>00792         arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[tempframe[j].<a class="code" href="structeolPoseBone.html#a4a098996b38750767ee12f1d25ce099f">boneIndex</a>].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>
+<a name="l00793"></a>00793         );
+<a name="l00794"></a>00794     }
+<a name="l00795"></a>00795     <span class="keywordflow">if</span> (strcmp(tempGroup-&gt;<a class="code" href="structeolGroup.html#a3e3e1a3bb70a39f16e17928b68464261">name</a>,arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[tempframe[j].<a class="code" href="structeolPoseBone.html#a4a098996b38750767ee12f1d25ce099f">boneIndex</a>].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>) != 0)
+<a name="l00796"></a>00796     {
+<a name="l00797"></a>00797       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00798"></a>00798         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
+<a name="l00799"></a>00799         <span class="stringliteral">&quot;eol_armature: bone/group mismatch - bone: %s, group %s\n&quot;</span>,
+<a name="l00800"></a>00800         tempGroup-&gt;<a class="code" href="structeolGroup.html#a3e3e1a3bb70a39f16e17928b68464261">name</a>,
+<a name="l00801"></a>00801         arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[tempframe[j].<a class="code" href="structeolPoseBone.html#a4a098996b38750767ee12f1d25ce099f">boneIndex</a>].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>
+<a name="l00802"></a>00802         );
+<a name="l00803"></a>00803     }
+<a name="l00804"></a>00804     <span class="keywordflow">for</span>(i = 0; i &lt; tempGroup-&gt;<a class="code" href="structeolGroup.html#aaf89092f7d1b5c5935078a0e8016c845">numVerts</a>; i++)
+<a name="l00805"></a>00805     {
+<a name="l00806"></a>00806       v = tempGroup-&gt;<a class="code" href="structeolGroup.html#a21411cd81cce491a88b0e2202b2ca8c9">vertices</a>[i];
+<a name="l00807"></a>00807       <span class="keywordflow">if</span> (v &lt; 0)
+<a name="l00808"></a>00808       {
+<a name="l00809"></a>00809         <a class="code" href="eol__logger_8c.html#a5ff3fd9e93a31adae78937d3a7a5bbbe" title="log a message at the error warning level. It will ignore warning levels below the...">eol_logger_error</a>(
+<a name="l00810"></a>00810           <span class="stringliteral">&quot;eol_armature: underseeking in group %s\n&quot;</span>,
+<a name="l00811"></a>00811           tempGroup-&gt;<a class="code" href="structeolGroup.html#a3e3e1a3bb70a39f16e17928b68464261">name</a>);
+<a name="l00812"></a>00812         <span class="keywordflow">continue</span>;
+<a name="l00813"></a>00813       }
+<a name="l00814"></a>00814       <span class="keywordflow">if</span> (v &gt;= mesh-&gt;<a class="code" href="structeolMesh.html#a4f91c21b651ac86d8820e437e952e3ca">_numVertices</a>)
+<a name="l00815"></a>00815       {
+<a name="l00816"></a>00816         <a class="code" href="eol__logger_8c.html#a5ff3fd9e93a31adae78937d3a7a5bbbe" title="log a message at the error warning level. It will ignore warning levels below the...">eol_logger_error</a>(
+<a name="l00817"></a>00817           <span class="stringliteral">&quot;eol_armature: overseeking in group %s\n&quot;</span>,
+<a name="l00818"></a>00818           tempGroup-&gt;<a class="code" href="structeolGroup.html#a3e3e1a3bb70a39f16e17928b68464261">name</a>);
+<a name="l00819"></a>00819         <span class="keywordflow">continue</span>;
+<a name="l00820"></a>00820       }
+<a name="l00821"></a>00821       <a class="code" href="eol__matrix_8c.html#acfdfbe18d8cd6b99d1a49ec60b47dfda">eol_mat4_mult_vert_factor</a>(
+<a name="l00822"></a>00822           &amp;mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[tempGroup-&gt;<a class="code" href="structeolGroup.html#a21411cd81cce491a88b0e2202b2ca8c9">vertices</a>[i]],
+<a name="l00823"></a>00823           tempframe[j].<a class="code" href="structeolPoseBone.html#a0c3ef8079418b71a2ae0422052f12817">matrix</a>,
+<a name="l00824"></a>00824           mesh-&gt;<a class="code" href="structeolMesh.html#ae61865f281d5bd1e91d6804ddc2f8f9f">_rest</a>[tempGroup-&gt;<a class="code" href="structeolGroup.html#a21411cd81cce491a88b0e2202b2ca8c9">vertices</a>[i]],
+<a name="l00825"></a>00825           tempGroup-&gt;<a class="code" href="structeolGroup.html#a944b22fc10bf1df3178a8f36f01814bd">weights</a>[i]
+<a name="l00826"></a>00826       );
+<a name="l00827"></a>00827     }
+<a name="l00828"></a>00828   }
+<a name="l00829"></a>00829 }
+<a name="l00830"></a>00830 
+<a name="l00831"></a>00831 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>
+<a name="l00832"></a><a class="code" href="eol__armature_8c.html#a79111924c48f9ac9ff40342f53969e53">00832</a> <a class="code" href="eol__armature_8c.html#a79111924c48f9ac9ff40342f53969e53">eol_armature_descendant_of</a>(
+<a name="l00833"></a>00833     <a class="code" href="structeolArmature.html">eolArmature</a> *arm,
+<a name="l00834"></a>00834     <a class="code" href="structS__Bone.html" title="this composes the skeletal structure of the armature at rest.">eolBone</a> *ancestor,
+<a name="l00835"></a>00835     <a class="code" href="structS__Bone.html" title="this composes the skeletal structure of the armature at rest.">eolBone</a> *descendant
+<a name="l00836"></a>00836   )
+<a name="l00837"></a>00837 {
+<a name="l00838"></a>00838   <span class="keywordtype">int</span> p;
+<a name="l00839"></a>00839   <span class="keywordflow">if</span> ((descendant == NULL) ||
+<a name="l00840"></a>00840       (arm == NULL) ||
+<a name="l00841"></a>00841       (ancestor == NULL))
+<a name="l00842"></a>00842   {
+<a name="l00843"></a>00843     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00844"></a>00844       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
+<a name="l00845"></a>00845       <span class="stringliteral">&quot;eol_armature: descendant_of passed NULL parameter\n&quot;</span>
+<a name="l00846"></a>00846     );
+<a name="l00847"></a>00847     <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00848"></a>00848   }
+<a name="l00849"></a>00849   <span class="keywordflow">if</span> (descendant-&gt;<a class="code" href="structS__Bone.html#a0c4898c73eeabdfda740bbfc2daa2cc0">hasParent</a> == <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>)
+<a name="l00850"></a>00850   {
+<a name="l00851"></a>00851     <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00852"></a>00852   }
+<a name="l00853"></a>00853   p = descendant-&gt;<a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">parentIndex</a>;
+<a name="l00854"></a>00854   <span class="keywordflow">while</span> ((p != -1) &amp;&amp; (p &lt; arm-&gt;boneCount))
+<a name="l00855"></a>00855   {
+<a name="l00856"></a>00856     <span class="keywordflow">if</span> (&amp;arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[p] == ancestor)
+<a name="l00857"></a>00857     {
+<a name="l00858"></a>00858       <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
+<a name="l00859"></a>00859     }
+<a name="l00860"></a>00860     <span class="keywordflow">if</span> (!arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[p].<a class="code" href="structS__Bone.html#a0c4898c73eeabdfda740bbfc2daa2cc0">hasParent</a>)<span class="keywordflow">break</span>;
+<a name="l00861"></a>00861     p = arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[p].<a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">parentIndex</a>;
+<a name="l00862"></a>00862   }
+<a name="l00863"></a>00863   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00864"></a>00864 }
+<a name="l00865"></a>00865 
+<a name="l00866"></a>00866 <span class="keywordtype">void</span>
+<a name="l00867"></a><a class="code" href="eol__armature_8h.html#ac730e7a4d1e36fd8d0d6369569d681f1">00867</a> <a class="code" href="eol__armature_8c.html#ac730e7a4d1e36fd8d0d6369569d681f1" title="prints out to log the bone structure">eol_armature_print_bone_hierarchy</a>(
+<a name="l00868"></a>00868   <a class="code" href="structeolArmature.html">eolArmature</a> *arm
+<a name="l00869"></a>00869   )
+<a name="l00870"></a>00870 {
+<a name="l00871"></a>00871   <span class="keywordtype">int</span> b,c;
+<a name="l00872"></a>00872   <span class="keywordflow">if</span> (arm == NULL)<span class="keywordflow">return</span>;
+<a name="l00873"></a>00873   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00874"></a>00874   <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00875"></a>00875   <span class="stringliteral">&quot;eol_armature: Bone Hierarchy for armature %s\n&quot;</span>,
+<a name="l00876"></a>00876   arm-&gt;<a class="code" href="structeolArmature.html#a5a46cfc07e11410a3ec1f10e3a63f666">filename</a>);
+<a name="l00877"></a>00877   <span class="keywordflow">for</span> (b = 0; b &lt; arm-&gt;<a class="code" href="structeolArmature.html#a89c8f90d845b93ea95aeb008c4956ff2">boneCount</a>; b++)
+<a name="l00878"></a>00878   {
+<a name="l00879"></a>00879     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00880"></a>00880       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00881"></a>00881       <span class="stringliteral">&quot;bone %s has\n&quot;</span>,
+<a name="l00882"></a>00882       arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[b].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>);
+<a name="l00883"></a>00883     <span class="keywordflow">if</span> (arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[b].<a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">parentIndex</a> != -1)
+<a name="l00884"></a>00884     {
+<a name="l00885"></a>00885       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00886"></a>00886         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00887"></a>00887         <span class="stringliteral">&quot;\tparent: %s\n&quot;</span>,
+<a name="l00888"></a>00888         arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[b].<a class="code" href="structS__Bone.html#ae7b6a4377f18110f33eb07fc30d972d9">parentIndex</a>].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>);
+<a name="l00889"></a>00889     }
+<a name="l00890"></a>00890     <span class="keywordflow">else</span>
+<a name="l00891"></a>00891     {
+<a name="l00892"></a>00892       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00893"></a>00893         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00894"></a>00894         <span class="stringliteral">&quot;\t&lt;no parent&gt;\n&quot;</span>);
+<a name="l00895"></a>00895     }
+<a name="l00896"></a>00896     <span class="keywordflow">if</span> (arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[b].<a class="code" href="structS__Bone.html#a237cf1f265c1de3b882847f61c311c4a">numChildren</a> &lt;= 0)
+<a name="l00897"></a>00897     {
+<a name="l00898"></a>00898       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00899"></a>00899         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00900"></a>00900         <span class="stringliteral">&quot;\t\t&lt;no children&gt;\n&quot;</span>);
+<a name="l00901"></a>00901       <span class="keywordflow">continue</span>;
+<a name="l00902"></a>00902     }
+<a name="l00903"></a>00903     <span class="keywordflow">for</span> (c = 0; c &lt; arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[b].<a class="code" href="structS__Bone.html#a237cf1f265c1de3b882847f61c311c4a">numChildren</a>; c++)
+<a name="l00904"></a>00904     {
+<a name="l00905"></a>00905       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00906"></a>00906         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00907"></a>00907         <span class="stringliteral">&quot;\t\tchild %s\n&quot;</span>,
+<a name="l00908"></a>00908         arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[arm-&gt;<a class="code" href="structeolArmature.html#a791304795952cb01df0331f14169c31e">_bones</a>[b].<a class="code" href="structS__Bone.html#a2ed4804f8f61f3b8fc4cb8276f96c7b0">children</a>[c]].<a class="code" href="structS__Bone.html#af54fbc48f2e18ba68d50131722355a80">name</a>);
+<a name="l00909"></a>00909       <span class="keywordflow">continue</span>;         
+<a name="l00910"></a>00910     }
+<a name="l00911"></a>00911   }
+<a name="l00912"></a>00912 }
+<a name="l00913"></a>00913 <span class="comment">/*eol@eof*/</span>
+<a name="l00914"></a>00914 
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:23 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:09 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

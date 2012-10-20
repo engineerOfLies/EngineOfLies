@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -34,7 +35,7 @@
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#ac6367dd3c6b1a3715b8d10e7071975d8">eol_config_deinit</a> (void)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a> (yaml_parser_t *parser, <a class="el" href="structeolKeychain.html">eolKeychain</a> *cfg)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a> (yaml_parser_t *parser, <a class="el" href="structkeychain__S.html">eolKeychain</a> *cfg)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#a64a9bc02e28f6e8d6613d68353bc6618">eol_config_init</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">initializes config system  <a href="#a64a9bc02e28f6e8d6613d68353bc6618"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolConfig.html">eolConfig</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#abd161b4d10d4a39f485ef594bd07d5c6">eol_config_new</a> ()</td></tr>
@@ -45,9 +46,9 @@
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#a0fb35d3b58117bd19120136270dc7745">eol_config_destroy</a> (<a class="el" href="structeolConfig.html">eolConfig</a> *config)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#add43978a550fba94fa63292207c41cc5">eol_config_free</a> (<a class="el" href="structeolConfig.html">eolConfig</a> **config)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">returns the config back to the system.  <a href="#add43978a550fba94fa63292207c41cc5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#a0bbb480dc906a76f0509bfc9152688cf">eol_config_parse_sequence</a> (yaml_parser_t *parser, <a class="el" href="structeolKeychain.html">eolKeychain</a> *chain)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#acfa6e79bcae428d9c04146035857045f">eol_config_get_keychain</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#a7421347b5b87738585f4c9b34f5546c2">eol_config_get_keychain_by_tag</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> **output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#a0bbb480dc906a76f0509bfc9152688cf">eol_config_parse_sequence</a> (yaml_parser_t *parser, <a class="el" href="structkeychain__S.html">eolKeychain</a> *chain)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#acfa6e79bcae428d9c04146035857045f">eol_config_get_keychain</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#a7421347b5b87738585f4c9b34f5546c2">eol_config_get_keychain_by_tag</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> **output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">gets the element by tag as a keychain.  <a href="#a7421347b5b87738585f4c9b34f5546c2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#a08380f149757490db94be24109167d06">eol_config_get_vec3d_by_tag</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8c.html#a2119d828a77a4720ca626776dc26a5ae">eol_config_get_float_by_tag</a> (<a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
@@ -240,7 +241,7 @@
         <tr>
           <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_config_get_keychain </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>output</em>, </td>
         </tr>
         <tr>
@@ -269,7 +270,7 @@
         <tr>
           <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_config_get_keychain_by_tag </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> **&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> **&nbsp;</td>
           <td class="paramname"> <em>output</em>, </td>
         </tr>
         <tr>
@@ -550,7 +551,7 @@
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>chain</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -579,7 +580,7 @@
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>cfg</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -641,7 +642,7 @@
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:26 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:13 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

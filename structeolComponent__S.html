@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -43,6 +44,7 @@
 <tr><td class="memItemLeft" align="right" valign="top">void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a037c5a46ec02d3e85dc425c279bee222">componentData</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#aa124fc7bf5f3ab704d8b5bac002c75a0">data_free</a> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a86a6a65fff9a4c7ed3ff7422de472214">data_draw</a> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> <a class="el" href="structeolComponent__S.html#a4bafc80f7b426e95b29a4b62d8d531bc">bounds</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a24dda47dd1f9b799520836093ef4c3c0">data_move</a> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> <a class="el" href="structeolComponent__S.html#a4bafc80f7b426e95b29a4b62d8d531bc">bounds</a>)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a40c3aeffe604a42ef55374b4cac3a3db">data_update</a> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a906907cf6b4046e0638bb35e80fefd2d">data_get_state</a> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>(*&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponent__S.html#a2f857b4ab2c39f344d2350605e844a17">data_changed</a> )(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component)</td></tr>
@@ -50,7 +52,7 @@
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <p>this structure serves as a header for all components </p>
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00079">79</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00092">92</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 <hr/><h2>Field Documentation</h2>
 <a class="anchor" id="a4bafc80f7b426e95b29a4b62d8d531bc"></a><!-- doxytag: member="eolComponent_S::bounds" ref="a4bafc80f7b426e95b29a4b62d8d531bc" args="" -->
 <div class="memitem">
@@ -62,8 +64,9 @@
       </table>
 </div>
 <div class="memdoc">
+<p>calculated position to draw </p>
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00084">84</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00097">97</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -79,7 +82,7 @@
 <div class="memdoc">
 <p>I apologize for the lolcat reference </p>
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00085">85</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00098">98</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -94,7 +97,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00090">90</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00103">103</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -109,7 +112,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00095">95</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00109">109</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -124,7 +127,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00092">92</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00105">105</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -139,7 +142,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00091">91</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00104">104</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -154,7 +157,22 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00094">94</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00108">108</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a24dda47dd1f9b799520836093ef4c3c0"></a><!-- doxytag: member="eolComponent_S::data_move" ref="a24dda47dd1f9b799520836093ef4c3c0" args=")(struct eolComponent_S *component, eolRect bounds)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* <a class="el" href="structeolComponent__S.html#a24dda47dd1f9b799520836093ef4c3c0">eolComponent_S::data_move</a>)(struct <a class="el" href="structeolComponent__S.html">eolComponent_S</a> *component, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> <a class="el" href="structeolComponent__S.html#a4bafc80f7b426e95b29a4b62d8d531bc">bounds</a>)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00106">106</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -169,7 +187,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00093">93</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00107">107</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -184,7 +202,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00086">86</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00099">99</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -199,7 +217,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00081">81</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00094">94</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -214,7 +232,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00082">82</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00095">95</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -229,7 +247,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00088">88</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00101">101</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -243,8 +261,9 @@
       </table>
 </div>
 <div class="memdoc">
+<p>relative position to draw </p>
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00083">83</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00096">96</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -259,7 +278,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00087">87</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00100">100</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -274,7 +293,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00089">89</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__component_8h_source.html#l00102">102</a> of file <a class="el" href="eol__component_8h_source.html">eol_component.h</a>.</p>
 
 </div>
 </div>
@@ -282,7 +301,7 @@
 <li><a class="el" href="eol__component_8h_source.html">eol_component.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:29 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:16 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

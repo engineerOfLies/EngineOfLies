@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -79,7 +80,7 @@
 <a name="l00055"></a>00055   strncpy(win-&gt;<a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">name</a>,<span class="stringliteral">&quot;text_block&quot;</span>,<a class="code" href="eol__types_8h.html#a4111fa5f05bb9f3d53c75a2af7aef887">EOLLINELEN</a>);
 <a name="l00056"></a>00056 
 <a name="l00057"></a>00057   <a class="code" href="eol__graphics_8c.html#a9183e2efc235c4059cca17bd7535813d" title="retrieves the current graphics frame time index">eol_graphics_get_size</a>(&amp;sw, &amp;sh);
-<a name="l00058"></a>00058   <a class="code" href="eol__component_8c.html#ac1f51e5a4b8079ebfae6180da75cc50e" title="gets the dimensions for a stock button">eol_button_get_stock_size</a>(&amp;bw, &amp;bh);
+<a name="l00058"></a>00058   <a class="code" href="eol__component_8h.html#ac1f51e5a4b8079ebfae6180da75cc50e" title="gets the dimensions for a stock button">eol_button_get_stock_size</a>(&amp;bw, &amp;bh);
 <a name="l00059"></a>00059   trect = <a class="code" href="eol__font_8c.html#a94377f4cc721cf24d906f0478ae4f56e" title="returns the bounding rect ( in screen pixels ) of the text.">eol_font_get_bounds</a>(title,4);
 <a name="l00060"></a>00060   brect = <a class="code" href="eol__font_8c.html#a96d9dcdb715c0788be8faffdef42204a" title="returns the bounding rect ( in screen pixels ) of the text.">eol_font_get_block_bounds</a>(
 <a name="l00061"></a>00061     text,
@@ -110,7 +111,7 @@
 <a name="l00086"></a>00086 
 <a name="l00087"></a>00087   bx = <a class="code" href="eol__window_8c.html#a1135fa87f14bbcc759bf2910528e2698">eol_window_get_relative_position</a>(win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w - bw,win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w);
 <a name="l00088"></a>00088   by = <a class="code" href="eol__window_8c.html#a1135fa87f14bbcc759bf2910528e2698">eol_window_get_relative_position</a>(win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h - bh,win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h);
-<a name="l00089"></a>00089   comp = <a class="code" href="eol__component_8c.html#adb599ad6ca0522c12fcb2345a038991d" title="creates a new button component with common options">eol_button_stock_new</a>(2,
+<a name="l00089"></a>00089   comp = <a class="code" href="eol__component_8h.html#adb599ad6ca0522c12fcb2345a038991d" title="creates a new button component with common options">eol_button_stock_new</a>(2,
 <a name="l00090"></a>00090                               <span class="stringliteral">&quot;ok_button&quot;</span>,
 <a name="l00091"></a>00091                               <a class="code" href="eol__types_8c.html#af2f5ddad1677fe91c186f494870b4d1e" title="constructs and returns an eolRectFloat">eol_rectf</a>(bx,by,1,1),
 <a name="l00092"></a>00092                               win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
@@ -182,7 +183,7 @@
 <a name="l00158"></a>00158   }
 <a name="l00159"></a>00159   strncpy(win-&gt;<a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">name</a>,<span class="stringliteral">&quot;yesno&quot;</span>,<a class="code" href="eol__types_8h.html#a4111fa5f05bb9f3d53c75a2af7aef887">EOLLINELEN</a>);
 <a name="l00160"></a>00160   <a class="code" href="eol__graphics_8c.html#a9183e2efc235c4059cca17bd7535813d" title="retrieves the current graphics frame time index">eol_graphics_get_size</a>(&amp;sw, &amp;sh);
-<a name="l00161"></a>00161   <a class="code" href="eol__component_8c.html#ac1f51e5a4b8079ebfae6180da75cc50e" title="gets the dimensions for a stock button">eol_button_get_stock_size</a>(&amp;bw, &amp;bh);
+<a name="l00161"></a>00161   <a class="code" href="eol__component_8h.html#ac1f51e5a4b8079ebfae6180da75cc50e" title="gets the dimensions for a stock button">eol_button_get_stock_size</a>(&amp;bw, &amp;bh);
 <a name="l00162"></a>00162   trect = <a class="code" href="eol__font_8c.html#a94377f4cc721cf24d906f0478ae4f56e" title="returns the bounding rect ( in screen pixels ) of the text.">eol_font_get_bounds</a>(question,3);
 <a name="l00163"></a>00163   <span class="keywordflow">if</span> (trect.w &gt; ((bw*2) + 6))
 <a name="l00164"></a>00164   {
@@ -200,7 +201,7 @@
 <a name="l00176"></a>00176   comp = <a class="code" href="eol__component_8c.html#ac175ad1e771c44045cf6fbe377901d92" title="creates a new label component">eol_label_new</a>(0,<span class="stringliteral">&quot;yes_title&quot;</span>,<a class="code" href="eol__types_8c.html#af2f5ddad1677fe91c186f494870b4d1e" title="constructs and returns an eolRectFloat">eol_rectf</a>(0.5,0.1,1,1),win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,<a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>,
 <a name="l00177"></a>00177                        question,<a class="code" href="eol__font_8h.html#a819cf4a1ac8083884c9c7c43419d4281a3d2a286417b0bb6a1d8567692735a54b">eolJustifyCenter</a>,<a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>,3,NULL,<a class="code" href="eol__types_8c.html#ad9642ff032955fe0e6d34e41eb53b64a" title="create and return an eolVec3D">eol_vec3d</a>(1,1,1),1);
 <a name="l00178"></a>00178   <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
-<a name="l00179"></a>00179   comp = <a class="code" href="eol__component_8c.html#adb599ad6ca0522c12fcb2345a038991d" title="creates a new button component with common options">eol_button_stock_new</a>(1,
+<a name="l00179"></a>00179   comp = <a class="code" href="eol__component_8h.html#adb599ad6ca0522c12fcb2345a038991d" title="creates a new button component with common options">eol_button_stock_new</a>(1,
 <a name="l00180"></a>00180                               <span class="stringliteral">&quot;yes_button&quot;</span>,
 <a name="l00181"></a>00181                               <a class="code" href="eol__types_8c.html#af2f5ddad1677fe91c186f494870b4d1e" title="constructs and returns an eolRectFloat">eol_rectf</a>(0.25,0.65,1,1),
 <a name="l00182"></a>00182                               win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
@@ -209,7 +210,7 @@
 <a name="l00185"></a>00185                               0,
 <a name="l00186"></a>00186                               <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>);
 <a name="l00187"></a>00187   <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
-<a name="l00188"></a>00188   comp = <a class="code" href="eol__component_8c.html#adb599ad6ca0522c12fcb2345a038991d" title="creates a new button component with common options">eol_button_stock_new</a>(2,
+<a name="l00188"></a>00188   comp = <a class="code" href="eol__component_8h.html#adb599ad6ca0522c12fcb2345a038991d" title="creates a new button component with common options">eol_button_stock_new</a>(2,
 <a name="l00189"></a>00189                               <span class="stringliteral">&quot;no_button&quot;</span>,
 <a name="l00190"></a>00190                               <a class="code" href="eol__types_8c.html#af2f5ddad1677fe91c186f494870b4d1e" title="constructs and returns an eolRectFloat">eol_rectf</a>(0.75,0.65,1,1),
 <a name="l00191"></a>00191                               win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
@@ -313,7 +314,7 @@
 <a name="l00289"></a>00289   
 <a name="l00290"></a>00290   strncpy(win-&gt;<a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">name</a>,<span class="stringliteral">&quot;gettext&quot;</span>,<a class="code" href="eol__types_8h.html#a4111fa5f05bb9f3d53c75a2af7aef887">EOLLINELEN</a>);
 <a name="l00291"></a>00291   <a class="code" href="eol__graphics_8c.html#a9183e2efc235c4059cca17bd7535813d" title="retrieves the current graphics frame time index">eol_graphics_get_size</a>(&amp;sw, &amp;sh);
-<a name="l00292"></a>00292   <a class="code" href="eol__component_8c.html#ac1f51e5a4b8079ebfae6180da75cc50e" title="gets the dimensions for a stock button">eol_button_get_stock_size</a>(&amp;bw, &amp;bh);
+<a name="l00292"></a>00292   <a class="code" href="eol__component_8h.html#ac1f51e5a4b8079ebfae6180da75cc50e" title="gets the dimensions for a stock button">eol_button_get_stock_size</a>(&amp;bw, &amp;bh);
 <a name="l00293"></a>00293   trect = <a class="code" href="eol__font_8c.html#a94377f4cc721cf24d906f0478ae4f56e" title="returns the bounding rect ( in screen pixels ) of the text.">eol_font_get_bounds</a>(question,3);
 <a name="l00294"></a>00294   brect = <a class="code" href="eol__font_8c.html#a94377f4cc721cf24d906f0478ae4f56e" title="returns the bounding rect ( in screen pixels ) of the text.">eol_font_get_bounds</a>(<span class="stringliteral">&quot;W&quot;</span>,3);
 <a name="l00295"></a>00295   brect.w *= bufferSize;
@@ -336,7 +337,7 @@
 <a name="l00312"></a>00312                        question,<a class="code" href="eol__font_8h.html#a819cf4a1ac8083884c9c7c43419d4281a3d2a286417b0bb6a1d8567692735a54b">eolJustifyCenter</a>,<a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>,3,NULL,<a class="code" href="eol__types_8c.html#ad9642ff032955fe0e6d34e41eb53b64a" title="create and return an eolVec3D">eol_vec3d</a>(1,1,1),1);
 <a name="l00313"></a>00313   <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
 <a name="l00314"></a>00314   
-<a name="l00315"></a>00315   comp = <a class="code" href="eol__component_8c.html#adb599ad6ca0522c12fcb2345a038991d" title="creates a new button component with common options">eol_button_stock_new</a>(1,
+<a name="l00315"></a>00315   comp = <a class="code" href="eol__component_8h.html#adb599ad6ca0522c12fcb2345a038991d" title="creates a new button component with common options">eol_button_stock_new</a>(1,
 <a name="l00316"></a>00316                               <span class="stringliteral">&quot;ok_button&quot;</span>,
 <a name="l00317"></a>00317                               <a class="code" href="eol__types_8c.html#af2f5ddad1677fe91c186f494870b4d1e" title="constructs and returns an eolRectFloat">eol_rectf</a>(0.25,0.7,1,1),
 <a name="l00318"></a>00318                               win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
@@ -346,7 +347,7 @@
 <a name="l00322"></a>00322                               <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>);
 <a name="l00323"></a>00323   <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
 <a name="l00324"></a>00324   
-<a name="l00325"></a>00325   comp = <a class="code" href="eol__component_8c.html#adb599ad6ca0522c12fcb2345a038991d" title="creates a new button component with common options">eol_button_stock_new</a>(2,
+<a name="l00325"></a>00325   comp = <a class="code" href="eol__component_8h.html#adb599ad6ca0522c12fcb2345a038991d" title="creates a new button component with common options">eol_button_stock_new</a>(2,
 <a name="l00326"></a>00326                               <span class="stringliteral">&quot;cancel_button&quot;</span>,
 <a name="l00327"></a>00327                               <a class="code" href="eol__types_8c.html#af2f5ddad1677fe91c186f494870b4d1e" title="constructs and returns an eolRectFloat">eol_rectf</a>(0.75,0.7,1,1),
 <a name="l00328"></a>00328                               win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
@@ -384,7 +385,7 @@
 <a name="l00360"></a>00360 
 <a name="l00361"></a>00361 <span class="comment">/*eol@eof*/</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:23 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:10 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

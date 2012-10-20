@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -34,490 +35,513 @@
 <a name="l00010"></a><a class="code" href="eol__level_8c.html#a7b47d7ae4b1d6695087e494eb2f35daf">00010</a> <a class="code" href="structeolLevel.html">eolLevel</a> * <a class="code" href="eol__level_8c.html#a7b47d7ae4b1d6695087e494eb2f35daf">_eol_level_list</a> = NULL;
 <a name="l00011"></a><a class="code" href="eol__level_8c.html#aee20fcf48a1595df1b6b83b3bce381e7">00011</a> <a class="code" href="structeolLevel.html">eolLevel</a> * <a class="code" href="eol__level_8c.html#aee20fcf48a1595df1b6b83b3bce381e7">_eol_level_current</a> = NULL;
 <a name="l00012"></a><a class="code" href="eol__level_8c.html#a62c2d1f17a5c5412200326a0c8c37895">00012</a> <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>    <a class="code" href="eol__level_8c.html#a62c2d1f17a5c5412200326a0c8c37895">_eol_level_max_layers</a> = 1;
-<a name="l00013"></a><a class="code" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">00013</a> <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>    <a class="code" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">_eol_level_layer_draw_range</a> = 0;
-<a name="l00014"></a><a class="code" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">00014</a> <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>    <a class="code" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">_eol_level_draw_mode</a> = 0;
-<a name="l00015"></a><a class="code" href="eol__level_8c.html#a6e6a0630954a256ea678907c9f0653dc">00015</a> <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>    <a class="code" href="eol__level_8c.html#a6e6a0630954a256ea678907c9f0653dc">_eol_level_max</a> = 0; 
-<a name="l00017"></a><a class="code" href="eol__level_8c.html#aec1136aaa9c4dde7c8cb98010032768c">00017</a> <a class="code" href="eol__level_8h.html#a9fd0c341f589fe91780906fafa85aab9" title="function pointer prototype used to spawn the entities for the level the application...">eolSpawnGeneric</a> <a class="code" href="eol__level_8c.html#aec1136aaa9c4dde7c8cb98010032768c">_eol_level_spawn_generic</a> = NULL;
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019 
-<a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="comment">/*local function prototypes*/</span>
-<a name="l00022"></a>00022 <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#adb75ebdfdacafb725fddc94164897f1b">eol_level_close</a>();
-<a name="l00023"></a>00023 <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a1bc3f8ee5e1d413f9f0adfe66b088846">eol_level_delete</a>(<span class="keywordtype">void</span> *leveldata);
-<a name="l00024"></a>00024 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__level_8c.html#af6b1935fcd719e0aa917c45e205a745b">eol_level_load_data_from_file</a>(<span class="keywordtype">char</span> * filename,<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>);
+<a name="l00013"></a><a class="code" href="eol__level_8c.html#a4f9aa4d113f1d21101f18d16fc4aec29">00013</a> <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>    <a class="code" href="eol__level_8c.html#a4f9aa4d113f1d21101f18d16fc4aec29">_eol_level_clip_iterations</a> = 10;
+<a name="l00014"></a><a class="code" href="eol__level_8c.html#add92c5ce1ae50a3d6f67a8a6278fad66">00014</a> <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>   <a class="code" href="eol__level_8c.html#add92c5ce1ae50a3d6f67a8a6278fad66">_eol_level_clip_step</a> = 0.1;
+<a name="l00015"></a><a class="code" href="eol__level_8c.html#a8152fbfc6063e351cd0e8430fa01181a">00015</a> <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>   <a class="code" href="eol__level_8c.html#a8152fbfc6063e351cd0e8430fa01181a">_eol_level_clip_thickness</a> = 0.5;
+<a name="l00016"></a><a class="code" href="eol__level_8c.html#abc5802ffc65f9d17014ae06ffd4543d7">00016</a> <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>   <a class="code" href="eol__level_8c.html#abc5802ffc65f9d17014ae06ffd4543d7">_eol_level_slop</a> = 0.1;
+<a name="l00017"></a><a class="code" href="eol__level_8c.html#a61668eaafadd9968f582dcc7f7174a77">00017</a> <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>   <a class="code" href="eol__level_8c.html#a61668eaafadd9968f582dcc7f7174a77">_eol_level_bias</a> = 0.1;
+<a name="l00018"></a><a class="code" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">00018</a> <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>    <a class="code" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">_eol_level_layer_draw_range</a> = 0;
+<a name="l00019"></a><a class="code" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">00019</a> <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>    <a class="code" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">_eol_level_draw_mode</a> = 0;
+<a name="l00020"></a><a class="code" href="eol__level_8c.html#a6e6a0630954a256ea678907c9f0653dc">00020</a> <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>    <a class="code" href="eol__level_8c.html#a6e6a0630954a256ea678907c9f0653dc">_eol_level_max</a> = 0; 
+<a name="l00022"></a><a class="code" href="eol__level_8c.html#aec1136aaa9c4dde7c8cb98010032768c">00022</a> <a class="code" href="eol__level_8h.html#a9fd0c341f589fe91780906fafa85aab9" title="function pointer prototype used to spawn the entities for the level the application...">eolSpawnGeneric</a> <a class="code" href="eol__level_8c.html#aec1136aaa9c4dde7c8cb98010032768c">_eol_level_spawn_generic</a> = NULL;
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024 
 <a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="comment">/*function definitions*/</span>
-<a name="l00027"></a><a class="code" href="eol__level_8h.html#a0b10b020476b0c1b7259ae414f480213">00027</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a0b10b020476b0c1b7259ae414f480213" title="frees all loaded level data.">eol_level_init</a>()
-<a name="l00028"></a>00028 {
-<a name="l00029"></a>00029   cpInitChipmunk();
-<a name="l00030"></a>00030   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00031"></a>00031       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00032"></a>00032       <span class="stringliteral">&quot;eol_level:initializing\n&quot;</span>);
-<a name="l00033"></a>00033   _eol_level_manager = <a class="code" href="eol__resource_8c.html#a14cd7d7153b6a58ebd9b5bcf227018ab">eol_resource_manager_init</a>(
-<a name="l00034"></a>00034     <span class="stringliteral">&quot;eol_level_manager&quot;</span>,
-<a name="l00035"></a>00035     <a class="code" href="eol__level_8c.html#a6e6a0630954a256ea678907c9f0653dc">_eol_level_max</a>,
-<a name="l00036"></a>00036     <span class="keyword">sizeof</span>(<a class="code" href="structeolLevel.html">eolLevel</a>),
-<a name="l00037"></a>00037     <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>,
-<a name="l00038"></a>00038     <a class="code" href="eol__level_8c.html#a1bc3f8ee5e1d413f9f0adfe66b088846">eol_level_delete</a>,
-<a name="l00039"></a>00039     <a class="code" href="eol__level_8c.html#af6b1935fcd719e0aa917c45e205a745b">eol_level_load_data_from_file</a>
-<a name="l00040"></a>00040     );
-<a name="l00041"></a>00041   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00042"></a>00042       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00043"></a>00043       <span class="stringliteral">&quot;eol_level:initialized\n&quot;</span>);
-<a name="l00044"></a>00044   atexit(<a class="code" href="eol__level_8c.html#adb75ebdfdacafb725fddc94164897f1b">eol_level_close</a>);
-<a name="l00045"></a>00045   <a class="code" href="eol__level_8c.html#a63bcb04b0295b3746d6facaed2918cfd">_eol_level_initialized</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047 }
-<a name="l00048"></a>00048 
-<a name="l00049"></a><a class="code" href="eol__level_8h.html#ad947173ef0e957c8bc4a618c0cff4930">00049</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__level_8c.html#ad947173ef0e957c8bc4a618c0cff4930">eol_level_initialized</a>()
-<a name="l00050"></a>00050 {
-<a name="l00051"></a>00051   <span class="keywordflow">return</span> <a class="code" href="eol__level_8c.html#a63bcb04b0295b3746d6facaed2918cfd">_eol_level_initialized</a>;
+<a name="l00026"></a>00026 <span class="comment">/*local function prototypes*/</span>
+<a name="l00027"></a>00027 <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#adb75ebdfdacafb725fddc94164897f1b">eol_level_close</a>();
+<a name="l00028"></a>00028 <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a1bc3f8ee5e1d413f9f0adfe66b088846">eol_level_delete</a>(<span class="keywordtype">void</span> *leveldata);
+<a name="l00029"></a>00029 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__level_8c.html#af6b1935fcd719e0aa917c45e205a745b">eol_level_load_data_from_file</a>(<span class="keywordtype">char</span> * filename,<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>);
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="comment">/*function definitions*/</span>
+<a name="l00032"></a><a class="code" href="eol__level_8h.html#a0b10b020476b0c1b7259ae414f480213">00032</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a0b10b020476b0c1b7259ae414f480213" title="frees all loaded level data.">eol_level_init</a>()
+<a name="l00033"></a>00033 {
+<a name="l00034"></a>00034   cpInitChipmunk();
+<a name="l00035"></a>00035   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00036"></a>00036       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00037"></a>00037       <span class="stringliteral">&quot;eol_level:initializing\n&quot;</span>);
+<a name="l00038"></a>00038   _eol_level_manager = <a class="code" href="eol__resource_8c.html#a14cd7d7153b6a58ebd9b5bcf227018ab">eol_resource_manager_init</a>(
+<a name="l00039"></a>00039     <span class="stringliteral">&quot;eol_level_manager&quot;</span>,
+<a name="l00040"></a>00040     <a class="code" href="eol__level_8c.html#a6e6a0630954a256ea678907c9f0653dc">_eol_level_max</a>,
+<a name="l00041"></a>00041     <span class="keyword">sizeof</span>(<a class="code" href="structeolLevel.html">eolLevel</a>),
+<a name="l00042"></a>00042     <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>,
+<a name="l00043"></a>00043     <a class="code" href="eol__level_8c.html#a1bc3f8ee5e1d413f9f0adfe66b088846">eol_level_delete</a>,
+<a name="l00044"></a>00044     <a class="code" href="eol__level_8c.html#af6b1935fcd719e0aa917c45e205a745b">eol_level_load_data_from_file</a>
+<a name="l00045"></a>00045     );
+<a name="l00046"></a>00046   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00047"></a>00047       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00048"></a>00048       <span class="stringliteral">&quot;eol_level:initialized\n&quot;</span>);
+<a name="l00049"></a>00049   atexit(<a class="code" href="eol__level_8c.html#adb75ebdfdacafb725fddc94164897f1b">eol_level_close</a>);
+<a name="l00050"></a>00050   <a class="code" href="eol__level_8c.html#a63bcb04b0295b3746d6facaed2918cfd">_eol_level_initialized</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
+<a name="l00051"></a>00051 
 <a name="l00052"></a>00052 }
 <a name="l00053"></a>00053 
-<a name="l00054"></a><a class="code" href="eol__level_8h.html#a67627bc183007765d7cf91aa0ad23c27">00054</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a67627bc183007765d7cf91aa0ad23c27" title="loads config for level system from file or sets up defaults.">eol_level_config</a>()
+<a name="l00054"></a><a class="code" href="eol__level_8h.html#ad947173ef0e957c8bc4a618c0cff4930">00054</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__level_8c.html#ad947173ef0e957c8bc4a618c0cff4930">eol_level_initialized</a>()
 <a name="l00055"></a>00055 {
-<a name="l00056"></a>00056   <a class="code" href="structeolConfig.html">eolConfig</a> *conf = NULL;
-<a name="l00057"></a>00057   <a class="code" href="eol__level_8c.html#a62c2d1f17a5c5412200326a0c8c37895">_eol_level_max_layers</a> = 3;
-<a name="l00058"></a>00058   <a class="code" href="eol__level_8c.html#a6e6a0630954a256ea678907c9f0653dc">_eol_level_max</a> = 10;
-<a name="l00059"></a>00059   <a class="code" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">_eol_level_layer_draw_range</a> = 1;
-<a name="l00060"></a>00060   <a class="code" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">_eol_level_draw_mode</a> = <a class="code" href="eol__level_8h.html#a52255556aaf877d967c9d6148fc17c55a9e3cd52822997e911dca76f596881a9c">eolLevelDrawFull</a>;
-<a name="l00061"></a>00061   conf = <a class="code" href="eol__config_8c.html#ada9ae50380760f6af3fd596ff533b52d" title="loads a configuration file into a eolConfig struct">eol_config_load</a>(<span class="stringliteral">&quot;system/level.cfg&quot;</span>);
-<a name="l00062"></a>00062   <span class="keywordflow">if</span> (conf == NULL)<span class="keywordflow">return</span>;
-<a name="l00063"></a>00063   <a class="code" href="eol__config_8c.html#a9560706954a7d65917d81dd2cfbba284">eol_config_get_uint_by_tag</a>(&amp;<a class="code" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">_eol_level_draw_mode</a>,conf,<span class="stringliteral">&quot;drawLevel&quot;</span>);
-<a name="l00064"></a>00064   <a class="code" href="eol__config_8c.html#a9560706954a7d65917d81dd2cfbba284">eol_config_get_uint_by_tag</a>(&amp;<a class="code" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">_eol_level_layer_draw_range</a>,conf,<span class="stringliteral">&quot;drawDepth&quot;</span>);
-<a name="l00065"></a>00065 }
-<a name="l00066"></a>00066 
-<a name="l00067"></a><a class="code" href="eol__level_8c.html#a45a2f1580fa1345069afbcc22f61a0e1">00067</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a45a2f1580fa1345069afbcc22f61a0e1">eol_level_set_draw_mode</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> mode)
-<a name="l00068"></a>00068 {
-<a name="l00069"></a>00069   <a class="code" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">_eol_level_draw_mode</a> = mode;
-<a name="l00070"></a>00070 }
-<a name="l00071"></a>00071 
-<a name="l00072"></a><a class="code" href="eol__level_8h.html#a9136e233131c7b118cfe987c72492e37">00072</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a9136e233131c7b118cfe987c72492e37" title="registers the generic entity spawn function with the level system. only one can be...">eol_level_register_spawn_generic</a>(<a class="code" href="eol__level_8h.html#a9fd0c341f589fe91780906fafa85aab9" title="function pointer prototype used to spawn the entities for the level the application...">eolSpawnGeneric</a> spawnGeneric)
-<a name="l00073"></a>00073 {
-<a name="l00074"></a>00074   <a class="code" href="eol__level_8c.html#aec1136aaa9c4dde7c8cb98010032768c">_eol_level_spawn_generic</a> = spawnGeneric;
-<a name="l00075"></a>00075 }
-<a name="l00076"></a>00076 
-<a name="l00077"></a><a class="code" href="eol__level_8h.html#a34cf8f649ab7eaf50d5c0e3197a5fb0e">00077</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a34cf8f649ab7eaf50d5c0e3197a5fb0e" title="frees all loaded level data.">eol_level_clear</a>()
-<a name="l00078"></a>00078 {
-<a name="l00079"></a>00079   <span class="keywordflow">if</span> (!<a class="code" href="eol__level_8c.html#ad947173ef0e957c8bc4a618c0cff4930">eol_level_initialized</a>())
-<a name="l00080"></a>00080   {
-<a name="l00081"></a>00081     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00082"></a>00082         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00083"></a>00083         <span class="stringliteral">&quot;eol_level:cannot clean, not initialized\n&quot;</span>);
-<a name="l00084"></a>00084     <span class="keywordflow">return</span>;
-<a name="l00085"></a>00085   }
-<a name="l00086"></a>00086   <span class="keywordflow">if</span> (!_eol_level_manager)<span class="keywordflow">return</span>;
-<a name="l00087"></a>00087   <a class="code" href="eol__resource_8c.html#a0eb687b77c0698babe339d981c981de0" title="delete any unreferenced data from the resource manager a delete function must be...">eol_resource_manager_clean</a>(_eol_level_manager);
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089 }
-<a name="l00090"></a>00090 
-<a name="l00091"></a><a class="code" href="eol__level_8c.html#adb75ebdfdacafb725fddc94164897f1b">00091</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#adb75ebdfdacafb725fddc94164897f1b">eol_level_close</a>()
-<a name="l00092"></a>00092 {
-<a name="l00093"></a>00093   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00094"></a>00094       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00095"></a>00095       <span class="stringliteral">&quot;eol_level:closing\n&quot;</span>
-<a name="l00096"></a>00096   );
-<a name="l00097"></a>00097   <a class="code" href="eol__resource_8c.html#ab2a627097c3ed304ee32b5fa48d9d036">eol_resource_manager_free</a>(&amp;_eol_level_manager);
-<a name="l00098"></a>00098   <a class="code" href="eol__level_8c.html#a6e6a0630954a256ea678907c9f0653dc">_eol_level_max</a> = 0;
-<a name="l00099"></a>00099   <a class="code" href="eol__level_8c.html#a62c2d1f17a5c5412200326a0c8c37895">_eol_level_max_layers</a> = 1;
-<a name="l00100"></a>00100   <a class="code" href="eol__level_8c.html#a63bcb04b0295b3746d6facaed2918cfd">_eol_level_initialized</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00101"></a>00101   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00102"></a>00102       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00103"></a>00103       <span class="stringliteral">&quot;eol_level:closed\n&quot;</span>
-<a name="l00104"></a>00104   );
-<a name="l00105"></a>00105 }
-<a name="l00106"></a>00106 
-<a name="l00107"></a><a class="code" href="eol__level_8h.html#ad9ea481f8522016e2f0de13e35f4a1cb">00107</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#ad9ea481f8522016e2f0de13e35f4a1cb" title="frees the level passed and sets the pointer to it to NULL">eol_level_free</a>(<a class="code" href="structeolLevel.html">eolLevel</a> **level)
-<a name="l00108"></a>00108 {
-<a name="l00109"></a>00109   <span class="keywordflow">if</span> (!<a class="code" href="eol__level_8c.html#ad947173ef0e957c8bc4a618c0cff4930">eol_level_initialized</a>())<span class="keywordflow">return</span>;
-<a name="l00110"></a>00110   <span class="keywordflow">if</span> (_eol_level_current == *level)
-<a name="l00111"></a>00111   {
-<a name="l00112"></a>00112     _eol_level_current = NULL;
-<a name="l00113"></a>00113   }
-<a name="l00114"></a>00114   <a class="code" href="eol__resource_8c.html#a04a80e2833dab61ed23ac62dc3977df9" title="reduces the reference count to the element passed in. if data in the manager is unique...">eol_resource_free_element</a>(_eol_level_manager,(<span class="keywordtype">void</span> **)level);
-<a name="l00115"></a>00115 }
-<a name="l00116"></a>00116 
-<a name="l00117"></a><a class="code" href="eol__level_8c.html#a5372a5c35a0a662f79ee056930742bf3">00117</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a5372a5c35a0a662f79ee056930742bf3">eol_level_delete_layer</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> * level)
-<a name="l00118"></a>00118 {
-<a name="l00119"></a>00119   <a class="code" href="structeolBackground.html">eolBackground</a> *b = NULL;
-<a name="l00120"></a>00120   GList *s,*e;
-<a name="l00121"></a>00121   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span>;
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123   <span class="comment">/*TODO: free tile set*/</span>
-<a name="l00124"></a>00124   <a class="code" href="eol__mesh_8c.html#a680875bd7a21fa6cd97115929ca5e6b2" title="frees the mesh data provided. Sets the pointer to NULL to prevent accidental access...">eol_mesh_free</a>(&amp;level-&gt;<a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">clipMesh</a>);
-<a name="l00125"></a>00125   
-<a name="l00126"></a>00126   <span class="keywordflow">if</span> (level-&gt;<a class="code" href="structeolLevelLayer.html#a3d668b4d5fc38924d5521590196a08ac">tileMap</a>.<a class="code" href="structeolTileMap.html#aa534b314cb2e043305a0c18ea02030f4">map</a> != NULL)free(level-&gt;<a class="code" href="structeolLevelLayer.html#a3d668b4d5fc38924d5521590196a08ac">tileMap</a>.<a class="code" href="structeolTileMap.html#aa534b314cb2e043305a0c18ea02030f4">map</a>);
-<a name="l00127"></a>00127   
-<a name="l00128"></a>00128   <span class="keywordflow">for</span> (s = level-&gt;<a class="code" href="structeolLevelLayer.html#a6c8c09b74bdb834d54616f892508bb9c">spawnList</a>; s != NULL; s = s-&gt;next)
-<a name="l00129"></a>00129   {
-<a name="l00130"></a>00130     <a class="code" href="eol__spawn_8c.html#a7c76e94e263c5d0fdcd98810ced9064d" title="frees up internally allocated memory, but does not free the eolSpawn itself. after...">eol_spawn_free</a>((<a class="code" href="structeolSpawn.html" title="the spawn type is used as a descriptor for the level for the entities that get spawned...">eolSpawn</a> *)s-&gt;data);
-<a name="l00131"></a>00131   }
-<a name="l00132"></a>00132   s = NULL;
-<a name="l00133"></a>00133   g_list_free(level-&gt;<a class="code" href="structeolLevelLayer.html#a6c8c09b74bdb834d54616f892508bb9c">spawnList</a>);
-<a name="l00134"></a>00134   <span class="keywordflow">for</span> (s = level-&gt;<a class="code" href="structeolLevelLayer.html#ab7214a9bf780889c74f9138b01ec464c">backgrounds</a>; s != NULL; s = s-&gt;next)
-<a name="l00135"></a>00135   {
-<a name="l00136"></a>00136     <span class="keywordflow">if</span> (s-&gt;data == NULL)<span class="keywordflow">continue</span>;
-<a name="l00137"></a>00137     b = (<a class="code" href="structeolBackground.html">eolBackground</a> *)s-&gt;data;
-<a name="l00138"></a>00138     <a class="code" href="eol__model_8c.html#abd816a2a42cfc9b0d91142ede8542ba2" title="frees the model provided and sets your pointer to it to NULL">eol_model_free</a>(&amp;b-&gt;<a class="code" href="structeolBackground.html#a83467bd8d31a80a2af0b239d6f5b29b8">model</a>);
-<a name="l00139"></a>00139     free(b);
-<a name="l00140"></a>00140   }
-<a name="l00141"></a>00141   s = NULL;
-<a name="l00142"></a>00142   g_list_free(level-&gt;<a class="code" href="structeolLevelLayer.html#ab7214a9bf780889c74f9138b01ec464c">backgrounds</a>);
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144   <span class="keywordflow">for</span> (e = level-&gt;<a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">entities</a>;e != NULL;e = e-&gt;next)
-<a name="l00145"></a>00145   {
-<a name="l00146"></a>00146     <a class="code" href="eol__entity_8c.html#a8d84dc996def7edecc191720a4ece7be" title="Removed the entity from the space that it is a part of.">eol_entity_remove_from_space</a>(e-&gt;data);
-<a name="l00147"></a>00147   }
-<a name="l00148"></a>00148   g_list_free(level-&gt;<a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">entities</a>);<span class="comment">/*just free our pointers to em, they can delete themselves*/</span>
-<a name="l00149"></a>00149   <span class="keywordflow">if</span> (level-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a> != NULL)cpSpaceFree(level-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>);
-<a name="l00150"></a>00150 }
-<a name="l00151"></a>00151 
-<a name="l00152"></a><a class="code" href="eol__level_8c.html#a1bc3f8ee5e1d413f9f0adfe66b088846">00152</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a1bc3f8ee5e1d413f9f0adfe66b088846">eol_level_delete</a>(<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)
-<a name="l00153"></a>00153 {
-<a name="l00154"></a>00154   <a class="code" href="structeolLevel.html">eolLevel</a> *level;
-<a name="l00155"></a>00155   GList *l = NULL;
-<a name="l00156"></a>00156   <span class="keywordflow">if</span> (!data)<span class="keywordflow">return</span>;
-<a name="l00157"></a>00157   level = (<a class="code" href="structeolLevel.html">eolLevel</a> *)data;
-<a name="l00158"></a>00158   <span class="keywordflow">for</span> (l = level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>; l != NULL;l = l-&gt;next)
-<a name="l00159"></a>00159   {
-<a name="l00160"></a>00160     <a class="code" href="eol__level_8c.html#a5372a5c35a0a662f79ee056930742bf3">eol_level_delete_layer</a>(l-&gt;data);
-<a name="l00161"></a>00161   }
-<a name="l00162"></a>00162   g_list_free(level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>);
-<a name="l00163"></a>00163   memset(level,0,<span class="keyword">sizeof</span>(<a class="code" href="structeolLevel.html">eolLevel</a>));
-<a name="l00164"></a>00164 }
-<a name="l00165"></a>00165 
-<a name="l00166"></a><a class="code" href="eol__level_8c.html#af6b1935fcd719e0aa917c45e205a745b">00166</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__level_8c.html#af6b1935fcd719e0aa917c45e205a745b">eol_level_load_data_from_file</a>(<span class="keywordtype">char</span> * filename,<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)
-<a name="l00167"></a>00167 {
-<a name="l00168"></a>00168   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
-<a name="l00169"></a>00169 }
-<a name="l00170"></a>00170 
-<a name="l00171"></a><a class="code" href="eol__level_8h.html#a92f11c4264db8a019bb0231db5ced367">00171</a> <a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *<a class="code" href="eol__level_8c.html#a92f11c4264db8a019bb0231db5ced367" title="allocated an empty level layer, adds it to the level in question and returns a pointer...">eol_level_add_layer</a>(<a class="code" href="structeolLevel.html">eolLevel</a> *level)
-<a name="l00172"></a>00172 {
-<a name="l00173"></a>00173   <a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer = NULL;
-<a name="l00174"></a>00174   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span> NULL;
-<a name="l00175"></a>00175   layer = (<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a>*)malloc(<span class="keyword">sizeof</span>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a>));
-<a name="l00176"></a>00176   <span class="keywordflow">if</span> (layer == NULL)
-<a name="l00177"></a>00177   {
-<a name="l00178"></a>00178     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00179"></a>00179       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
-<a name="l00180"></a>00180       <span class="stringliteral">&quot;eol_level:failed to allocated a layer for level %s\n&quot;</span>,
-<a name="l00181"></a>00181       level-&gt;<a class="code" href="structeolLevel.html#a431c4d45ca128144d5b0bf0ad253c691">idName</a>);
-<a name="l00182"></a>00182     <span class="keywordflow">return</span> NULL;
-<a name="l00183"></a>00183   }
-<a name="l00184"></a>00184   memset(layer,0,<span class="keyword">sizeof</span>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a>));
-<a name="l00185"></a>00185 
-<a name="l00186"></a>00186   layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a> = cpSpaceNew();
-<a name="l00187"></a>00187   <span class="keywordflow">if</span> (layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a> == NULL)
+<a name="l00056"></a>00056   <span class="keywordflow">return</span> <a class="code" href="eol__level_8c.html#a63bcb04b0295b3746d6facaed2918cfd">_eol_level_initialized</a>;
+<a name="l00057"></a>00057 }
+<a name="l00058"></a>00058 
+<a name="l00059"></a><a class="code" href="eol__level_8h.html#a67627bc183007765d7cf91aa0ad23c27">00059</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a67627bc183007765d7cf91aa0ad23c27" title="loads config for level system from file or sets up defaults.">eol_level_config</a>()
+<a name="l00060"></a>00060 {
+<a name="l00061"></a>00061   <a class="code" href="structeolConfig.html">eolConfig</a> *conf = NULL;
+<a name="l00062"></a>00062   <a class="code" href="eol__level_8c.html#a62c2d1f17a5c5412200326a0c8c37895">_eol_level_max_layers</a> = 3;
+<a name="l00063"></a>00063   <a class="code" href="eol__level_8c.html#a6e6a0630954a256ea678907c9f0653dc">_eol_level_max</a> = 10;
+<a name="l00064"></a>00064   <a class="code" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">_eol_level_layer_draw_range</a> = 1;
+<a name="l00065"></a>00065   <a class="code" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">_eol_level_draw_mode</a> = <a class="code" href="eol__level_8h.html#a52255556aaf877d967c9d6148fc17c55a9e3cd52822997e911dca76f596881a9c">eolLevelDrawFull</a>;
+<a name="l00066"></a>00066   conf = <a class="code" href="eol__config_8c.html#ada9ae50380760f6af3fd596ff533b52d" title="loads a configuration file into a eolConfig struct">eol_config_load</a>(<span class="stringliteral">&quot;system/level.cfg&quot;</span>);
+<a name="l00067"></a>00067   <span class="keywordflow">if</span> (conf == NULL)<span class="keywordflow">return</span>;
+<a name="l00068"></a>00068   <a class="code" href="eol__config_8c.html#a9560706954a7d65917d81dd2cfbba284">eol_config_get_uint_by_tag</a>(&amp;<a class="code" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">_eol_level_draw_mode</a>,conf,<span class="stringliteral">&quot;drawLevel&quot;</span>);
+<a name="l00069"></a>00069   <a class="code" href="eol__config_8c.html#a9560706954a7d65917d81dd2cfbba284">eol_config_get_uint_by_tag</a>(&amp;<a class="code" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">_eol_level_layer_draw_range</a>,conf,<span class="stringliteral">&quot;drawDepth&quot;</span>);
+<a name="l00070"></a>00070   <a class="code" href="eol__config_8c.html#a9560706954a7d65917d81dd2cfbba284">eol_config_get_uint_by_tag</a>(&amp;<a class="code" href="eol__level_8c.html#a4f9aa4d113f1d21101f18d16fc4aec29">_eol_level_clip_iterations</a> ,conf,<span class="stringliteral">&quot;iterations&quot;</span>);
+<a name="l00071"></a>00071   <a class="code" href="eol__config_8c.html#a2119d828a77a4720ca626776dc26a5ae">eol_config_get_float_by_tag</a>(&amp;<a class="code" href="eol__level_8c.html#add92c5ce1ae50a3d6f67a8a6278fad66">_eol_level_clip_step</a> ,conf,<span class="stringliteral">&quot;clipStep&quot;</span>);
+<a name="l00072"></a>00072   <a class="code" href="eol__config_8c.html#a2119d828a77a4720ca626776dc26a5ae">eol_config_get_float_by_tag</a>(&amp;<a class="code" href="eol__level_8c.html#a8152fbfc6063e351cd0e8430fa01181a">_eol_level_clip_thickness</a> ,conf,<span class="stringliteral">&quot;clipThickness&quot;</span>);
+<a name="l00073"></a>00073   <a class="code" href="eol__config_8c.html#a2119d828a77a4720ca626776dc26a5ae">eol_config_get_float_by_tag</a>(&amp;<a class="code" href="eol__level_8c.html#abc5802ffc65f9d17014ae06ffd4543d7">_eol_level_slop</a>,conf,<span class="stringliteral">&quot;clipSlop&quot;</span>);
+<a name="l00074"></a>00074   <a class="code" href="eol__config_8c.html#a2119d828a77a4720ca626776dc26a5ae">eol_config_get_float_by_tag</a>(&amp;<a class="code" href="eol__level_8c.html#a61668eaafadd9968f582dcc7f7174a77">_eol_level_bias</a>,conf,<span class="stringliteral">&quot;clipBias&quot;</span>);
+<a name="l00075"></a>00075   
+<a name="l00076"></a>00076 }
+<a name="l00077"></a>00077 
+<a name="l00078"></a><a class="code" href="eol__level_8c.html#a45a2f1580fa1345069afbcc22f61a0e1">00078</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a45a2f1580fa1345069afbcc22f61a0e1">eol_level_set_draw_mode</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> mode)
+<a name="l00079"></a>00079 {
+<a name="l00080"></a>00080   <a class="code" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">_eol_level_draw_mode</a> = mode;
+<a name="l00081"></a>00081 }
+<a name="l00082"></a>00082 
+<a name="l00083"></a><a class="code" href="eol__level_8h.html#a9136e233131c7b118cfe987c72492e37">00083</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a9136e233131c7b118cfe987c72492e37" title="registers the generic entity spawn function with the level system. only one can be...">eol_level_register_spawn_generic</a>(<a class="code" href="eol__level_8h.html#a9fd0c341f589fe91780906fafa85aab9" title="function pointer prototype used to spawn the entities for the level the application...">eolSpawnGeneric</a> spawnGeneric)
+<a name="l00084"></a>00084 {
+<a name="l00085"></a>00085   <a class="code" href="eol__level_8c.html#aec1136aaa9c4dde7c8cb98010032768c">_eol_level_spawn_generic</a> = spawnGeneric;
+<a name="l00086"></a>00086 }
+<a name="l00087"></a>00087 
+<a name="l00088"></a><a class="code" href="eol__level_8h.html#a34cf8f649ab7eaf50d5c0e3197a5fb0e">00088</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a34cf8f649ab7eaf50d5c0e3197a5fb0e" title="frees all loaded level data.">eol_level_clear</a>()
+<a name="l00089"></a>00089 {
+<a name="l00090"></a>00090   <span class="keywordflow">if</span> (!<a class="code" href="eol__level_8c.html#ad947173ef0e957c8bc4a618c0cff4930">eol_level_initialized</a>())
+<a name="l00091"></a>00091   {
+<a name="l00092"></a>00092     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00093"></a>00093         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00094"></a>00094         <span class="stringliteral">&quot;eol_level:cannot clean, not initialized\n&quot;</span>);
+<a name="l00095"></a>00095     <span class="keywordflow">return</span>;
+<a name="l00096"></a>00096   }
+<a name="l00097"></a>00097   <span class="keywordflow">if</span> (!_eol_level_manager)<span class="keywordflow">return</span>;
+<a name="l00098"></a>00098   <a class="code" href="eol__resource_8c.html#a0eb687b77c0698babe339d981c981de0" title="delete any unreferenced data from the resource manager a delete function must be...">eol_resource_manager_clean</a>(_eol_level_manager);
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100 }
+<a name="l00101"></a>00101 
+<a name="l00102"></a><a class="code" href="eol__level_8c.html#adb75ebdfdacafb725fddc94164897f1b">00102</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#adb75ebdfdacafb725fddc94164897f1b">eol_level_close</a>()
+<a name="l00103"></a>00103 {
+<a name="l00104"></a>00104   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00105"></a>00105       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00106"></a>00106       <span class="stringliteral">&quot;eol_level:closing\n&quot;</span>
+<a name="l00107"></a>00107   );
+<a name="l00108"></a>00108   <a class="code" href="eol__resource_8c.html#ab2a627097c3ed304ee32b5fa48d9d036">eol_resource_manager_free</a>(&amp;_eol_level_manager);
+<a name="l00109"></a>00109   <a class="code" href="eol__level_8c.html#a6e6a0630954a256ea678907c9f0653dc">_eol_level_max</a> = 0;
+<a name="l00110"></a>00110   <a class="code" href="eol__level_8c.html#a62c2d1f17a5c5412200326a0c8c37895">_eol_level_max_layers</a> = 1;
+<a name="l00111"></a>00111   <a class="code" href="eol__level_8c.html#a63bcb04b0295b3746d6facaed2918cfd">_eol_level_initialized</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00112"></a>00112   <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00113"></a>00113       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00114"></a>00114       <span class="stringliteral">&quot;eol_level:closed\n&quot;</span>
+<a name="l00115"></a>00115   );
+<a name="l00116"></a>00116 }
+<a name="l00117"></a>00117 
+<a name="l00118"></a><a class="code" href="eol__level_8h.html#ad9ea481f8522016e2f0de13e35f4a1cb">00118</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#ad9ea481f8522016e2f0de13e35f4a1cb" title="frees the level passed and sets the pointer to it to NULL">eol_level_free</a>(<a class="code" href="structeolLevel.html">eolLevel</a> **level)
+<a name="l00119"></a>00119 {
+<a name="l00120"></a>00120   <span class="keywordflow">if</span> (!<a class="code" href="eol__level_8c.html#ad947173ef0e957c8bc4a618c0cff4930">eol_level_initialized</a>())<span class="keywordflow">return</span>;
+<a name="l00121"></a>00121   <span class="keywordflow">if</span> (_eol_level_current == *level)
+<a name="l00122"></a>00122   {
+<a name="l00123"></a>00123     _eol_level_current = NULL;
+<a name="l00124"></a>00124   }
+<a name="l00125"></a>00125   <a class="code" href="eol__resource_8c.html#a04a80e2833dab61ed23ac62dc3977df9" title="reduces the reference count to the element passed in. if data in the manager is unique...">eol_resource_free_element</a>(_eol_level_manager,(<span class="keywordtype">void</span> **)level);
+<a name="l00126"></a>00126 }
+<a name="l00127"></a>00127 
+<a name="l00128"></a><a class="code" href="eol__level_8c.html#a5372a5c35a0a662f79ee056930742bf3">00128</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a5372a5c35a0a662f79ee056930742bf3">eol_level_delete_layer</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> * level)
+<a name="l00129"></a>00129 {
+<a name="l00130"></a>00130   <a class="code" href="structeolBackground.html">eolBackground</a> *b = NULL;
+<a name="l00131"></a>00131   GList *s,*e;
+<a name="l00132"></a>00132   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span>;
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134   <span class="comment">/*TODO: free tile set*/</span>
+<a name="l00135"></a>00135   <a class="code" href="eol__mesh_8c.html#a680875bd7a21fa6cd97115929ca5e6b2" title="frees the mesh data provided. Sets the pointer to NULL to prevent accidental access...">eol_mesh_free</a>(&amp;level-&gt;<a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">clipMesh</a>);
+<a name="l00136"></a>00136   
+<a name="l00137"></a>00137   <span class="keywordflow">if</span> (level-&gt;<a class="code" href="structeolLevelLayer.html#a3d668b4d5fc38924d5521590196a08ac">tileMap</a>.<a class="code" href="structeolTileMap.html#aa534b314cb2e043305a0c18ea02030f4">map</a> != NULL)free(level-&gt;<a class="code" href="structeolLevelLayer.html#a3d668b4d5fc38924d5521590196a08ac">tileMap</a>.<a class="code" href="structeolTileMap.html#aa534b314cb2e043305a0c18ea02030f4">map</a>);
+<a name="l00138"></a>00138   
+<a name="l00139"></a>00139   <span class="keywordflow">for</span> (s = level-&gt;<a class="code" href="structeolLevelLayer.html#a6c8c09b74bdb834d54616f892508bb9c">spawnList</a>; s != NULL; s = s-&gt;next)
+<a name="l00140"></a>00140   {
+<a name="l00141"></a>00141     <a class="code" href="eol__spawn_8c.html#a7c76e94e263c5d0fdcd98810ced9064d" title="frees up internally allocated memory, but does not free the eolSpawn itself. after...">eol_spawn_free</a>((<a class="code" href="structeolSpawn.html" title="the spawn type is used as a descriptor for the level for the entities that get spawned...">eolSpawn</a> *)s-&gt;data);
+<a name="l00142"></a>00142   }
+<a name="l00143"></a>00143   s = NULL;
+<a name="l00144"></a>00144   g_list_free(level-&gt;<a class="code" href="structeolLevelLayer.html#a6c8c09b74bdb834d54616f892508bb9c">spawnList</a>);
+<a name="l00145"></a>00145   <span class="keywordflow">for</span> (s = level-&gt;<a class="code" href="structeolLevelLayer.html#ab7214a9bf780889c74f9138b01ec464c">backgrounds</a>; s != NULL; s = s-&gt;next)
+<a name="l00146"></a>00146   {
+<a name="l00147"></a>00147     <span class="keywordflow">if</span> (s-&gt;data == NULL)<span class="keywordflow">continue</span>;
+<a name="l00148"></a>00148     b = (<a class="code" href="structeolBackground.html">eolBackground</a> *)s-&gt;data;
+<a name="l00149"></a>00149     <a class="code" href="eol__model_8c.html#abd816a2a42cfc9b0d91142ede8542ba2" title="frees the model provided and sets your pointer to it to NULL">eol_model_free</a>(&amp;b-&gt;<a class="code" href="structeolBackground.html#a83467bd8d31a80a2af0b239d6f5b29b8">model</a>);
+<a name="l00150"></a>00150     free(b);
+<a name="l00151"></a>00151   }
+<a name="l00152"></a>00152   s = NULL;
+<a name="l00153"></a>00153   g_list_free(level-&gt;<a class="code" href="structeolLevelLayer.html#ab7214a9bf780889c74f9138b01ec464c">backgrounds</a>);
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155   <span class="keywordflow">for</span> (e = level-&gt;<a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">entities</a>;e != NULL;e = e-&gt;next)
+<a name="l00156"></a>00156   {
+<a name="l00157"></a>00157     <a class="code" href="eol__entity_8c.html#a8d84dc996def7edecc191720a4ece7be" title="Removed the entity from the space that it is a part of.">eol_entity_remove_from_space</a>(e-&gt;data);
+<a name="l00158"></a>00158   }
+<a name="l00159"></a>00159   g_list_free(level-&gt;<a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">entities</a>);<span class="comment">/*just free our pointers to em, they can delete themselves*/</span>
+<a name="l00160"></a>00160   <span class="keywordflow">if</span> (level-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a> != NULL)cpSpaceFree(level-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>);
+<a name="l00161"></a>00161 }
+<a name="l00162"></a>00162 
+<a name="l00163"></a><a class="code" href="eol__level_8c.html#a1bc3f8ee5e1d413f9f0adfe66b088846">00163</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a1bc3f8ee5e1d413f9f0adfe66b088846">eol_level_delete</a>(<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)
+<a name="l00164"></a>00164 {
+<a name="l00165"></a>00165   <a class="code" href="structeolLevel.html">eolLevel</a> *level;
+<a name="l00166"></a>00166   GList *l = NULL;
+<a name="l00167"></a>00167   <span class="keywordflow">if</span> (!data)<span class="keywordflow">return</span>;
+<a name="l00168"></a>00168   level = (<a class="code" href="structeolLevel.html">eolLevel</a> *)data;
+<a name="l00169"></a>00169   <span class="keywordflow">for</span> (l = level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>; l != NULL;l = l-&gt;next)
+<a name="l00170"></a>00170   {
+<a name="l00171"></a>00171     <a class="code" href="eol__level_8c.html#a5372a5c35a0a662f79ee056930742bf3">eol_level_delete_layer</a>(l-&gt;data);
+<a name="l00172"></a>00172   }
+<a name="l00173"></a>00173   g_list_free(level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>);
+<a name="l00174"></a>00174   memset(level,0,<span class="keyword">sizeof</span>(<a class="code" href="structeolLevel.html">eolLevel</a>));
+<a name="l00175"></a>00175 }
+<a name="l00176"></a>00176 
+<a name="l00177"></a><a class="code" href="eol__level_8c.html#af6b1935fcd719e0aa917c45e205a745b">00177</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__level_8c.html#af6b1935fcd719e0aa917c45e205a745b">eol_level_load_data_from_file</a>(<span class="keywordtype">char</span> * filename,<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)
+<a name="l00178"></a>00178 {
+<a name="l00179"></a>00179   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
+<a name="l00180"></a>00180 }
+<a name="l00181"></a>00181 
+<a name="l00182"></a><a class="code" href="eol__level_8h.html#a92f11c4264db8a019bb0231db5ced367">00182</a> <a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *<a class="code" href="eol__level_8c.html#a92f11c4264db8a019bb0231db5ced367" title="allocated an empty level layer, adds it to the level in question and returns a pointer...">eol_level_add_layer</a>(<a class="code" href="structeolLevel.html">eolLevel</a> *level)
+<a name="l00183"></a>00183 {
+<a name="l00184"></a>00184   <a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer = NULL;
+<a name="l00185"></a>00185   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span> NULL;
+<a name="l00186"></a>00186   layer = (<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a>*)malloc(<span class="keyword">sizeof</span>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a>));
+<a name="l00187"></a>00187   <span class="keywordflow">if</span> (layer == NULL)
 <a name="l00188"></a>00188   {
 <a name="l00189"></a>00189     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
 <a name="l00190"></a>00190       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
-<a name="l00191"></a>00191       <span class="stringliteral">&quot;Unable to create a physics space for new layer in level %s!\n&quot;</span>,
+<a name="l00191"></a>00191       <span class="stringliteral">&quot;eol_level:failed to allocated a layer for level %s\n&quot;</span>,
 <a name="l00192"></a>00192       level-&gt;<a class="code" href="structeolLevel.html#a431c4d45ca128144d5b0bf0ad253c691">idName</a>);
-<a name="l00193"></a>00193     <a class="code" href="eol__level_8c.html#a5372a5c35a0a662f79ee056930742bf3">eol_level_delete_layer</a>(layer);
-<a name="l00194"></a>00194     <span class="keywordflow">return</span> NULL;
-<a name="l00195"></a>00195   }
-<a name="l00196"></a>00196   layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>-&gt;iterations = 10;<span class="comment">/*NOTE: make configurable*/</span>
-<a name="l00197"></a>00197   layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>-&gt;sleepTimeThreshold = 999999;
-<a name="l00198"></a>00198   
-<a name="l00199"></a>00199   level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a> = g_list_append(level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,layer);
-<a name="l00200"></a>00200   level-&gt;<a class="code" href="structeolLevel.html#af85ae7094e9ab2bdd0e12e836fea11bf">layerCount</a>++;
-<a name="l00201"></a>00201   <span class="keywordflow">return</span> layer;
-<a name="l00202"></a>00202 }
-<a name="l00203"></a>00203 
-<a name="l00204"></a><a class="code" href="eol__level_8h.html#aaba45d7c49ca16380cc89ffdf2137379">00204</a> <a class="code" href="structeolBackground.html">eolBackground</a> *<a class="code" href="eol__level_8c.html#aaba45d7c49ca16380cc89ffdf2137379" title="allocated an empty background, adds it to the layer in question and returns a pointer...">eol_level_add_background_to_layer</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer)
-<a name="l00205"></a>00205 {
-<a name="l00206"></a>00206   <a class="code" href="structeolBackground.html">eolBackground</a> *back;
-<a name="l00207"></a>00207   <span class="keywordflow">if</span> (!layer)<span class="keywordflow">return</span> NULL;
-<a name="l00208"></a>00208   back = (<a class="code" href="structeolBackground.html">eolBackground</a>*)malloc(<span class="keyword">sizeof</span>(<a class="code" href="structeolBackground.html">eolBackground</a>));
-<a name="l00209"></a>00209   <span class="keywordflow">if</span> (back == NULL)
-<a name="l00210"></a>00210   {
-<a name="l00211"></a>00211     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00212"></a>00212       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
-<a name="l00213"></a>00213       <span class="stringliteral">&quot;eol_level:failed to allocated a background for layer %s\n&quot;</span>,
-<a name="l00214"></a>00214       layer-&gt;<a class="code" href="structeolLevelLayer.html#af55305012f5a11462a53b733adb160f7">idName</a>);
-<a name="l00215"></a>00215     <span class="keywordflow">return</span> NULL;
-<a name="l00216"></a>00216   }
-<a name="l00217"></a>00217   layer-&gt;<a class="code" href="structeolLevelLayer.html#ab7214a9bf780889c74f9138b01ec464c">backgrounds</a> = g_list_append(layer-&gt;<a class="code" href="structeolLevelLayer.html#ab7214a9bf780889c74f9138b01ec464c">backgrounds</a>,back);
-<a name="l00218"></a>00218   <span class="keywordflow">return</span> back;
-<a name="l00219"></a>00219 }
-<a name="l00220"></a>00220 
-<a name="l00221"></a><a class="code" href="eol__level_8h.html#a49aabe5f44ca29a667b8e90484ca4263">00221</a> <a class="code" href="structeolLevel.html">eolLevel</a> *<a class="code" href="eol__level_8c.html#a49aabe5f44ca29a667b8e90484ca4263" title="allocates an empty level struct and returns a pointer to it.">eol_level_new</a>()
-<a name="l00222"></a>00222 {
-<a name="l00223"></a>00223   <a class="code" href="structeolLevel.html">eolLevel</a> *level = NULL;
-<a name="l00224"></a>00224   <span class="keywordflow">if</span> (!<a class="code" href="eol__level_8c.html#ad947173ef0e957c8bc4a618c0cff4930">eol_level_initialized</a>())
-<a name="l00225"></a>00225   {
-<a name="l00226"></a>00226     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00227"></a>00227       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00228"></a>00228       <span class="stringliteral">&quot;eol_entdow:used uninitialized\n&quot;</span>);
+<a name="l00193"></a>00193     <span class="keywordflow">return</span> NULL;
+<a name="l00194"></a>00194   }
+<a name="l00195"></a>00195   memset(layer,0,<span class="keyword">sizeof</span>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a>));
+<a name="l00196"></a>00196 
+<a name="l00197"></a>00197   layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a> = cpSpaceNew();
+<a name="l00198"></a>00198   <span class="keywordflow">if</span> (layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a> == NULL)
+<a name="l00199"></a>00199   {
+<a name="l00200"></a>00200     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00201"></a>00201       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
+<a name="l00202"></a>00202       <span class="stringliteral">&quot;Unable to create a physics space for new layer in level %s!\n&quot;</span>,
+<a name="l00203"></a>00203       level-&gt;<a class="code" href="structeolLevel.html#a431c4d45ca128144d5b0bf0ad253c691">idName</a>);
+<a name="l00204"></a>00204     <a class="code" href="eol__level_8c.html#a5372a5c35a0a662f79ee056930742bf3">eol_level_delete_layer</a>(layer);
+<a name="l00205"></a>00205     <span class="keywordflow">return</span> NULL;
+<a name="l00206"></a>00206   }
+<a name="l00207"></a>00207   layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>-&gt;iterations = <a class="code" href="eol__level_8c.html#a4f9aa4d113f1d21101f18d16fc4aec29">_eol_level_clip_iterations</a>;
+<a name="l00208"></a>00208   layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>-&gt;sleepTimeThreshold = 999999;
+<a name="l00209"></a>00209   cpSpaceSetEnableContactGraph(layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>,<a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>);
+<a name="l00210"></a>00210   cpSpaceSetCollisionSlop(layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>, <a class="code" href="eol__level_8c.html#abc5802ffc65f9d17014ae06ffd4543d7">_eol_level_slop</a>);
+<a name="l00211"></a>00211   cpSpaceSetCollisionBias(layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>, <a class="code" href="eol__level_8c.html#a61668eaafadd9968f582dcc7f7174a77">_eol_level_bias</a>);
+<a name="l00212"></a>00212   
+<a name="l00213"></a>00213   level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a> = g_list_append(level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,layer);
+<a name="l00214"></a>00214   level-&gt;<a class="code" href="structeolLevel.html#af85ae7094e9ab2bdd0e12e836fea11bf">layerCount</a>++;
+<a name="l00215"></a>00215   <span class="keywordflow">return</span> layer;
+<a name="l00216"></a>00216 }
+<a name="l00217"></a>00217 
+<a name="l00218"></a><a class="code" href="eol__level_8h.html#aaba45d7c49ca16380cc89ffdf2137379">00218</a> <a class="code" href="structeolBackground.html">eolBackground</a> *<a class="code" href="eol__level_8c.html#aaba45d7c49ca16380cc89ffdf2137379" title="allocated an empty background, adds it to the layer in question and returns a pointer...">eol_level_add_background_to_layer</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer)
+<a name="l00219"></a>00219 {
+<a name="l00220"></a>00220   <a class="code" href="structeolBackground.html">eolBackground</a> *back;
+<a name="l00221"></a>00221   <span class="keywordflow">if</span> (!layer)<span class="keywordflow">return</span> NULL;
+<a name="l00222"></a>00222   back = (<a class="code" href="structeolBackground.html">eolBackground</a>*)malloc(<span class="keyword">sizeof</span>(<a class="code" href="structeolBackground.html">eolBackground</a>));
+<a name="l00223"></a>00223   <span class="keywordflow">if</span> (back == NULL)
+<a name="l00224"></a>00224   {
+<a name="l00225"></a>00225     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00226"></a>00226       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
+<a name="l00227"></a>00227       <span class="stringliteral">&quot;eol_level:failed to allocated a background for layer %s\n&quot;</span>,
+<a name="l00228"></a>00228       layer-&gt;<a class="code" href="structeolLevelLayer.html#af55305012f5a11462a53b733adb160f7">idName</a>);
 <a name="l00229"></a>00229     <span class="keywordflow">return</span> NULL;
 <a name="l00230"></a>00230   }
-<a name="l00231"></a>00231   level = (<a class="code" href="structeolLevel.html">eolLevel</a> *)<a class="code" href="eol__resource_8c.html#aeb3e7d608eb643eca2e3136e2b035d1b" title="returns a pointer to a new allocated element or NULL on error">eol_resource_new_element</a>(_eol_level_manager);
-<a name="l00232"></a>00232   <span class="keywordflow">if</span> (level == NULL)
-<a name="l00233"></a>00233   {
-<a name="l00234"></a>00234     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00235"></a>00235       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00236"></a>00236       <span class="stringliteral">&quot;eol_level:failed to get new resource\n&quot;</span>);
-<a name="l00237"></a>00237     <span class="keywordflow">return</span> NULL;
-<a name="l00238"></a>00238   }
-<a name="l00239"></a>00239   <span class="keywordflow">return</span> level;
-<a name="l00240"></a>00240 }
-<a name="l00241"></a>00241 
-<a name="l00242"></a>00242 <span class="comment">/*</span>
-<a name="l00243"></a>00243 <span class="comment">  *** DRAWING ***</span>
-<a name="l00244"></a>00244 <span class="comment">*/</span>
-<a name="l00245"></a>00245 
-<a name="l00246"></a><a class="code" href="eol__level_8h.html#aa5f1618f73bf0c0b7ab03ca750542017">00246</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#aa5f1618f73bf0c0b7ab03ca750542017" title="draws the current level.">eol_level_draw_current</a>()
-<a name="l00247"></a>00247 {
-<a name="l00248"></a>00248   <span class="keywordflow">if</span> (!<a class="code" href="eol__level_8c.html#ad947173ef0e957c8bc4a618c0cff4930">eol_level_initialized</a>())<span class="keywordflow">return</span>;
-<a name="l00249"></a>00249   <span class="keywordflow">if</span> (_eol_level_current == NULL)<span class="keywordflow">return</span>;
-<a name="l00250"></a>00250   <span class="keywordflow">switch</span> (<a class="code" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">_eol_level_draw_mode</a>)
-<a name="l00251"></a>00251   {
-<a name="l00252"></a>00252     <span class="keywordflow">case</span> <a class="code" href="eol__level_8h.html#a52255556aaf877d967c9d6148fc17c55a9e3cd52822997e911dca76f596881a9c">eolLevelDrawFull</a>:
-<a name="l00253"></a>00253       <a class="code" href="eol__level_8c.html#a76470a5d177306e8e73c18e1a9469b88" title="draws the level focused on the active layer.">eol_level_draw</a>(_eol_level_current);
-<a name="l00254"></a>00254       <span class="keywordflow">break</span>;
-<a name="l00255"></a>00255     <span class="keywordflow">case</span> <a class="code" href="eol__level_8h.html#a52255556aaf877d967c9d6148fc17c55ab45bbe0f69ed3b4e88d6083aba593b5c">eolLevelDrawClip</a>:
-<a name="l00256"></a>00256       <a class="code" href="eol__level_8c.html#ac7ef546303e343b3381f9ffaae8c4be9" title="draws the active layer&amp;#39;s clip mask and level bounds">eol_level_draw_clip</a>(_eol_level_current);
-<a name="l00257"></a>00257       <span class="keywordflow">break</span>;
-<a name="l00258"></a>00258   }
-<a name="l00259"></a>00259 }
-<a name="l00260"></a>00260 
-<a name="l00261"></a><a class="code" href="eol__level_8c.html#a4e6e46b97f15f76db929d5365af7e506">00261</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a4e6e46b97f15f76db929d5365af7e506">eol_level_draw_background</a>(<a class="code" href="structeolBackground.html">eolBackground</a> * back)
-<a name="l00262"></a>00262 {
-<a name="l00263"></a>00263   <span class="keywordflow">if</span> (!back)<span class="keywordflow">return</span>;
-<a name="l00264"></a>00264   <span class="keywordflow">if</span> (!back-&gt;<a class="code" href="structeolBackground.html#a83467bd8d31a80a2af0b239d6f5b29b8">model</a>)<span class="keywordflow">return</span>;
-<a name="l00265"></a>00265   <a class="code" href="eol__model_8c.html#adc93f635c2aab594b059e985d9198bb3" title="draw the model under the current conditions">eol_model_draw</a>(
-<a name="l00266"></a>00266     back-&gt;<a class="code" href="structeolBackground.html#a83467bd8d31a80a2af0b239d6f5b29b8">model</a>,
-<a name="l00267"></a>00267     back-&gt;<a class="code" href="structeolBackground.html#a5ba5dd7154b9e467d68a6b1b657a919a">ori</a>.<a class="code" href="structeolOrientation.html#a330e91eab574b7fe44a977c7b0914184">position</a>,
-<a name="l00268"></a>00268     back-&gt;<a class="code" href="structeolBackground.html#a5ba5dd7154b9e467d68a6b1b657a919a">ori</a>.<a class="code" href="structeolOrientation.html#a3306d3bd6116e17ec105b9865726110f">rotation</a>,
-<a name="l00269"></a>00269     back-&gt;<a class="code" href="structeolBackground.html#a5ba5dd7154b9e467d68a6b1b657a919a">ori</a>.<a class="code" href="structeolOrientation.html#a24c3df28538b7fbc540fd639a46eed08">scale</a>,
-<a name="l00270"></a>00270     back-&gt;<a class="code" href="structeolBackground.html#a5ba5dd7154b9e467d68a6b1b657a919a">ori</a>.<a class="code" href="structeolOrientation.html#a5a18cd3b6b3be071b0491fc20979455e">color</a>,
-<a name="l00271"></a>00271     back-&gt;<a class="code" href="structeolBackground.html#a5ba5dd7154b9e467d68a6b1b657a919a">ori</a>.<a class="code" href="structeolOrientation.html#af6a92f9497c2530b06e7e938524c54a3">alpha</a>,
-<a name="l00272"></a>00272     0
-<a name="l00273"></a>00273   );
-<a name="l00274"></a>00274 }
-<a name="l00275"></a>00275 
-<a name="l00276"></a><a class="code" href="eol__level_8c.html#ad7a05e9081efdf6122f8246b2309dbc1">00276</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#ad7a05e9081efdf6122f8246b2309dbc1">eol_level_draw_layer_backgrounds</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer)
-<a name="l00277"></a>00277 {
-<a name="l00278"></a>00278   GList *b;
-<a name="l00279"></a>00279   <span class="keywordflow">if</span> (!layer)<span class="keywordflow">return</span>;
-<a name="l00280"></a>00280   <span class="keywordflow">for</span> (b = layer-&gt;<a class="code" href="structeolLevelLayer.html#ab7214a9bf780889c74f9138b01ec464c">backgrounds</a>; b != NULL; b= b-&gt;next)
-<a name="l00281"></a>00281   {
-<a name="l00282"></a>00282     <a class="code" href="eol__level_8c.html#a4e6e46b97f15f76db929d5365af7e506">eol_level_draw_background</a>((<a class="code" href="structeolBackground.html">eolBackground</a> *)b-&gt;data);
-<a name="l00283"></a>00283   }
-<a name="l00284"></a>00284 }
-<a name="l00285"></a>00285 
-<a name="l00286"></a><a class="code" href="eol__level_8c.html#a21f0cd1a557221c06312307cee7cacdb">00286</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a21f0cd1a557221c06312307cee7cacdb">eol_level_draw_layer_clipmask</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer)
-<a name="l00287"></a>00287 {
-<a name="l00288"></a>00288   <span class="keywordflow">if</span> (!layer)<span class="keywordflow">return</span>;
-<a name="l00289"></a>00289   <a class="code" href="eol__mesh_8c.html#a29afce30640e1b7ec20e30a94f326223" title="draws the provided mesh to the active draw buffer.">eol_mesh_draw_wire</a>(
-<a name="l00290"></a>00290     layer-&gt;<a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">clipMesh</a>,
-<a name="l00291"></a>00291     layer-&gt;<a class="code" href="structeolLevelLayer.html#a666236eff670187e24bba095db24bba1">clipMaskOri</a>.<a class="code" href="structeolOrientation.html#a330e91eab574b7fe44a977c7b0914184">position</a>,
-<a name="l00292"></a>00292     layer-&gt;<a class="code" href="structeolLevelLayer.html#a666236eff670187e24bba095db24bba1">clipMaskOri</a>.<a class="code" href="structeolOrientation.html#a3306d3bd6116e17ec105b9865726110f">rotation</a>,
-<a name="l00293"></a>00293     layer-&gt;<a class="code" href="structeolLevelLayer.html#a666236eff670187e24bba095db24bba1">clipMaskOri</a>.<a class="code" href="structeolOrientation.html#a24c3df28538b7fbc540fd639a46eed08">scale</a>,
-<a name="l00294"></a>00294     layer-&gt;<a class="code" href="structeolLevelLayer.html#a666236eff670187e24bba095db24bba1">clipMaskOri</a>.<a class="code" href="structeolOrientation.html#a5a18cd3b6b3be071b0491fc20979455e">color</a>,
-<a name="l00295"></a>00295     layer-&gt;<a class="code" href="structeolLevelLayer.html#a666236eff670187e24bba095db24bba1">clipMaskOri</a>.<a class="code" href="structeolOrientation.html#af6a92f9497c2530b06e7e938524c54a3">alpha</a>
-<a name="l00296"></a>00296   );
-<a name="l00297"></a>00297 
+<a name="l00231"></a>00231   layer-&gt;<a class="code" href="structeolLevelLayer.html#ab7214a9bf780889c74f9138b01ec464c">backgrounds</a> = g_list_append(layer-&gt;<a class="code" href="structeolLevelLayer.html#ab7214a9bf780889c74f9138b01ec464c">backgrounds</a>,back);
+<a name="l00232"></a>00232   <span class="keywordflow">return</span> back;
+<a name="l00233"></a>00233 }
+<a name="l00234"></a>00234 
+<a name="l00235"></a><a class="code" href="eol__level_8h.html#a49aabe5f44ca29a667b8e90484ca4263">00235</a> <a class="code" href="structeolLevel.html">eolLevel</a> *<a class="code" href="eol__level_8c.html#a49aabe5f44ca29a667b8e90484ca4263" title="allocates an empty level struct and returns a pointer to it.">eol_level_new</a>()
+<a name="l00236"></a>00236 {
+<a name="l00237"></a>00237   <a class="code" href="structeolLevel.html">eolLevel</a> *level = NULL;
+<a name="l00238"></a>00238   <span class="keywordflow">if</span> (!<a class="code" href="eol__level_8c.html#ad947173ef0e957c8bc4a618c0cff4930">eol_level_initialized</a>())
+<a name="l00239"></a>00239   {
+<a name="l00240"></a>00240     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00241"></a>00241       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00242"></a>00242       <span class="stringliteral">&quot;eol_entdow:used uninitialized\n&quot;</span>);
+<a name="l00243"></a>00243     <span class="keywordflow">return</span> NULL;
+<a name="l00244"></a>00244   }
+<a name="l00245"></a>00245   level = (<a class="code" href="structeolLevel.html">eolLevel</a> *)<a class="code" href="eol__resource_8c.html#aeb3e7d608eb643eca2e3136e2b035d1b" title="returns a pointer to a new allocated element or NULL on error">eol_resource_new_element</a>(_eol_level_manager);
+<a name="l00246"></a>00246   <span class="keywordflow">if</span> (level == NULL)
+<a name="l00247"></a>00247   {
+<a name="l00248"></a>00248     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00249"></a>00249       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00250"></a>00250       <span class="stringliteral">&quot;eol_level:failed to get new resource\n&quot;</span>);
+<a name="l00251"></a>00251     <span class="keywordflow">return</span> NULL;
+<a name="l00252"></a>00252   }
+<a name="l00253"></a>00253   <span class="keywordflow">return</span> level;
+<a name="l00254"></a>00254 }
+<a name="l00255"></a>00255 
+<a name="l00256"></a>00256 <span class="comment">/*</span>
+<a name="l00257"></a>00257 <span class="comment">  *** DRAWING ***</span>
+<a name="l00258"></a>00258 <span class="comment">*/</span>
+<a name="l00259"></a>00259 
+<a name="l00260"></a><a class="code" href="eol__level_8h.html#aa5f1618f73bf0c0b7ab03ca750542017">00260</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#aa5f1618f73bf0c0b7ab03ca750542017" title="draws the current level.">eol_level_draw_current</a>()
+<a name="l00261"></a>00261 {
+<a name="l00262"></a>00262   <span class="keywordflow">if</span> (!<a class="code" href="eol__level_8c.html#ad947173ef0e957c8bc4a618c0cff4930">eol_level_initialized</a>())<span class="keywordflow">return</span>;
+<a name="l00263"></a>00263   <span class="keywordflow">if</span> (_eol_level_current == NULL)<span class="keywordflow">return</span>;
+<a name="l00264"></a>00264   <span class="keywordflow">switch</span> (<a class="code" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">_eol_level_draw_mode</a>)
+<a name="l00265"></a>00265   {
+<a name="l00266"></a>00266     <span class="keywordflow">case</span> <a class="code" href="eol__level_8h.html#a52255556aaf877d967c9d6148fc17c55a9e3cd52822997e911dca76f596881a9c">eolLevelDrawFull</a>:
+<a name="l00267"></a>00267       <a class="code" href="eol__level_8c.html#a76470a5d177306e8e73c18e1a9469b88" title="draws the level focused on the active layer.">eol_level_draw</a>(_eol_level_current);
+<a name="l00268"></a>00268       <span class="keywordflow">break</span>;
+<a name="l00269"></a>00269     <span class="keywordflow">case</span> <a class="code" href="eol__level_8h.html#a52255556aaf877d967c9d6148fc17c55ab45bbe0f69ed3b4e88d6083aba593b5c">eolLevelDrawClip</a>:
+<a name="l00270"></a>00270       <a class="code" href="eol__level_8c.html#ac7ef546303e343b3381f9ffaae8c4be9" title="draws the active layer&amp;#39;s clip mask and level bounds">eol_level_draw_clip</a>(_eol_level_current);
+<a name="l00271"></a>00271       <span class="keywordflow">break</span>;
+<a name="l00272"></a>00272   }
+<a name="l00273"></a>00273 }
+<a name="l00274"></a>00274 
+<a name="l00275"></a><a class="code" href="eol__level_8c.html#a4e6e46b97f15f76db929d5365af7e506">00275</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a4e6e46b97f15f76db929d5365af7e506">eol_level_draw_background</a>(<a class="code" href="structeolBackground.html">eolBackground</a> * back)
+<a name="l00276"></a>00276 {
+<a name="l00277"></a>00277   <span class="keywordflow">if</span> (!back)<span class="keywordflow">return</span>;
+<a name="l00278"></a>00278   <span class="keywordflow">if</span> (!back-&gt;<a class="code" href="structeolBackground.html#a83467bd8d31a80a2af0b239d6f5b29b8">model</a>)<span class="keywordflow">return</span>;
+<a name="l00279"></a>00279   <a class="code" href="eol__model_8c.html#adc93f635c2aab594b059e985d9198bb3" title="draw the model under the current conditions">eol_model_draw</a>(
+<a name="l00280"></a>00280     back-&gt;<a class="code" href="structeolBackground.html#a83467bd8d31a80a2af0b239d6f5b29b8">model</a>,
+<a name="l00281"></a>00281     back-&gt;<a class="code" href="structeolBackground.html#a5ba5dd7154b9e467d68a6b1b657a919a">ori</a>.<a class="code" href="structeolOrientation.html#a330e91eab574b7fe44a977c7b0914184">position</a>,
+<a name="l00282"></a>00282     back-&gt;<a class="code" href="structeolBackground.html#a5ba5dd7154b9e467d68a6b1b657a919a">ori</a>.<a class="code" href="structeolOrientation.html#a3306d3bd6116e17ec105b9865726110f">rotation</a>,
+<a name="l00283"></a>00283     back-&gt;<a class="code" href="structeolBackground.html#a5ba5dd7154b9e467d68a6b1b657a919a">ori</a>.<a class="code" href="structeolOrientation.html#a24c3df28538b7fbc540fd639a46eed08">scale</a>,
+<a name="l00284"></a>00284     back-&gt;<a class="code" href="structeolBackground.html#a5ba5dd7154b9e467d68a6b1b657a919a">ori</a>.<a class="code" href="structeolOrientation.html#a5a18cd3b6b3be071b0491fc20979455e">color</a>,
+<a name="l00285"></a>00285     back-&gt;<a class="code" href="structeolBackground.html#a5ba5dd7154b9e467d68a6b1b657a919a">ori</a>.<a class="code" href="structeolOrientation.html#af6a92f9497c2530b06e7e938524c54a3">alpha</a>,
+<a name="l00286"></a>00286     0
+<a name="l00287"></a>00287   );
+<a name="l00288"></a>00288 }
+<a name="l00289"></a>00289 
+<a name="l00290"></a><a class="code" href="eol__level_8c.html#ad7a05e9081efdf6122f8246b2309dbc1">00290</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#ad7a05e9081efdf6122f8246b2309dbc1">eol_level_draw_layer_backgrounds</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer)
+<a name="l00291"></a>00291 {
+<a name="l00292"></a>00292   GList *b;
+<a name="l00293"></a>00293   <span class="keywordflow">if</span> (!layer)<span class="keywordflow">return</span>;
+<a name="l00294"></a>00294   <span class="keywordflow">for</span> (b = layer-&gt;<a class="code" href="structeolLevelLayer.html#ab7214a9bf780889c74f9138b01ec464c">backgrounds</a>; b != NULL; b= b-&gt;next)
+<a name="l00295"></a>00295   {
+<a name="l00296"></a>00296     <a class="code" href="eol__level_8c.html#a4e6e46b97f15f76db929d5365af7e506">eol_level_draw_background</a>((<a class="code" href="structeolBackground.html">eolBackground</a> *)b-&gt;data);
+<a name="l00297"></a>00297   }
 <a name="l00298"></a>00298 }
 <a name="l00299"></a>00299 
-<a name="l00300"></a><a class="code" href="eol__level_8c.html#afd8f14ad526720f43746fd38143d66ca">00300</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#afd8f14ad526720f43746fd38143d66ca">eol_level_draw_layer_bounds</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer)
+<a name="l00300"></a><a class="code" href="eol__level_8c.html#a21f0cd1a557221c06312307cee7cacdb">00300</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a21f0cd1a557221c06312307cee7cacdb">eol_level_draw_layer_clipmask</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer)
 <a name="l00301"></a>00301 {
-<a name="l00302"></a>00302   <a class="code" href="structeolOrientation.html">eolOrientation</a> <a class="code" href="structEntity__S.html#a787ec1dd949e18bf8d5f75311ecd45b0">ori</a>;
-<a name="l00303"></a>00303   <span class="keywordflow">if</span> (!layer)<span class="keywordflow">return</span>;
-<a name="l00304"></a>00304   <a class="code" href="eol__types_8c.html#a8f2f80f519e7bdf6ce618d0f7ffe65f9" title="sets the passed orientation to a default set up. sets alpha and scale to 1, all else...">eol_orientation_clear</a>(&amp;ori);
-<a name="l00305"></a>00305   <a class="code" href="eol__draw_8c.html#ac9a06cb936177c0bd6bae54456f3944d">eol_draw_rect_3D</a>(layer-&gt;<a class="code" href="structeolLevelLayer.html#a1e73c6a8a0c357ac82030200236739d3">bounds</a>,ori);
-<a name="l00306"></a>00306 }
-<a name="l00307"></a>00307 
-<a name="l00308"></a><a class="code" href="eol__level_8h.html#a76470a5d177306e8e73c18e1a9469b88">00308</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a76470a5d177306e8e73c18e1a9469b88" title="draws the level focused on the active layer.">eol_level_draw</a>(<a class="code" href="structeolLevel.html">eolLevel</a> *level)
-<a name="l00309"></a>00309 {
-<a name="l00310"></a>00310   <span class="keywordtype">int</span> i;
-<a name="l00311"></a>00311   GList *layerNode = NULL;
-<a name="l00312"></a>00312   <a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer = NULL;
-<a name="l00313"></a>00313   <span class="keywordtype">float</span> alpha = 1;
-<a name="l00314"></a>00314   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span>;
-<a name="l00315"></a>00315   <span class="keywordflow">if</span> (!level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>)<span class="keywordflow">return</span>;
-<a name="l00316"></a>00316   i = level-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a> - <a class="code" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">_eol_level_layer_draw_range</a>;
-<a name="l00317"></a>00317   <span class="keywordflow">if</span> (i &lt; 0)i = 0;
-<a name="l00318"></a>00318   layerNode = g_list_nth(level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,i);
-<a name="l00319"></a>00319   <span class="keywordflow">for</span> (;(layerNode != NULL) &amp;&amp; (i &lt; level-&gt;active + <a class="code" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">_eol_level_layer_draw_range</a>);
-<a name="l00320"></a>00320         layerNode = layerNode-&gt;next,i++)
-<a name="l00321"></a>00321   {
-<a name="l00322"></a>00322     <span class="keywordflow">if</span> (layerNode-&gt;data == NULL)<span class="keywordflow">continue</span>;
-<a name="l00323"></a>00323     <span class="keywordflow">if</span> (i &gt;= level-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>)alpha = 0.25;
-<a name="l00324"></a>00324     layer = (<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *)layerNode-&gt;data;
-<a name="l00325"></a>00325     layer-&gt;<a class="code" href="structeolLevelLayer.html#a61b9ced59a2b944ff69d461afb4fcb46">alpha</a> = alpha;
-<a name="l00326"></a>00326     <a class="code" href="eol__level_8c.html#ad7a05e9081efdf6122f8246b2309dbc1">eol_level_draw_layer_backgrounds</a>(layer);
-<a name="l00327"></a>00327   }
-<a name="l00328"></a>00328 }
-<a name="l00329"></a>00329 
-<a name="l00330"></a><a class="code" href="eol__level_8h.html#ac7ef546303e343b3381f9ffaae8c4be9">00330</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#ac7ef546303e343b3381f9ffaae8c4be9" title="draws the active layer&amp;#39;s clip mask and level bounds">eol_level_draw_clip</a>(<a class="code" href="structeolLevel.html">eolLevel</a> *level)
-<a name="l00331"></a>00331 {
-<a name="l00332"></a>00332   <a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer;
-<a name="l00333"></a>00333   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span>;
-<a name="l00334"></a>00334   <span class="keywordflow">if</span> (!level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>)<span class="keywordflow">return</span>;
-<a name="l00335"></a>00335   layer = g_list_nth_data(level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,level-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>);
-<a name="l00336"></a>00336   <span class="keywordflow">if</span> (layer == NULL)
-<a name="l00337"></a>00337   {
-<a name="l00338"></a>00338     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00339"></a>00339       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
-<a name="l00340"></a>00340       <span class="stringliteral">&quot;cannot get layer %n for level %s\n&quot;</span>,
-<a name="l00341"></a>00341       level-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>,
-<a name="l00342"></a>00342       level-&gt;<a class="code" href="structeolLevel.html#a431c4d45ca128144d5b0bf0ad253c691">idName</a>);
-<a name="l00343"></a>00343     <span class="keywordflow">return</span>;
-<a name="l00344"></a>00344   }
-<a name="l00345"></a>00345   <a class="code" href="eol__level_8c.html#afd8f14ad526720f43746fd38143d66ca">eol_level_draw_layer_bounds</a>(layer);
-<a name="l00346"></a>00346   <a class="code" href="eol__level_8c.html#a21f0cd1a557221c06312307cee7cacdb">eol_level_draw_layer_clipmask</a>(layer);
-<a name="l00347"></a>00347 }
-<a name="l00348"></a>00348 
-<a name="l00349"></a><a class="code" href="eol__level_8h.html#aaaa907e78c20f4b8dd9db6ec5eae31cd">00349</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#aaaa907e78c20f4b8dd9db6ec5eae31cd" title="sets which layer in the level has the focus and gets updated.">eol_level_set_active_layer</a>(<a class="code" href="structeolLevel.html">eolLevel</a> *level, <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> layer)
-<a name="l00350"></a>00350 {
-<a name="l00351"></a>00351   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span>;
-<a name="l00352"></a>00352   <span class="keywordflow">if</span> (!level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>)<span class="keywordflow">return</span>;
-<a name="l00353"></a>00353   <span class="keywordflow">if</span> (layer &gt;= level-&gt;<a class="code" href="structeolLevel.html#af85ae7094e9ab2bdd0e12e836fea11bf">layerCount</a>)
-<a name="l00354"></a>00354   {
-<a name="l00355"></a>00355     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00356"></a>00356       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
-<a name="l00357"></a>00357       <span class="stringliteral">&quot;eol_level:cannot set active layer %i for level %s\n&quot;</span>,
-<a name="l00358"></a>00358       layer,
-<a name="l00359"></a>00359       level-&gt;<a class="code" href="structeolLevel.html#a431c4d45ca128144d5b0bf0ad253c691">idName</a>);
-<a name="l00360"></a>00360     <span class="keywordflow">return</span>;
-<a name="l00361"></a>00361   }
-<a name="l00362"></a>00362   level-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a> = layer;
-<a name="l00363"></a>00363 }
-<a name="l00364"></a>00364 
-<a name="l00365"></a><a class="code" href="eol__level_8h.html#a3af8da486697abf4d701d4c37f20980f">00365</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a3af8da486697abf4d701d4c37f20980f" title="sets the passed in level as the active level for rendering and updating.">eol_level_set_current_level</a>(<a class="code" href="structeolLevel.html">eolLevel</a> *level)
-<a name="l00366"></a>00366 {
-<a name="l00367"></a>00367   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span>;
-<a name="l00368"></a>00368   <span class="keywordflow">if</span> (!level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>)<span class="keywordflow">return</span>;
-<a name="l00369"></a>00369   _eol_level_current = level;
-<a name="l00370"></a>00370 }
-<a name="l00371"></a>00371 
-<a name="l00372"></a>00372 <span class="comment">/*</span>
-<a name="l00373"></a>00373 <span class="comment"> *** physics ***</span>
-<a name="l00374"></a>00374 <span class="comment">*/</span>
-<a name="l00375"></a>00375 
-<a name="l00376"></a><a class="code" href="eol__level_8c.html#a6642c6148cfbc7867985893f0e468e69">00376</a> cpShape *<a class="code" href="eol__level_8c.html#a6642c6148cfbc7867985893f0e468e69">eol_level_add_segment_to_space</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> sx,
-<a name="l00377"></a>00377                                         <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> sy,
-<a name="l00378"></a>00378                                         <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> ex,
-<a name="l00379"></a>00379                                         <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> ey,
-<a name="l00380"></a>00380                                         cpSpace *space)
-<a name="l00381"></a>00381 {
-<a name="l00382"></a>00382   cpShape *<a class="code" href="structEntity__S.html#a7445ff05e4df0566c793fc113a1aa2a4">shape</a>;
-<a name="l00383"></a>00383   <span class="keywordtype">float</span> friction = 0.1;
-<a name="l00384"></a>00384   <span class="keywordflow">if</span>(space == NULL)<span class="keywordflow">return</span> NULL;
-<a name="l00385"></a>00385   shape = cpSegmentShapeNew(cpSpaceGetStaticBody(space), cpv(sx,sy), cpv(ex,ey), 0.0);
-<a name="l00386"></a>00386   <span class="keywordflow">if</span> (sx == ex)
-<a name="l00387"></a>00387   {
-<a name="l00388"></a>00388     friction = 0;
-<a name="l00389"></a>00389   }
-<a name="l00390"></a>00390   <span class="keywordflow">if</span>(shape != NULL)
-<a name="l00391"></a>00391   {
-<a name="l00392"></a>00392     shape-&gt;e = 0;
-<a name="l00393"></a>00393     shape-&gt;u = friction;
-<a name="l00394"></a>00394     shape-&gt;collision_type = <a class="code" href="eol__entity_8h.html#accea269d6ce4747283645850e70cea9aa36060c60618d11762a7313c2a045f0f3">eolEntityClipLevel</a>;
-<a name="l00395"></a>00395     cpShapeSetLayers (shape, <a class="code" href="eol__entity_8h.html#accea269d6ce4747283645850e70cea9aa36060c60618d11762a7313c2a045f0f3">eolEntityClipLevel</a>);
-<a name="l00396"></a>00396     cpSpaceAddStaticShape(space, shape);
-<a name="l00397"></a>00397   }
-<a name="l00398"></a>00398   <span class="keywordflow">return</span> shape;
-<a name="l00399"></a>00399 }
-<a name="l00400"></a>00400 
-<a name="l00401"></a><a class="code" href="eol__level_8c.html#a4609070abccd144b6f558bd68c49840e">00401</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a4609070abccd144b6f558bd68c49840e">eol_level_add_triangle_to_space</a>(cpSpace *space,<a class="code" href="structeolFace.html">eolFace</a> *face,<a class="code" href="structeolMesh.html">eolMesh</a> *<a class="code" href="eol__opengl_8h.html#a582594109983c43d7023a28318a0bb3c">mask</a>)
-<a name="l00402"></a>00402 {
-<a name="l00403"></a>00403   <span class="keywordflow">if</span> ((!space)||(!face)||(!mask))<span class="keywordflow">return</span>;
-<a name="l00404"></a>00404   <span class="comment">/*TODO dont add duplicate edges to the space*/</span>
-<a name="l00405"></a>00405   <a class="code" href="eol__level_8c.html#a6642c6148cfbc7867985893f0e468e69">eol_level_add_segment_to_space</a>(mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
-<a name="l00406"></a>00406                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
-<a name="l00407"></a>00407                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
-<a name="l00408"></a>00408                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
-<a name="l00409"></a>00409                                  space);
-<a name="l00410"></a>00410 
-<a name="l00411"></a>00411   <a class="code" href="eol__level_8c.html#a6642c6148cfbc7867985893f0e468e69">eol_level_add_segment_to_space</a>(mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
-<a name="l00412"></a>00412                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
-<a name="l00413"></a>00413                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
-<a name="l00414"></a>00414                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
-<a name="l00415"></a>00415                                  space);
-<a name="l00416"></a>00416 
-<a name="l00417"></a>00417   <a class="code" href="eol__level_8c.html#a6642c6148cfbc7867985893f0e468e69">eol_level_add_segment_to_space</a>(mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
-<a name="l00418"></a>00418                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
-<a name="l00419"></a>00419                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
-<a name="l00420"></a>00420                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
-<a name="l00421"></a>00421                                  space);
-<a name="l00422"></a>00422   <span class="comment">/*TODO see if I need to catch these and free em up later.*/</span>
-<a name="l00423"></a>00423 }
-<a name="l00424"></a>00424 
-<a name="l00425"></a><a class="code" href="eol__level_8h.html#a755b57559288fcdb4d274d7d2c94dd37">00425</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a755b57559288fcdb4d274d7d2c94dd37">eol_level_add_mask_to_space</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer)
-<a name="l00426"></a>00426 {
-<a name="l00427"></a>00427   <span class="keywordtype">int</span> i;
-<a name="l00428"></a>00428   <span class="keywordflow">if</span> (!layer)<span class="keywordflow">return</span>;
-<a name="l00429"></a>00429   <span class="keywordflow">if</span> ((!layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>)||(!layer-&gt;<a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">clipMesh</a>))
-<a name="l00430"></a>00430   {
-<a name="l00431"></a>00431     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00432"></a>00432       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
-<a name="l00433"></a>00433       <span class="stringliteral">&quot;cannot add clipmesh to space %s: missing data\n&quot;</span>,
-<a name="l00434"></a>00434       layer-&gt;<a class="code" href="structeolLevelLayer.html#af55305012f5a11462a53b733adb160f7">idName</a>);
-<a name="l00435"></a>00435     <span class="keywordflow">return</span>;
-<a name="l00436"></a>00436   }
-<a name="l00437"></a>00437   <span class="keywordflow">for</span> (i = 0; i &lt; layer-&gt;<a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">clipMesh</a>-&gt;<a class="code" href="structeolMesh.html#a610aa52e54c96f472d46b797a4fdf495">_numFaces</a>;i++)
-<a name="l00438"></a>00438   {
-<a name="l00439"></a>00439     <a class="code" href="eol__level_8c.html#a4609070abccd144b6f558bd68c49840e">eol_level_add_triangle_to_space</a>(layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>,
-<a name="l00440"></a>00440                                     &amp;layer-&gt;<a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">clipMesh</a>-&gt;<a class="code" href="structeolMesh.html#af1f4dfd4b8c26be0b59719679cdd485d">_faces</a>[i],
-<a name="l00441"></a>00441                                     layer-&gt;<a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">clipMesh</a>);
-<a name="l00442"></a>00442   }
-<a name="l00443"></a>00443 }
-<a name="l00444"></a>00444 
-<a name="l00445"></a><a class="code" href="eol__level_8h.html#a3a833f49c31d6c2929c14d766029d39e">00445</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a3a833f49c31d6c2929c14d766029d39e" title="runs the physics simulation for the active layer. Runs pre and post sync for entities...">eol_level_update_active</a>()
-<a name="l00446"></a>00446 {
-<a name="l00447"></a>00447   <a class="code" href="eol__level_8c.html#a454618085ecc003258545ef147dbb867" title="steps through an iteration of game time. Calls collision updates.">eol_level_update</a>(_eol_level_current);
-<a name="l00448"></a>00448 }
-<a name="l00449"></a>00449 
-<a name="l00450"></a><a class="code" href="eol__level_8h.html#a454618085ecc003258545ef147dbb867">00450</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a454618085ecc003258545ef147dbb867" title="steps through an iteration of game time. Calls collision updates.">eol_level_update</a>(<a class="code" href="structeolLevel.html">eolLevel</a> *level)
-<a name="l00451"></a>00451 {
-<a name="l00452"></a>00452   <a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer = NULL;
-<a name="l00453"></a>00453   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span>;
-<a name="l00454"></a>00454   layer = g_list_nth_data(level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,level-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>);
-<a name="l00455"></a>00455   <span class="keywordflow">if</span> (layer == NULL)<span class="keywordflow">return</span>;
-<a name="l00456"></a>00456   <span class="comment">/*presync*/</span>
-<a name="l00457"></a>00457   <a class="code" href="eol__entity_8c.html#ab093ee46bdc7c026eb98979494490c34" title="sync entity states with the collision space. Update desired forces, add and remove...">eol_entity_presync_all</a>();
-<a name="l00458"></a>00458 
-<a name="l00459"></a>00459   cpSpaceStep(layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>,0.01);<span class="comment">/*TODO: make configurable*/</span>
-<a name="l00460"></a>00460 
-<a name="l00461"></a>00461   <span class="comment">/*post sync*/</span>
-<a name="l00462"></a>00462   <a class="code" href="eol__entity_8c.html#a075d3ead5cf66a82f9a3477f52718030" title="sync entity states from the collision space. Update positions, call touch functions...">eol_entity_postsync_all</a>();
-<a name="l00463"></a>00463 }
-<a name="l00464"></a>00464 
-<a name="l00465"></a><a class="code" href="eol__level_8h.html#a68da4fbe2ab88bc1115e4ab85adbcc20">00465</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a68da4fbe2ab88bc1115e4ab85adbcc20">eol_level_add_entity_to_active_layer</a>(<a class="code" href="structEntity__S.html">eolEntity</a> *ent)
-<a name="l00466"></a>00466 {
-<a name="l00467"></a>00467   <span class="keywordflow">if</span> (!_eol_level_current)<span class="keywordflow">return</span>;
-<a name="l00468"></a>00468   <a class="code" href="eol__level_8c.html#a49e8c23cbf55fb12b0311c90e0b0fab6" title="adds and entity&amp;#39;s body and shape to the layer space for physics. The entity should...">eol_level_add_entity_to_layer</a>(g_list_nth_data(_eol_level_current-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,
-<a name="l00469"></a>00469                                                 _eol_level_current-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>),
-<a name="l00470"></a>00470                                 ent);
+<a name="l00302"></a>00302   <span class="keywordflow">if</span> (!layer)<span class="keywordflow">return</span>;
+<a name="l00303"></a>00303   <a class="code" href="eol__mesh_8c.html#a29afce30640e1b7ec20e30a94f326223" title="draws the provided mesh to the active draw buffer.">eol_mesh_draw_wire</a>(
+<a name="l00304"></a>00304     layer-&gt;<a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">clipMesh</a>,
+<a name="l00305"></a>00305     layer-&gt;<a class="code" href="structeolLevelLayer.html#a666236eff670187e24bba095db24bba1">clipMaskOri</a>.<a class="code" href="structeolOrientation.html#a330e91eab574b7fe44a977c7b0914184">position</a>,
+<a name="l00306"></a>00306     layer-&gt;<a class="code" href="structeolLevelLayer.html#a666236eff670187e24bba095db24bba1">clipMaskOri</a>.<a class="code" href="structeolOrientation.html#a3306d3bd6116e17ec105b9865726110f">rotation</a>,
+<a name="l00307"></a>00307     layer-&gt;<a class="code" href="structeolLevelLayer.html#a666236eff670187e24bba095db24bba1">clipMaskOri</a>.<a class="code" href="structeolOrientation.html#a24c3df28538b7fbc540fd639a46eed08">scale</a>,
+<a name="l00308"></a>00308     layer-&gt;<a class="code" href="structeolLevelLayer.html#a666236eff670187e24bba095db24bba1">clipMaskOri</a>.<a class="code" href="structeolOrientation.html#a5a18cd3b6b3be071b0491fc20979455e">color</a>,
+<a name="l00309"></a>00309     layer-&gt;<a class="code" href="structeolLevelLayer.html#a666236eff670187e24bba095db24bba1">clipMaskOri</a>.<a class="code" href="structeolOrientation.html#af6a92f9497c2530b06e7e938524c54a3">alpha</a>
+<a name="l00310"></a>00310   );
+<a name="l00311"></a>00311 
+<a name="l00312"></a>00312 }
+<a name="l00313"></a>00313 
+<a name="l00314"></a><a class="code" href="eol__level_8c.html#afd8f14ad526720f43746fd38143d66ca">00314</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#afd8f14ad526720f43746fd38143d66ca">eol_level_draw_layer_bounds</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer)
+<a name="l00315"></a>00315 {
+<a name="l00316"></a>00316   <a class="code" href="structeolOrientation.html">eolOrientation</a> ori;
+<a name="l00317"></a>00317   <span class="keywordflow">if</span> (!layer)<span class="keywordflow">return</span>;
+<a name="l00318"></a>00318   <a class="code" href="eol__types_8c.html#a8f2f80f519e7bdf6ce618d0f7ffe65f9" title="sets the passed orientation to a default set up. sets alpha and scale to 1, all else...">eol_orientation_clear</a>(&amp;ori);
+<a name="l00319"></a>00319   <a class="code" href="eol__draw_8c.html#ac9a06cb936177c0bd6bae54456f3944d">eol_draw_rect_3D</a>(layer-&gt;<a class="code" href="structeolLevelLayer.html#a1e73c6a8a0c357ac82030200236739d3">bounds</a>,ori);
+<a name="l00320"></a>00320 }
+<a name="l00321"></a>00321 
+<a name="l00322"></a><a class="code" href="eol__level_8h.html#a76470a5d177306e8e73c18e1a9469b88">00322</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a76470a5d177306e8e73c18e1a9469b88" title="draws the level focused on the active layer.">eol_level_draw</a>(<a class="code" href="structeolLevel.html">eolLevel</a> *level)
+<a name="l00323"></a>00323 {
+<a name="l00324"></a>00324   <span class="keywordtype">int</span> i;
+<a name="l00325"></a>00325   GList *layerNode = NULL;
+<a name="l00326"></a>00326   <a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer = NULL;
+<a name="l00327"></a>00327   <span class="keywordtype">float</span> alpha = 1;
+<a name="l00328"></a>00328   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span>;
+<a name="l00329"></a>00329   <span class="keywordflow">if</span> (!level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>)<span class="keywordflow">return</span>;
+<a name="l00330"></a>00330   i = level-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a> - <a class="code" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">_eol_level_layer_draw_range</a>;
+<a name="l00331"></a>00331   <span class="keywordflow">if</span> (i &lt; 0)i = 0;
+<a name="l00332"></a>00332   layerNode = g_list_nth(level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,i);
+<a name="l00333"></a>00333   <span class="keywordflow">for</span> (;(layerNode != NULL) &amp;&amp; (i &lt; level-&gt;active + <a class="code" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">_eol_level_layer_draw_range</a>);
+<a name="l00334"></a>00334         layerNode = layerNode-&gt;next,i++)
+<a name="l00335"></a>00335   {
+<a name="l00336"></a>00336     <span class="keywordflow">if</span> (layerNode-&gt;data == NULL)<span class="keywordflow">continue</span>;
+<a name="l00337"></a>00337     <span class="keywordflow">if</span> (i &gt;= level-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>)alpha = 0.25;
+<a name="l00338"></a>00338     layer = (<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *)layerNode-&gt;data;
+<a name="l00339"></a>00339     layer-&gt;<a class="code" href="structeolLevelLayer.html#a61b9ced59a2b944ff69d461afb4fcb46">alpha</a> = alpha;
+<a name="l00340"></a>00340     <a class="code" href="eol__level_8c.html#ad7a05e9081efdf6122f8246b2309dbc1">eol_level_draw_layer_backgrounds</a>(layer);
+<a name="l00341"></a>00341   }
+<a name="l00342"></a>00342 }
+<a name="l00343"></a>00343 
+<a name="l00344"></a><a class="code" href="eol__level_8h.html#ac7ef546303e343b3381f9ffaae8c4be9">00344</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#ac7ef546303e343b3381f9ffaae8c4be9" title="draws the active layer&amp;#39;s clip mask and level bounds">eol_level_draw_clip</a>(<a class="code" href="structeolLevel.html">eolLevel</a> *level)
+<a name="l00345"></a>00345 {
+<a name="l00346"></a>00346   <a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer;
+<a name="l00347"></a>00347   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span>;
+<a name="l00348"></a>00348   <span class="keywordflow">if</span> (!level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>)<span class="keywordflow">return</span>;
+<a name="l00349"></a>00349   layer = g_list_nth_data(level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,level-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>);
+<a name="l00350"></a>00350   <span class="keywordflow">if</span> (layer == NULL)
+<a name="l00351"></a>00351   {
+<a name="l00352"></a>00352     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00353"></a>00353       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
+<a name="l00354"></a>00354       <span class="stringliteral">&quot;cannot get layer %n for level %s\n&quot;</span>,
+<a name="l00355"></a>00355       level-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>,
+<a name="l00356"></a>00356       level-&gt;<a class="code" href="structeolLevel.html#a431c4d45ca128144d5b0bf0ad253c691">idName</a>);
+<a name="l00357"></a>00357     <span class="keywordflow">return</span>;
+<a name="l00358"></a>00358   }
+<a name="l00359"></a>00359   <a class="code" href="eol__level_8c.html#afd8f14ad526720f43746fd38143d66ca">eol_level_draw_layer_bounds</a>(layer);
+<a name="l00360"></a>00360   <a class="code" href="eol__level_8c.html#a21f0cd1a557221c06312307cee7cacdb">eol_level_draw_layer_clipmask</a>(layer);
+<a name="l00361"></a>00361 }
+<a name="l00362"></a>00362 
+<a name="l00363"></a><a class="code" href="eol__level_8h.html#aaaa907e78c20f4b8dd9db6ec5eae31cd">00363</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#aaaa907e78c20f4b8dd9db6ec5eae31cd" title="sets which layer in the level has the focus and gets updated.">eol_level_set_active_layer</a>(<a class="code" href="structeolLevel.html">eolLevel</a> *level, <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> layer)
+<a name="l00364"></a>00364 {
+<a name="l00365"></a>00365   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span>;
+<a name="l00366"></a>00366   <span class="keywordflow">if</span> (!level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>)<span class="keywordflow">return</span>;
+<a name="l00367"></a>00367   <span class="keywordflow">if</span> (layer &gt;= level-&gt;<a class="code" href="structeolLevel.html#af85ae7094e9ab2bdd0e12e836fea11bf">layerCount</a>)
+<a name="l00368"></a>00368   {
+<a name="l00369"></a>00369     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00370"></a>00370       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
+<a name="l00371"></a>00371       <span class="stringliteral">&quot;eol_level:cannot set active layer %i for level %s\n&quot;</span>,
+<a name="l00372"></a>00372       layer,
+<a name="l00373"></a>00373       level-&gt;<a class="code" href="structeolLevel.html#a431c4d45ca128144d5b0bf0ad253c691">idName</a>);
+<a name="l00374"></a>00374     <span class="keywordflow">return</span>;
+<a name="l00375"></a>00375   }
+<a name="l00376"></a>00376   level-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a> = layer;
+<a name="l00377"></a>00377 }
+<a name="l00378"></a>00378 
+<a name="l00379"></a><a class="code" href="eol__level_8h.html#a3af8da486697abf4d701d4c37f20980f">00379</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a3af8da486697abf4d701d4c37f20980f" title="sets the passed in level as the active level for rendering and updating.">eol_level_set_current_level</a>(<a class="code" href="structeolLevel.html">eolLevel</a> *level)
+<a name="l00380"></a>00380 {
+<a name="l00381"></a>00381   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span>;
+<a name="l00382"></a>00382   <span class="keywordflow">if</span> (!level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>)<span class="keywordflow">return</span>;
+<a name="l00383"></a>00383   _eol_level_current = level;
+<a name="l00384"></a>00384 }
+<a name="l00385"></a>00385 
+<a name="l00386"></a>00386 <span class="comment">/*</span>
+<a name="l00387"></a>00387 <span class="comment"> *** physics ***</span>
+<a name="l00388"></a>00388 <span class="comment">*/</span>
+<a name="l00389"></a>00389 
+<a name="l00390"></a><a class="code" href="eol__level_8h.html#a60c632f0bcd4f9bf074d40316c817323">00390</a> cpBody *<a class="code" href="eol__level_8c.html#a60c632f0bcd4f9bf074d40316c817323">eol_level_get_active_layer_body</a>()
+<a name="l00391"></a>00391 {
+<a name="l00392"></a>00392   <a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer;
+<a name="l00393"></a>00393   <span class="keywordflow">if</span> (!_eol_level_current)<span class="keywordflow">return</span> NULL;
+<a name="l00394"></a>00394   layer = g_list_nth_data(_eol_level_current-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,_eol_level_current-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>);
+<a name="l00395"></a>00395   <span class="keywordflow">if</span> (!layer)<span class="keywordflow">return</span> NULL;
+<a name="l00396"></a>00396   <span class="keywordflow">return</span> cpSpaceGetStaticBody(layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>);
+<a name="l00397"></a>00397 }
+<a name="l00398"></a>00398 
+<a name="l00399"></a><a class="code" href="eol__level_8c.html#a6642c6148cfbc7867985893f0e468e69">00399</a> cpShape *<a class="code" href="eol__level_8c.html#a6642c6148cfbc7867985893f0e468e69">eol_level_add_segment_to_space</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> sx,
+<a name="l00400"></a>00400                                         <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> sy,
+<a name="l00401"></a>00401                                         <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> ex,
+<a name="l00402"></a>00402                                         <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> ey,
+<a name="l00403"></a>00403                                         cpSpace *space)
+<a name="l00404"></a>00404 {
+<a name="l00405"></a>00405   cpShape *shape;
+<a name="l00406"></a>00406   <span class="keywordtype">float</span> friction = 0.1;
+<a name="l00407"></a>00407   <span class="keywordflow">if</span>(space == NULL)<span class="keywordflow">return</span> NULL;
+<a name="l00408"></a>00408   shape = cpSegmentShapeNew(cpSpaceGetStaticBody(space), cpv(sx,sy), cpv(ex,ey), <a class="code" href="eol__level_8c.html#a8152fbfc6063e351cd0e8430fa01181a">_eol_level_clip_thickness</a>);
+<a name="l00409"></a>00409   <span class="keywordflow">if</span> (sx == ex)
+<a name="l00410"></a>00410   {
+<a name="l00411"></a>00411     friction = 0;
+<a name="l00412"></a>00412   }
+<a name="l00413"></a>00413   <span class="keywordflow">if</span>(shape != NULL)
+<a name="l00414"></a>00414   {
+<a name="l00415"></a>00415     shape-&gt;e = 0;
+<a name="l00416"></a>00416     shape-&gt;u = friction;
+<a name="l00417"></a>00417     shape-&gt;collision_type = <a class="code" href="eol__entity_8h.html#adef4b9a35dca79f88f8a330ff7f87d57a36060c60618d11762a7313c2a045f0f3">eolEntityClipLevel</a>;
+<a name="l00418"></a>00418     cpShapeSetLayers (shape, <a class="code" href="eol__entity_8h.html#adef4b9a35dca79f88f8a330ff7f87d57a36060c60618d11762a7313c2a045f0f3">eolEntityClipLevel</a>);
+<a name="l00419"></a>00419     cpSpaceAddShape(space, shape);
+<a name="l00420"></a>00420   }
+<a name="l00421"></a>00421   <span class="keywordflow">return</span> shape;
+<a name="l00422"></a>00422 }
+<a name="l00423"></a>00423 
+<a name="l00424"></a><a class="code" href="eol__level_8c.html#a4609070abccd144b6f558bd68c49840e">00424</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a4609070abccd144b6f558bd68c49840e">eol_level_add_triangle_to_space</a>(cpSpace *space,<a class="code" href="structeolFace.html">eolFace</a> *face,<a class="code" href="structeolMesh.html">eolMesh</a> *<a class="code" href="eol__opengl_8h.html#a582594109983c43d7023a28318a0bb3c">mask</a>)
+<a name="l00425"></a>00425 {
+<a name="l00426"></a>00426   <span class="keywordflow">if</span> ((!space)||(!face)||(!mask))<span class="keywordflow">return</span>;
+<a name="l00427"></a>00427   <span class="comment">/*TODO dont add duplicate edges to the space*/</span>
+<a name="l00428"></a>00428   <a class="code" href="eol__level_8c.html#a6642c6148cfbc7867985893f0e468e69">eol_level_add_segment_to_space</a>(mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
+<a name="l00429"></a>00429                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
+<a name="l00430"></a>00430                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
+<a name="l00431"></a>00431                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
+<a name="l00432"></a>00432                                  space);
+<a name="l00433"></a>00433 
+<a name="l00434"></a>00434   <a class="code" href="eol__level_8c.html#a6642c6148cfbc7867985893f0e468e69">eol_level_add_segment_to_space</a>(mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
+<a name="l00435"></a>00435                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
+<a name="l00436"></a>00436                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
+<a name="l00437"></a>00437                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
+<a name="l00438"></a>00438                                  space);
+<a name="l00439"></a>00439 
+<a name="l00440"></a>00440   <a class="code" href="eol__level_8c.html#a6642c6148cfbc7867985893f0e468e69">eol_level_add_segment_to_space</a>(mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
+<a name="l00441"></a>00441                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
+<a name="l00442"></a>00442                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
+<a name="l00443"></a>00443                                  mask-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[face-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
+<a name="l00444"></a>00444                                  space);
+<a name="l00445"></a>00445   <span class="comment">/*TODO see if I need to catch these and free em up later.*/</span>
+<a name="l00446"></a>00446 }
+<a name="l00447"></a>00447 
+<a name="l00448"></a><a class="code" href="eol__level_8h.html#a755b57559288fcdb4d274d7d2c94dd37">00448</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a755b57559288fcdb4d274d7d2c94dd37">eol_level_add_mask_to_space</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer)
+<a name="l00449"></a>00449 {
+<a name="l00450"></a>00450   <span class="keywordtype">int</span> i;
+<a name="l00451"></a>00451   <span class="keywordflow">if</span> (!layer)<span class="keywordflow">return</span>;
+<a name="l00452"></a>00452   <span class="keywordflow">if</span> ((!layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>)||(!layer-&gt;<a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">clipMesh</a>))
+<a name="l00453"></a>00453   {
+<a name="l00454"></a>00454     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00455"></a>00455       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
+<a name="l00456"></a>00456       <span class="stringliteral">&quot;cannot add clipmesh to space %s: missing data\n&quot;</span>,
+<a name="l00457"></a>00457       layer-&gt;<a class="code" href="structeolLevelLayer.html#af55305012f5a11462a53b733adb160f7">idName</a>);
+<a name="l00458"></a>00458     <span class="keywordflow">return</span>;
+<a name="l00459"></a>00459   }
+<a name="l00460"></a>00460   <span class="keywordflow">for</span> (i = 0; i &lt; layer-&gt;<a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">clipMesh</a>-&gt;<a class="code" href="structeolMesh.html#a610aa52e54c96f472d46b797a4fdf495">_numFaces</a>;i++)
+<a name="l00461"></a>00461   {
+<a name="l00462"></a>00462     <a class="code" href="eol__level_8c.html#a4609070abccd144b6f558bd68c49840e">eol_level_add_triangle_to_space</a>(layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>,
+<a name="l00463"></a>00463                                     &amp;layer-&gt;<a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">clipMesh</a>-&gt;<a class="code" href="structeolMesh.html#af1f4dfd4b8c26be0b59719679cdd485d">_faces</a>[i],
+<a name="l00464"></a>00464                                     layer-&gt;<a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">clipMesh</a>);
+<a name="l00465"></a>00465   }
+<a name="l00466"></a>00466 }
+<a name="l00467"></a>00467 
+<a name="l00468"></a><a class="code" href="eol__level_8h.html#a3a833f49c31d6c2929c14d766029d39e">00468</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a3a833f49c31d6c2929c14d766029d39e" title="runs the physics simulation for the active layer. Runs pre and post sync for entities...">eol_level_update_active</a>()
+<a name="l00469"></a>00469 {
+<a name="l00470"></a>00470   <a class="code" href="eol__level_8c.html#a454618085ecc003258545ef147dbb867" title="steps through an iteration of game time. Calls collision updates.">eol_level_update</a>(_eol_level_current);
 <a name="l00471"></a>00471 }
 <a name="l00472"></a>00472 
-<a name="l00473"></a><a class="code" href="eol__level_8h.html#a49e8c23cbf55fb12b0311c90e0b0fab6">00473</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a49e8c23cbf55fb12b0311c90e0b0fab6" title="adds and entity&amp;#39;s body and shape to the layer space for physics. The entity should...">eol_level_add_entity_to_layer</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer, <a class="code" href="structEntity__S.html">eolEntity</a> *ent)
+<a name="l00473"></a><a class="code" href="eol__level_8h.html#a454618085ecc003258545ef147dbb867">00473</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a454618085ecc003258545ef147dbb867" title="steps through an iteration of game time. Calls collision updates.">eol_level_update</a>(<a class="code" href="structeolLevel.html">eolLevel</a> *level)
 <a name="l00474"></a>00474 {
-<a name="l00475"></a>00475   <span class="keywordflow">if</span> ((!layer) || (!ent))<span class="keywordflow">return</span>;
-<a name="l00476"></a>00476   <a class="code" href="eol__entity_8c.html#ab6a060f8ffd59c67e9d13b2d67a6070b" title="Adds an entity to a physics space for physics calculations. automatically sets flags...">eol_entity_add_to_space</a>(ent,layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>);
-<a name="l00477"></a>00477   <span class="keywordflow">if</span> (ent-&gt;<a class="code" href="structEntity__S.html#a7212c7e9e9800297f8fc165d071e9ff3">_space</a> != layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>)<span class="keywordflow">return</span>;
-<a name="l00478"></a>00478   layer-&gt;<a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">entities</a> = g_list_append(layer-&gt;<a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">entities</a>,ent);
-<a name="l00479"></a>00479 }
-<a name="l00480"></a>00480 
-<a name="l00481"></a><a class="code" href="eol__level_8c.html#a917fb94fe0beb1a83396bf4582c17db5">00481</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a917fb94fe0beb1a83396bf4582c17db5">eol_level_remove_entity_from_layer</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer, <a class="code" href="structEntity__S.html">eolEntity</a> *ent)
-<a name="l00482"></a>00482 {
-<a name="l00483"></a>00483   <span class="keywordflow">if</span> ((!layer) || (!ent))<span class="keywordflow">return</span>;
-<a name="l00484"></a>00484   layer-&gt;<a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">entities</a> = g_list_remove(layer-&gt;<a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">entities</a>,ent);
-<a name="l00485"></a>00485   <a class="code" href="eol__entity_8c.html#a8d84dc996def7edecc191720a4ece7be" title="Removed the entity from the space that it is a part of.">eol_entity_remove_from_space</a>(ent);
+<a name="l00475"></a>00475   <a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer = NULL;
+<a name="l00476"></a>00476   <span class="keywordflow">if</span> (!level)<span class="keywordflow">return</span>;
+<a name="l00477"></a>00477   layer = g_list_nth_data(level-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,level-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>);
+<a name="l00478"></a>00478   <span class="keywordflow">if</span> (layer == NULL)<span class="keywordflow">return</span>;
+<a name="l00479"></a>00479   <span class="comment">/*presync*/</span>
+<a name="l00480"></a>00480   <a class="code" href="eol__entity_8c.html#ab093ee46bdc7c026eb98979494490c34" title="sync entity states with the collision space. Update desired forces, note that position...">eol_entity_presync_all</a>();
+<a name="l00481"></a>00481 
+<a name="l00482"></a>00482   cpSpaceStep(layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>,<a class="code" href="eol__level_8c.html#add92c5ce1ae50a3d6f67a8a6278fad66">_eol_level_clip_step</a>);
+<a name="l00483"></a>00483 
+<a name="l00484"></a>00484   <span class="comment">/*post sync*/</span>
+<a name="l00485"></a>00485   <a class="code" href="eol__entity_8c.html#a075d3ead5cf66a82f9a3477f52718030" title="sync entity states from the collision space. Update positions, call touch functions...">eol_entity_postsync_all</a>();
 <a name="l00486"></a>00486 }
 <a name="l00487"></a>00487 
-<a name="l00488"></a><a class="code" href="eol__level_8c.html#a64bd4acf105818bb6a06646a4c2ca7dc">00488</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a64bd4acf105818bb6a06646a4c2ca7dc">eol_level_remove_entity_from_active_layer</a>(<a class="code" href="structEntity__S.html">eolEntity</a> *ent)
+<a name="l00488"></a><a class="code" href="eol__level_8h.html#a68da4fbe2ab88bc1115e4ab85adbcc20">00488</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a68da4fbe2ab88bc1115e4ab85adbcc20">eol_level_add_entity_to_active_layer</a>(<a class="code" href="structEntity__S.html">eolEntity</a> *ent)
 <a name="l00489"></a>00489 {
 <a name="l00490"></a>00490   <span class="keywordflow">if</span> (!_eol_level_current)<span class="keywordflow">return</span>;
-<a name="l00491"></a>00491   <a class="code" href="eol__level_8c.html#a917fb94fe0beb1a83396bf4582c17db5">eol_level_remove_entity_from_layer</a>(g_list_nth_data(_eol_level_current-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,
-<a name="l00492"></a>00492                                                      _eol_level_current-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>),
-<a name="l00493"></a>00493                                      ent);
+<a name="l00491"></a>00491   <a class="code" href="eol__level_8c.html#a49e8c23cbf55fb12b0311c90e0b0fab6" title="adds and entity&amp;#39;s body and shape to the layer space for physics. The entity should...">eol_level_add_entity_to_layer</a>(g_list_nth_data(_eol_level_current-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,
+<a name="l00492"></a>00492                                                 _eol_level_current-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>),
+<a name="l00493"></a>00493                                 ent);
 <a name="l00494"></a>00494 }
-<a name="l00495"></a>00495 <span class="comment">/*eol@eof*/</span>
+<a name="l00495"></a>00495 
+<a name="l00496"></a><a class="code" href="eol__level_8h.html#a49e8c23cbf55fb12b0311c90e0b0fab6">00496</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a49e8c23cbf55fb12b0311c90e0b0fab6" title="adds and entity&amp;#39;s body and shape to the layer space for physics. The entity should...">eol_level_add_entity_to_layer</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer, <a class="code" href="structEntity__S.html">eolEntity</a> *ent)
+<a name="l00497"></a>00497 {
+<a name="l00498"></a>00498   <span class="keywordflow">if</span> ((!layer) || (!ent))<span class="keywordflow">return</span>;
+<a name="l00499"></a>00499   <a class="code" href="eol__entity_8c.html#ab6a060f8ffd59c67e9d13b2d67a6070b" title="Adds an entity to a physics space for physics calculations. automatically sets flags...">eol_entity_add_to_space</a>(ent,layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>);
+<a name="l00500"></a>00500   <span class="keywordflow">if</span> (ent-&gt;<a class="code" href="structEntity__S.html#a7212c7e9e9800297f8fc165d071e9ff3">_space</a> != layer-&gt;<a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">space</a>)<span class="keywordflow">return</span>;
+<a name="l00501"></a>00501   layer-&gt;<a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">entities</a> = g_list_append(layer-&gt;<a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">entities</a>,ent);
+<a name="l00502"></a>00502 }
+<a name="l00503"></a>00503 
+<a name="l00504"></a><a class="code" href="eol__level_8c.html#a917fb94fe0beb1a83396bf4582c17db5">00504</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a917fb94fe0beb1a83396bf4582c17db5">eol_level_remove_entity_from_layer</a>(<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a> *layer, <a class="code" href="structEntity__S.html">eolEntity</a> *ent)
+<a name="l00505"></a>00505 {
+<a name="l00506"></a>00506   <span class="keywordflow">if</span> ((!layer) || (!ent))<span class="keywordflow">return</span>;
+<a name="l00507"></a>00507   layer-&gt;<a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">entities</a> = g_list_remove(layer-&gt;<a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">entities</a>,ent);
+<a name="l00508"></a>00508   <a class="code" href="eol__entity_8c.html#a8d84dc996def7edecc191720a4ece7be" title="Removed the entity from the space that it is a part of.">eol_entity_remove_from_space</a>(ent);
+<a name="l00509"></a>00509 }
+<a name="l00510"></a>00510 
+<a name="l00511"></a><a class="code" href="eol__level_8c.html#a64bd4acf105818bb6a06646a4c2ca7dc">00511</a> <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a64bd4acf105818bb6a06646a4c2ca7dc">eol_level_remove_entity_from_active_layer</a>(<a class="code" href="structEntity__S.html">eolEntity</a> *ent)
+<a name="l00512"></a>00512 {
+<a name="l00513"></a>00513   <span class="keywordflow">if</span> (!_eol_level_current)<span class="keywordflow">return</span>;
+<a name="l00514"></a>00514   <a class="code" href="eol__level_8c.html#a917fb94fe0beb1a83396bf4582c17db5">eol_level_remove_entity_from_layer</a>(g_list_nth_data(_eol_level_current-&gt;<a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">layers</a>,
+<a name="l00515"></a>00515                                                      _eol_level_current-&gt;<a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">active</a>),
+<a name="l00516"></a>00516                                      ent);
+<a name="l00517"></a>00517 }
+<a name="l00518"></a>00518 <span class="comment">/*eol@eof*/</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:24 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:11 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

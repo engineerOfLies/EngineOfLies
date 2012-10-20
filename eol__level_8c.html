@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -76,6 +77,7 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">sets which layer in the level has the focus and gets updated.  <a href="#aaaa907e78c20f4b8dd9db6ec5eae31cd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#a3af8da486697abf4d701d4c37f20980f">eol_level_set_current_level</a> (<a class="el" href="structeolLevel.html">eolLevel</a> *level)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">sets the passed in level as the active level for rendering and updating.  <a href="#a3af8da486697abf4d701d4c37f20980f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">cpBody *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#a60c632f0bcd4f9bf074d40316c817323">eol_level_get_active_layer_body</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">cpShape *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#a6642c6148cfbc7867985893f0e468e69">eol_level_add_segment_to_space</a> (<a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> sx, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> sy, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> ex, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> ey, cpSpace *space)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#a4609070abccd144b6f558bd68c49840e">eol_level_add_triangle_to_space</a> (cpSpace *space, <a class="el" href="structeolFace.html">eolFace</a> *face, <a class="el" href="structeolMesh.html">eolMesh</a> *<a class="el" href="eol__opengl_8h.html#a582594109983c43d7023a28318a0bb3c">mask</a>)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#a755b57559288fcdb4d274d7d2c94dd37">eol_level_add_mask_to_space</a> (<a class="el" href="structeolLevelLayer.html">eolLevelLayer</a> *layer)</td></tr>
@@ -94,6 +96,11 @@
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolLevel.html">eolLevel</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#a7b47d7ae4b1d6695087e494eb2f35daf">_eol_level_list</a> = NULL</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolLevel.html">eolLevel</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#aee20fcf48a1595df1b6b83b3bce381e7">_eol_level_current</a> = NULL</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#a62c2d1f17a5c5412200326a0c8c37895">_eol_level_max_layers</a> = 1</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#a4f9aa4d113f1d21101f18d16fc4aec29">_eol_level_clip_iterations</a> = 10</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#add92c5ce1ae50a3d6f67a8a6278fad66">_eol_level_clip_step</a> = 0.1</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#a8152fbfc6063e351cd0e8430fa01181a">_eol_level_clip_thickness</a> = 0.5</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#abc5802ffc65f9d17014ae06ffd4543d7">_eol_level_slop</a> = 0.1</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#a61668eaafadd9968f582dcc7f7174a77">_eol_level_bias</a> = 0.1</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#aca7baa7de3f539b2215fedee1f2aa34e">_eol_level_layer_draw_range</a> = 0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#a9c51731a58f37ec6b8080b0f55d6dac5">_eol_level_draw_mode</a> = 0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__level_8c.html#a6e6a0630954a256ea678907c9f0653dc">_eol_level_max</a> = 0</td></tr>
@@ -125,7 +132,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to an allocated, but empty layer, or NULL on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00204">204</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00218">218</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -145,7 +152,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00465">465</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00488">488</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -183,7 +190,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00473">473</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00496">496</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -212,7 +219,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to an allocated, but empty layer, or NULL on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00171">171</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00182">182</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -232,7 +239,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00425">425</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00448">448</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -279,7 +286,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00376">376</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00399">399</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -314,7 +321,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00401">401</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00424">424</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -335,7 +342,7 @@
 
 <p>frees all loaded level data. </p>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00077">77</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00088">88</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -354,7 +361,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00091">91</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00102">102</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -375,7 +382,7 @@
 
 <p>loads config for level system from file or sets up defaults. </p>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00054">54</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00059">59</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -395,7 +402,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00152">152</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00163">163</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -415,7 +422,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00117">117</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00128">128</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -443,7 +450,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00308">308</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00322">322</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -463,7 +470,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00261">261</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00275">275</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -491,7 +498,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00330">330</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00344">344</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -512,7 +519,7 @@
 
 <p>draws the current level. </p>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00246">246</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00260">260</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -532,7 +539,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00276">276</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00290">290</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -552,7 +559,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00300">300</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00314">314</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -572,7 +579,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00286">286</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00300">300</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -600,7 +607,26 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00107">107</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00118">118</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a60c632f0bcd4f9bf074d40316c817323"></a><!-- doxytag: member="eol_level.c::eol_level_get_active_layer_body" ref="a60c632f0bcd4f9bf074d40316c817323" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cpBody* eol_level_get_active_layer_body </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00390">390</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -621,7 +647,7 @@
 
 <p>frees all loaded level data. </p>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00027">27</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00032">32</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -640,7 +666,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00049">49</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00054">54</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -669,7 +695,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00166">166</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00177">177</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -691,7 +717,7 @@
 <p>allocates an empty level struct and returns a pointer to it. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to an allocated, but empty level, or NULL on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00221">221</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00235">235</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -719,7 +745,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00072">72</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00083">83</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -739,7 +765,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00488">488</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00511">511</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -768,7 +794,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00481">481</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00504">504</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -806,7 +832,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00349">349</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00363">363</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -834,7 +860,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00365">365</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00379">379</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -854,7 +880,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00067">67</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00078">78</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -876,7 +902,7 @@
 
 <p>steps through an iteration of game time. Calls collision updates. </p>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00450">450</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00473">473</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -897,11 +923,71 @@
 
 <p>runs the physics simulation for the active layer. Runs pre and post sync for entities </p>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00445">445</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00468">468</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Variable Documentation</h2>
+<a class="anchor" id="a61668eaafadd9968f582dcc7f7174a77"></a><!-- doxytag: member="eol_level.c::_eol_level_bias" ref="a61668eaafadd9968f582dcc7f7174a77" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__level_8c.html#a61668eaafadd9968f582dcc7f7174a77">_eol_level_bias</a> = 0.1</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00017">17</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4f9aa4d113f1d21101f18d16fc4aec29"></a><!-- doxytag: member="eol_level.c::_eol_level_clip_iterations" ref="a4f9aa4d113f1d21101f18d16fc4aec29" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__level_8c.html#a4f9aa4d113f1d21101f18d16fc4aec29">_eol_level_clip_iterations</a> = 10</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00013">13</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="add92c5ce1ae50a3d6f67a8a6278fad66"></a><!-- doxytag: member="eol_level.c::_eol_level_clip_step" ref="add92c5ce1ae50a3d6f67a8a6278fad66" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__level_8c.html#add92c5ce1ae50a3d6f67a8a6278fad66">_eol_level_clip_step</a> = 0.1</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00014">14</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8152fbfc6063e351cd0e8430fa01181a"></a><!-- doxytag: member="eol_level.c::_eol_level_clip_thickness" ref="a8152fbfc6063e351cd0e8430fa01181a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__level_8c.html#a8152fbfc6063e351cd0e8430fa01181a">_eol_level_clip_thickness</a> = 0.5</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00015">15</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aee20fcf48a1595df1b6b83b3bce381e7"></a><!-- doxytag: member="eol_level.c::_eol_level_current" ref="aee20fcf48a1595df1b6b83b3bce381e7" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -928,7 +1014,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00014">14</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00019">19</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -958,7 +1044,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00013">13</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00018">18</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -1004,7 +1090,7 @@
 <div class="memdoc">
 <p>maximum number of levels that can be loaded at a time, ie: buffered </p>
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00015">15</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00020">20</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
@@ -1023,6 +1109,21 @@
 
 </div>
 </div>
+<a class="anchor" id="abc5802ffc65f9d17014ae06ffd4543d7"></a><!-- doxytag: member="eol_level.c::_eol_level_slop" ref="abc5802ffc65f9d17014ae06ffd4543d7" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__level_8c.html#abc5802ffc65f9d17014ae06ffd4543d7">_eol_level_slop</a> = 0.1</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00016">16</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aec1136aaa9c4dde7c8cb98010032768c"></a><!-- doxytag: member="eol_level.c::_eol_level_spawn_generic" ref="aec1136aaa9c4dde7c8cb98010032768c" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -1034,12 +1135,12 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00017">17</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__level_8c_source.html#l00022">22</a> of file <a class="el" href="eol__level_8c_source.html">eol_level.c</a>.</p>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:27 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:14 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

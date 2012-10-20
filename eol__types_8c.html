@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -25,6 +26,7 @@
 </div>
 <div class="contents">
 <h1>eol_types.c File Reference</h1><code>#include &quot;<a class="el" href="eol__types_8h_source.html">eol_types.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="eol__logger_8h_source.html">eol_logger.h</a>&quot;</code><br/>
 <code>#include &lt;math.h&gt;</code><br/>
 
 <p><a href="eol__types_8c_source.html">Go to the source code of this file.</a></p>
@@ -32,16 +34,47 @@
 <tr><td colspan="2"><h2>Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a43f29f616f4d979baa88ec1c2696d997">eol_equals</a> (<a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> a, <a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> b)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Determines if the two floats are effectively equal within the thresholds of floating point accuracry.  <a href="#a43f29f616f4d979baa88ec1c2696d997"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec2D.html">eolVec2D</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a86343e3dea354b9ec0201b957e8f51ea">eol_vec2d</a> (<a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="el" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>, <a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="el" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">create and return an <a class="el" href="structeolVec2D.html">eolVec2D</a>  <a href="#a86343e3dea354b9ec0201b957e8f51ea"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#ad9642ff032955fe0e6d34e41eb53b64a">eol_vec3d</a> (<a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="el" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>, <a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="el" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>, <a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="el" href="eol__opengl_8h.html#ab26e6a0e7d142ed28ac773f12a73f458">z</a>)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">create and return an <a class="el" href="structeolVec3D.html">eolVec3D</a>  <a href="#ad9642ff032955fe0e6d34e41eb53b64a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec4D.html">eolVec4D</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#ae6d4a99faadf23b7b0f3f3b470b1b18b">eol_vec4d</a> (<a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="el" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>, <a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="el" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>, <a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="el" href="eol__opengl_8h.html#ab26e6a0e7d142ed28ac773f12a73f458">z</a>, <a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="el" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">create and return an <a class="el" href="structeolVec4D.html">eolVec4D</a>  <a href="#ae6d4a99faadf23b7b0f3f3b470b1b18b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#aaeb43c71c7141f0f2c68e1f96162d640">eol_vec2d_magnitude</a> (<a class="el" href="structeolVec2D.html">eolVec2D</a> V)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">normalizes the vector passed. does nothing for a zero length vector.  <a href="#aaeb43c71c7141f0f2c68e1f96162d640"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#afea3003071add3311fbe3ef420ce076a">eol_vec3d_magnitude</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> V)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a778fa43d615f6f8627a428dd91364ff5">eol_vec3d_magnatude_squared</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> V)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a8ba6c25ed1686c0896ed33b5be1bce2c">eol_vec3d_magnatude_less_than</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> V, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__opengl_8h.html#a3d1e3edfcf61ca2d831883e1afbad89e">size</a>)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#ad9d472062e3887dc8f8f711409441bef">eol_distance_between_less_than</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> p1, <a class="el" href="structeolVec3D.html">eolVec3D</a> p2, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__opengl_8h.html#a3d1e3edfcf61ca2d831883e1afbad89e">size</a>)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">checks if the distance between the two points provided is less than size.  <a href="#ad9d472062e3887dc8f8f711409441bef"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#aef8e0d565a72a5c3accbef664b1c57e4">eol_vec4d_magnitude</a> (<a class="el" href="structeolVec4D.html">eolVec4D</a> V)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a0fe853337cac97073de3f3e6524ef8b2">eol_vec3d_magnitude_squared</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> V)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#aee7fef73d16e398241516af2d6d822fb">eol_vec2d_set_magnitude</a> (<a class="el" href="structeolVec2D.html">eolVec2D</a> *V, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> magnitude)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">scales the vector to the specified length without changing direction No op is magnitude is 0 or V is NULL  <a href="#aee7fef73d16e398241516af2d6d822fb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#ab98a0e763240e3c1ee4345b7e5146ca7">eol_vec3d_set_magnitude</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> *V, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> magnitude)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#ac88fff9224bc07cb2a60523692a9e306">eol_vec4d_set_magnitude</a> (<a class="el" href="structeolVec4D.html">eolVec4D</a> *V, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> magnitude)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a0d7fc7c3e65e3f6f10cc01ae2c967313">eol_vec3d_magnitude_less_than</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> V, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__opengl_8h.html#a3d1e3edfcf61ca2d831883e1afbad89e">size</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a6c80a083f6afa1ff3aaa7b1678a34462">eol_distance_between_less_than3d</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> p1, <a class="el" href="structeolVec3D.html">eolVec3D</a> p2, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__opengl_8h.html#a3d1e3edfcf61ca2d831883e1afbad89e">size</a>)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#ab0225953b40818f41970c461ac2e7424">eol_vec3d_set_angle_by_radians</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> *out, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radians)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">sets the outvector to a unit vector pointing at the angle specified  <a href="#ab0225953b40818f41970c461ac2e7424"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a82fc4c636f5b3978377b7419fb4db358">eol_vec4d_set_angle_by_radians</a> (<a class="el" href="structeolVec4D.html">eolVec4D</a> *out, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radians)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a6f525c51a2d1a24be1107c8d09c33b08">eol_vec2d_normalize</a> (<a class="el" href="structeolVec2D.html">eolVec2D</a> *V)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#ad9b26b880ac377cd6d1c19bf565e1008">eol_vec3d_normalize</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> *V)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#ae5f8fafb7d5ad5c1648a33c6d187fa85">eol_vec4d_normalize</a> (<a class="el" href="structeolVec4D.html">eolVec4D</a> *V)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec2D.html">eolVec2D</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#abf93318b8cc5e068e55f51117d017fb9">eol_vec2d_dup</a> (<a class="el" href="structeolVec2D.html">eolVec2D</a> old)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec3D.html">eolVec3D</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a023e00324c15ec6ca386a1eddccb631a">eol_vec3d_dup</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> old)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec4D.html">eolVec4D</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a83789c527a6c6dd355e9147501b905b2">eol_vec4d_dup</a> (<a class="el" href="structeolVec4D.html">eolVec4D</a> old)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec2D.html">eolVec2D</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a6d38451820a49ba080cbb867a418be31">eol_vec2d_new</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec3D.html">eolVec3D</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#aca5c4883a55e7ac3616718ad3abb9e1c">eol_vec3d_new</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec4D.html">eolVec4D</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a18e1dbd28a485fd15ea93f5ecb5a3a38">eol_vec4d_new</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a8f41c669b9c9843057c5a25d54461c98">eol_vector_angle</a> (<a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">returns the angle of a vector in 2D space.  <a href="#a8f41c669b9c9843057c5a25d54461c98"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#afee236579853e82f5b8878af91b2fc47">eol_angle_clamp_degrees</a> (<a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> *a)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a6709f6768420df658f1cf8fc4f4859bf">eol_angle_between_degrees</a> (<a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> a, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> b)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">returns the angle between the two angles. Takes into account wraping around 0 and 360 units are degrees  a one of the angles in question  b one of the angles in question  <a href="#a6709f6768420df658f1cf8fc4f4859bf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a95fc203df9672e17365ca15e3a54a55c">eol_vec2d_reflect</a> (<a class="el" href="structeolVec2D.html">eolVec2D</a> *out, <a class="el" href="structeolVec2D.html">eolVec2D</a> normal, <a class="el" href="structeolVec2D.html">eolVec2D</a> in)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">reflect a vector about a normal. Simulates "Bounce"  <a href="#a95fc203df9672e17365ca15e3a54a55c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a7c9e9964956a0408a1a6f5c71f79d4a0">eol_vec3d_reflect</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> *out, <a class="el" href="structeolVec3D.html">eolVec3D</a> normal, <a class="el" href="structeolVec3D.html">eolVec3D</a> in)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a91919e0d1c52bbf32d8d49f4251f8ac5">eol_vec4d_reflect</a> (<a class="el" href="structeolVec4D.html">eolVec4D</a> *out, <a class="el" href="structeolVec4D.html">eolVec4D</a> normal, <a class="el" href="structeolVec4D.html">eolVec4D</a> in)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a5105e79b30efd5ee66b964383b17205e">eol_vec3d_cross_product</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> *out, <a class="el" href="structeolVec3D.html">eolVec3D</a> <a class="el" href="eol__opengl_8h.html#a025735300dec90b633a756190fb0c664">v1</a>, <a class="el" href="structeolVec3D.html">eolVec3D</a> <a class="el" href="eol__opengl_8h.html#a2058e9908b67dcf6a2209c30fd7f1b5e">v2</a>)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">calculates the cross product of the two input vectors  <a href="#a5105e79b30efd5ee66b964383b17205e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a38e4170a1cdaaa96550272e56e922b9f">eol_vec3d_rotate_point</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> *dst, <a class="el" href="structeolVec3D.html">eolVec3D</a> point, <a class="el" href="structeolVec3D.html">eolVec3D</a> origin, <a class="el" href="structeolVec3D.html">eolVec3D</a> rotation)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#adb79e027070ddefcdcad4be19d26f570">eol_rect</a> (<a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> <a class="el" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>, <a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> <a class="el" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> h)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">constructs and returns an eolRect  <a href="#adb79e027070ddefcdcad4be19d26f570"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolRectFloat.html">eolRectFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#af2f5ddad1677fe91c186f494870b4d1e">eol_rectf</a> (<a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="el" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>, <a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="el" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>, <a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="el" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>, <a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> h)</td></tr>
@@ -51,6 +84,8 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">copies float rect data from s into d  <a href="#ac370862202290d068ec8ae9f308b8625"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a4c127b89fdebe0f27d105ace89a2b1c4">eol_rect_copy</a> (<a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> *d, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> s)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">copies rect data from s into d  <a href="#a4c127b89fdebe0f27d105ace89a2b1c4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a30e9eb3ceb152cd837274fd55c11da74">eol_rect_lap_rect</a> (<a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> a, <a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> b)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">checks if the two rects are overlapping  <a href="#a30e9eb3ceb152cd837274fd55c11da74"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a923dfde8db7ce3a0f2d9ce52a0203785">eol_orientation_copy</a> (<a class="el" href="structeolOrientation.html">eolOrientation</a> *dst, <a class="el" href="structeolOrientation.html">eolOrientation</a> src)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a8f2f80f519e7bdf6ce618d0f7ffe65f9">eol_orientation_clear</a> (<a class="el" href="structeolOrientation.html">eolOrientation</a> *out)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">sets the passed orientation to a default set up. sets alpha and scale to 1, all else to zero  <a href="#a8f2f80f519e7bdf6ce618d0f7ffe65f9"></a><br/></td></tr>
@@ -64,6 +99,7 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">frees allocated trail data. resets the trail struct to zero does not free the trail structure iself, just the data allocated within it.  <a href="#aff6234f96376c400a5a350fe0f16c274"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a8ff240edeb43f37d2ba21b5b57201d48">eol_trail_append</a> (<a class="el" href="structeolTrail.html">eolTrail</a> *trail, <a class="el" href="structeolOrientation.html">eolOrientation</a> orientation)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">adds a new orientation to the head of the trail, pushing all others back.  <a href="#a8ff240edeb43f37d2ba21b5b57201d48"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#ab8b78207de8378c95cd5233a63062b7c">eol_trail_get_length</a> (<a class="el" href="structeolTrail.html">eolTrail</a> *trail)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a9cb8d6341aada632c0af259652312894">eol_trail_get_nth</a> (<a class="el" href="structeolTrail.html">eolTrail</a> *trail, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> n, <a class="el" href="structeolOrientation.html">eolOrientation</a> *ori)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">retrieves the orientation n spots behind the head.  <a href="#a9cb8d6341aada632c0af259652312894"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__types_8c.html#a9858707765891ded1c79fcff00339519">eol_true_from_string</a> (char *truth)</td></tr>
@@ -74,6 +110,58 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">converts a string represention of true/false to the value accepts "true", "TRUE" and "True" / "false", "FALSE" and "False"  <a href="#ad7276f1b154903afebea5ce2e82050cc"></a><br/></td></tr>
 </table>
 <hr/><h2>Function Documentation</h2>
+<a class="anchor" id="a6709f6768420df658f1cf8fc4f4859bf"></a><!-- doxytag: member="eol_types.c::eol_angle_between_degrees" ref="a6709f6768420df658f1cf8fc4f4859bf" args="(eolFloat a, eolFloat b)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> eol_angle_between_degrees </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>returns the angle between the two angles. Takes into account wraping around 0 and 360 units are degrees  a one of the angles in question  b one of the angles in question </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the angle, in degrees, between the two angles </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00258">258</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afee236579853e82f5b8878af91b2fc47"></a><!-- doxytag: member="eol_types.c::eol_angle_clamp_degrees" ref="afee236579853e82f5b8878af91b2fc47" args="(eolFloat *a)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_angle_clamp_degrees </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> *&nbsp;</td>
+          <td class="paramname"> <em>a</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00251">251</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ad7276f1b154903afebea5ce2e82050cc"></a><!-- doxytag: member="eol_types.c::eol_bool_from_string" ref="ad7276f1b154903afebea5ce2e82050cc" args="(char *truth)" -->
 <div class="memitem">
 <div class="memproto">
@@ -99,16 +187,16 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if "true" or eolFalse if "false",-1 if nothing </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00302">302</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00548">548</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad9d472062e3887dc8f8f711409441bef"></a><!-- doxytag: member="eol_types.c::eol_distance_between_less_than" ref="ad9d472062e3887dc8f8f711409441bef" args="(eolVec3D p1, eolVec3D p2, eolFloat size)" -->
+<a class="anchor" id="a6c80a083f6afa1ff3aaa7b1678a34462"></a><!-- doxytag: member="eol_types.c::eol_distance_between_less_than3d" ref="a6c80a083f6afa1ff3aaa7b1678a34462" args="(eolVec3D p1, eolVec3D p2, eolFloat size)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_distance_between_less_than </td>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_distance_between_less_than3d </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
           <td class="paramname"> <em>p1</em>, </td>
@@ -134,18 +222,7 @@
 </div>
 <div class="memdoc">
 
-<p>checks if the distance between the two points provided is less than size. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>p1</em>&nbsp;</td><td>one point for the distance check </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>p2</em>&nbsp;</td><td>another point for the distance check </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>size</em>&nbsp;</td><td>the value to check against </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if the distance between P1 and P2 is less than size, false otherwise </dd></dl>
-
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00048">48</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00101">101</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -184,7 +261,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue is they are withing +/- of EOL_EPSILON of each other. eolFalse otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00021">21</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00022">22</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -213,7 +290,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolFalse if "false" eolTrue otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00292">292</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00538">538</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -258,7 +335,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00166">166</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00406">406</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -280,7 +357,7 @@
 
 <p>sets the passed orientation to a default set up. sets alpha and scale to 1, all else to zero </p>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00156">156</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00396">396</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -309,7 +386,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00146">146</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00386">386</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -354,7 +431,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00190">190</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00430">430</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -406,7 +483,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00077">77</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00309">309</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -444,7 +521,46 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00134">134</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00366">366</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a30e9eb3ceb152cd837274fd55c11da74"></a><!-- doxytag: member="eol_types.c::eol_rect_lap_rect" ref="a30e9eb3ceb152cd837274fd55c11da74" args="(eolRect a, eolRect b)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_rect_lap_rect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>&nbsp;</td>
+          <td class="paramname"> <em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>&nbsp;</td>
+          <td class="paramname"> <em>b</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>checks if the two rects are overlapping </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>a</em>&nbsp;</td><td>one of the rects to check </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>b</em>&nbsp;</td><td>the other rect to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if they overlap, eolFalse otherwise </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00378">378</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -496,7 +612,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00092">92</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00324">324</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -534,7 +650,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00122">122</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00354">354</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -581,7 +697,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00107">107</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00339">339</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -619,7 +735,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00243">243</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00483">483</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -647,7 +763,27 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00235">235</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00475">475</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab8b78207de8378c95cd5233a63062b7c"></a><!-- doxytag: member="eol_types.c::eol_trail_get_length" ref="ab8b78207de8378c95cd5233a63062b7c" args="(eolTrail *trail)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> eol_trail_get_length </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolTrail.html">eolTrail</a> *&nbsp;</td>
+          <td class="paramname"> <em>trail</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00504">504</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -693,7 +829,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if it found the nth orientation or eolFalse on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00264">264</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00510">510</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -731,7 +867,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00222">222</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00462">462</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -760,7 +896,208 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if "true" or eolFalse if anything else </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00282">282</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00528">528</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a86343e3dea354b9ec0201b957e8f51ea"></a><!-- doxytag: member="eol_types.c::eol_vec2d" ref="a86343e3dea354b9ec0201b957e8f51ea" args="(eolDouble x, eolDouble y)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolVec2D.html">eolVec2D</a> eol_vec2d </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>&nbsp;</td>
+          <td class="paramname"> <em>y</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>create and return an <a class="el" href="structeolVec2D.html">eolVec2D</a> </p>
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00027">27</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abf93318b8cc5e068e55f51117d017fb9"></a><!-- doxytag: member="eol_types.c::eol_vec2d_dup" ref="abf93318b8cc5e068e55f51117d017fb9" args="(eolVec2D old)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolVec2D.html">eolVec2D</a>* eol_vec2d_dup </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec2D.html">eolVec2D</a>&nbsp;</td>
+          <td class="paramname"> <em>old</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00168">168</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaeb43c71c7141f0f2c68e1f96162d640"></a><!-- doxytag: member="eol_types.c::eol_vec2d_magnitude" ref="aaeb43c71c7141f0f2c68e1f96162d640" args="(eolVec2D V)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> eol_vec2d_magnitude </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec2D.html">eolVec2D</a>&nbsp;</td>
+          <td class="paramname"> <em>V</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>normalizes the vector passed. does nothing for a zero length vector. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>v</em>&nbsp;</td><td>pointer to the vector to be normalized. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00048">48</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6d38451820a49ba080cbb867a418be31"></a><!-- doxytag: member="eol_types.c::eol_vec2d_new" ref="a6d38451820a49ba080cbb867a418be31" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolVec2D.html">eolVec2D</a>* eol_vec2d_new </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00195">195</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6f525c51a2d1a24be1107c8d09c33b08"></a><!-- doxytag: member="eol_types.c::eol_vec2d_normalize" ref="a6f525c51a2d1a24be1107c8d09c33b08" args="(eolVec2D *V)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_vec2d_normalize </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec2D.html">eolVec2D</a> *&nbsp;</td>
+          <td class="paramname"> <em>V</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00123">123</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a95fc203df9672e17365ca15e3a54a55c"></a><!-- doxytag: member="eol_types.c::eol_vec2d_reflect" ref="a95fc203df9672e17365ca15e3a54a55c" args="(eolVec2D *out, eolVec2D normal, eolVec2D in)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_vec2d_reflect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec2D.html">eolVec2D</a> *&nbsp;</td>
+          <td class="paramname"> <em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec2D.html">eolVec2D</a>&nbsp;</td>
+          <td class="paramname"> <em>normal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec2D.html">eolVec2D</a>&nbsp;</td>
+          <td class="paramname"> <em>in</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>reflect a vector about a normal. Simulates "Bounce" </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>out</em>&nbsp;</td><td>the resultant vector </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>normal</em>&nbsp;</td><td>the normal vector for the surface that is providing the bounce </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>in</em>&nbsp;</td><td>the input vector that will bounce off of the normal </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00268">268</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aee7fef73d16e398241516af2d6d822fb"></a><!-- doxytag: member="eol_types.c::eol_vec2d_set_magnitude" ref="aee7fef73d16e398241516af2d6d822fb" args="(eolVec2D *V, eolFloat magnitude)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_vec2d_set_magnitude </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec2D.html">eolVec2D</a> *&nbsp;</td>
+          <td class="paramname"> <em>V</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>magnitude</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>scales the vector to the specified length without changing direction No op is magnitude is 0 or V is NULL </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>V</em>&nbsp;</td><td>a pointer to the vector to scale </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>magnitude</em>&nbsp;</td><td>the new length for the vector </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00069">69</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -797,25 +1134,31 @@
 
 <p>create and return an <a class="el" href="structeolVec3D.html">eolVec3D</a> </p>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00026">26</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00034">34</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8ba6c25ed1686c0896ed33b5be1bce2c"></a><!-- doxytag: member="eol_types.c::eol_vec3d_magnatude_less_than" ref="a8ba6c25ed1686c0896ed33b5be1bce2c" args="(eolVec3D V, eolFloat size)" -->
+<a class="anchor" id="a5105e79b30efd5ee66b964383b17205e"></a><!-- doxytag: member="eol_types.c::eol_vec3d_cross_product" ref="a5105e79b30efd5ee66b964383b17205e" args="(eolVec3D *out, eolVec3D v1, eolVec3D v2)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_vec3d_magnatude_less_than </td>
+          <td class="memname">void eol_vec3d_cross_product </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
-          <td class="paramname"> <em>V</em>, </td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a> *&nbsp;</td>
+          <td class="paramname"> <em>out</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
-          <td class="paramname"> <em>size</em></td><td>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>v1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>v2</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -826,19 +1169,29 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00043">43</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>calculates the cross product of the two input vectors </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>out</em>&nbsp;</td><td>the resultant cross product </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>v1</em>&nbsp;</td><td>one of the components </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>v2</em>&nbsp;</td><td>one of the components </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00295">295</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a778fa43d615f6f8627a428dd91364ff5"></a><!-- doxytag: member="eol_types.c::eol_vec3d_magnatude_squared" ref="a778fa43d615f6f8627a428dd91364ff5" args="(eolVec3D V)" -->
+<a class="anchor" id="a023e00324c15ec6ca386a1eddccb631a"></a><!-- doxytag: member="eol_types.c::eol_vec3d_dup" ref="a023e00324c15ec6ca386a1eddccb631a" args="(eolVec3D old)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> eol_vec3d_magnatude_squared </td>
+          <td class="memname"><a class="el" href="structeolVec3D.html">eolVec3D</a>* eol_vec3d_dup </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
-          <td class="paramname"> <em>V</em></td>
+          <td class="paramname"> <em>old</em></td>
           <td>&nbsp;)&nbsp;</td>
           <td></td>
         </tr>
@@ -846,7 +1199,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00038">38</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00177">177</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -866,7 +1219,75 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00033">33</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00053">53</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0d7fc7c3e65e3f6f10cc01ae2c967313"></a><!-- doxytag: member="eol_types.c::eol_vec3d_magnitude_less_than" ref="a0d7fc7c3e65e3f6f10cc01ae2c967313" args="(eolVec3D V, eolFloat size)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_vec3d_magnitude_less_than </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>V</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>size</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00096">96</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0fe853337cac97073de3f3e6524ef8b2"></a><!-- doxytag: member="eol_types.c::eol_vec3d_magnitude_squared" ref="a0fe853337cac97073de3f3e6524ef8b2" args="(eolVec3D V)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> eol_vec3d_magnitude_squared </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>V</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00064">64</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aca5c4883a55e7ac3616718ad3abb9e1c"></a><!-- doxytag: member="eol_types.c::eol_vec3d_new" ref="aca5c4883a55e7ac3616718ad3abb9e1c" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolVec3D.html">eolVec3D</a>* eol_vec3d_new </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00210">210</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -886,7 +1307,83 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00063">63</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00137">137</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7c9e9964956a0408a1a6f5c71f79d4a0"></a><!-- doxytag: member="eol_types.c::eol_vec3d_reflect" ref="a7c9e9964956a0408a1a6f5c71f79d4a0" args="(eolVec3D *out, eolVec3D normal, eolVec3D in)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_vec3d_reflect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a> *&nbsp;</td>
+          <td class="paramname"> <em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>normal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>in</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00276">276</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a38e4170a1cdaaa96550272e56e922b9f"></a><!-- doxytag: member="eol_types.c::eol_vec3d_rotate_point" ref="a38e4170a1cdaaa96550272e56e922b9f" args="(eolVec3D *dst, eolVec3D point, eolVec3D origin, eolVec3D rotation)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_vec3d_rotate_point </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a> *&nbsp;</td>
+          <td class="paramname"> <em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>point</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>origin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td>
+          <td class="paramname"> <em>rotation</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00302">302</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
@@ -924,12 +1421,295 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00056">56</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00109">109</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab98a0e763240e3c1ee4345b7e5146ca7"></a><!-- doxytag: member="eol_types.c::eol_vec3d_set_magnitude" ref="ab98a0e763240e3c1ee4345b7e5146ca7" args="(eolVec3D *V, eolFloat magnitude)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_vec3d_set_magnitude </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec3D.html">eolVec3D</a> *&nbsp;</td>
+          <td class="paramname"> <em>V</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>magnitude</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00077">77</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae6d4a99faadf23b7b0f3f3b470b1b18b"></a><!-- doxytag: member="eol_types.c::eol_vec4d" ref="ae6d4a99faadf23b7b0f3f3b470b1b18b" args="(eolDouble x, eolDouble y, eolDouble z, eolDouble w)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolVec4D.html">eolVec4D</a> eol_vec4d </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>&nbsp;</td>
+          <td class="paramname"> <em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>&nbsp;</td>
+          <td class="paramname"> <em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>&nbsp;</td>
+          <td class="paramname"> <em>w</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>create and return an <a class="el" href="structeolVec4D.html">eolVec4D</a> </p>
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00041">41</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a83789c527a6c6dd355e9147501b905b2"></a><!-- doxytag: member="eol_types.c::eol_vec4d_dup" ref="a83789c527a6c6dd355e9147501b905b2" args="(eolVec4D old)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolVec4D.html">eolVec4D</a>* eol_vec4d_dup </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec4D.html">eolVec4D</a>&nbsp;</td>
+          <td class="paramname"> <em>old</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00186">186</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aef8e0d565a72a5c3accbef664b1c57e4"></a><!-- doxytag: member="eol_types.c::eol_vec4d_magnitude" ref="aef8e0d565a72a5c3accbef664b1c57e4" args="(eolVec4D V)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> eol_vec4d_magnitude </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec4D.html">eolVec4D</a>&nbsp;</td>
+          <td class="paramname"> <em>V</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00058">58</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a18e1dbd28a485fd15ea93f5ecb5a3a38"></a><!-- doxytag: member="eol_types.c::eol_vec4d_new" ref="a18e1dbd28a485fd15ea93f5ecb5a3a38" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolVec4D.html">eolVec4D</a>* eol_vec4d_new </td>
+          <td>(</td>
+          <td class="paramname"></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00225">225</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae5f8fafb7d5ad5c1648a33c6d187fa85"></a><!-- doxytag: member="eol_types.c::eol_vec4d_normalize" ref="ae5f8fafb7d5ad5c1648a33c6d187fa85" args="(eolVec4D *V)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_vec4d_normalize </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec4D.html">eolVec4D</a> *&nbsp;</td>
+          <td class="paramname"> <em>V</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00152">152</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a91919e0d1c52bbf32d8d49f4251f8ac5"></a><!-- doxytag: member="eol_types.c::eol_vec4d_reflect" ref="a91919e0d1c52bbf32d8d49f4251f8ac5" args="(eolVec4D *out, eolVec4D normal, eolVec4D in)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_vec4d_reflect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec4D.html">eolVec4D</a> *&nbsp;</td>
+          <td class="paramname"> <em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec4D.html">eolVec4D</a>&nbsp;</td>
+          <td class="paramname"> <em>normal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeolVec4D.html">eolVec4D</a>&nbsp;</td>
+          <td class="paramname"> <em>in</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00285">285</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a82fc4c636f5b3978377b7419fb4db358"></a><!-- doxytag: member="eol_types.c::eol_vec4d_set_angle_by_radians" ref="a82fc4c636f5b3978377b7419fb4db358" args="(eolVec4D *out, eolFloat radians)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_vec4d_set_angle_by_radians </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec4D.html">eolVec4D</a> *&nbsp;</td>
+          <td class="paramname"> <em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>radians</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00116">116</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac88fff9224bc07cb2a60523692a9e306"></a><!-- doxytag: member="eol_types.c::eol_vec4d_set_magnitude" ref="ac88fff9224bc07cb2a60523692a9e306" args="(eolVec4D *V, eolFloat magnitude)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_vec4d_set_magnitude </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec4D.html">eolVec4D</a> *&nbsp;</td>
+          <td class="paramname"> <em>V</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>magnitude</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00086">86</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8f41c669b9c9843057c5a25d54461c98"></a><!-- doxytag: member="eol_types.c::eol_vector_angle" ref="a8f41c669b9c9843057c5a25d54461c98" args="(eolFloat x, eolFloat y)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> eol_vector_angle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
+          <td class="paramname"> <em>y</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>returns the angle of a vector in 2D space. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>x</em>&nbsp;</td><td>the x component of the vector </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>y</em>&nbsp;</td><td>the y component of the vector </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the angle of the vector in radians. </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__types_8c_source.html#l00240">240</a> of file <a class="el" href="eol__types_8c_source.html">eol_types.c</a>.</p>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:28 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:15 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

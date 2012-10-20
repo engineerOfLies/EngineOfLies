@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -57,10 +58,12 @@
 <a class="el" href="eol__entity_8h.html#a09e7fa8fedd17a7683438945262daae8a6a2bb9709d509b1f2eda48ddfc413fd4">eolEntityDrawTextured</a> =  3, 
 <br/>
 &nbsp;&nbsp;<a class="el" href="eol__entity_8h.html#a09e7fa8fedd17a7683438945262daae8a00a0d4f5ee3fae6def89f0584725f6a5">eolEntityDrawLighting</a> =  4, 
-<a class="el" href="eol__entity_8h.html#a09e7fa8fedd17a7683438945262daae8a0ae941cfe2398d485d68f42802583761">eolEntityDrawShaded</a> =  5
+<a class="el" href="eol__entity_8h.html#a09e7fa8fedd17a7683438945262daae8a0ae941cfe2398d485d68f42802583761">eolEntityDrawShaded</a> =  5, 
+<a class="el" href="eol__entity_8h.html#a09e7fa8fedd17a7683438945262daae8a48fa63a983c9696e36ba16f35f3ffefe">eolEntityDrawTexturedBound</a> =  6
 <br/>
  }</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__entity_8h.html#accea269d6ce4747283645850e70cea9a">eolEntityClipLayers</a> { <a class="el" href="eol__entity_8h.html#accea269d6ce4747283645850e70cea9aa36060c60618d11762a7313c2a045f0f3">eolEntityClipLevel</a> =  1
+<tr><td class="memItemLeft" align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__entity_8h.html#adef4b9a35dca79f88f8a330ff7f87d57">eolEntityClipTypes</a> { <a class="el" href="eol__entity_8h.html#adef4b9a35dca79f88f8a330ff7f87d57a36060c60618d11762a7313c2a045f0f3">eolEntityClipLevel</a> =  1, 
+<a class="el" href="eol__entity_8h.html#adef4b9a35dca79f88f8a330ff7f87d57ada6b2299bcc2e73650230e7e9aac8c90">eolEntityClipEntities</a> =  2
  }</td></tr>
 <tr><td colspan="2"><h2>Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__entity_8h.html#a164a9bd5ff05413177995877d00420ee">eol_entity_config</a> ()</td></tr>
@@ -76,7 +79,7 @@
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structEntity__S.html">eolEntity</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__entity_8h.html#ac824cf3d9833f0040635a61b6f19e0cc">eol_entity_new</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get a newly allocated freshly initialized entity.  <a href="#ac824cf3d9833f0040635a61b6f19e0cc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__entity_8h.html#ab093ee46bdc7c026eb98979494490c34">eol_entity_presync_all</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">sync entity states with the collision space. Update desired forces, add and remove entities from the space. delete entities marked for death.  <a href="#ab093ee46bdc7c026eb98979494490c34"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">sync entity states with the collision space. Update desired forces, note that position and velocity are updated automatically here. add and remove entities from the space. delete entities marked for death.  <a href="#ab093ee46bdc7c026eb98979494490c34"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__entity_8h.html#a075d3ead5cf66a82f9a3477f52718030">eol_entity_postsync_all</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">sync entity states from the collision space. Update positions, call touch functions.  <a href="#a075d3ead5cf66a82f9a3477f52718030"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__entity_8h.html#a9a58d74b0021a3ed24914df71b4d55aa">eol_entity_update_all</a> ()</td></tr>
@@ -101,6 +104,8 @@
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__entity_8h.html#a8f42ec31223afba27d6ebb50d3531e4d">eol_entity_add_to_collision_mask</a> (<a class="el" href="structEntity__S.html">eolEntity</a> *ent, cpLayers collisionmask)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__entity_8h.html#aa8a412481c1f0d5e3ba2ff17e5206fb5">eol_entity_remove_entity_from_collision_mask</a> (<a class="el" href="structEntity__S.html">eolEntity</a> *ent, cpLayers collisionmask)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__entity_8h.html#a32672a5f226bb17cb21443945e6e72f8">eol_entity_add_actor</a> (<a class="el" href="structEntity__S.html">eolEntity</a> *ent, <a class="el" href="structeolActor.html">eolActor</a> *act)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__entity_8h.html#a58908d6440eb4b32c0c565c80a856a1d">eol_entity_set_actor_bounds</a> (<a class="el" href="structEntity__S.html">eolEntity</a> *ent)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__entity_8h.html#a20c35ec1c82f179cf07c64f63f99da9d">eol_entity_get_ref_count</a> (<a class="el" href="structEntity__S.html">eolEntity</a> *ent)</td></tr>
 </table>
 <hr/><h2>Typedef Documentation</h2>
 <a class="anchor" id="aa08778383db210c3b1717a97d83fabd0"></a><!-- doxytag: member="eol_entity.h::eolEntity" ref="aa08778383db210c3b1717a97d83fabd0" args="" -->
@@ -129,29 +134,31 @@
 
 <p>this is the function prototype for a customData delete function a delete function must be provided if using customData  the function must take a pointer to the custom data. It should be cast internally as the customData type. </p>
 
-<p>Definition at line <a class="el" href="eol__entity_8h_source.html#l00203">203</a> of file <a class="el" href="eol__entity_8h_source.html">eol_entity.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8h_source.html#l00220">220</a> of file <a class="el" href="eol__entity_8h_source.html">eol_entity.h</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Enumeration Type Documentation</h2>
-<a class="anchor" id="accea269d6ce4747283645850e70cea9a"></a><!-- doxytag: member="eol_entity.h::eolEntityClipLayers" ref="accea269d6ce4747283645850e70cea9a" args="" -->
+<a class="anchor" id="adef4b9a35dca79f88f8a330ff7f87d57"></a><!-- doxytag: member="eol_entity.h::eolEntityClipTypes" ref="adef4b9a35dca79f88f8a330ff7f87d57" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="eol__entity_8h.html#accea269d6ce4747283645850e70cea9a">eolEntityClipLayers</a></td>
+          <td class="memname">enum <a class="el" href="eol__entity_8h.html#adef4b9a35dca79f88f8a330ff7f87d57">eolEntityClipTypes</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em><a class="anchor" id="accea269d6ce4747283645850e70cea9aa36060c60618d11762a7313c2a045f0f3"></a><!-- doxytag: member="eolEntityClipLevel" ref="accea269d6ce4747283645850e70cea9aa36060c60618d11762a7313c2a045f0f3" args="" -->eolEntityClipLevel</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" id="adef4b9a35dca79f88f8a330ff7f87d57a36060c60618d11762a7313c2a045f0f3"></a><!-- doxytag: member="eolEntityClipLevel" ref="adef4b9a35dca79f88f8a330ff7f87d57a36060c60618d11762a7313c2a045f0f3" args="" -->eolEntityClipLevel</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="adef4b9a35dca79f88f8a330ff7f87d57ada6b2299bcc2e73650230e7e9aac8c90"></a><!-- doxytag: member="eolEntityClipEntities" ref="adef4b9a35dca79f88f8a330ff7f87d57ada6b2299bcc2e73650230e7e9aac8c90" args="" -->eolEntityClipEntities</em>&nbsp;</td><td>
 </td></tr>
 </table>
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__entity_8h_source.html#l00057">57</a> of file <a class="el" href="eol__entity_8h_source.html">eol_entity.h</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8h_source.html#l00058">58</a> of file <a class="el" href="eol__entity_8h_source.html">eol_entity.h</a>.</p>
 
 </div>
 </div>
@@ -177,6 +184,8 @@
 <tr><td valign="top"><em><a class="anchor" id="a09e7fa8fedd17a7683438945262daae8a00a0d4f5ee3fae6def89f0584725f6a5"></a><!-- doxytag: member="eolEntityDrawLighting" ref="a09e7fa8fedd17a7683438945262daae8a00a0d4f5ee3fae6def89f0584725f6a5" args="" -->eolEntityDrawLighting</em>&nbsp;</td><td>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="a09e7fa8fedd17a7683438945262daae8a0ae941cfe2398d485d68f42802583761"></a><!-- doxytag: member="eolEntityDrawShaded" ref="a09e7fa8fedd17a7683438945262daae8a0ae941cfe2398d485d68f42802583761" args="" -->eolEntityDrawShaded</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a09e7fa8fedd17a7683438945262daae8a48fa63a983c9696e36ba16f35f3ffefe"></a><!-- doxytag: member="eolEntityDrawTexturedBound" ref="a09e7fa8fedd17a7683438945262daae8a48fa63a983c9696e36ba16f35f3ffefe" args="" -->eolEntityDrawTexturedBound</em>&nbsp;</td><td>
 </td></tr>
 </table>
 </dd>
@@ -270,7 +279,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00617">617</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00817">817</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -299,7 +308,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00604">604</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00789">789</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -337,7 +346,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00469">469</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00651">651</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -358,7 +367,7 @@
 
 <p>deleted loaded entity data resetting system back to startup </p>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00097">97</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00150">150</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -379,7 +388,7 @@
 
 <p>configure entity system from file or defaults </p>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00032">32</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00035">35</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -400,7 +409,7 @@
 
 <p>draws all entities in the current context. </p>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00406">406</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00568">568</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -428,7 +437,27 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00161">161</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00212">212</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a20c35ec1c82f179cf07c64f63f99da9d"></a><!-- doxytag: member="eol_entity.h::eol_entity_get_ref_count" ref="a20c35ec1c82f179cf07c64f63f99da9d" args="(eolEntity *ent)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> eol_entity_get_ref_count </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structEntity__S.html">eolEntity</a> *&nbsp;</td>
+          <td class="paramname"> <em>ent</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00276">276</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -449,7 +478,7 @@
 
 <p>sets up entity system based on defaults </p>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00061">61</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00114">114</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -470,7 +499,7 @@
 
 <p>returns initialization status of entity system </p>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00110">110</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00163">163</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -491,7 +520,7 @@
 
 <p>Get a newly allocated freshly initialized entity. </p>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00168">168</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00219">219</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -512,7 +541,7 @@
 
 <p>sync entity states from the collision space. Update positions, call touch functions. </p>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00268">268</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00404">404</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -531,9 +560,9 @@
 </div>
 <div class="memdoc">
 
-<p>sync entity states with the collision space. Update desired forces, add and remove entities from the space. delete entities marked for death. </p>
+<p>sync entity states with the collision space. Update desired forces, note that position and velocity are updated automatically here. add and remove entities from the space. delete entities marked for death. </p>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00258">258</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00394">394</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -561,7 +590,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00211">211</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00265">265</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -589,7 +618,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00200">200</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00254">254</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -618,7 +647,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00610">610</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00795">795</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -646,7 +675,27 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00513">513</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00696">696</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a58908d6440eb4b32c0c565c80a856a1d"></a><!-- doxytag: member="eol_entity.h::eol_entity_set_actor_bounds" ref="a58908d6440eb4b32c0c565c80a856a1d" args="(eolEntity *ent)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_entity_set_actor_bounds </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structEntity__S.html">eolEntity</a> *&nbsp;</td>
+          <td class="paramname"> <em>ent</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00802">802</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -675,7 +724,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00598">598</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00783">783</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -703,7 +752,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00537">537</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00724">724</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -731,7 +780,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00567">567</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00750">750</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -752,7 +801,7 @@
 
 <p>calls all think functions for entities if they need to think </p>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00292">292</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00428">428</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
@@ -773,12 +822,12 @@
 
 <p>calls all update functions for entities. </p>
 
-<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00279">279</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__entity_8c_source.html#l00415">415</a> of file <a class="el" href="eol__entity_8c_source.html">eol_entity.c</a>.</p>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:26 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:13 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -70,33 +71,35 @@
 <a name="l00102"></a>00102 
 <a name="l00110"></a>00110 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__input_8c.html#a7bac5f6fc8de890bd1ee9b2cc900bbd3" title="determines if the keyboard modifier key is held during this frame Uses SDLMod enumerations...">eol_input_is_mod_held</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> mod);
 <a name="l00111"></a>00111 
-<a name="l00119"></a>00119 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__input_8c.html#a9776c0c5d7986e34d481f072aaa53bf9" title="determines if the keyboard modifier key is pressed during this frame Uses SDLMod...">eol_input_is_mod_pressed</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> mod);
+<a name="l00119"></a>00119 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__input_8c.html#ac5b3071c7fcd21fe8874315f47bd8756" title="determines if the keyboard modifier key is down during this frame Uses SDLMod enumerations...">eol_input_is_mod_down</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> mod);
 <a name="l00120"></a>00120 
-<a name="l00128"></a>00128 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__input_8c.html#a8bcd09d0bc99aafae6080abaf1f4a82d" title="determines if the keyboard modifier key is released during this frame Uses SDLMod...">eol_input_is_mod_released</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> mod);
+<a name="l00128"></a>00128 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__input_8c.html#a9776c0c5d7986e34d481f072aaa53bf9" title="determines if the keyboard modifier key is pressed during this frame Uses SDLMod...">eol_input_is_mod_pressed</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> mod);
 <a name="l00129"></a>00129 
-<a name="l00130"></a>00130 <a class="code" href="structeolInput.html" title="structure for defining a control type.">eolInput</a> *<a class="code" href="eol__input_8h.html#a3208defdfcc7686042af8a525b691e44">eol_input_get_nth_input</a>(<span class="keywordtype">char</span> *<a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>,<a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> n);
-<a name="l00131"></a>00131 
-<a name="l00140"></a>00140 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>   <a class="code" href="eol__input_8c.html#a489d50dccf9d19e054340f88af5225c1" title="determines the if the named input is in a down state at the point of this call.">eol_input_is_input_down</a>(<span class="keywordtype">char</span> *input);
-<a name="l00141"></a>00141 
-<a name="l00150"></a>00150 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>   <a class="code" href="eol__input_8h.html#a6563162ca530ea87c74c39a529a97f99" title="determines the if the named input has been down continuously for set period of time...">eol_input_is_input_held</a>(<span class="keywordtype">char</span> *input);
-<a name="l00151"></a>00151 
-<a name="l00159"></a>00159 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>   <a class="code" href="eol__input_8h.html#a6f5e25eaf00f95d79cec09798078aa5a" title="determines the if the named input was just pressed this frame">eol_input_is_input_pressed</a>(<span class="keywordtype">char</span> *input);
+<a name="l00137"></a>00137 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__input_8c.html#a8bcd09d0bc99aafae6080abaf1f4a82d" title="determines if the keyboard modifier key is released during this frame Uses SDLMod...">eol_input_is_mod_released</a>(<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> mod);
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139 <a class="code" href="structeolInput.html" title="structure for defining a control type.">eolInput</a> *<a class="code" href="eol__input_8h.html#a3208defdfcc7686042af8a525b691e44">eol_input_get_nth_input</a>(<span class="keywordtype">char</span> *<a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>,<a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> n);
+<a name="l00140"></a>00140 
+<a name="l00149"></a>00149 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>   <a class="code" href="eol__input_8c.html#a8645d1885fddca75a9a9c01af1e7272d" title="determines the if the named input is in a down state at the point of this call.">eol_input_is_input_down</a>(<span class="keywordtype">char</span> *input);
+<a name="l00150"></a>00150 
+<a name="l00159"></a>00159 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>   <a class="code" href="eol__input_8c.html#abe7bfe3d8c937774ac08225c0330e151" title="determines the if the named input has been down continuously for set period of time...">eol_input_is_input_held</a>(<span class="keywordtype">char</span> *input);
 <a name="l00160"></a>00160 
-<a name="l00168"></a>00168 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>   <a class="code" href="eol__input_8h.html#a185aa39b87170506963d7fb8259f40d8" title="determines the if the named input was just released this frame">eol_input_is_input_released</a>(<span class="keywordtype">char</span> *input);
+<a name="l00168"></a>00168 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>   <a class="code" href="eol__input_8c.html#a2afe21aa3730aedd8c19a2ce4aa1d012" title="determines the if the named input was just pressed this frame">eol_input_is_input_pressed</a>(<span class="keywordtype">char</span> *input);
 <a name="l00169"></a>00169 
-<a name="l00178"></a>00178 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>   <a class="code" href="eol__input_8h.html#a7d747f320832045d6e066104ffa21f63" title="determines the if the named input was tapped twice in rapid succession. The threshold...">eol_input_is_input_double_tapped</a>(<span class="keywordtype">char</span> *input);
-<a name="l00179"></a>00179 
-<a name="l00184"></a>00184 <span class="keywordtype">void</span> <a class="code" href="eol__input_8c.html#a09300830bfef6ddf57a5e628051897c9" title="updated internal input states. This need to be called every frame or as often as...">eol_input_update</a>();
-<a name="l00185"></a>00185 
-<a name="l00190"></a>00190 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__input_8h.html#a4cca9fa5a2fb6f2931b7c7a5e27f650d" title="return the value of the input specified. This is useful for analog control types...">eol_get_input_value</a>(<span class="keywordtype">char</span> *input);
-<a name="l00191"></a>00191 
-<a name="l00196"></a>00196 <span class="keywordtype">void</span> <a class="code" href="eol__input_8c.html#aa0e135a156c7288289859f989be653c2" title="load the input system configuration and input mappings from files. If no files found...">eol_input_load_config</a>();
-<a name="l00197"></a>00197 
-<a name="l00203"></a>00203 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__input_8c.html#a11f0d498f697b0e92ce6efcf7b7db9eb" title="checks for any quit condition from the user.">eol_input_quit_check</a>();
-<a name="l00204"></a>00204 
-<a name="l00205"></a>00205 <span class="preprocessor">#endif</span>
+<a name="l00177"></a>00177 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>   <a class="code" href="eol__input_8c.html#ab85fe4026b772f3d05f7aebf923d9557" title="determines the if the named input was just released this frame">eol_input_is_input_released</a>(<span class="keywordtype">char</span> *input);
+<a name="l00178"></a>00178 
+<a name="l00187"></a>00187 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>   <a class="code" href="eol__input_8h.html#a7d747f320832045d6e066104ffa21f63" title="determines the if the named input was tapped twice in rapid succession. The threshold...">eol_input_is_input_double_tapped</a>(<span class="keywordtype">char</span> *input);
+<a name="l00188"></a>00188 
+<a name="l00193"></a>00193 <span class="keywordtype">void</span> <a class="code" href="eol__input_8c.html#a09300830bfef6ddf57a5e628051897c9" title="updated internal input states. This need to be called every frame or as often as...">eol_input_update</a>();
+<a name="l00194"></a>00194 
+<a name="l00199"></a>00199 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__input_8h.html#a4cca9fa5a2fb6f2931b7c7a5e27f650d" title="return the value of the input specified. This is useful for analog control types...">eol_get_input_value</a>(<span class="keywordtype">char</span> *input);
+<a name="l00200"></a>00200 
+<a name="l00205"></a>00205 <span class="keywordtype">void</span> <a class="code" href="eol__input_8c.html#aa0e135a156c7288289859f989be653c2" title="load the input system configuration and input mappings from files. If no files found...">eol_input_load_config</a>();
+<a name="l00206"></a>00206 
+<a name="l00212"></a>00212 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__input_8c.html#a11f0d498f697b0e92ce6efcf7b7db9eb" title="checks for any quit condition from the user.">eol_input_quit_check</a>();
+<a name="l00213"></a>00213 
+<a name="l00214"></a>00214 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:23 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:11 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

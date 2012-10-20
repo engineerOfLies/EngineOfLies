@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -52,15 +53,15 @@
 <a name="l00038"></a><a class="code" href="structeolTileType.html#a46f9f351c70e8fa320c3b1b622e9f195">00038</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>        <a class="code" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>;        
 <a name="l00039"></a><a class="code" href="structeolTileType.html#ac1a9a024eb39924a5d00dff18db28755">00039</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>        footwidth; 
 <a name="l00040"></a><a class="code" href="structeolTileType.html#a61c8ce6046e865a1976c182a42b6355d">00040</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>        footheight;
-<a name="l00041"></a><a class="code" href="structeolTileType.html#a352d63647caacc5776d48f2235312ba5">00041</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> <a class="code" href="structEntity__S.html#a787ec1dd949e18bf8d5f75311ecd45b0">ori</a>;       
+<a name="l00041"></a><a class="code" href="structeolTileType.html#a352d63647caacc5776d48f2235312ba5">00041</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> ori;       
 <a name="l00042"></a><a class="code" href="structeolTileType.html#a3083039a3ff22bfd4940dea4eb521b8b">00042</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        modelFile; 
 <a name="l00043"></a>00043 }<a class="code" href="structeolTileType.html" title="Tiles are a means of constructing levels with components, rather than a fully fleshed...">eolTileType</a>;
 <a name="l00044"></a>00044 
 <a name="l00045"></a><a class="code" href="structeolTile.html">00045</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00046"></a>00046 {
 <a name="l00047"></a><a class="code" href="structeolTile.html#a59e467cc103f6b8655a29f72ec5fe7ed">00047</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>          <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,<a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>;     
-<a name="l00048"></a><a class="code" href="structeolTile.html#afaaa082a15eee8aebe2060bc8301e593">00048</a>   <a class="code" href="structeolActor.html">eolActor</a>       * <a class="code" href="structEntity__S.html#a5e854f8f625ce666a0b37816e712321e">actor</a>;   
-<a name="l00049"></a><a class="code" href="structeolTile.html#a9744dae3c3ca0f92fdf2f92d2ff4938e">00049</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a>   <a class="code" href="structEntity__S.html#a787ec1dd949e18bf8d5f75311ecd45b0">ori</a>;     
+<a name="l00048"></a><a class="code" href="structeolTile.html#afaaa082a15eee8aebe2060bc8301e593">00048</a>   <a class="code" href="structeolActor.html">eolActor</a>       * actor;   
+<a name="l00049"></a><a class="code" href="structeolTile.html#a9744dae3c3ca0f92fdf2f92d2ff4938e">00049</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a>   ori;     
 <a name="l00050"></a>00050 }<a class="code" href="structeolTile.html">eolTile</a>;
 <a name="l00051"></a>00051 
 <a name="l00052"></a><a class="code" href="structeolTileMap.html">00052</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
@@ -80,7 +81,7 @@
 <a name="l00066"></a>00066 <span class="keywordtype">void</span> <a class="code" href="eol__tile_8h.html#a78773655deb683804fa17f9283c3d439">eol_tile_map_add_to_space</a>(<a class="code" href="structeolTileMap.html">eolTileMap</a> *map, cpSpace *space);
 <a name="l00067"></a>00067 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:25 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:12 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -67,62 +68,65 @@
 <a name="l00050"></a><a class="code" href="structeolModel.html">00050</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00051"></a>00051 {
 <a name="l00052"></a><a class="code" href="structeolModel.html#ac4cefea9d40874bb3cb8afcbf600f872">00052</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        <a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>;               
-<a name="l00053"></a><a class="code" href="structeolModel.html#a4a73f9a4f7df5ba484b8cc5bf3bf55b7">00053</a>   <a class="code" href="structeolMesh.html">eolMesh</a>      * _mesh;              
-<a name="l00054"></a><a class="code" href="structeolModel.html#a597dda5b48bdb18c8aced6ce841dc4dd">00054</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        _meshFile;          
-<a name="l00055"></a><a class="code" href="structeolModel.html#a54439d32de369c4378b79a49c6a3d56c">00055</a>   <a class="code" href="structeolSprite.html">eolSprite</a>    * _skin;              
-<a name="l00056"></a><a class="code" href="structeolModel.html#ac9fcd19e878a63df3967d9df5c3e3714">00056</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        _skinFile;          
-<a name="l00057"></a><a class="code" href="structeolModel.html#a5b9d9cd638adecd3f58de5643207a2e3">00057</a>   <a class="code" href="structeolArmature.html">eolArmature</a>  * _arm;               
-<a name="l00058"></a><a class="code" href="structeolModel.html#a28a946618d5dc42e5e67c9e94765853f">00058</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        _armFile;           
-<a name="l00059"></a><a class="code" href="structeolModel.html#a10d862fc527fe733f149801df33dc82c">00059</a>   <a class="code" href="structeolSprite.html">eolSprite</a>    * _sprite;            
-<a name="l00060"></a><a class="code" href="structeolModel.html#abb2d22a7e10062fe3897b71481e54561">00060</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        _spriteFile;        
-<a name="l00061"></a><a class="code" href="structeolModel.html#a5b5c3c8ea5181a14568defc76af90b16">00061</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>        _sprite_3D;      
-<a name="l00062"></a><a class="code" href="structeolModel.html#ab6fe4dde16bdbce9b640e37838710c19">00062</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>        numActions;         
-<a name="l00063"></a><a class="code" href="structeolModel.html#af7ed5c1c42ad39560de902a3dddba383">00063</a>   <a class="code" href="structeolAction.html">eolAction</a>    * _actionList;        
-<a name="l00064"></a>00064 }<a class="code" href="structeolModel.html">eolModel</a>;
-<a name="l00065"></a>00065 
-<a name="l00069"></a>00069 <span class="keywordtype">void</span> <a class="code" href="eol__model_8c.html#a10de85a49b3c3c026e280212ec6b95c1" title="model system init">eol_model_init</a>();
-<a name="l00070"></a>00070 
-<a name="l00074"></a>00074 <span class="keywordtype">void</span> <a class="code" href="eol__model_8c.html#a4f4bc73e71893f37176edb56da8f06c4" title="loads up model system config">eol_model_config</a>();
-<a name="l00075"></a>00075 
-<a name="l00079"></a>00079 <span class="keywordtype">void</span> <a class="code" href="eol__model_8c.html#af976c6409d599abd1678641857b9f95c" title="closes model sytem">eol_model_close</a>();
-<a name="l00080"></a>00080 
-<a name="l00085"></a>00085 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__model_8c.html#a5bd42a69752fbf46ffed151213596a15" title="retrieves model system init status">eol_model_initialized</a>();
-<a name="l00086"></a>00086 
-<a name="l00093"></a>00093 <a class="code" href="structeolModel.html">eolModel</a> *<a class="code" href="eol__model_8c.html#a23fffd97c77c9af1e2a50a946e4b097b" title="loads an model from file and returns a pointer to it. based on the file information...">eol_model_load</a>(<span class="keywordtype">char</span> *filename);
-<a name="l00094"></a>00094 
-<a name="l00100"></a>00100 <span class="keywordtype">void</span> <a class="code" href="eol__model_8c.html#abd816a2a42cfc9b0d91142ede8542ba2" title="frees the model provided and sets your pointer to it to NULL">eol_model_free</a>(
-<a name="l00101"></a>00101     <a class="code" href="structeolModel.html">eolModel</a> **model
-<a name="l00102"></a>00102 );
-<a name="l00103"></a>00103 
-<a name="l00115"></a>00115 <span class="keywordtype">void</span> <a class="code" href="eol__model_8c.html#adc93f635c2aab594b059e985d9198bb3" title="draw the model under the current conditions">eol_model_draw</a>(
-<a name="l00116"></a>00116     <a class="code" href="structeolModel.html">eolModel</a> *model,
-<a name="l00117"></a>00117     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
-<a name="l00118"></a>00118     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
-<a name="l00119"></a>00119     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
-<a name="l00120"></a>00120     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00121"></a>00121     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha,
-<a name="l00122"></a>00122     <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>  frame
-<a name="l00123"></a>00123   );
-<a name="l00124"></a>00124 
-<a name="l00136"></a>00136 <span class="keywordtype">void</span> <a class="code" href="eol__model_8c.html#a84f8e06437c57f233dd6cbde4a26d040" title="draw the model under the current conditions">eol_model_draw_wire</a>(
-<a name="l00137"></a>00137     <a class="code" href="structeolModel.html">eolModel</a> *model,
-<a name="l00138"></a>00138     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
-<a name="l00139"></a>00139     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
-<a name="l00140"></a>00140     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
-<a name="l00141"></a>00141     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00142"></a>00142     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha,
-<a name="l00143"></a>00143     <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>  frame
-<a name="l00144"></a>00144   );
-<a name="l00145"></a>00145 
-<a name="l00154"></a>00154 <a class="code" href="structeolAction.html">eolAction</a> * <a class="code" href="eol__model_8c.html#a84aa8ab311b8a9a6eb5f2c70275f3155" title="searches for the model&amp;#39;s action by name">eol_model_get_action</a>(
-<a name="l00155"></a>00155     <a class="code" href="structeolModel.html">eolModel</a> *model,
-<a name="l00156"></a>00156     <a class="code" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb" title="16 character buffer used for short tags">eolWord</a>   aName
-<a name="l00157"></a>00157   );
-<a name="l00158"></a>00158 
-<a name="l00159"></a>00159 <span class="preprocessor">#endif</span>
-<a name="l00160"></a>00160 <span class="preprocessor"></span>
+<a name="l00053"></a><a class="code" href="structeolModel.html#ac1896ac0116b72b434b7cb985c48f840">00053</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a>       scale;              
+<a name="l00054"></a><a class="code" href="structeolModel.html#a8582139ef634bd5d31f3333f624968fc">00054</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a>       <a class="code" href="eol__opengl_8h.html#ae1b92ae085ddef4b1cdca7d749339fb0">offset</a>;             
+<a name="l00055"></a><a class="code" href="structeolModel.html#abcbe9c8ae0e00550fb04013067291afa">00055</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a>       rotation;           
+<a name="l00056"></a><a class="code" href="structeolModel.html#a4a73f9a4f7df5ba484b8cc5bf3bf55b7">00056</a>   <a class="code" href="structeolMesh.html">eolMesh</a>      * _mesh;              
+<a name="l00057"></a><a class="code" href="structeolModel.html#a597dda5b48bdb18c8aced6ce841dc4dd">00057</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        _meshFile;          
+<a name="l00058"></a><a class="code" href="structeolModel.html#a54439d32de369c4378b79a49c6a3d56c">00058</a>   <a class="code" href="structeolSprite.html">eolSprite</a>    * _skin;              
+<a name="l00059"></a><a class="code" href="structeolModel.html#ac9fcd19e878a63df3967d9df5c3e3714">00059</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        _skinFile;          
+<a name="l00060"></a><a class="code" href="structeolModel.html#a5b9d9cd638adecd3f58de5643207a2e3">00060</a>   <a class="code" href="structeolArmature.html">eolArmature</a>  * _arm;               
+<a name="l00061"></a><a class="code" href="structeolModel.html#a28a946618d5dc42e5e67c9e94765853f">00061</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        _armFile;           
+<a name="l00062"></a><a class="code" href="structeolModel.html#a10d862fc527fe733f149801df33dc82c">00062</a>   <a class="code" href="structeolSprite.html">eolSprite</a>    * _sprite;            
+<a name="l00063"></a><a class="code" href="structeolModel.html#abb2d22a7e10062fe3897b71481e54561">00063</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        _spriteFile;        
+<a name="l00064"></a><a class="code" href="structeolModel.html#a5b5c3c8ea5181a14568defc76af90b16">00064</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>        _sprite_3D;      
+<a name="l00065"></a><a class="code" href="structeolModel.html#ab6fe4dde16bdbce9b640e37838710c19">00065</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>        numActions;         
+<a name="l00066"></a><a class="code" href="structeolModel.html#af7ed5c1c42ad39560de902a3dddba383">00066</a>   <a class="code" href="structeolAction.html">eolAction</a>    * _actionList;        
+<a name="l00067"></a>00067 }<a class="code" href="structeolModel.html">eolModel</a>;
+<a name="l00068"></a>00068 
+<a name="l00072"></a>00072 <span class="keywordtype">void</span> <a class="code" href="eol__model_8c.html#a10de85a49b3c3c026e280212ec6b95c1" title="model system init">eol_model_init</a>();
+<a name="l00073"></a>00073 
+<a name="l00077"></a>00077 <span class="keywordtype">void</span> <a class="code" href="eol__model_8c.html#a4f4bc73e71893f37176edb56da8f06c4" title="loads up model system config">eol_model_config</a>();
+<a name="l00078"></a>00078 
+<a name="l00082"></a>00082 <span class="keywordtype">void</span> <a class="code" href="eol__model_8c.html#af976c6409d599abd1678641857b9f95c" title="closes model sytem">eol_model_close</a>();
+<a name="l00083"></a>00083 
+<a name="l00088"></a>00088 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__model_8c.html#a5bd42a69752fbf46ffed151213596a15" title="retrieves model system init status">eol_model_initialized</a>();
+<a name="l00089"></a>00089 
+<a name="l00096"></a>00096 <a class="code" href="structeolModel.html">eolModel</a> *<a class="code" href="eol__model_8c.html#a23fffd97c77c9af1e2a50a946e4b097b" title="loads an model from file and returns a pointer to it. based on the file information...">eol_model_load</a>(<span class="keywordtype">char</span> *filename);
+<a name="l00097"></a>00097 
+<a name="l00103"></a>00103 <span class="keywordtype">void</span> <a class="code" href="eol__model_8c.html#abd816a2a42cfc9b0d91142ede8542ba2" title="frees the model provided and sets your pointer to it to NULL">eol_model_free</a>(
+<a name="l00104"></a>00104     <a class="code" href="structeolModel.html">eolModel</a> **model
+<a name="l00105"></a>00105 );
+<a name="l00106"></a>00106 
+<a name="l00118"></a>00118 <span class="keywordtype">void</span> <a class="code" href="eol__model_8c.html#adc93f635c2aab594b059e985d9198bb3" title="draw the model under the current conditions">eol_model_draw</a>(
+<a name="l00119"></a>00119     <a class="code" href="structeolModel.html">eolModel</a> *model,
+<a name="l00120"></a>00120     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
+<a name="l00121"></a>00121     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
+<a name="l00122"></a>00122     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
+<a name="l00123"></a>00123     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
+<a name="l00124"></a>00124     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha,
+<a name="l00125"></a>00125     <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>  frame
+<a name="l00126"></a>00126   );
+<a name="l00127"></a>00127 
+<a name="l00139"></a>00139 <span class="keywordtype">void</span> <a class="code" href="eol__model_8c.html#a84f8e06437c57f233dd6cbde4a26d040" title="draw the model under the current conditions">eol_model_draw_wire</a>(
+<a name="l00140"></a>00140     <a class="code" href="structeolModel.html">eolModel</a> *model,
+<a name="l00141"></a>00141     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
+<a name="l00142"></a>00142     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
+<a name="l00143"></a>00143     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
+<a name="l00144"></a>00144     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
+<a name="l00145"></a>00145     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha,
+<a name="l00146"></a>00146     <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>  frame
+<a name="l00147"></a>00147   );
+<a name="l00148"></a>00148 
+<a name="l00157"></a>00157 <a class="code" href="structeolAction.html">eolAction</a> * <a class="code" href="eol__model_8c.html#a84aa8ab311b8a9a6eb5f2c70275f3155" title="searches for the model&amp;#39;s action by name">eol_model_get_action</a>(
+<a name="l00158"></a>00158     <a class="code" href="structeolModel.html">eolModel</a> *model,
+<a name="l00159"></a>00159     <a class="code" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb" title="16 character buffer used for short tags">eolWord</a>   aName
+<a name="l00160"></a>00160   );
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162 <span class="preprocessor">#endif</span>
+<a name="l00163"></a>00163 <span class="preprocessor"></span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:24 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:11 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

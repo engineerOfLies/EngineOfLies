@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -56,11 +57,11 @@
 <a name="l00039"></a><a class="code" href="eol__level_8h.html#a52255556aaf877d967c9d6148fc17c55a9e3cd52822997e911dca76f596881a9c">00039</a>   <a class="code" href="eol__level_8h.html#a52255556aaf877d967c9d6148fc17c55a9e3cd52822997e911dca76f596881a9c">eolLevelDrawFull</a>
 <a name="l00040"></a>00040 };
 <a name="l00041"></a>00041 
-<a name="l00048"></a><a class="code" href="eol__level_8h.html#a9fd0c341f589fe91780906fafa85aab9">00048</a> <span class="keyword">typedef</span> <a class="code" href="eol__opengl_8h.html#a0f46383af3c04eeaa5f69463a6e59445">void</a> (*<a class="code" href="eol__level_8h.html#a9fd0c341f589fe91780906fafa85aab9" title="function pointer prototype used to spawn the entities for the level the application...">eolSpawnGeneric</a>)(<a class="code" href="structeolSpawn.html" title="the spawn type is used as a descriptor for the level for the entities that get spawned...">eolSpawn</a> *<a class="code" href="structEntity__S.html#a7afb7ea67bdd6140eede43c1ee10e2cb">spawn</a>);
+<a name="l00048"></a><a class="code" href="eol__level_8h.html#a9fd0c341f589fe91780906fafa85aab9">00048</a> <span class="keyword">typedef</span> <a class="code" href="eol__opengl_8h.html#a0f46383af3c04eeaa5f69463a6e59445">void</a> (*<a class="code" href="eol__level_8h.html#a9fd0c341f589fe91780906fafa85aab9" title="function pointer prototype used to spawn the entities for the level the application...">eolSpawnGeneric</a>)(<a class="code" href="structeolSpawn.html" title="the spawn type is used as a descriptor for the level for the entities that get spawned...">eolSpawn</a> *spawn);
 <a name="l00049"></a>00049 
 <a name="l00050"></a><a class="code" href="structeolBackground.html">00050</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00051"></a>00051 {
-<a name="l00052"></a><a class="code" href="structeolBackground.html#a5ba5dd7154b9e467d68a6b1b657a919a">00052</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a>   <a class="code" href="structEntity__S.html#a787ec1dd949e18bf8d5f75311ecd45b0">ori</a>;
+<a name="l00052"></a><a class="code" href="structeolBackground.html#a5ba5dd7154b9e467d68a6b1b657a919a">00052</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a>   ori;
 <a name="l00053"></a><a class="code" href="structeolBackground.html#aca3c015ae1874b97022e78899cf16271">00053</a>   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>          modelFile;
 <a name="l00054"></a><a class="code" href="structeolBackground.html#a4ed8627b4f66811f3445802bc36e3839">00054</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>         followCam; 
 <a name="l00055"></a><a class="code" href="structeolBackground.html#a83467bd8d31a80a2af0b239d6f5b29b8">00055</a>   <a class="code" href="structeolModel.html">eolModel</a>       * model;
@@ -84,7 +85,7 @@
 <a name="l00081"></a><a class="code" href="structeolLevelLayer.html#a2bcdeac3df36364974ddaf0f44ba59fd">00081</a>   cpSpace    * space;        
 <a name="l00082"></a><a class="code" href="structeolLevelLayer.html#a907bb985bff55d3ba53453ae9f21a18c">00082</a>   <a class="code" href="structeolMesh.html">eolMesh</a>    * clipMesh;     
 <a name="l00083"></a><a class="code" href="structeolLevelLayer.html#a4192ca0847002343571a8aef7c82efff">00083</a>   GList      * entities;     
-<a name="l00084"></a><a class="code" href="structeolLevelLayer.html#accf45358aca9896750efaa5611974c86">00084</a>   <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> * keys;        
+<a name="l00084"></a><a class="code" href="structeolLevelLayer.html#accf45358aca9896750efaa5611974c86">00084</a>   <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> * keys;        
 <a name="l00085"></a>00085 }<a class="code" href="structeolLevelLayer.html" title="the structure used to house the level layer data. The engine supports multiple layers...">eolLevelLayer</a>;
 <a name="l00086"></a>00086 
 <a name="l00087"></a><a class="code" href="structeolLevel.html">00087</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
@@ -93,7 +94,7 @@
 <a name="l00090"></a><a class="code" href="structeolLevel.html#af85ae7094e9ab2bdd0e12e836fea11bf">00090</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>         layerCount; 
 <a name="l00091"></a><a class="code" href="structeolLevel.html#a84c5a27d84e3255f650e8a0e60f75bbe">00091</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>         active;     
 <a name="l00092"></a><a class="code" href="structeolLevel.html#a0418b4bfc54c211ff39ad802c58e0384">00092</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>        cameraDist; 
-<a name="l00093"></a><a class="code" href="structeolLevel.html#ab8e188cb50d6590d7b6b46a3c625d198">00093</a>   <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a>   * keys;       
+<a name="l00093"></a><a class="code" href="structeolLevel.html#ab8e188cb50d6590d7b6b46a3c625d198">00093</a>   <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a>   * keys;       
 <a name="l00094"></a><a class="code" href="structeolLevel.html#ae9346269259111006c0ee313806b33e9">00094</a>   GList         * layers;     
 <a name="l00095"></a>00095 }<a class="code" href="structeolLevel.html">eolLevel</a>;
 <a name="l00096"></a>00096 
@@ -144,9 +145,11 @@
 <a name="l00220"></a>00220 
 <a name="l00221"></a>00221 <span class="keywordtype">void</span> <a class="code" href="eol__level_8c.html#a68da4fbe2ab88bc1115e4ab85adbcc20">eol_level_add_entity_to_active_layer</a>(<a class="code" href="structEntity__S.html">eolEntity</a> *ent);
 <a name="l00222"></a>00222 
-<a name="l00223"></a>00223 <span class="preprocessor">#endif</span>
+<a name="l00223"></a>00223 cpBody *<a class="code" href="eol__level_8c.html#a60c632f0bcd4f9bf074d40316c817323">eol_level_get_active_layer_body</a>();
+<a name="l00224"></a>00224 
+<a name="l00225"></a>00225 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:24 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:11 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

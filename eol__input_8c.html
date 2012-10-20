@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -26,8 +27,8 @@
 <div class="contents">
 <h1>eol_input.c File Reference</h1><code>#include &quot;<a class="el" href="eol__input_8h_source.html">eol_input.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="eol__logger_8h_source.html">eol_logger.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="eol__config_8h_source.html">eol_config.h</a>&quot;</code><br/>
 <code>#include &lt;SDL.h&gt;</code><br/>
-<code>#include &lt;physfs.h&gt;</code><br/>
 
 <p><a href="eol__input_8c_source.html">Go to the source code of this file.</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
@@ -44,6 +45,7 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">updated internal input states. This need to be called every frame or as often as you need your inputs updated.  <a href="#a09300830bfef6ddf57a5e628051897c9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a88b420bd1b5a3c0afec16f8f9649e353">eol_input_parse</a> (char *<a class="el" href="eol__opengl_8h.html#a7d05960f4f1c1b11f3177dc963a45d86">type</a>, char *input)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">converts input config into sdl_key info  <a href="#a88b420bd1b5a3c0afec16f8f9649e353"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a011f76acc1e43b5ab96b7223a09b7f0f">eol_input_add_input_from_link</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *link, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> i)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#aa0e135a156c7288289859f989be653c2">eol_input_load_config</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">load the input system configuration and input mappings from files. If no files found, load defaults.  <a href="#aa0e135a156c7288289859f989be653c2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#aa04cf4e4b0144b649a1570bf86ae555c">eol_input_clear_keyboard</a> ()</td></tr>
@@ -55,6 +57,8 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">determines if the keyboard key is held during this frame  <a href="#a64e80e64409db5bebf47289a648720dd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a7bac5f6fc8de890bd1ee9b2cc900bbd3">eol_input_is_mod_held</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> mod)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">determines if the keyboard modifier key is held during this frame Uses SDLMod enumerations, ex: KMOD_LSHIFT, KMOD_ALT, etc.  <a href="#a7bac5f6fc8de890bd1ee9b2cc900bbd3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#ac5b3071c7fcd21fe8874315f47bd8756">eol_input_is_mod_down</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> mod)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">determines if the keyboard modifier key is down during this frame Uses SDLMod enumerations, ex: KMOD_LSHIFT, KMOD_ALT, etc.  <a href="#ac5b3071c7fcd21fe8874315f47bd8756"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a9776c0c5d7986e34d481f072aaa53bf9">eol_input_is_mod_pressed</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> mod)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">determines if the keyboard modifier key is pressed during this frame Uses SDLMod enumerations, ex: KMOD_LSHIFT, KMOD_ALT, etc.  <a href="#a9776c0c5d7986e34d481f072aaa53bf9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a8bcd09d0bc99aafae6080abaf1f4a82d">eol_input_is_mod_released</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> mod)</td></tr>
@@ -62,14 +66,20 @@
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a11f0d498f697b0e92ce6efcf7b7db9eb">eol_input_quit_check</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">checks for any quit condition from the user.  <a href="#a11f0d498f697b0e92ce6efcf7b7db9eb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolInput.html">eolInput</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a27ee875f684e18ee949e8fc435b4c1b5">eol_input_get_by_name</a> (char *input)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a489d50dccf9d19e054340f88af5225c1">eol_input_is_input_down</a> (char *inputName)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">determines the if the named input is in a down state at the point of this call.  <a href="#a489d50dccf9d19e054340f88af5225c1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a8645d1885fddca75a9a9c01af1e7272d">eol_input_is_input_down</a> (char *inputName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">determines the if the named input is in a down state at the point of this call.  <a href="#a8645d1885fddca75a9a9c01af1e7272d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a2afe21aa3730aedd8c19a2ce4aa1d012">eol_input_is_input_pressed</a> (char *inputName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">determines the if the named input was just pressed this frame  <a href="#a2afe21aa3730aedd8c19a2ce4aa1d012"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#ab85fe4026b772f3d05f7aebf923d9557">eol_input_is_input_released</a> (char *inputName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">determines the if the named input was just released this frame  <a href="#ab85fe4026b772f3d05f7aebf923d9557"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#abe7bfe3d8c937774ac08225c0330e151">eol_input_is_input_held</a> (char *inputName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">determines the if the named input has been down continuously for set period of time. the held threshold is configureable.  <a href="#abe7bfe3d8c937774ac08225c0330e151"></a><br/></td></tr>
 <tr><td colspan="2"><h2>Variables</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolInput.html">eolInput</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a77517decc8b15e5674f8f07c6a9c1a67">_input_list</a> = NULL</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a2a6c0b737135d502e8d23cf17839edb4">_num_inputs</a> = 0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolInput.html">eolInput</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#afceec2bce1b9a5aa7e806caf31e8b938">_eol_input_list</a> = NULL</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a84b6b97f20bd985f28695211c8392341">_eol_input_count</a> = 0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a848d720136d359525ed86acf7cc5a4d2">_eol_input_initialized</a> = eolFalse</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a9f6799c830daa0efe31404a7dc56471a">_held_threshold</a> = 0</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#ad474f3aecaeb2ce7d5ef519360e7fcc8">_double_tap_threshold</a> = 0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#afa1ef1e7ef1c13152a39eaa448102651">_eol_input_held_threshold</a> = 0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a02a71f605d31b200b4c283a386532cc8">_eol_input_double_tap_threshold</a> = 0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a90d509e2e16c3bcf242e0b37b8422b17">_this_frame_keyboard_mod</a> = 0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a59b65f9fb163d553edca6888047397bd">_last_frame_keyboard_mod</a> = 0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">Uint8 *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a7788462d60ffe628d5ad4991635e8cbb">_this_frame_keyboard</a> = NULL</td></tr>
@@ -77,6 +87,35 @@
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__input_8c.html#a312af162e431bdd997840a060aa76f1d">_eol_input_keyboard_numkeys</a> = 0</td></tr>
 </table>
 <hr/><h2>Function Documentation</h2>
+<a class="anchor" id="a011f76acc1e43b5ab96b7223a09b7f0f"></a><!-- doxytag: member="eol_input.c::eol_input_add_input_from_link" ref="a011f76acc1e43b5ab96b7223a09b7f0f" args="(eolKeychain *link, eolUint i)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_input_add_input_from_link </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramname"> <em>link</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td>
+          <td class="paramname"> <em>i</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00171">171</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aa04cf4e4b0144b649a1570bf86ae555c"></a><!-- doxytag: member="eol_input.c::eol_input_clear_keyboard" ref="aa04cf4e4b0144b649a1570bf86ae555c" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -92,7 +131,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00280">280</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00258">258</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -111,7 +150,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00036">36</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00033">33</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -131,7 +170,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00415">415</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00409">409</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -152,7 +191,7 @@
 
 <p>initializes internal components of eol_input </p>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00025">25</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00022">22</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -174,16 +213,16 @@
 <p>returns the initialization status of eol_input </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if eol_input has been initialized, eolFalse otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00049">49</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00046">46</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a489d50dccf9d19e054340f88af5225c1"></a><!-- doxytag: member="eol_input.c::eol_input_is_input_down" ref="a489d50dccf9d19e054340f88af5225c1" args="(char *inputName)" -->
+<a class="anchor" id="a8645d1885fddca75a9a9c01af1e7272d"></a><!-- doxytag: member="eol_input.c::eol_input_is_input_down" ref="a8645d1885fddca75a9a9c01af1e7272d" args="(char *inputName)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_input_is_input_down </td>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> eol_input_is_input_down </td>
           <td>(</td>
           <td class="paramtype">char *&nbsp;</td>
           <td class="paramname"> <em>input</em></td>
@@ -201,9 +240,96 @@
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>true if it is down. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the value of the input (if analog a float, if not 1 or 0) </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00428">428</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00426">426</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abe7bfe3d8c937774ac08225c0330e151"></a><!-- doxytag: member="eol_input.c::eol_input_is_input_held" ref="abe7bfe3d8c937774ac08225c0330e151" args="(char *inputName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> eol_input_is_input_held </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>input</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>determines the if the named input has been down continuously for set period of time. the held threshold is configureable. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>input</em>&nbsp;</td><td>the name of the input in question. eg: "jump"</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the value of the input (if analog a float, if not 1) if it is held, 0 otherwise </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00453">453</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2afe21aa3730aedd8c19a2ce4aa1d012"></a><!-- doxytag: member="eol_input.c::eol_input_is_input_pressed" ref="a2afe21aa3730aedd8c19a2ce4aa1d012" args="(char *inputName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_input_is_input_pressed </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>input</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>determines the if the named input was just pressed this frame </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>input</em>&nbsp;</td><td>the name of the input in question. eg: "jump"</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if it is pressed </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00435">435</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab85fe4026b772f3d05f7aebf923d9557"></a><!-- doxytag: member="eol_input.c::eol_input_is_input_released" ref="ab85fe4026b772f3d05f7aebf923d9557" args="(char *inputName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_input_is_input_released </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>input</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>determines the if the named input was just released this frame </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>input</em>&nbsp;</td><td>the name of the input in question. eg: "jump"</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if it is pressed </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00444">444</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -232,7 +358,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if held, eolFalse otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00329">329</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00307">307</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -261,7 +387,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if pressed, eolFalse otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00289">289</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00267">267</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -290,7 +416,36 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if released, eolFalse otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00309">309</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00287">287</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac5b3071c7fcd21fe8874315f47bd8756"></a><!-- doxytag: member="eol_input.c::eol_input_is_mod_down" ref="ac5b3071c7fcd21fe8874315f47bd8756" args="(eolUint mod)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_input_is_mod_down </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td>
+          <td class="paramname"> <em>mod</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>determines if the keyboard modifier key is down during this frame Uses SDLMod enumerations, ex: KMOD_LSHIFT, KMOD_ALT, etc. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>key</em>&nbsp;</td><td>the SDLMod value of the mod of interest.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if held, eolFalse otherwise </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00346">346</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -319,7 +474,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if held, eolFalse otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00351">351</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00329">329</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -348,7 +503,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if held, eolFalse otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00368">368</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00362">362</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -377,7 +532,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if held, eolFalse otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00385">385</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00379">379</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -396,7 +551,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00246">246</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00224">224</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -415,7 +570,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00251">251</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00229">229</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -436,7 +591,7 @@
 
 <p>load the input system configuration and input mappings from files. If no files found, load defaults. </p>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00172">172</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00182">182</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -473,7 +628,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00088">88</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00085">85</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -495,7 +650,7 @@
 <p>checks for any quit condition from the user. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if a quit condition has been found. </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00402">402</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00396">396</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -516,7 +671,7 @@
 
 <p>updated internal input states. This need to be called every frame or as often as you need your inputs updated. </p>
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00054">54</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00051">51</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -535,23 +690,53 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00266">266</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00244">244</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Variable Documentation</h2>
-<a class="anchor" id="ad474f3aecaeb2ce7d5ef519360e7fcc8"></a><!-- doxytag: member="eol_input.c::_double_tap_threshold" ref="ad474f3aecaeb2ce7d5ef519360e7fcc8" args="" -->
+<a class="anchor" id="a84b6b97f20bd985f28695211c8392341"></a><!-- doxytag: member="eol_input.c::_eol_input_count" ref="a84b6b97f20bd985f28695211c8392341" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__input_8c.html#ad474f3aecaeb2ce7d5ef519360e7fcc8">_double_tap_threshold</a> = 0</td>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__input_8c.html#a84b6b97f20bd985f28695211c8392341">_eol_input_count</a> = 0</td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00013">13</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00007">7</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a02a71f605d31b200b4c283a386532cc8"></a><!-- doxytag: member="eol_input.c::_eol_input_double_tap_threshold" ref="a02a71f605d31b200b4c283a386532cc8" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__input_8c.html#a02a71f605d31b200b4c283a386532cc8">_eol_input_double_tap_threshold</a> = 0</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00010">10</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afa1ef1e7ef1c13152a39eaa448102651"></a><!-- doxytag: member="eol_input.c::_eol_input_held_threshold" ref="afa1ef1e7ef1c13152a39eaa448102651" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__input_8c.html#afa1ef1e7ef1c13152a39eaa448102651">_eol_input_held_threshold</a> = 0</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00009">9</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -566,7 +751,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00011">11</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00008">8</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -581,37 +766,22 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00018">18</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00015">15</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9f6799c830daa0efe31404a7dc56471a"></a><!-- doxytag: member="eol_input.c::_held_threshold" ref="a9f6799c830daa0efe31404a7dc56471a" args="" -->
+<a class="anchor" id="afceec2bce1b9a5aa7e806caf31e8b938"></a><!-- doxytag: member="eol_input.c::_eol_input_list" ref="afceec2bce1b9a5aa7e806caf31e8b938" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__input_8c.html#a9f6799c830daa0efe31404a7dc56471a">_held_threshold</a> = 0</td>
+          <td class="memname"><a class="el" href="structeolInput.html">eolInput</a>* <a class="el" href="eol__input_8c.html#afceec2bce1b9a5aa7e806caf31e8b938">_eol_input_list</a> = NULL</td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00012">12</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a77517decc8b15e5674f8f07c6a9c1a67"></a><!-- doxytag: member="eol_input.c::_input_list" ref="a77517decc8b15e5674f8f07c6a9c1a67" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structeolInput.html">eolInput</a>* <a class="el" href="eol__input_8c.html#a77517decc8b15e5674f8f07c6a9c1a67">_input_list</a> = NULL</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00009">9</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00006">6</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -626,7 +796,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00017">17</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00014">14</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -641,22 +811,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00015">15</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a2a6c0b737135d502e8d23cf17839edb4"></a><!-- doxytag: member="eol_input.c::_num_inputs" ref="a2a6c0b737135d502e8d23cf17839edb4" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__input_8c.html#a2a6c0b737135d502e8d23cf17839edb4">_num_inputs</a> = 0</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00010">10</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00012">12</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -671,7 +826,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00016">16</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00013">13</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
@@ -686,12 +841,12 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00014">14</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__input_8c_source.html#l00011">11</a> of file <a class="el" href="eol__input_8c_source.html">eol_input.c</a>.</p>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:26 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:14 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

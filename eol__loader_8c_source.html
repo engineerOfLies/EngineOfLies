@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -424,12 +425,12 @@
 <a name="l00400"></a>00400 
 <a name="l00401"></a>00401 <span class="comment">/*saving and loading:*/</span>
 <a name="l00402"></a>00402 
-<a name="l00403"></a><a class="code" href="eol__loader_8c.html#a539a2098c6e03e433b84c2399c6e9fb7">00403</a> <span class="keywordtype">void</span> <a class="code" href="eol__loader_8c.html#a539a2098c6e03e433b84c2399c6e9fb7">eol_loader_write_keychain_hash</a>(<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *link,<a class="code" href="structeolFile.html">eolFile</a> *file)
+<a name="l00403"></a><a class="code" href="eol__loader_8c.html#a539a2098c6e03e433b84c2399c6e9fb7">00403</a> <span class="keywordtype">void</span> <a class="code" href="eol__loader_8c.html#a539a2098c6e03e433b84c2399c6e9fb7">eol_loader_write_keychain_hash</a>(<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *link,<a class="code" href="structeolFile.html">eolFile</a> *file)
 <a name="l00404"></a>00404 {
 <a name="l00405"></a>00405   GList *keys = NULL;
 <a name="l00406"></a>00406   GList *values = NULL;
 <a name="l00407"></a>00407   <span class="keywordflow">if</span> (!link)<span class="keywordflow">return</span>;
-<a name="l00408"></a>00408   <span class="keywordflow">if</span> (link-&gt;<a class="code" href="structeolKeychain.html#af3607bc229cf9a3a867604b408429514">keyType</a> != <a class="code" href="eol__keychain_8h.html#a889169076c31a15947cdd2dd05fd03f2acc5c8adbc5afb84402f1259b10229447">eolKeychainHash</a>)<span class="keywordflow">return</span>;
+<a name="l00408"></a>00408   <span class="keywordflow">if</span> (link-&gt;<a class="code" href="structkeychain__S.html#ac816c9776ae15b4da15cee0f63f64f8a">keyType</a> != <a class="code" href="eol__keychain_8h.html#a889169076c31a15947cdd2dd05fd03f2acc5c8adbc5afb84402f1259b10229447">eolKeychainHash</a>)<span class="keywordflow">return</span>;
 <a name="l00409"></a>00409   <span class="comment">/*</span>
 <a name="l00410"></a>00410 <span class="comment">  type</span>
 <a name="l00411"></a>00411 <span class="comment">  count</span>
@@ -439,46 +440,46 @@
 <a name="l00415"></a>00415 <span class="comment">  value</span>
 <a name="l00416"></a>00416 <span class="comment">  ...</span>
 <a name="l00417"></a>00417 <span class="comment">  */</span>
-<a name="l00418"></a>00418   <a class="code" href="eol__loader_8c.html#a83203ce91a9a900ab183fde550c1d8f2" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_uint_to_file</a>(file,link-&gt;<a class="code" href="structeolKeychain.html#af3607bc229cf9a3a867604b408429514">keyType</a>);
-<a name="l00419"></a>00419   <a class="code" href="eol__loader_8c.html#a83203ce91a9a900ab183fde550c1d8f2" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_uint_to_file</a>(file,link-&gt;<a class="code" href="structeolKeychain.html#a1f5ad244dec5e48d4c9bb718748adf99">itemCount</a>);
-<a name="l00420"></a>00420   keys = g_hash_table_get_keys((GHashTable*)link-&gt;<a class="code" href="structeolKeychain.html#a0aa8a665144765cc7875f9c7a61854ac">keyValue</a>);
-<a name="l00421"></a>00421   values = g_hash_table_get_values((GHashTable*)link-&gt;<a class="code" href="structeolKeychain.html#a0aa8a665144765cc7875f9c7a61854ac">keyValue</a>);
+<a name="l00418"></a>00418   <a class="code" href="eol__loader_8c.html#a83203ce91a9a900ab183fde550c1d8f2" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_uint_to_file</a>(file,link-&gt;<a class="code" href="structkeychain__S.html#ac816c9776ae15b4da15cee0f63f64f8a">keyType</a>);
+<a name="l00419"></a>00419   <a class="code" href="eol__loader_8c.html#a83203ce91a9a900ab183fde550c1d8f2" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_uint_to_file</a>(file,link-&gt;<a class="code" href="structkeychain__S.html#af23d6aa52f5d1005fa7e743f6f65ed84">itemCount</a>);
+<a name="l00420"></a>00420   keys = g_hash_table_get_keys((GHashTable*)link-&gt;<a class="code" href="structkeychain__S.html#aa82b538c20fa9537ad65be72f2ef90c4">keyValue</a>);
+<a name="l00421"></a>00421   values = g_hash_table_get_values((GHashTable*)link-&gt;<a class="code" href="structkeychain__S.html#aa82b538c20fa9537ad65be72f2ef90c4">keyValue</a>);
 <a name="l00422"></a>00422   <span class="keywordflow">for</span> (;(keys != NULL) &amp;&amp; (values != NULL); keys = keys-&gt;next,values = values-&gt;next)
 <a name="l00423"></a>00423   {
 <a name="l00424"></a>00424     <a class="code" href="eol__loader_8c.html#ad8236cbf11eda7f6607071f4e91c9e8a" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_string_to_file</a>(file,(<span class="keywordtype">char</span> *)keys-&gt;data);
-<a name="l00425"></a>00425     <a class="code" href="eol__loader_8c.html#a6b55496451fbdff249ef48cdeebd3731">eol_loader_write_keychain_link</a>((<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *)values-&gt;data,file);
+<a name="l00425"></a>00425     <a class="code" href="eol__loader_8c.html#a6b55496451fbdff249ef48cdeebd3731">eol_loader_write_keychain_link</a>((<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *)values-&gt;data,file);
 <a name="l00426"></a>00426   }
 <a name="l00427"></a>00427 }
 <a name="l00428"></a>00428 
-<a name="l00429"></a><a class="code" href="eol__loader_8c.html#acdeaa413594051f0ed53654ec3d90caa">00429</a> <span class="keywordtype">void</span> <a class="code" href="eol__loader_8c.html#acdeaa413594051f0ed53654ec3d90caa">eol_loader_write_keychain_list</a>(<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *link,<a class="code" href="structeolFile.html">eolFile</a> *file)
+<a name="l00429"></a><a class="code" href="eol__loader_8c.html#acdeaa413594051f0ed53654ec3d90caa">00429</a> <span class="keywordtype">void</span> <a class="code" href="eol__loader_8c.html#acdeaa413594051f0ed53654ec3d90caa">eol_loader_write_keychain_list</a>(<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *link,<a class="code" href="structeolFile.html">eolFile</a> *file)
 <a name="l00430"></a>00430 {
 <a name="l00431"></a>00431   GList *it;
 <a name="l00432"></a>00432   <span class="keywordflow">if</span> (!link)<span class="keywordflow">return</span>;
-<a name="l00433"></a>00433   <span class="keywordflow">if</span> (link-&gt;<a class="code" href="structeolKeychain.html#af3607bc229cf9a3a867604b408429514">keyType</a> != <a class="code" href="eol__keychain_8h.html#a889169076c31a15947cdd2dd05fd03f2a90e3430f135df637c4dec04964a314cc">eolKeychainList</a>)<span class="keywordflow">return</span>;
-<a name="l00434"></a>00434   <a class="code" href="eol__loader_8c.html#a83203ce91a9a900ab183fde550c1d8f2" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_uint_to_file</a>(file,link-&gt;<a class="code" href="structeolKeychain.html#af3607bc229cf9a3a867604b408429514">keyType</a>);
-<a name="l00435"></a>00435   <a class="code" href="eol__loader_8c.html#a83203ce91a9a900ab183fde550c1d8f2" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_uint_to_file</a>(file,link-&gt;<a class="code" href="structeolKeychain.html#a1f5ad244dec5e48d4c9bb718748adf99">itemCount</a>);
-<a name="l00436"></a>00436   <span class="keywordflow">for</span> (it = (GList *)link-&gt;<a class="code" href="structeolKeychain.html#a0aa8a665144765cc7875f9c7a61854ac">keyValue</a>;it != NULL;it = it-&gt;next)
+<a name="l00433"></a>00433   <span class="keywordflow">if</span> (link-&gt;<a class="code" href="structkeychain__S.html#ac816c9776ae15b4da15cee0f63f64f8a">keyType</a> != <a class="code" href="eol__keychain_8h.html#a889169076c31a15947cdd2dd05fd03f2a90e3430f135df637c4dec04964a314cc">eolKeychainList</a>)<span class="keywordflow">return</span>;
+<a name="l00434"></a>00434   <a class="code" href="eol__loader_8c.html#a83203ce91a9a900ab183fde550c1d8f2" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_uint_to_file</a>(file,link-&gt;<a class="code" href="structkeychain__S.html#ac816c9776ae15b4da15cee0f63f64f8a">keyType</a>);
+<a name="l00435"></a>00435   <a class="code" href="eol__loader_8c.html#a83203ce91a9a900ab183fde550c1d8f2" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_uint_to_file</a>(file,link-&gt;<a class="code" href="structkeychain__S.html#af23d6aa52f5d1005fa7e743f6f65ed84">itemCount</a>);
+<a name="l00436"></a>00436   <span class="keywordflow">for</span> (it = (GList *)link-&gt;<a class="code" href="structkeychain__S.html#aa82b538c20fa9537ad65be72f2ef90c4">keyValue</a>;it != NULL;it = it-&gt;next)
 <a name="l00437"></a>00437   {
 <a name="l00438"></a>00438     <a class="code" href="eol__loader_8c.html#a6b55496451fbdff249ef48cdeebd3731">eol_loader_write_keychain_link</a>(it-&gt;data,file);
 <a name="l00439"></a>00439   }
 <a name="l00440"></a>00440 }
 <a name="l00441"></a>00441 
-<a name="l00442"></a><a class="code" href="eol__loader_8c.html#a71e77da7d3f0c9d854b4660611a6dcb9">00442</a> <span class="keywordtype">void</span> <a class="code" href="eol__loader_8c.html#a71e77da7d3f0c9d854b4660611a6dcb9">eol_loader_write_keychain_string</a>(<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *link,<a class="code" href="structeolFile.html">eolFile</a> *file)
+<a name="l00442"></a><a class="code" href="eol__loader_8c.html#a71e77da7d3f0c9d854b4660611a6dcb9">00442</a> <span class="keywordtype">void</span> <a class="code" href="eol__loader_8c.html#a71e77da7d3f0c9d854b4660611a6dcb9">eol_loader_write_keychain_string</a>(<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *link,<a class="code" href="structeolFile.html">eolFile</a> *file)
 <a name="l00443"></a>00443 {
 <a name="l00444"></a>00444   <span class="keywordflow">if</span> (!link)<span class="keywordflow">return</span>;
-<a name="l00445"></a>00445   <span class="keywordflow">if</span> (link-&gt;<a class="code" href="structeolKeychain.html#af3607bc229cf9a3a867604b408429514">keyType</a> != <a class="code" href="eol__keychain_8h.html#a889169076c31a15947cdd2dd05fd03f2a57875657aaf58a4d2865d9419ef2cfdc">eolKeychainString</a>)<span class="keywordflow">return</span>;
+<a name="l00445"></a>00445   <span class="keywordflow">if</span> (link-&gt;<a class="code" href="structkeychain__S.html#ac816c9776ae15b4da15cee0f63f64f8a">keyType</a> != <a class="code" href="eol__keychain_8h.html#a889169076c31a15947cdd2dd05fd03f2a57875657aaf58a4d2865d9419ef2cfdc">eolKeychainString</a>)<span class="keywordflow">return</span>;
 <a name="l00446"></a>00446   <span class="comment">/*</span>
 <a name="l00447"></a>00447 <span class="comment">  type</span>
 <a name="l00448"></a>00448 <span class="comment">  string (which is len,chars)</span>
 <a name="l00449"></a>00449 <span class="comment">  */</span>
-<a name="l00450"></a>00450   <a class="code" href="eol__loader_8c.html#a83203ce91a9a900ab183fde550c1d8f2" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_uint_to_file</a>(file,link-&gt;<a class="code" href="structeolKeychain.html#af3607bc229cf9a3a867604b408429514">keyType</a>);
-<a name="l00451"></a>00451   <a class="code" href="eol__loader_8c.html#ad8236cbf11eda7f6607071f4e91c9e8a" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_string_to_file</a>(file,link-&gt;<a class="code" href="structeolKeychain.html#a0aa8a665144765cc7875f9c7a61854ac">keyValue</a>);
+<a name="l00450"></a>00450   <a class="code" href="eol__loader_8c.html#a83203ce91a9a900ab183fde550c1d8f2" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_uint_to_file</a>(file,link-&gt;<a class="code" href="structkeychain__S.html#ac816c9776ae15b4da15cee0f63f64f8a">keyType</a>);
+<a name="l00451"></a>00451   <a class="code" href="eol__loader_8c.html#ad8236cbf11eda7f6607071f4e91c9e8a" title="write data to an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_write_string_to_file</a>(file,link-&gt;<a class="code" href="structkeychain__S.html#aa82b538c20fa9537ad65be72f2ef90c4">keyValue</a>);
 <a name="l00452"></a>00452 }
 <a name="l00453"></a>00453 
-<a name="l00454"></a><a class="code" href="eol__loader_8h.html#a6b55496451fbdff249ef48cdeebd3731">00454</a> <span class="keywordtype">void</span> <a class="code" href="eol__loader_8c.html#a6b55496451fbdff249ef48cdeebd3731">eol_loader_write_keychain_link</a>(<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *link,<a class="code" href="structeolFile.html">eolFile</a> *file)
+<a name="l00454"></a><a class="code" href="eol__loader_8h.html#a6b55496451fbdff249ef48cdeebd3731">00454</a> <span class="keywordtype">void</span> <a class="code" href="eol__loader_8c.html#a6b55496451fbdff249ef48cdeebd3731">eol_loader_write_keychain_link</a>(<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *link,<a class="code" href="structeolFile.html">eolFile</a> *file)
 <a name="l00455"></a>00455 {
 <a name="l00456"></a>00456   <span class="keywordflow">if</span> ((!link) || (!file))<span class="keywordflow">return</span>;
-<a name="l00457"></a>00457   <span class="keywordflow">switch</span>(link-&gt;<a class="code" href="structeolKeychain.html#af3607bc229cf9a3a867604b408429514">keyType</a>)
+<a name="l00457"></a>00457   <span class="keywordflow">switch</span>(link-&gt;<a class="code" href="structkeychain__S.html#ac816c9776ae15b4da15cee0f63f64f8a">keyType</a>)
 <a name="l00458"></a>00458   {
 <a name="l00459"></a>00459     <span class="keywordflow">case</span> <a class="code" href="eol__keychain_8h.html#a889169076c31a15947cdd2dd05fd03f2a57875657aaf58a4d2865d9419ef2cfdc">eolKeychainString</a>:
 <a name="l00460"></a>00460       <a class="code" href="eol__loader_8c.html#a71e77da7d3f0c9d854b4660611a6dcb9">eol_loader_write_keychain_string</a>(link,file);
@@ -493,11 +494,11 @@
 <a name="l00469"></a>00469       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
 <a name="l00470"></a>00470         <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
 <a name="l00471"></a>00471         <span class="stringliteral">&quot;eol_loader:unsupported keychain type for writing: %i\n&quot;</span>,
-<a name="l00472"></a>00472         link-&gt;<a class="code" href="structeolKeychain.html#af3607bc229cf9a3a867604b408429514">keyType</a>);
+<a name="l00472"></a>00472         link-&gt;<a class="code" href="structkeychain__S.html#ac816c9776ae15b4da15cee0f63f64f8a">keyType</a>);
 <a name="l00473"></a>00473   }
 <a name="l00474"></a>00474 }
 <a name="l00475"></a>00475 
-<a name="l00476"></a><a class="code" href="eol__loader_8c.html#a25d172d43db90e193ef1b12984f978c6">00476</a> <span class="keywordtype">void</span> <a class="code" href="eol__loader_8c.html#a25d172d43db90e193ef1b12984f978c6">eol_loader_keychain_save</a>(<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *chain, <span class="keywordtype">char</span> *filename)
+<a name="l00476"></a><a class="code" href="eol__loader_8c.html#a25d172d43db90e193ef1b12984f978c6">00476</a> <span class="keywordtype">void</span> <a class="code" href="eol__loader_8c.html#a25d172d43db90e193ef1b12984f978c6">eol_loader_keychain_save</a>(<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *chain, <span class="keywordtype">char</span> *filename)
 <a name="l00477"></a>00477 {
 <a name="l00478"></a>00478   <a class="code" href="structeolFile.html">eolFile</a> *file;
 <a name="l00479"></a>00479   <span class="keywordflow">if</span> ((!chain) || (!filename))<span class="keywordflow">return</span>;
@@ -512,12 +513,12 @@
 <a name="l00488"></a>00488 <span class="comment">*** loading from file ***</span>
 <a name="l00489"></a>00489 <span class="comment">*/</span>
 <a name="l00490"></a>00490 
-<a name="l00491"></a><a class="code" href="eol__loader_8c.html#a8cc0796ea04c07e3f9414a2cf6e993e2">00491</a> <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *<a class="code" href="eol__loader_8c.html#a8cc0796ea04c07e3f9414a2cf6e993e2">eol_loader_read_keychain_hash</a>(<a class="code" href="structeolFile.html">eolFile</a> *file)
+<a name="l00491"></a><a class="code" href="eol__loader_8c.html#a8cc0796ea04c07e3f9414a2cf6e993e2">00491</a> <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *<a class="code" href="eol__loader_8c.html#a8cc0796ea04c07e3f9414a2cf6e993e2">eol_loader_read_keychain_hash</a>(<a class="code" href="structeolFile.html">eolFile</a> *file)
 <a name="l00492"></a>00492 {
 <a name="l00493"></a>00493   <span class="keywordtype">int</span> i;
 <a name="l00494"></a>00494   <span class="keywordtype">char</span> * <a class="code" href="eol__opengl_8h.html#a3667f558219c90437106b544a3ca00b8">buffer</a> = NULL;  <span class="comment">/*all keys should be limited to an eolLine*/</span>
-<a name="l00495"></a>00495   <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *link = NULL;
-<a name="l00496"></a>00496   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> itemCount = 0;
+<a name="l00495"></a>00495   <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *link = NULL;
+<a name="l00496"></a>00496   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="structkeychain__S.html#af23d6aa52f5d1005fa7e743f6f65ed84">itemCount</a> = 0;
 <a name="l00497"></a>00497   <span class="comment">/*</span>
 <a name="l00498"></a>00498 <span class="comment">  count</span>
 <a name="l00499"></a>00499 <span class="comment">  key</span>
@@ -553,11 +554,11 @@
 <a name="l00529"></a>00529   <span class="keywordflow">return</span> link;
 <a name="l00530"></a>00530 }
 <a name="l00531"></a>00531 
-<a name="l00532"></a><a class="code" href="eol__loader_8c.html#a84e7f7cbce5698a61b64f7eea2a12630">00532</a> <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *<a class="code" href="eol__loader_8c.html#a84e7f7cbce5698a61b64f7eea2a12630">eol_loader_read_keychain_list</a>(<a class="code" href="structeolFile.html">eolFile</a> *file)
+<a name="l00532"></a><a class="code" href="eol__loader_8c.html#a84e7f7cbce5698a61b64f7eea2a12630">00532</a> <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *<a class="code" href="eol__loader_8c.html#a84e7f7cbce5698a61b64f7eea2a12630">eol_loader_read_keychain_list</a>(<a class="code" href="structeolFile.html">eolFile</a> *file)
 <a name="l00533"></a>00533 {
 <a name="l00534"></a>00534   <span class="keywordtype">int</span> i;
-<a name="l00535"></a>00535   <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *link = NULL;
-<a name="l00536"></a>00536   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> itemCount = 0;
+<a name="l00535"></a>00535   <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *link = NULL;
+<a name="l00536"></a>00536   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="structkeychain__S.html#af23d6aa52f5d1005fa7e743f6f65ed84">itemCount</a> = 0;
 <a name="l00537"></a>00537   <a class="code" href="eol__loader_8c.html#a34d099071ae871dcdc2511b3d8efd664" title="read data from an open eolFile buffer. does nothing if the file handle is NULL or...">eol_loader_read_uint_from_file</a>(&amp;itemCount,file);
 <a name="l00538"></a>00538   <span class="keywordflow">if</span> (!itemCount)<span class="keywordflow">return</span> NULL;
 <a name="l00539"></a>00539   link = <a class="code" href="eol__keychain_8c.html#a2389674e231793f280c14a078c68852f" title="allocated and sets up a pointer to an Empty GList.">eol_keychain_new_list</a>();
@@ -569,9 +570,9 @@
 <a name="l00545"></a>00545   <span class="keywordflow">return</span> link;
 <a name="l00546"></a>00546 }
 <a name="l00547"></a>00547 
-<a name="l00548"></a><a class="code" href="eol__loader_8c.html#a5741bdb3872c89cebd0346f2f2ca7183">00548</a> <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *<a class="code" href="eol__loader_8c.html#a5741bdb3872c89cebd0346f2f2ca7183">eol_loader_read_keychain_string</a>(<a class="code" href="structeolFile.html">eolFile</a> *file)
+<a name="l00548"></a><a class="code" href="eol__loader_8c.html#a5741bdb3872c89cebd0346f2f2ca7183">00548</a> <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *<a class="code" href="eol__loader_8c.html#a5741bdb3872c89cebd0346f2f2ca7183">eol_loader_read_keychain_string</a>(<a class="code" href="structeolFile.html">eolFile</a> *file)
 <a name="l00549"></a>00549 {
-<a name="l00550"></a>00550   <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> * link = NULL;
+<a name="l00550"></a>00550   <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> * link = NULL;
 <a name="l00551"></a>00551   <span class="keywordtype">char</span> *<a class="code" href="eol__opengl_8h.html#a3667f558219c90437106b544a3ca00b8">buffer</a> = NULL;
 <a name="l00552"></a>00552   <a class="code" href="eol__loader_8c.html#abc79bea8fdbb3ffe07c2894df6e43e40" title="read string data from an open eolFile buffer. does nothing if the file handle is...">eol_loader_read_string_from_file</a>((<span class="keywordtype">char</span> **)&amp;buffer,file);
 <a name="l00553"></a>00553   <span class="keywordflow">if</span> ((buffer == NULL) || (strlen(buffer) == 0))<span class="keywordflow">return</span> NULL;
@@ -580,7 +581,7 @@
 <a name="l00556"></a>00556   <span class="keywordflow">return</span> link;
 <a name="l00557"></a>00557 }
 <a name="l00558"></a>00558 
-<a name="l00559"></a><a class="code" href="eol__loader_8h.html#ac84a45c664b0c0107dc63ebdb82fa7bf">00559</a> <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *<a class="code" href="eol__loader_8c.html#ac84a45c664b0c0107dc63ebdb82fa7bf">eol_loader_read_keychain_link</a>(<a class="code" href="structeolFile.html">eolFile</a> *file)
+<a name="l00559"></a><a class="code" href="eol__loader_8h.html#ac84a45c664b0c0107dc63ebdb82fa7bf">00559</a> <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *<a class="code" href="eol__loader_8c.html#ac84a45c664b0c0107dc63ebdb82fa7bf">eol_loader_read_keychain_link</a>(<a class="code" href="structeolFile.html">eolFile</a> *file)
 <a name="l00560"></a>00560 {
 <a name="l00561"></a>00561   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> newtype = 0;
 <a name="l00562"></a>00562   <span class="keywordflow">if</span> (!file)<span class="keywordflow">return</span> NULL;
@@ -602,7 +603,7 @@
 <a name="l00578"></a>00578   <span class="keywordflow">return</span> NULL;
 <a name="l00579"></a>00579 }
 <a name="l00580"></a>00580 
-<a name="l00581"></a><a class="code" href="eol__loader_8c.html#a2b45ef0fdf97885880bd4f980336f9f4">00581</a> <span class="keywordtype">void</span> <a class="code" href="eol__loader_8c.html#a2b45ef0fdf97885880bd4f980336f9f4">eol_loader_keychain_load_from_file</a>(<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> **chain, <span class="keywordtype">char</span> *filename)
+<a name="l00581"></a><a class="code" href="eol__loader_8c.html#a2b45ef0fdf97885880bd4f980336f9f4">00581</a> <span class="keywordtype">void</span> <a class="code" href="eol__loader_8c.html#a2b45ef0fdf97885880bd4f980336f9f4">eol_loader_keychain_load_from_file</a>(<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> **chain, <span class="keywordtype">char</span> *filename)
 <a name="l00582"></a>00582 {
 <a name="l00583"></a>00583   <a class="code" href="structeolFile.html">eolFile</a> *file;
 <a name="l00584"></a>00584   <span class="keywordflow">if</span> ((!chain) || (!filename))<span class="keywordflow">return</span>;
@@ -617,7 +618,7 @@
 <a name="l00593"></a>00593 <span class="comment">/*eol@eof*/</span>
 <a name="l00594"></a>00594 
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:24 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:11 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

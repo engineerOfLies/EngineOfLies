@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -57,7 +58,7 @@
 <a name="l00033"></a><a class="code" href="structeolLight.html#a9f6a41cd15be947908a02380ca9f6e52">00033</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>  <a class="code" href="eol__opengl_8h.html#a7d05960f4f1c1b11f3177dc963a45d86">type</a>;
 <a name="l00034"></a><a class="code" href="structeolLight.html#a6fc07043e53ba9b3900ceac5e7f7d29a">00034</a>   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>   lightIndex; 
 <a name="l00035"></a><a class="code" href="structeolLight.html#a6d0414d0d5373364f175483a4b671e38">00035</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>  on;
-<a name="l00036"></a><a class="code" href="structeolLight.html#a98748b4f1c1141b638f6b542cc9a012c">00036</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="structEntity__S.html#ab0935e73999d6f9690fa7ce2633fe628">radius</a>;
+<a name="l00036"></a><a class="code" href="structeolLight.html#a98748b4f1c1141b638f6b542cc9a012c">00036</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radius;
 <a name="l00037"></a><a class="code" href="structeolLight.html#a53ebc6b203ba7ea25f191e9301147277">00037</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> position;
 <a name="l00038"></a><a class="code" href="structeolLight.html#adb8bbc8c14be3e8b427cec01e5a39c28">00038</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> colorSpec;
 <a name="l00039"></a><a class="code" href="structeolLight.html#aae07b827a3ddfcc642a3d3ced3867119">00039</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> colorAmbi;
@@ -99,7 +100,7 @@
 <a name="l00123"></a>00123 
 <a name="l00129"></a>00129 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a957c782d6f794887c543b417d9853f17" title="sets the ambient diffuse and specular lighting to color">eol_light_set_color</a>(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="structeolVec3D.html">eolVec3D</a> color);
 <a name="l00130"></a>00130 
-<a name="l00135"></a>00135 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a8723792736d6673ed14c386e902053f9" title="sets the light radius for a light. The light is disabled for anything outside the...">eol_light_set_radius</a>(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="structEntity__S.html#ab0935e73999d6f9690fa7ce2633fe628">radius</a>);
+<a name="l00135"></a>00135 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a8723792736d6673ed14c386e902053f9" title="sets the light radius for a light. The light is disabled for anything outside the...">eol_light_set_radius</a>(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radius);
 <a name="l00136"></a>00136 
 <a name="l00142"></a>00142 <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a91c8593b84eba61818cb6f98b70f3d87" title="goes through each light and enables / disabled them based on distance to the point...">eol_lighting_filter_for_position</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> pos);
 <a name="l00143"></a>00143 
@@ -111,7 +112,7 @@
 <a name="l00160"></a>00160 
 <a name="l00161"></a>00161 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:24 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:11 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

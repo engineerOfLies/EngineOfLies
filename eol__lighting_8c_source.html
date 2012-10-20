@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -44,7 +45,7 @@
 <a name="l00020"></a>00020 {
 <a name="l00021"></a>00021   <a class="code" href="eol__lighting_8c.html#a29a4e000abd2a1a65646557a91e5d1e9">_eol_lighting_max</a> = GL_MAX_LIGHTS;
 <a name="l00022"></a>00022   <a class="code" href="eol__lighting_8c.html#a0bd4441a3da04d04d2b58be0a826ac4c">_eol_global_light_level</a> = 1;
-<a name="l00023"></a>00023   <a class="code" href="eol__types_8h.html#a9614ffb8bfeb8abdf995639f86a7e0a5" title="Macro to set the components of the vector varient ending in p takes a pointer to...">eol_vec3d_set</a>(_eol_global_light_color,1,1,1);
+<a name="l00023"></a>00023   <a class="code" href="eol__types_8h.html#a9614ffb8bfeb8abdf995639f86a7e0a5">eol_vec3d_set</a>(_eol_global_light_color,1,1,1);
 <a name="l00024"></a>00024 }
 <a name="l00025"></a>00025 
 <a name="l00026"></a><a class="code" href="eol__lighting_8c.html#a06edbcb8b61c026fcaaa2b703debfd38">00026</a> <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a06edbcb8b61c026fcaaa2b703debfd38">eol_lighting_close</a>()
@@ -170,7 +171,7 @@
 <a name="l00146"></a>00146   {
 <a name="l00147"></a>00147     <span class="keywordflow">if</span> (!light-&gt;<a class="code" href="structeolLight.html#a6d0414d0d5373364f175483a4b671e38">on</a>)<span class="keywordflow">continue</span>;
 <a name="l00148"></a>00148     <span class="keywordflow">if</span> (light-&gt;<a class="code" href="structeolLight.html#a9f6a41cd15be947908a02380ca9f6e52">type</a> &gt; <a class="code" href="eol__lighting_8h.html#a8c10faa71336f99ef6a75dd9d7f29179adac02b0bbaf224647733dcb846994a63">eolLightSpot</a>)<span class="keywordflow">continue</span>;
-<a name="l00149"></a>00149     <span class="keywordflow">if</span> (<a class="code" href="eol__types_8c.html#ad9d472062e3887dc8f8f711409441bef" title="checks if the distance between the two points provided is less than size.">eol_distance_between_less_than</a>(pos,light-&gt;<a class="code" href="structeolLight.html#a53ebc6b203ba7ea25f191e9301147277">position</a>,light-&gt;<a class="code" href="structeolLight.html#a98748b4f1c1141b638f6b542cc9a012c">radius</a>))
+<a name="l00149"></a>00149     <span class="keywordflow">if</span> (<a class="code" href="eol__types_8c.html#a6c80a083f6afa1ff3aaa7b1678a34462">eol_distance_between_less_than3d</a>(pos,light-&gt;<a class="code" href="structeolLight.html#a53ebc6b203ba7ea25f191e9301147277">position</a>,light-&gt;<a class="code" href="structeolLight.html#a98748b4f1c1141b638f6b542cc9a012c">radius</a>))
 <a name="l00150"></a>00150     {
 <a name="l00151"></a>00151       <a class="code" href="eol__lighting_8c.html#a3fdc9e6a20ec4db8306ae387e614f503" title="turns on or off a light without killing the pointer.">eol_light_enable</a>(light,<a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>);
 <a name="l00152"></a>00152     }
@@ -185,12 +186,12 @@
 <a name="l00161"></a>00161 {
 <a name="l00162"></a>00162   <span class="keywordflow">if</span> (!<a class="code" href="eol__lighting_8c.html#a5631001be885e2f75061db68cc5116d3" title="retrieves initialization status for the lighting system">eol_lighting_initialized</a>())<span class="keywordflow">return</span>;
 <a name="l00163"></a>00163   <span class="keywordflow">if</span> (!light)<span class="keywordflow">return</span>;
-<a name="l00164"></a>00164   <a class="code" href="eol__types_8h.html#ae675720a579c2f83b3aae75858f7e428" title="copies the data from one vector into another">eol_vec3d_copy</a>(light-&gt;<a class="code" href="structeolLight.html#adb8bbc8c14be3e8b427cec01e5a39c28">colorSpec</a>,color);
-<a name="l00165"></a>00165   <a class="code" href="eol__types_8h.html#ae675720a579c2f83b3aae75858f7e428" title="copies the data from one vector into another">eol_vec3d_copy</a>(light-&gt;<a class="code" href="structeolLight.html#aae07b827a3ddfcc642a3d3ced3867119">colorAmbi</a>,color);
-<a name="l00166"></a>00166   <a class="code" href="eol__types_8h.html#ae675720a579c2f83b3aae75858f7e428" title="copies the data from one vector into another">eol_vec3d_copy</a>(light-&gt;<a class="code" href="structeolLight.html#ab15eff7efca2ffc6f110f8920c7885f6">colorDiff</a>,color);
+<a name="l00164"></a>00164   <a class="code" href="eol__types_8h.html#ae675720a579c2f83b3aae75858f7e428">eol_vec3d_copy</a>(light-&gt;<a class="code" href="structeolLight.html#adb8bbc8c14be3e8b427cec01e5a39c28">colorSpec</a>,color);
+<a name="l00165"></a>00165   <a class="code" href="eol__types_8h.html#ae675720a579c2f83b3aae75858f7e428">eol_vec3d_copy</a>(light-&gt;<a class="code" href="structeolLight.html#aae07b827a3ddfcc642a3d3ced3867119">colorAmbi</a>,color);
+<a name="l00166"></a>00166   <a class="code" href="eol__types_8h.html#ae675720a579c2f83b3aae75858f7e428">eol_vec3d_copy</a>(light-&gt;<a class="code" href="structeolLight.html#ab15eff7efca2ffc6f110f8920c7885f6">colorDiff</a>,color);
 <a name="l00167"></a>00167 }
 <a name="l00168"></a>00168 
-<a name="l00169"></a><a class="code" href="eol__lighting_8h.html#a8723792736d6673ed14c386e902053f9">00169</a> <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a8723792736d6673ed14c386e902053f9" title="sets the light radius for a light. The light is disabled for anything outside the...">eol_light_set_radius</a>(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="structEntity__S.html#ab0935e73999d6f9690fa7ce2633fe628">radius</a>)
+<a name="l00169"></a><a class="code" href="eol__lighting_8h.html#a8723792736d6673ed14c386e902053f9">00169</a> <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a8723792736d6673ed14c386e902053f9" title="sets the light radius for a light. The light is disabled for anything outside the...">eol_light_set_radius</a>(<a class="code" href="structeolLight.html">eolLight</a> *light,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radius)
 <a name="l00170"></a>00170 {
 <a name="l00171"></a>00171   <span class="keywordflow">if</span> (!<a class="code" href="eol__lighting_8c.html#a5631001be885e2f75061db68cc5116d3" title="retrieves initialization status for the lighting system">eol_lighting_initialized</a>())<span class="keywordflow">return</span>;
 <a name="l00172"></a>00172   <span class="keywordflow">if</span> (!light)<span class="keywordflow">return</span>;
@@ -329,7 +330,7 @@
 <a name="l00305"></a>00305 {
 <a name="l00306"></a>00306   <span class="keywordflow">if</span> (!<a class="code" href="eol__lighting_8c.html#a5631001be885e2f75061db68cc5116d3" title="retrieves initialization status for the lighting system">eol_lighting_initialized</a>())<span class="keywordflow">return</span>;
 <a name="l00307"></a>00307   <span class="keywordflow">if</span> (!light)<span class="keywordflow">return</span>;
-<a name="l00308"></a>00308   <a class="code" href="eol__types_8h.html#ae675720a579c2f83b3aae75858f7e428" title="copies the data from one vector into another">eol_vec3d_copy</a>(light-&gt;<a class="code" href="structeolLight.html#a53ebc6b203ba7ea25f191e9301147277">position</a>,point);
+<a name="l00308"></a>00308   <a class="code" href="eol__types_8h.html#ae675720a579c2f83b3aae75858f7e428">eol_vec3d_copy</a>(light-&gt;<a class="code" href="structeolLight.html#a53ebc6b203ba7ea25f191e9301147277">position</a>,point);
 <a name="l00309"></a>00309 }
 <a name="l00310"></a>00310 
 <a name="l00311"></a><a class="code" href="eol__lighting_8c.html#a15fa9ec5dbe9ed2c98247953605efb3b">00311</a> <span class="keywordtype">void</span> <a class="code" href="eol__lighting_8c.html#a15fa9ec5dbe9ed2c98247953605efb3b">eol_light_draw</a>(<a class="code" href="structeolLight.html">eolLight</a> *light)
@@ -344,7 +345,7 @@
 <a name="l00320"></a>00320 
 <a name="l00321"></a>00321 <span class="comment">/*eol@eof*/</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:24 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:11 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

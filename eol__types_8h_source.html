@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -100,188 +101,250 @@
 <a name="l00118"></a><a class="code" href="eol__types_8h.html#aa5ecd856fbc9365537868e120f9d4929">00118</a> <span class="preprocessor">#define EOLWORDLEN   16</span>
 <a name="l00119"></a><a class="code" href="eol__types_8h.html#a387cc1c6f474fc3688c762c0ce68dc0f">00119</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_word_cmp(a,b) (strncmp(a,b,EOLWORDLEN))</span>
 <a name="l00120"></a><a class="code" href="eol__types_8h.html#ae48aa130124a26e78913e245442ccb2f">00120</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_word_cpy(dst,src) (strncpy(dst,src,EOLWORDLEN))</span>
-<a name="l00121"></a>00121 <span class="preprocessor"></span>
-<a name="l00124"></a><a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">00124</a> <span class="keyword">typedef</span> <span class="keywordtype">char</span> <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>[128];
-<a name="l00125"></a><a class="code" href="eol__types_8h.html#a4111fa5f05bb9f3d53c75a2af7aef887">00125</a> <span class="preprocessor">#define EOLLINELEN   128</span>
-<a name="l00126"></a><a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">00126</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_line_cmp(a,b) (strncmp(a,b,EOLLINELEN))</span>
-<a name="l00127"></a><a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">00127</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_line_cpy(dst,src) (strncpy(dst,src,EOLLINELEN))</span>
-<a name="l00128"></a>00128 <span class="preprocessor"></span>
-<a name="l00131"></a><a class="code" href="eol__types_8h.html#a92f37859b66a1dbe34455363c1e6b4cc">00131</a> <span class="keyword">typedef</span> <span class="keywordtype">char</span> <a class="code" href="eol__types_8h.html#a92f37859b66a1dbe34455363c1e6b4cc" title="512 character buffer used for text blocks">eolText</a>[512];
-<a name="l00132"></a><a class="code" href="eol__types_8h.html#a7322e9e401ec8ff8db0a17bcdbfc6814">00132</a> <span class="preprocessor">#define EOLTEXTLEN   512</span>
-<a name="l00133"></a><a class="code" href="eol__types_8h.html#a338723aa2acab2ca6428462806471db8">00133</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_text_cmp(a,b) (strncmp(a,b,EOLTEXTLEN))</span>
-<a name="l00134"></a><a class="code" href="eol__types_8h.html#a82ae7a1add2e1cd09223eb22dc370461">00134</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_text_cpy(dst,src) (strncpy(dst,src,EOLTEXTLEN))</span>
-<a name="l00135"></a>00135 <span class="preprocessor"></span>
-<a name="l00136"></a><a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">00136</a> <span class="keyword">typedef</span> SDL_Rect <a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>;
-<a name="l00137"></a>00137 
-<a name="l00145"></a>00145 <a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> <a class="code" href="eol__types_8c.html#adb79e027070ddefcdcad4be19d26f570" title="constructs and returns an eolRect">eol_rect</a>(
-<a name="l00146"></a>00146   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>  <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,
-<a name="l00147"></a>00147   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>  <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>,
-<a name="l00148"></a>00148   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>,
-<a name="l00149"></a>00149   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> h
-<a name="l00150"></a>00150 );
-<a name="l00151"></a>00151 
-<a name="l00158"></a>00158 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a4c127b89fdebe0f27d105ace89a2b1c4" title="copies rect data from s into d">eol_rect_copy</a>(
-<a name="l00159"></a>00159     <a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> * d,
-<a name="l00160"></a>00160     <a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>   s
-<a name="l00161"></a>00161   );
-<a name="l00162"></a>00162 
-<a name="l00163"></a><a class="code" href="structeolRectFloat.html">00163</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00164"></a>00164 {
-<a name="l00165"></a><a class="code" href="structeolRectFloat.html#a46a6b82b8f6e0cd0a43d7b5ce5e54a5c">00165</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,<a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>,<a class="code" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>,h;
-<a name="l00166"></a>00166 }<a class="code" href="structeolRectFloat.html">eolRectFloat</a>;
-<a name="l00167"></a>00167 
-<a name="l00175"></a>00175 <a class="code" href="structeolRectFloat.html">eolRectFloat</a> <a class="code" href="eol__types_8c.html#af2f5ddad1677fe91c186f494870b4d1e" title="constructs and returns an eolRectFloat">eol_rectf</a>(
-<a name="l00176"></a>00176   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>  <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,
-<a name="l00177"></a>00177   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>  <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>,
-<a name="l00178"></a>00178   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>  <a class="code" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>,
-<a name="l00179"></a>00179   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>  h
-<a name="l00180"></a>00180 );
-<a name="l00181"></a>00181 
-<a name="l00182"></a>00182 
-<a name="l00189"></a>00189 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#ac370862202290d068ec8ae9f308b8625" title="copies float rect data from s into d">eol_rectf_copy</a>(
-<a name="l00190"></a>00190     <a class="code" href="structeolRectFloat.html">eolRectFloat</a> * d,
-<a name="l00191"></a>00191     <a class="code" href="structeolRectFloat.html">eolRectFloat</a>   s
-<a name="l00192"></a>00192   );
-<a name="l00193"></a>00193 
-<a name="l00194"></a>00194 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a3e2deb34a63a85c2a4b3ead0bc10908f">eol_rectf_set</a>(
-<a name="l00195"></a>00195     <a class="code" href="structeolRectFloat.html">eolRectFloat</a> * d,
-<a name="l00196"></a>00196     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>       <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,
-<a name="l00197"></a>00197     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>       <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>,
-<a name="l00198"></a>00198     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>       <a class="code" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>,
-<a name="l00199"></a>00199     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>       h
-<a name="l00200"></a>00200   );
-<a name="l00201"></a>00201 
-<a name="l00202"></a>00202 <span class="comment">/*</span>
-<a name="l00203"></a>00203 <span class="comment"> * The Vector Types</span>
-<a name="l00204"></a>00204 <span class="comment"> * Not to be confused with the vector lists from STL</span>
-<a name="l00205"></a>00205 <span class="comment">*/</span>
-<a name="l00206"></a><a class="code" href="structeolVec2D.html">00206</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00207"></a>00207 {
-<a name="l00208"></a><a class="code" href="structeolVec2D.html#a05813d1d57b3b946b03d91c70dd138a9">00208</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>;
-<a name="l00209"></a><a class="code" href="structeolVec2D.html#a61e7aa983b05eabe2b4c54bc4d765eed">00209</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>;
-<a name="l00210"></a>00210 }<a class="code" href="structeolVec2D.html">eolVec2D</a>;
-<a name="l00211"></a>00211 
-<a name="l00212"></a><a class="code" href="structeolVec3D.html">00212</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00213"></a>00213 {
-<a name="l00214"></a><a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">00214</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>;
-<a name="l00215"></a><a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">00215</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>;
-<a name="l00216"></a><a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">00216</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ab26e6a0e7d142ed28ac773f12a73f458">z</a>;
-<a name="l00217"></a>00217 }<a class="code" href="structeolVec3D.html">eolVec3D</a>;
-<a name="l00218"></a>00218 
-<a name="l00219"></a><a class="code" href="eol__types_8h.html#a32bd0791c5d79cae6390ce97fdb87cee">00219</a> <span class="preprocessor">#define eol_vec_in_rect(v, r)  ((v.x &gt;= r.x)&amp;&amp;(v.x &lt; (r.x + r.w))&amp;&amp;(v.y &gt;= r.y)&amp;&amp;(v.y &lt; (r.y + r.h)))</span>
-<a name="l00220"></a>00220 <span class="preprocessor"></span>
-<a name="l00224"></a>00224 <a class="code" href="structeolVec3D.html">eolVec3D</a> <a class="code" href="eol__types_8c.html#ad9642ff032955fe0e6d34e41eb53b64a" title="create and return an eolVec3D">eol_vec3d</a>(<a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>, <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>, <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ab26e6a0e7d142ed28ac773f12a73f458">z</a>);
-<a name="l00225"></a>00225 
-<a name="l00226"></a>00226 
-<a name="l00232"></a>00232 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#ab0225953b40818f41970c461ac2e7424" title="sets the outvector to a unit vector pointing at the angle specified">eol_vec3d_set_angle_by_radians</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> *out,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radians);
-<a name="l00233"></a>00233 <span class="comment">/*</span>
-<a name="l00234"></a>00234 <span class="comment">  Time Handling</span>
-<a name="l00235"></a>00235 <span class="comment">*/</span>
-<a name="l00236"></a><a class="code" href="eol__types_8h.html#abb8daca37b7cc4c8b25df074d9ca9678">00236</a> <span class="keyword">typedef</span> <a class="code" href="eol__types_8h.html#ad6e38baab36a9031590b3a0b0571cda2">eolUI32</a> <a class="code" href="eol__types_8h.html#abb8daca37b7cc4c8b25df074d9ca9678">eolTime</a>;
+<a name="l00121"></a><a class="code" href="eol__types_8h.html#a7e1c90252678a6c0ea4fd609c07c8b19">00121</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_word_clear(a)  (a[0]=&#39;\0&#39;)</span>
+<a name="l00122"></a>00122 <span class="preprocessor"></span>
+<a name="l00125"></a><a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">00125</a> <span class="keyword">typedef</span> <span class="keywordtype">char</span> <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>[128];
+<a name="l00126"></a><a class="code" href="eol__types_8h.html#a4111fa5f05bb9f3d53c75a2af7aef887">00126</a> <span class="preprocessor">#define EOLLINELEN   128</span>
+<a name="l00127"></a><a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">00127</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_line_cmp(a,b) (strncmp(a,b,EOLLINELEN))</span>
+<a name="l00128"></a><a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">00128</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_line_cpy(dst,src) (strncpy(dst,src,EOLLINELEN))</span>
+<a name="l00129"></a><a class="code" href="eol__types_8h.html#a981f1e851d02d9ff85f84279d93c8d74">00129</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_line_clear(a)  (a[0]=&#39;\0&#39;)</span>
+<a name="l00130"></a>00130 <span class="preprocessor"></span>
+<a name="l00133"></a><a class="code" href="eol__types_8h.html#a92f37859b66a1dbe34455363c1e6b4cc">00133</a> <span class="keyword">typedef</span> <span class="keywordtype">char</span> <a class="code" href="eol__types_8h.html#a92f37859b66a1dbe34455363c1e6b4cc" title="512 character buffer used for text blocks">eolText</a>[512];
+<a name="l00134"></a><a class="code" href="eol__types_8h.html#a7322e9e401ec8ff8db0a17bcdbfc6814">00134</a> <span class="preprocessor">#define EOLTEXTLEN   512</span>
+<a name="l00135"></a><a class="code" href="eol__types_8h.html#a338723aa2acab2ca6428462806471db8">00135</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_text_cmp(a,b) (strncmp(a,b,EOLTEXTLEN))</span>
+<a name="l00136"></a><a class="code" href="eol__types_8h.html#a82ae7a1add2e1cd09223eb22dc370461">00136</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_text_cpy(dst,src) (strncpy(dst,src,EOLTEXTLEN))</span>
+<a name="l00137"></a><a class="code" href="eol__types_8h.html#aef03ea9cc26a5b6df5baa7e9f9c90826">00137</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_text_clear(a)  (a[0]=&#39;\0&#39;)</span>
+<a name="l00138"></a>00138 <span class="preprocessor"></span>
+<a name="l00139"></a><a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">00139</a> <span class="keyword">typedef</span> SDL_Rect <a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>;
+<a name="l00140"></a>00140 
+<a name="l00148"></a>00148 <a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> <a class="code" href="eol__types_8c.html#adb79e027070ddefcdcad4be19d26f570" title="constructs and returns an eolRect">eol_rect</a>(
+<a name="l00149"></a>00149   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>  <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,
+<a name="l00150"></a>00150   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>  <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>,
+<a name="l00151"></a>00151   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>,
+<a name="l00152"></a>00152   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> h
+<a name="l00153"></a>00153 );
+<a name="l00154"></a>00154 
+<a name="l00161"></a>00161 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a4c127b89fdebe0f27d105ace89a2b1c4" title="copies rect data from s into d">eol_rect_copy</a>(
+<a name="l00162"></a>00162     <a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> * d,
+<a name="l00163"></a>00163     <a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>   s
+<a name="l00164"></a>00164   );
+<a name="l00165"></a>00165 
+<a name="l00166"></a><a class="code" href="structeolRectFloat.html">00166</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00167"></a>00167 {
+<a name="l00168"></a><a class="code" href="structeolRectFloat.html#a46a6b82b8f6e0cd0a43d7b5ce5e54a5c">00168</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,<a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>,<a class="code" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>,h;
+<a name="l00169"></a>00169 }<a class="code" href="structeolRectFloat.html">eolRectFloat</a>;
+<a name="l00170"></a>00170 
+<a name="l00178"></a>00178 <a class="code" href="structeolRectFloat.html">eolRectFloat</a> <a class="code" href="eol__types_8c.html#af2f5ddad1677fe91c186f494870b4d1e" title="constructs and returns an eolRectFloat">eol_rectf</a>(
+<a name="l00179"></a>00179   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>  <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,
+<a name="l00180"></a>00180   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>  <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>,
+<a name="l00181"></a>00181   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>  <a class="code" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>,
+<a name="l00182"></a>00182   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a>  h
+<a name="l00183"></a>00183 );
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185 
+<a name="l00192"></a>00192 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#ac370862202290d068ec8ae9f308b8625" title="copies float rect data from s into d">eol_rectf_copy</a>(
+<a name="l00193"></a>00193     <a class="code" href="structeolRectFloat.html">eolRectFloat</a> * d,
+<a name="l00194"></a>00194     <a class="code" href="structeolRectFloat.html">eolRectFloat</a>   s
+<a name="l00195"></a>00195   );
+<a name="l00196"></a>00196 
+<a name="l00197"></a>00197 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a3e2deb34a63a85c2a4b3ead0bc10908f">eol_rectf_set</a>(
+<a name="l00198"></a>00198     <a class="code" href="structeolRectFloat.html">eolRectFloat</a> * d,
+<a name="l00199"></a>00199     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>       <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,
+<a name="l00200"></a>00200     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>       <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>,
+<a name="l00201"></a>00201     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>       <a class="code" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>,
+<a name="l00202"></a>00202     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>       h
+<a name="l00203"></a>00203   );
+<a name="l00204"></a>00204 
+<a name="l00211"></a>00211 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__types_8c.html#a30e9eb3ceb152cd837274fd55c11da74" title="checks if the two rects are overlapping">eol_rect_lap_rect</a>(<a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> a, <a class="code" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> b);
+<a name="l00212"></a>00212 
+<a name="l00213"></a>00213 <span class="comment">/*</span>
+<a name="l00214"></a>00214 <span class="comment"> * The Vector Types</span>
+<a name="l00215"></a>00215 <span class="comment"> * Not to be confused with the vector lists from STL</span>
+<a name="l00216"></a>00216 <span class="comment">*/</span>
+<a name="l00217"></a><a class="code" href="structeolVec2D.html">00217</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00218"></a>00218 {
+<a name="l00219"></a><a class="code" href="structeolVec2D.html#a05813d1d57b3b946b03d91c70dd138a9">00219</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>;
+<a name="l00220"></a><a class="code" href="structeolVec2D.html#a61e7aa983b05eabe2b4c54bc4d765eed">00220</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>;
+<a name="l00221"></a>00221 }<a class="code" href="structeolVec2D.html">eolVec2D</a>;
+<a name="l00222"></a>00222 
+<a name="l00223"></a><a class="code" href="structeolVec3D.html">00223</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00224"></a>00224 {
+<a name="l00225"></a><a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">00225</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>;
+<a name="l00226"></a><a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">00226</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>;
+<a name="l00227"></a><a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">00227</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ab26e6a0e7d142ed28ac773f12a73f458">z</a>;
+<a name="l00228"></a>00228 }<a class="code" href="structeolVec3D.html">eolVec3D</a>;
+<a name="l00229"></a>00229 
+<a name="l00230"></a><a class="code" href="structeolVec4D.html">00230</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00231"></a>00231 {
+<a name="l00232"></a><a class="code" href="structeolVec4D.html#a5bfa3bb08097a9b10c649ab266429ff5">00232</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>;
+<a name="l00233"></a><a class="code" href="structeolVec4D.html#a50cb1dd6b7b642c23242a6a348913883">00233</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>;
+<a name="l00234"></a><a class="code" href="structeolVec4D.html#a4b9f0a156c89e8eee4ba1d3c1a58a0e3">00234</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ab26e6a0e7d142ed28ac773f12a73f458">z</a>;
+<a name="l00235"></a><a class="code" href="structeolVec4D.html#a1ef36f0b8af377562c6ec9d38d758162">00235</a>   <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>;
+<a name="l00236"></a>00236 }<a class="code" href="structeolVec4D.html">eolVec4D</a>;
 <a name="l00237"></a>00237 
-<a name="l00238"></a>00238 <span class="comment">/*</span>
-<a name="l00239"></a>00239 <span class="comment">  3d orientation</span>
-<a name="l00240"></a>00240 <span class="comment">*/</span>
-<a name="l00241"></a>00241 
-<a name="l00242"></a><a class="code" href="structeolOrientation.html">00242</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00243"></a>00243 {
-<a name="l00244"></a><a class="code" href="structeolOrientation.html#a330e91eab574b7fe44a977c7b0914184">00244</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> position;
-<a name="l00245"></a><a class="code" href="structeolOrientation.html#a24c3df28538b7fbc540fd639a46eed08">00245</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> scale;
-<a name="l00246"></a><a class="code" href="structeolOrientation.html#a3306d3bd6116e17ec105b9865726110f">00246</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation;
-<a name="l00247"></a><a class="code" href="structeolOrientation.html#a5a18cd3b6b3be071b0491fc20979455e">00247</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> color;
-<a name="l00248"></a><a class="code" href="structeolOrientation.html#af6a92f9497c2530b06e7e938524c54a3">00248</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha;
-<a name="l00249"></a>00249 }<a class="code" href="structeolOrientation.html">eolOrientation</a>;
-<a name="l00250"></a>00250 
-<a name="l00258"></a>00258 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#abca0642577ae215f2e0a5ea7e252ae76" title="Adds the two input orientations together. useful for applying vector to position...">eol_orientation_add</a>(<a class="code" href="structeolOrientation.html">eolOrientation</a> * out,
-<a name="l00259"></a>00259                          <a class="code" href="structeolOrientation.html">eolOrientation</a>   in1,
-<a name="l00260"></a>00260                          <a class="code" href="structeolOrientation.html">eolOrientation</a>   in2);
+<a name="l00238"></a><a class="code" href="eol__types_8h.html#a32bd0791c5d79cae6390ce97fdb87cee">00238</a> <span class="preprocessor">#define eol_vec_in_rect(v, r)  ((v.x &gt;= r.x)&amp;&amp;(v.x &lt; (r.x + r.w))&amp;&amp;(v.y &gt;= r.y)&amp;&amp;(v.y &lt; (r.y + r.h)))</span>
+<a name="l00239"></a>00239 <span class="preprocessor"></span>
+<a name="l00243"></a>00243 <a class="code" href="structeolVec2D.html">eolVec2D</a> <a class="code" href="eol__types_8c.html#a86343e3dea354b9ec0201b957e8f51ea" title="create and return an eolVec2D">eol_vec2d</a>(<a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>, <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>);
+<a name="l00244"></a>00244 
+<a name="l00248"></a>00248 <a class="code" href="structeolVec3D.html">eolVec3D</a> <a class="code" href="eol__types_8c.html#ad9642ff032955fe0e6d34e41eb53b64a" title="create and return an eolVec3D">eol_vec3d</a>(<a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>, <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>, <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ab26e6a0e7d142ed28ac773f12a73f458">z</a>);
+<a name="l00249"></a>00249 
+<a name="l00253"></a>00253 <a class="code" href="structeolVec4D.html">eolVec4D</a> <a class="code" href="eol__types_8c.html#ae6d4a99faadf23b7b0f3f3b470b1b18b" title="create and return an eolVec4D">eol_vec4d</a>(<a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>, <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>, <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#ab26e6a0e7d142ed28ac773f12a73f458">z</a>, <a class="code" href="eol__types_8h.html#a06b0ca814a47a88bb0b16d3cc1c8b24e">eolDouble</a> <a class="code" href="eol__opengl_8h.html#a1ad83f255afd4038129297b57ef91603">w</a>);
+<a name="l00254"></a>00254 
+<a name="l00260"></a>00260 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#ab0225953b40818f41970c461ac2e7424" title="sets the outvector to a unit vector pointing at the angle specified">eol_vec3d_set_angle_by_radians</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> *out,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radians);
 <a name="l00261"></a>00261 
-<a name="l00269"></a>00269 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a53452556b3342790160bff366e06de1e" title="Merges the two. Add position and rotation, but multiplies scale, color and alpha...">eol_orientation_mix</a>(<a class="code" href="structeolOrientation.html">eolOrientation</a> * out,
-<a name="l00270"></a>00270                          <a class="code" href="structeolOrientation.html">eolOrientation</a>   in1,
-<a name="l00271"></a>00271                          <a class="code" href="structeolOrientation.html">eolOrientation</a>   in2);
-<a name="l00272"></a>00272 
-<a name="l00277"></a>00277 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a8f2f80f519e7bdf6ce618d0f7ffe65f9" title="sets the passed orientation to a default set up. sets alpha and scale to 1, all else...">eol_orientation_clear</a>(<a class="code" href="structeolOrientation.html">eolOrientation</a> *out);
-<a name="l00278"></a>00278 
-<a name="l00279"></a>00279 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a923dfde8db7ce3a0f2d9ce52a0203785">eol_orientation_copy</a>(<a class="code" href="structeolOrientation.html">eolOrientation</a> *dst,<a class="code" href="structeolOrientation.html">eolOrientation</a> src);
-<a name="l00280"></a>00280 <span class="comment">/*</span>
-<a name="l00281"></a>00281 <span class="comment">  3d trails.</span>
-<a name="l00282"></a>00282 <span class="comment">*/</span>
-<a name="l00283"></a><a class="code" href="structeolTrail.html">00283</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00284"></a>00284 {
-<a name="l00285"></a><a class="code" href="structeolTrail.html#a6057745f3b6d1597aab935e671060ac3">00285</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>         maxLen;
-<a name="l00286"></a><a class="code" href="structeolTrail.html#a7dfcbdcab86be8a2f79f5ebf521de0f0">00286</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>         len;
-<a name="l00287"></a><a class="code" href="structeolTrail.html#a61091ccaef6c6b10006ace480b255e9e">00287</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> *<a class="code" href="structEntity__S.html#a860e9afb98090f41cf61efc0f34261ff">trail</a>;
-<a name="l00288"></a><a class="code" href="structeolTrail.html#a1e5e0385eb727aab6f29b94a25170c0e">00288</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> *head;
-<a name="l00289"></a><a class="code" href="structeolTrail.html#ac4bb80cee0ca397822c73cb03763cc6a">00289</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> *tail;
-<a name="l00290"></a>00290 }<a class="code" href="structeolTrail.html">eolTrail</a>;
-<a name="l00291"></a>00291 
-<a name="l00298"></a>00298 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#ac3bb2ca13c481353e84e5a2ab722e2d6" title="allocated trail data for the trail provided does not allocate the structure itself...">eol_trail_new</a>(<a class="code" href="structeolTrail.html">eolTrail</a> *<a class="code" href="structEntity__S.html#a860e9afb98090f41cf61efc0f34261ff">trail</a>,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> maxLen);
-<a name="l00299"></a>00299 
-<a name="l00305"></a>00305 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#aff6234f96376c400a5a350fe0f16c274" title="frees allocated trail data. resets the trail struct to zero does not free the trail...">eol_trail_free</a>(<a class="code" href="structeolTrail.html">eolTrail</a> *<a class="code" href="structEntity__S.html#a860e9afb98090f41cf61efc0f34261ff">trail</a>);
-<a name="l00306"></a>00306 
-<a name="l00313"></a>00313 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a8ff240edeb43f37d2ba21b5b57201d48" title="adds a new orientation to the head of the trail, pushing all others back.">eol_trail_append</a>(<a class="code" href="structeolTrail.html">eolTrail</a> *<a class="code" href="structEntity__S.html#a860e9afb98090f41cf61efc0f34261ff">trail</a>,<a class="code" href="structeolOrientation.html">eolOrientation</a> orientation);
-<a name="l00314"></a>00314 
-<a name="l00323"></a>00323 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__types_8c.html#a9cb8d6341aada632c0af259652312894" title="retrieves the orientation n spots behind the head.">eol_trail_get_nth</a>(<a class="code" href="structeolTrail.html">eolTrail</a> *<a class="code" href="structEntity__S.html#a860e9afb98090f41cf61efc0f34261ff">trail</a>, <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> n, <a class="code" href="structeolOrientation.html">eolOrientation</a> *<a class="code" href="structEntity__S.html#a787ec1dd949e18bf8d5f75311ecd45b0">ori</a>);
-<a name="l00324"></a>00324 
-<a name="l00328"></a>00328 <span class="preprocessor">#ifndef MIN</span>
-<a name="l00329"></a><a class="code" href="eol__types_8h.html#a3acffbd305ee72dcd4593c0d8af64a4f">00329</a> <span class="preprocessor"></span><span class="preprocessor">#define MIN(a,b)          (a&lt;=b?a:b)</span>
-<a name="l00330"></a>00330 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
-<a name="l00331"></a>00331 <span class="preprocessor"></span>
-<a name="l00332"></a>00332 <span class="preprocessor">#ifndef MAX</span>
-<a name="l00333"></a><a class="code" href="eol__types_8h.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f">00333</a> <span class="preprocessor"></span><span class="preprocessor">#define MAX(a,b)          (a&gt;=b?a:b)</span>
-<a name="l00334"></a>00334 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
-<a name="l00335"></a>00335 <span class="preprocessor"></span>
-<a name="l00341"></a><a class="code" href="eol__types_8h.html#aacc27cf1b97af98cac9e3415ac748810">00341</a> <span class="preprocessor">#define eol_vec3d_into_array(ar,vec)   (ar[0] = vec.x,ar[1] = vec.y,ar[2] = vec.z)</span>
-<a name="l00342"></a><a class="code" href="eol__types_8h.html#a6e87905532a7f0df3441749d2c651d67">00342</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec2d_into_array(ar,vec)   (ar[0] = vec.x,ar[1] = vec.y)</span>
-<a name="l00343"></a>00343 <span class="preprocessor"></span>
-<a name="l00352"></a><a class="code" href="eol__types_8h.html#ab428070eede80f97242715d0e1d5f33c">00352</a> <span class="preprocessor">#define eol_vec3d_dot_product(a,b)      (a.x*b.x+a.y*b.y+a.z*b.z)</span>
-<a name="l00353"></a><a class="code" href="eol__types_8h.html#a2c0746cd7af61dba30fbe3fd57db54c8">00353</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec2d_dot_product(a,b)      (a.x*b.x+a.y*b.y)</span>
-<a name="l00354"></a>00354 <span class="preprocessor"></span>
-<a name="l00361"></a><a class="code" href="eol__types_8h.html#ae675720a579c2f83b3aae75858f7e428">00361</a> <span class="preprocessor">#define eol_vec3d_copy(dst,src)  (dst.x = src.x,dst.y = src.y,dst.z = src.z)</span>
-<a name="l00362"></a>00362 <span class="preprocessor"></span>
-<a name="l00372"></a><a class="code" href="eol__types_8h.html#a9510a8460a8b653f406c759285ce4b95">00372</a> <span class="preprocessor">#define eol_vector_sub_3D(a,b,c)     (c.x=a.x-b.x,c.y=a.y-b.y,c.z=a.z-b.z)</span>
-<a name="l00373"></a><a class="code" href="eol__types_8h.html#a3333e89db33ff36fc06e4f7de25e8289">00373</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_sub_3D_p(a,b,c)     (c-&gt;x=a-&gt;x-b-&gt;x,c-&gt;y=a-&gt;y-b-&gt;y,c-&gt;z=a-&gt;z-b-&gt;z)</span>
-<a name="l00374"></a><a class="code" href="eol__types_8h.html#a071b71736e9f0e1384e28bd8bcc16d95">00374</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_sub_2D(a,b,c)     (c.x=a.x-b.x,c.y=a.y-b.y)</span>
-<a name="l00375"></a><a class="code" href="eol__types_8h.html#ac790724d945e4b9a33d4dbce97e590ab">00375</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_sub_2D_p(a,b,c)     (c-&gt;x=a-&gt;x-b-&gt;x,c-&gt;y=a-&gt;y-b-&gt;y)</span>
-<a name="l00376"></a>00376 <span class="preprocessor"></span>
-<a name="l00386"></a><a class="code" href="eol__types_8h.html#aa3b5671c7f993ede0c953aee540bd16f">00386</a> <span class="preprocessor">#define eol_vector_add_3D(a,b,c)     (c.x=a.x+b.x,c.y=a.y+b.y,c.z=a.z+b.z)</span>
-<a name="l00387"></a><a class="code" href="eol__types_8h.html#a15a935a011b8d056c8fbddc010b3b8e9">00387</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec3d_add(out,in1,in2)   (out.x = in1.x+in2.x,out.y = in1.y+in2.y,out.z = in1.z+in2.z)</span>
-<a name="l00388"></a><a class="code" href="eol__types_8h.html#aca9665ccb898295eaf6b342128eb135b">00388</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_add_3D_p(a,b,c)     (c-&gt;x=a-&gt;x+b-&gt;x,c-&gt;y=a-&gt;y+b-&gt;y,c-&gt;z=a-&gt;z+b-&gt;z)</span>
-<a name="l00389"></a><a class="code" href="eol__types_8h.html#afd273fe9d3cf8ce2e78e99f56db3213e">00389</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_add_2D(a,b,c)     (c.x=a.x+b.x,c.y=a.y+b.y)</span>
-<a name="l00390"></a><a class="code" href="eol__types_8h.html#a7c77d62068b6e7dfdd69c579af057f0d">00390</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_add_2D_p(a,b,c)     (c-&gt;x=a-&gt;x+b-&gt;x,c-&gt;y=a-&gt;y+b-&gt;y)</span>
-<a name="l00391"></a>00391 <span class="preprocessor"></span>
-<a name="l00401"></a><a class="code" href="eol__types_8h.html#abdc89fda392437aa79a8ced57fd14ab4">00401</a> <span class="preprocessor">#define eol_vector_scale_3D(a,b,c)  (c.x=a.x*b,c.y=a.y*b,c.z=a.z*b)</span>
-<a name="l00402"></a><a class="code" href="eol__types_8h.html#a50b1b42512b31bb48e8a29238eb54d8d">00402</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_scale_3D_p(a,b,c)  (c-&gt;x=a-&gt;x*b,c-&gt;y=a-&gt;y*b,c-&gt;z=a-&gt;z*b)</span>
-<a name="l00403"></a><a class="code" href="eol__types_8h.html#adc6ca6cf368c560050e3634d2414f343">00403</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_scale_2D(a,b,c)  (c.x=a.x*b,c.y=a.y*b)</span>
-<a name="l00404"></a><a class="code" href="eol__types_8h.html#ace427fb1ad0cb26eb0ef8da7bebb3aaf">00404</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_scale_2D_p(a,b,c)  (c-&gt;x=a-&gt;x*b,c-&gt;y=a-&gt;y*b)</span>
-<a name="l00405"></a>00405 <span class="preprocessor"></span>
-<a name="l00413"></a><a class="code" href="eol__types_8h.html#ae5348b6a4744c00df6968f3a35bfe8dc">00413</a> <span class="preprocessor">#define eol_vector_clear_3D(a)       (a.x=a.y=a.z=0)</span>
-<a name="l00414"></a><a class="code" href="eol__types_8h.html#a76d5dbdb9d3650925b508e559602df25">00414</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_clear_3D_p(a)       (a-&gt;x=a-&gt;y=a-&gt;z=0)</span>
-<a name="l00415"></a><a class="code" href="eol__types_8h.html#a9bf86ed2018cff9aba5ec54b3fcb807a">00415</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_clear_2D(a)       (a.x=a.y=0)</span>
-<a name="l00416"></a><a class="code" href="eol__types_8h.html#af342988af0c8bb1e6e0b4af705500004">00416</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_clear_2D_p(a)       (a-&gt;x=a-&gt;y=0)</span>
+<a name="l00262"></a>00262 <span class="keywordtype">void</span> <a class="code" href="eol__types_8h.html#aa05de2ad1c8b8f05a338488fbfe325a5">eol_vec2d_set_angle_by_radians</a>(<a class="code" href="structeolVec2D.html">eolVec2D</a> *out,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radians);
+<a name="l00263"></a>00263 
+<a name="l00270"></a>00270 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__types_8c.html#a8f41c669b9c9843057c5a25d54461c98" title="returns the angle of a vector in 2D space.">eol_vector_angle</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__opengl_8h.html#ac916c0825494ac3acd4457effd2823d2">x</a>,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__opengl_8h.html#a4f27f1eebce8c31db01bb39fab9ef561">y</a>);
+<a name="l00271"></a>00271 
+<a name="l00280"></a>00280 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__types_8c.html#a6709f6768420df658f1cf8fc4f4859bf" title="returns the angle between the two angles. Takes into account wraping around 0 and...">eol_angle_between_degrees</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> a, <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> b);
+<a name="l00281"></a>00281 
+<a name="l00282"></a>00282 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#afee236579853e82f5b8878af91b2fc47">eol_angle_clamp_degrees</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> *a);
+<a name="l00283"></a>00283 
+<a name="l00284"></a>00284 <span class="comment">/*</span>
+<a name="l00285"></a>00285 <span class="comment">  Time Handling</span>
+<a name="l00286"></a>00286 <span class="comment">*/</span>
+<a name="l00287"></a><a class="code" href="eol__types_8h.html#abb8daca37b7cc4c8b25df074d9ca9678">00287</a> <span class="keyword">typedef</span> <a class="code" href="eol__types_8h.html#ad6e38baab36a9031590b3a0b0571cda2">eolUI32</a> <a class="code" href="eol__types_8h.html#abb8daca37b7cc4c8b25df074d9ca9678">eolTime</a>;
+<a name="l00288"></a>00288 
+<a name="l00289"></a>00289 <span class="comment">/*</span>
+<a name="l00290"></a>00290 <span class="comment">  3d orientation</span>
+<a name="l00291"></a>00291 <span class="comment">*/</span>
+<a name="l00292"></a>00292 
+<a name="l00293"></a><a class="code" href="structeolOrientation.html">00293</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00294"></a>00294 {
+<a name="l00295"></a><a class="code" href="structeolOrientation.html#a330e91eab574b7fe44a977c7b0914184">00295</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> position;
+<a name="l00296"></a><a class="code" href="structeolOrientation.html#a24c3df28538b7fbc540fd639a46eed08">00296</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> scale;
+<a name="l00297"></a><a class="code" href="structeolOrientation.html#a3306d3bd6116e17ec105b9865726110f">00297</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation;
+<a name="l00298"></a><a class="code" href="structeolOrientation.html#a5a18cd3b6b3be071b0491fc20979455e">00298</a>   <a class="code" href="structeolVec3D.html">eolVec3D</a> color;
+<a name="l00299"></a><a class="code" href="structeolOrientation.html#af6a92f9497c2530b06e7e938524c54a3">00299</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha;
+<a name="l00300"></a>00300 }<a class="code" href="structeolOrientation.html">eolOrientation</a>;
+<a name="l00301"></a>00301 
+<a name="l00309"></a>00309 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#abca0642577ae215f2e0a5ea7e252ae76" title="Adds the two input orientations together. useful for applying vector to position...">eol_orientation_add</a>(<a class="code" href="structeolOrientation.html">eolOrientation</a> * out,
+<a name="l00310"></a>00310                          <a class="code" href="structeolOrientation.html">eolOrientation</a>   in1,
+<a name="l00311"></a>00311                          <a class="code" href="structeolOrientation.html">eolOrientation</a>   in2);
+<a name="l00312"></a>00312 
+<a name="l00320"></a>00320 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a53452556b3342790160bff366e06de1e" title="Merges the two. Add position and rotation, but multiplies scale, color and alpha...">eol_orientation_mix</a>(<a class="code" href="structeolOrientation.html">eolOrientation</a> * out,
+<a name="l00321"></a>00321                          <a class="code" href="structeolOrientation.html">eolOrientation</a>   in1,
+<a name="l00322"></a>00322                          <a class="code" href="structeolOrientation.html">eolOrientation</a>   in2);
+<a name="l00323"></a>00323 
+<a name="l00328"></a>00328 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a8f2f80f519e7bdf6ce618d0f7ffe65f9" title="sets the passed orientation to a default set up. sets alpha and scale to 1, all else...">eol_orientation_clear</a>(<a class="code" href="structeolOrientation.html">eolOrientation</a> *out);
+<a name="l00329"></a>00329 
+<a name="l00330"></a>00330 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a923dfde8db7ce3a0f2d9ce52a0203785">eol_orientation_copy</a>(<a class="code" href="structeolOrientation.html">eolOrientation</a> *dst,<a class="code" href="structeolOrientation.html">eolOrientation</a> src);
+<a name="l00331"></a>00331 <span class="comment">/*</span>
+<a name="l00332"></a>00332 <span class="comment">  3d trails.</span>
+<a name="l00333"></a>00333 <span class="comment">*/</span>
+<a name="l00334"></a><a class="code" href="structeolTrail.html">00334</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00335"></a>00335 {
+<a name="l00336"></a><a class="code" href="structeolTrail.html#a6057745f3b6d1597aab935e671060ac3">00336</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>         maxLen;
+<a name="l00337"></a><a class="code" href="structeolTrail.html#a7dfcbdcab86be8a2f79f5ebf521de0f0">00337</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>         len;
+<a name="l00338"></a><a class="code" href="structeolTrail.html#a61091ccaef6c6b10006ace480b255e9e">00338</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> *trail;
+<a name="l00339"></a><a class="code" href="structeolTrail.html#a1e5e0385eb727aab6f29b94a25170c0e">00339</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> *head;
+<a name="l00340"></a><a class="code" href="structeolTrail.html#ac4bb80cee0ca397822c73cb03763cc6a">00340</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> *tail;
+<a name="l00341"></a>00341 }<a class="code" href="structeolTrail.html">eolTrail</a>;
+<a name="l00342"></a>00342 
+<a name="l00349"></a>00349 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#ac3bb2ca13c481353e84e5a2ab722e2d6" title="allocated trail data for the trail provided does not allocate the structure itself...">eol_trail_new</a>(<a class="code" href="structeolTrail.html">eolTrail</a> *trail,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> maxLen);
+<a name="l00350"></a>00350 
+<a name="l00356"></a>00356 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#aff6234f96376c400a5a350fe0f16c274" title="frees allocated trail data. resets the trail struct to zero does not free the trail...">eol_trail_free</a>(<a class="code" href="structeolTrail.html">eolTrail</a> *trail);
+<a name="l00357"></a>00357 
+<a name="l00364"></a>00364 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a8ff240edeb43f37d2ba21b5b57201d48" title="adds a new orientation to the head of the trail, pushing all others back.">eol_trail_append</a>(<a class="code" href="structeolTrail.html">eolTrail</a> *trail,<a class="code" href="structeolOrientation.html">eolOrientation</a> orientation);
+<a name="l00365"></a>00365 
+<a name="l00374"></a>00374 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__types_8c.html#a9cb8d6341aada632c0af259652312894" title="retrieves the orientation n spots behind the head.">eol_trail_get_nth</a>(<a class="code" href="structeolTrail.html">eolTrail</a> *trail, <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> n, <a class="code" href="structeolOrientation.html">eolOrientation</a> *ori);
+<a name="l00375"></a>00375 
+<a name="l00376"></a>00376 <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__types_8c.html#ab8b78207de8378c95cd5233a63062b7c">eol_trail_get_length</a>(<a class="code" href="structeolTrail.html">eolTrail</a> *trail);
+<a name="l00377"></a>00377 
+<a name="l00381"></a>00381 <span class="preprocessor">#ifndef MIN</span>
+<a name="l00382"></a><a class="code" href="eol__types_8h.html#a3acffbd305ee72dcd4593c0d8af64a4f">00382</a> <span class="preprocessor"></span><span class="preprocessor">#define MIN(a,b)          (a&lt;=b?a:b)</span>
+<a name="l00383"></a>00383 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00384"></a>00384 <span class="preprocessor"></span>
+<a name="l00385"></a>00385 <span class="preprocessor">#ifndef MAX</span>
+<a name="l00386"></a><a class="code" href="eol__types_8h.html#afa99ec4acc4ecb2dc3c2d05da15d0e3f">00386</a> <span class="preprocessor"></span><span class="preprocessor">#define MAX(a,b)          (a&gt;=b?a:b)</span>
+<a name="l00387"></a>00387 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00388"></a>00388 <span class="preprocessor"></span>
+<a name="l00394"></a><a class="code" href="eol__types_8h.html#ae4cca5f7fde0387d45e555a4afdafeef">00394</a> <span class="preprocessor">#define eol_vec4d_into_array(ar,vec)   (ar[0] = vec.x,ar[1] = vec.y,ar[2] = vec.z,ar[3] = vec.w)</span>
+<a name="l00395"></a><a class="code" href="eol__types_8h.html#aacc27cf1b97af98cac9e3415ac748810">00395</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec3d_into_array(ar,vec)   (ar[0] = vec.x,ar[1] = vec.y,ar[2] = vec.z)</span>
+<a name="l00396"></a><a class="code" href="eol__types_8h.html#a6e87905532a7f0df3441749d2c651d67">00396</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec2d_into_array(ar,vec)   (ar[0] = vec.x,ar[1] = vec.y)</span>
+<a name="l00397"></a>00397 <span class="preprocessor"></span>
+<a name="l00404"></a>00404 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a5105e79b30efd5ee66b964383b17205e" title="calculates the cross product of the two input vectors">eol_vec3d_cross_product</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> *out, <a class="code" href="structeolVec3D.html">eolVec3D</a> <a class="code" href="eol__opengl_8h.html#a025735300dec90b633a756190fb0c664">v1</a>, <a class="code" href="structeolVec3D.html">eolVec3D</a> <a class="code" href="eol__opengl_8h.html#a2058e9908b67dcf6a2209c30fd7f1b5e">v2</a>);
+<a name="l00405"></a>00405 
+<a name="l00414"></a><a class="code" href="eol__types_8h.html#a7970bf7dc5217d00ee86b59446ba6fe2">00414</a> <span class="preprocessor">#define eol_vec4d_dot_product(a,b)      (a.x*b.x+a.y*b.y+a.z*b.z+a.w*b.w)</span>
+<a name="l00415"></a><a class="code" href="eol__types_8h.html#ab428070eede80f97242715d0e1d5f33c">00415</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec3d_dot_product(a,b)      (a.x*b.x+a.y*b.y+a.z*b.z)</span>
+<a name="l00416"></a><a class="code" href="eol__types_8h.html#a2c0746cd7af61dba30fbe3fd57db54c8">00416</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec2d_dot_product(a,b)      (a.x*b.x+a.y*b.y)</span>
 <a name="l00417"></a>00417 <span class="preprocessor"></span>
-<a name="l00426"></a><a class="code" href="eol__types_8h.html#a047c67abc89521822c121515bcbead1d">00426</a> <span class="preprocessor">#define eol_vector_negate_3D(a,b)      (b.x=-a.x,b.y=-a.y,b.z=-a.z)</span>
-<a name="l00427"></a><a class="code" href="eol__types_8h.html#a19b78758e302e9207debc83b569dcc47">00427</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_negate_3D_p(a,b)      (b-&gt;x=-a-&gt;x,b-&gt;y=-a-&gt;y,b-&gt;z=-a-&gt;z)</span>
-<a name="l00428"></a><a class="code" href="eol__types_8h.html#a21cdd8648ab60b91a2b91258c81b7410">00428</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_negate_2D(a,b)      (b.x=-a.x,b.y=-a.y)</span>
-<a name="l00429"></a><a class="code" href="eol__types_8h.html#a01f7031f67540046b528d8c715d891dc">00429</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vector_negate_2D_p(a,b)      (b-&gt;x=-a-&gt;x,b-&gt;y=-a-&gt;y)</span>
-<a name="l00430"></a>00430 <span class="preprocessor"></span>
-<a name="l00441"></a><a class="code" href="eol__types_8h.html#a9614ffb8bfeb8abdf995639f86a7e0a5">00441</a> <span class="preprocessor">#define eol_vec3d_set(v, a, b, c)  (v.x=(a), v.y=(b), v.z=(c))</span>
-<a name="l00442"></a><a class="code" href="eol__types_8h.html#a9656b0d2c0f119ce5e623100c7ce8946">00442</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec2d_set(v, a, b)  (v.x=(a), v.y=(b))</span>
-<a name="l00443"></a>00443 <span class="preprocessor"></span>
-<a name="l00449"></a>00449 <span class="keywordtype">void</span> <a class="code" href="eol__types_8h.html#af8979cdd6c1c0f9fd1d16cc8b2f9ef0c" title="normalizes the vector passed. does nothing for a zero length vector.">eol_vector_normalize</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> *<a class="code" href="eol__opengl_8h.html#a14cfbe2fc2234f5504618905b69d1e06">v</a>);
-<a name="l00450"></a>00450 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__types_8c.html#afea3003071add3311fbe3ef420ce076a">eol_vec3d_magnitude</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> V);
-<a name="l00451"></a>00451 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#ad9b26b880ac377cd6d1c19bf565e1008">eol_vec3d_normalize</a> (<a class="code" href="structeolVec3D.html">eolVec3D</a> *V);
-<a name="l00452"></a>00452 
-<a name="l00459"></a>00459 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__types_8h.html#a0fe853337cac97073de3f3e6524ef8b2" title="returns the magnitude squared, which is faster than getting the magnitude which would...">eol_vec3d_magnitude_squared</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> V);
-<a name="l00460"></a>00460 
-<a name="l00468"></a>00468 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>  <a class="code" href="eol__types_8h.html#a0d7fc7c3e65e3f6f10cc01ae2c967313" title="checks if the magnitude of V is less than size. It does this without doing square...">eol_vec3d_magnitude_less_than</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> V,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__opengl_8h.html#a3d1e3edfcf61ca2d831883e1afbad89e">size</a>);
-<a name="l00469"></a>00469 
-<a name="l00477"></a>00477 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__types_8c.html#ad9d472062e3887dc8f8f711409441bef" title="checks if the distance between the two points provided is less than size.">eol_distance_between_less_than</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> p1,<a class="code" href="structeolVec3D.html">eolVec3D</a> p2,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__opengl_8h.html#a3d1e3edfcf61ca2d831883e1afbad89e">size</a>);
-<a name="l00478"></a>00478 
-<a name="l00479"></a>00479 <span class="preprocessor">#endif</span>
+<a name="l00424"></a><a class="code" href="eol__types_8h.html#a109ceca6c36b971f72ac998468ca581b">00424</a> <span class="preprocessor">#define eol_vec2d_copy(dst,src)  (dst.x = src.x,dst.y = src.y)</span>
+<a name="l00425"></a><a class="code" href="eol__types_8h.html#ae675720a579c2f83b3aae75858f7e428">00425</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec3d_copy(dst,src)  (dst.x = src.x,dst.y = src.y,dst.z = src.z)</span>
+<a name="l00426"></a><a class="code" href="eol__types_8h.html#aff85f1d46a815beb100679ce19e44bec">00426</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec4d_copy(dst,src)  (dst.x = src.x,dst.y = src.y,dst.z = src.z,dst.w=src.w)</span>
+<a name="l00427"></a>00427 <span class="preprocessor"></span>
+<a name="l00437"></a><a class="code" href="eol__types_8h.html#a63e8f742d8a86264c1c61b39f3670213">00437</a> <span class="preprocessor">#define eol_vec2d_sub(dst,a,b)     (dst.x=a.x-b.x,dst.y=a.y-b.y)</span>
+<a name="l00438"></a><a class="code" href="eol__types_8h.html#a4f7464ae5c4ec8fa1abcaf6f55b96816">00438</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec3d_sub(dst,a,b)     (dst.x=a.x-b.x,dst.y=a.y-b.y,dst.z=a.z-b.z)</span>
+<a name="l00439"></a><a class="code" href="eol__types_8h.html#af4a1e194357989476be1794202f16d57">00439</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec4d_sub(dst,a,b)     (dst.x=a.x-b.x,dst.y=a.y-b.y,dst.z=a.z-b.z,dst.w=a.w-b.w)</span>
+<a name="l00440"></a>00440 <span class="preprocessor"></span>
+<a name="l00450"></a><a class="code" href="eol__types_8h.html#a9f681f09e77bca903c7a6b133eb48f47">00450</a> <span class="preprocessor">#define eol_vec2d_add(dst,a,b)   (dst.x = a.x+b.x,dst.y = a.y+b.y)</span>
+<a name="l00451"></a><a class="code" href="eol__types_8h.html#a19023dd0ccd9829ad604256d77a4b9e0">00451</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec3d_add(dst,a,b)   (dst.x = a.x+b.x,dst.y = a.y+b.y,dst.z = a.z+b.z)</span>
+<a name="l00452"></a><a class="code" href="eol__types_8h.html#a17ee4c5b41053db968d952ddffc93599">00452</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec4d_add(dst,a,b)   (dst.x = a.x+b.x,dst.y = a.y+b.y,dst.z = a.z+b.z,dst.w = a.w+b.w)</span>
+<a name="l00453"></a>00453 <span class="preprocessor"></span>
+<a name="l00463"></a><a class="code" href="eol__types_8h.html#a70bd8da8d8a0b51ba45970f6781976bb">00463</a> <span class="preprocessor">#define eol_vec2d_scale(dst,src,factor) (dst.x = src.x *factor,\</span>
+<a name="l00464"></a>00464 <span class="preprocessor">                                         dst.y = src.y *factor)</span>
+<a name="l00465"></a><a class="code" href="eol__types_8h.html#ac2d43ec6a92826ea3c9461b730b4732e">00465</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec3d_scale(dst,src,factor) (dst.x = src.x *factor,\</span>
+<a name="l00466"></a>00466 <span class="preprocessor">                                         dst.y = src.y *factor,\</span>
+<a name="l00467"></a>00467 <span class="preprocessor">                                         dst.z = src.z *factor)</span>
+<a name="l00468"></a><a class="code" href="eol__types_8h.html#a71a459d42700c51619a00016649f6e44">00468</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec4d_scale(dst,src,factor) (dst.x = src.x *factor,\</span>
+<a name="l00469"></a>00469 <span class="preprocessor">                                         dst.y = src.y *factor,\</span>
+<a name="l00470"></a>00470 <span class="preprocessor">                                         dst.z = src.z *factor,\</span>
+<a name="l00471"></a>00471 <span class="preprocessor">                                         dst.w = src.w *factor)</span>
+<a name="l00472"></a>00472 <span class="preprocessor"></span>
+<a name="l00477"></a><a class="code" href="eol__types_8h.html#a70892cd2cf132ad15ccfcfb7d7eb08f7">00477</a> <span class="preprocessor">#define eol_vec2d_clear(a)       (a.x=a.y=0)</span>
+<a name="l00478"></a><a class="code" href="eol__types_8h.html#a8132c5c20ecf10c90af2b5e5bf794ca3">00478</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec3d_clear(a)       (a.x=a.y=a.z=0)</span>
+<a name="l00479"></a><a class="code" href="eol__types_8h.html#a7aca64b683df17bddc912a709c303861">00479</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec4d_clear(a)       (a.x=a.y=a.z=a.w=0)</span>
 <a name="l00480"></a>00480 <span class="preprocessor"></span>
+<a name="l00487"></a><a class="code" href="eol__types_8h.html#a62ab4aec26ce963e9901d386de85bc32">00487</a> <span class="preprocessor">#define eol_vec2d_negate(dst,src)      (dst.x = -src.x,dst.y = -src.y)</span>
+<a name="l00488"></a><a class="code" href="eol__types_8h.html#ac015080447287a91eaa92cd7214fb4b5">00488</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec3d_negate(dst,src)      (dst.x = -src.x,dst.y = -src.y,dst.z = -src.z)</span>
+<a name="l00489"></a><a class="code" href="eol__types_8h.html#a22672a48e9c92f8dbed254cc290a0ae9">00489</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec4d_negate(dst,src)      (dst.x = -src.x,dst.y = -src.y,dst.z = -src.z,dst.w = -src.w)</span>
+<a name="l00490"></a>00490 <span class="preprocessor"></span>
+<a name="l00500"></a><a class="code" href="eol__types_8h.html#a9656b0d2c0f119ce5e623100c7ce8946">00500</a> <span class="preprocessor">#define eol_vec2d_set(v, a, b)  (v.x=(a), v.y=(b))</span>
+<a name="l00501"></a><a class="code" href="eol__types_8h.html#a9614ffb8bfeb8abdf995639f86a7e0a5">00501</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec3d_set(v, a, b, c)  (v.x=(a), v.y=(b), v.z=(c))</span>
+<a name="l00502"></a><a class="code" href="eol__types_8h.html#a00ef486d182ebf57da7b94f7477585d5">00502</a> <span class="preprocessor"></span><span class="preprocessor">#define eol_vec4d_set(v, a, b, c,d)  (v.x=(a), v.y=(b), v.z=(c), v.w=(d))</span>
+<a name="l00503"></a>00503 <span class="preprocessor"></span>
+<a name="l00504"></a>00504 
+<a name="l00505"></a>00505 <a class="code" href="structeolVec2D.html">eolVec2D</a> *<a class="code" href="eol__types_8c.html#a6d38451820a49ba080cbb867a418be31">eol_vec2d_new</a>();
+<a name="l00506"></a>00506 <a class="code" href="structeolVec3D.html">eolVec3D</a> *<a class="code" href="eol__types_8c.html#aca5c4883a55e7ac3616718ad3abb9e1c">eol_vec3d_new</a>();
+<a name="l00507"></a>00507 <a class="code" href="structeolVec4D.html">eolVec4D</a> *<a class="code" href="eol__types_8c.html#a18e1dbd28a485fd15ea93f5ecb5a3a38">eol_vec4d_new</a>();
+<a name="l00508"></a>00508 
+<a name="l00509"></a>00509 <a class="code" href="structeolVec2D.html">eolVec2D</a> *<a class="code" href="eol__types_8c.html#abf93318b8cc5e068e55f51117d017fb9">eol_vec2d_dup</a>(<a class="code" href="structeolVec2D.html">eolVec2D</a> old);
+<a name="l00510"></a>00510 <a class="code" href="structeolVec3D.html">eolVec3D</a> *<a class="code" href="eol__types_8c.html#a023e00324c15ec6ca386a1eddccb631a">eol_vec3d_dup</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> old);
+<a name="l00511"></a>00511 <a class="code" href="structeolVec4D.html">eolVec4D</a> *<a class="code" href="eol__types_8c.html#a83789c527a6c6dd355e9147501b905b2">eol_vec4d_dup</a>(<a class="code" href="structeolVec4D.html">eolVec4D</a> old);
+<a name="l00512"></a>00512 
+<a name="l00519"></a>00519 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a95fc203df9672e17365ca15e3a54a55c" title="reflect a vector about a normal. Simulates &amp;quot;Bounce&amp;quot;">eol_vec2d_reflect</a>(<a class="code" href="structeolVec2D.html">eolVec2D</a> *out, <a class="code" href="structeolVec2D.html">eolVec2D</a> normal,<a class="code" href="structeolVec2D.html">eolVec2D</a> in);
+<a name="l00520"></a>00520 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a7c9e9964956a0408a1a6f5c71f79d4a0">eol_vec3d_reflect</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> *out, <a class="code" href="structeolVec3D.html">eolVec3D</a> normal,<a class="code" href="structeolVec3D.html">eolVec3D</a> in);
+<a name="l00521"></a>00521 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a91919e0d1c52bbf32d8d49f4251f8ac5">eol_vec4d_reflect</a>(<a class="code" href="structeolVec4D.html">eolVec4D</a> *out, <a class="code" href="structeolVec4D.html">eolVec4D</a> normal,<a class="code" href="structeolVec4D.html">eolVec4D</a> in);
+<a name="l00522"></a>00522 
+<a name="l00523"></a>00523 
+<a name="l00529"></a>00529 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__types_8c.html#aaeb43c71c7141f0f2c68e1f96162d640" title="normalizes the vector passed. does nothing for a zero length vector.">eol_vec2d_magnitude</a>(<a class="code" href="structeolVec2D.html">eolVec2D</a> V);
+<a name="l00530"></a>00530 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__types_8c.html#afea3003071add3311fbe3ef420ce076a">eol_vec3d_magnitude</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> V);
+<a name="l00531"></a>00531 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__types_8c.html#aef8e0d565a72a5c3accbef664b1c57e4">eol_vec4d_magnitude</a>(<a class="code" href="structeolVec4D.html">eolVec4D</a> V);
+<a name="l00532"></a>00532 
+<a name="l00533"></a>00533 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#a6f525c51a2d1a24be1107c8d09c33b08">eol_vec2d_normalize</a> (<a class="code" href="structeolVec2D.html">eolVec2D</a> *V);
+<a name="l00534"></a>00534 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#ad9b26b880ac377cd6d1c19bf565e1008">eol_vec3d_normalize</a> (<a class="code" href="structeolVec3D.html">eolVec3D</a> *V);
+<a name="l00535"></a>00535 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#ae5f8fafb7d5ad5c1648a33c6d187fa85">eol_vec4d_normalize</a> (<a class="code" href="structeolVec4D.html">eolVec4D</a> *V);
+<a name="l00536"></a>00536 
+<a name="l00543"></a>00543 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__types_8h.html#a1f72e3102860a85c1cb0b6a14adab3d2" title="returns the magnitude squared, which is faster than getting the magnitude which would...">eol_vec2d_magnitude_squared</a>(<a class="code" href="structeolVec2D.html">eolVec2D</a> V);
+<a name="l00544"></a>00544 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__types_8c.html#a0fe853337cac97073de3f3e6524ef8b2">eol_vec3d_magnitude_squared</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> V);
+<a name="l00545"></a>00545 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__types_8h.html#a681e73cdd647368604585cefb9ea8d71">eol_vec4d_magnitude_squared</a>(<a class="code" href="structeolVec4D.html">eolVec4D</a> V);
+<a name="l00546"></a>00546 
+<a name="l00554"></a>00554 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>  <a class="code" href="eol__types_8h.html#ab29e314f304c2cf94465b19a1cc60904" title="checks if the magnitude of V is less than size. It does this without doing square...">eol_vec2d_magnitude_less_than</a>(<a class="code" href="structeolVec2D.html">eolVec2D</a> V,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__opengl_8h.html#a3d1e3edfcf61ca2d831883e1afbad89e">size</a>);
+<a name="l00555"></a>00555 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>  <a class="code" href="eol__types_8c.html#a0d7fc7c3e65e3f6f10cc01ae2c967313">eol_vec3d_magnitude_less_than</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> V,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__opengl_8h.html#a3d1e3edfcf61ca2d831883e1afbad89e">size</a>);
+<a name="l00556"></a>00556 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>  <a class="code" href="eol__types_8h.html#a10359d86641888cb6d5203e7b9930602">eol_vec4d_magnitude_less_than</a>(<a class="code" href="structeolVec4D.html">eolVec4D</a> V,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__opengl_8h.html#a3d1e3edfcf61ca2d831883e1afbad89e">size</a>);
+<a name="l00557"></a>00557 
+<a name="l00564"></a>00564 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#aee7fef73d16e398241516af2d6d822fb" title="scales the vector to the specified length without changing direction No op is magnitude...">eol_vec2d_set_magnitude</a>(<a class="code" href="structeolVec2D.html">eolVec2D</a> * V,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> magnitude);
+<a name="l00565"></a>00565 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#ab98a0e763240e3c1ee4345b7e5146ca7">eol_vec3d_set_magnitude</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> * V,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> magnitude);
+<a name="l00566"></a>00566 <span class="keywordtype">void</span> <a class="code" href="eol__types_8c.html#ac88fff9224bc07cb2a60523692a9e306">eol_vec4d_set_magnitude</a>(<a class="code" href="structeolVec4D.html">eolVec4D</a> * V,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> magnitude);
+<a name="l00567"></a>00567 
+<a name="l00575"></a>00575 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__types_8h.html#a426900ec696fbfbbe909a5f0df04a01a" title="checks if the distance between the two points provided is less than size.">eol_distance_between_less_than2d</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> p1,<a class="code" href="structeolVec3D.html">eolVec3D</a> p2,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__opengl_8h.html#a3d1e3edfcf61ca2d831883e1afbad89e">size</a>);
+<a name="l00576"></a>00576 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__types_8c.html#a6c80a083f6afa1ff3aaa7b1678a34462">eol_distance_between_less_than3d</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> p1,<a class="code" href="structeolVec3D.html">eolVec3D</a> p2,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__opengl_8h.html#a3d1e3edfcf61ca2d831883e1afbad89e">size</a>);
+<a name="l00577"></a>00577 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__types_8h.html#afc5f4c035af6a358f80ec68a22bdf1a6">eol_distance_between_less_than4d</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> p1,<a class="code" href="structeolVec3D.html">eolVec3D</a> p2,<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__opengl_8h.html#a3d1e3edfcf61ca2d831883e1afbad89e">size</a>);
+<a name="l00578"></a>00578 
+<a name="l00579"></a>00579 <span class="preprocessor">#endif</span>
+<a name="l00580"></a>00580 <span class="preprocessor"></span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:25 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:12 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

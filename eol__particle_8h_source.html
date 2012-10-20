@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -54,14 +55,14 @@
 <a name="l00035"></a><a class="code" href="structeolParticle.html">00035</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00036"></a>00036 {
 <a name="l00037"></a><a class="code" href="structeolParticle.html#ae32e4dc576172f4b8ca740c6d441d8b6">00037</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>        <a class="code" href="eol__opengl_8h.html#a7d05960f4f1c1b11f3177dc963a45d86">type</a>;      
-<a name="l00038"></a><a class="code" href="structeolParticle.html#ab45dff73e3578f7c0ad0961833c88367">00038</a>   <a class="code" href="structeolTrail.html">eolTrail</a>       <a class="code" href="structEntity__S.html#a860e9afb98090f41cf61efc0f34261ff">trail</a>;     
-<a name="l00039"></a><a class="code" href="structeolParticle.html#af87177923f1f72efa67c75d78acc9b6b">00039</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> <a class="code" href="structEntity__S.html#a787ec1dd949e18bf8d5f75311ecd45b0">ori</a>;       
-<a name="l00040"></a><a class="code" href="structeolParticle.html#a5886749b128da9be322151c9a5a6512f">00040</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> <a class="code" href="structEntity__S.html#acf8112947558431dfdf0b078e26ba8a3">vector</a>;    
-<a name="l00041"></a><a class="code" href="structeolParticle.html#a491999ee91fbef9b63bea330de924918">00041</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> <a class="code" href="structEntity__S.html#a8489837c996421e2670c3e2bab33526c">accel</a>;     
-<a name="l00042"></a><a class="code" href="structeolParticle.html#a06e5eab48f049c25fc23bf7485bdf1de">00042</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>       <a class="code" href="structEntity__S.html#ab0935e73999d6f9690fa7ce2633fe628">radius</a>;    
-<a name="l00043"></a><a class="code" href="structeolParticle.html#a1f00a8a6b62a73e5de1c270c5d0646ff">00043</a>   <a class="code" href="structeolActor.html">eolActor</a>     * <a class="code" href="structEntity__S.html#a5e854f8f625ce666a0b37816e712321e">actor</a>;     
+<a name="l00038"></a><a class="code" href="structeolParticle.html#ab45dff73e3578f7c0ad0961833c88367">00038</a>   <a class="code" href="structeolTrail.html">eolTrail</a>       trail;     
+<a name="l00039"></a><a class="code" href="structeolParticle.html#af87177923f1f72efa67c75d78acc9b6b">00039</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> ori;       
+<a name="l00040"></a><a class="code" href="structeolParticle.html#a5886749b128da9be322151c9a5a6512f">00040</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> vector;    
+<a name="l00041"></a><a class="code" href="structeolParticle.html#a491999ee91fbef9b63bea330de924918">00041</a>   <a class="code" href="structeolOrientation.html">eolOrientation</a> accel;     
+<a name="l00042"></a><a class="code" href="structeolParticle.html#a06e5eab48f049c25fc23bf7485bdf1de">00042</a>   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>       radius;    
+<a name="l00043"></a><a class="code" href="structeolParticle.html#a1f00a8a6b62a73e5de1c270c5d0646ff">00043</a>   <a class="code" href="structeolActor.html">eolActor</a>     * actor;     
 <a name="l00044"></a><a class="code" href="structeolParticle.html#acec4c3b2a4280b6b58f9ae3f4deea9db">00044</a>   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>        lifetime;  
-<a name="l00045"></a><a class="code" href="structeolParticle.html#a0da974b50700ce77b729760b1cd05302">00045</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>        <a class="code" href="structEntity__S.html#aafab1bf8dd6e2ca88517068f444b8107">drawTrail</a>; 
+<a name="l00045"></a><a class="code" href="structeolParticle.html#a0da974b50700ce77b729760b1cd05302">00045</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>        drawTrail; 
 <a name="l00046"></a><a class="code" href="structeolParticle.html#adc5fb177d9807f8fc2ee07c29ce4df20">00046</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>        fade;      
 <a name="l00047"></a><a class="code" href="structeolParticle.html#a229df87556c483432b5ffcfd315581fe">00047</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>        taper;     
 <a name="l00048"></a>00048 }<a class="code" href="structeolParticle.html">eolParticle</a>;
@@ -87,15 +88,16 @@
 <a name="l00093"></a>00093 
 <a name="l00094"></a>00094 <span class="keywordtype">void</span> <a class="code" href="eol__particle_8c.html#ab005e7eb728f1c72a5d37643056bc2a8">eol_particle_make_point</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> position,
 <a name="l00095"></a>00095                              <a class="code" href="structeolVec3D.html">eolVec3D</a> velocity,
-<a name="l00096"></a>00096                              <a class="code" href="structeolVec3D.html">eolVec3D</a> <a class="code" href="structEntity__S.html#a8489837c996421e2670c3e2bab33526c">accel</a>,
-<a name="l00097"></a>00097                              <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="structEntity__S.html#ab0935e73999d6f9690fa7ce2633fe628">radius</a>,
+<a name="l00096"></a>00096                              <a class="code" href="structeolVec3D.html">eolVec3D</a> accel,
+<a name="l00097"></a>00097                              <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radius,
 <a name="l00098"></a>00098                              <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
 <a name="l00099"></a>00099                              <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha,
 <a name="l00100"></a>00100                              <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>  lifetime);
 <a name="l00101"></a>00101 
-<a name="l00102"></a>00102 <span class="preprocessor">#endif</span>
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:25 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:12 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

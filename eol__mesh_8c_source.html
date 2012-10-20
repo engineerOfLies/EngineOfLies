@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -381,7 +382,7 @@
 <a name="l00357"></a>00357         <span class="keywordflow">break</span>;
 <a name="l00358"></a>00358     }
 <a name="l00359"></a>00359   }
-<a name="l00360"></a>00360   <a class="code" href="eol__types_8h.html#ae675720a579c2f83b3aae75858f7e428" title="copies the data from one vector into another">eol_vec3d_copy</a>(model-&gt;<a class="code" href="structeolMesh.html#a575c2d36aa6d2b2d7ab7ce8c5c221171">bounds</a>,bounds);
+<a name="l00360"></a>00360   <a class="code" href="eol__types_8h.html#ae675720a579c2f83b3aae75858f7e428">eol_vec3d_copy</a>(model-&gt;<a class="code" href="structeolMesh.html#a575c2d36aa6d2b2d7ab7ce8c5c221171">bounds</a>,bounds);
 <a name="l00361"></a>00361 }
 <a name="l00362"></a>00362 
 <a name="l00363"></a><a class="code" href="eol__mesh_8c.html#add575c24a3480dd2844e28668fb30667">00363</a> <span class="keywordtype">void</span> <a class="code" href="eol__mesh_8c.html#add575c24a3480dd2844e28668fb30667">eol_mesh_get_groups</a>(<a class="code" href="structeolMesh.html">eolMesh</a> *model, FILE *file)
@@ -437,7 +438,7 @@
 <a name="l00413"></a>00413       g++;
 <a name="l00414"></a>00414       <span class="keywordflow">continue</span>;
 <a name="l00415"></a>00415     }
-<a name="l00416"></a>00416     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;GroupName:&quot;</span>) == 0)
+<a name="l00416"></a>00416     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;groupname:&quot;</span>) == 0)
 <a name="l00417"></a>00417     {
 <a name="l00418"></a>00418       fscanf(file, <span class="stringliteral">&quot;%s&quot;</span>,name);
 <a name="l00419"></a>00419       group = <a class="code" href="eol__mesh_8c.html#af93b0bf3fb99a738352039db35b14bb6" title="searches the mesh provided for the vertex group by the name.">eol_mesh_get_group_by_name</a>(name,model);
@@ -491,7 +492,7 @@
 <a name="l00467"></a>00467   group = NULL;
 <a name="l00468"></a>00468   <span class="keywordflow">while</span>(fscanf(file, <span class="stringliteral">&quot;%s&quot;</span>, buf) != EOF)
 <a name="l00469"></a>00469   {
-<a name="l00470"></a>00470     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;GroupName:&quot;</span>) == 0)<span class="comment">/*select active bone for addition*/</span>
+<a name="l00470"></a>00470     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;groupname:&quot;</span>) == 0)<span class="comment">/*select active bone for addition*/</span>
 <a name="l00471"></a>00471     {
 <a name="l00472"></a>00472       fscanf(file, <span class="stringliteral">&quot;%s&quot;</span>,name);
 <a name="l00473"></a>00473       group = <a class="code" href="eol__mesh_8c.html#af93b0bf3fb99a738352039db35b14bb6" title="searches the mesh provided for the vertex group by the name.">eol_mesh_get_group_by_name</a>(name,model);
@@ -502,7 +503,7 @@
 <a name="l00478"></a>00478       }
 <a name="l00479"></a>00479       <span class="keywordflow">continue</span>;
 <a name="l00480"></a>00480     }
-<a name="l00481"></a>00481     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;Weight:&quot;</span>) == 0)<span class="comment">/*select active bone for addition*/</span>
+<a name="l00481"></a>00481     <span class="keywordflow">if</span>(strcmp(buf,<span class="stringliteral">&quot;weight:&quot;</span>) == 0)<span class="comment">/*select active bone for addition*/</span>
 <a name="l00482"></a>00482     {
 <a name="l00483"></a>00483       <span class="keywordflow">if</span> (group != NULL)
 <a name="l00484"></a>00484       {
@@ -764,97 +765,99 @@
 <a name="l00740"></a>00740   }
 <a name="l00741"></a>00741   glEnd();
 <a name="l00742"></a>00742 
-<a name="l00743"></a>00743   glDisable(GL_LIGHTING);
-<a name="l00744"></a>00744   glDisable(GL_COLOR_MATERIAL);
-<a name="l00745"></a>00745   glDisable(GL_BLEND);
-<a name="l00746"></a>00746   <span class="keywordflow">if</span>(skin != NULL)
-<a name="l00747"></a>00747   {
-<a name="l00748"></a>00748     glDisable(GL_TEXTURE_2D);
-<a name="l00749"></a>00749   }
-<a name="l00750"></a>00750   glDisable(GL_NORMALIZE);
-<a name="l00751"></a>00751   glDepthFunc(GL_LESS);
-<a name="l00752"></a>00752   glPopMatrix();
-<a name="l00753"></a>00753 }
-<a name="l00754"></a>00754 
-<a name="l00755"></a><a class="code" href="eol__mesh_8h.html#a29afce30640e1b7ec20e30a94f326223">00755</a> <span class="keywordtype">void</span> <a class="code" href="eol__mesh_8c.html#a29afce30640e1b7ec20e30a94f326223" title="draws the provided mesh to the active draw buffer.">eol_mesh_draw_wire</a>(
-<a name="l00756"></a>00756     <a class="code" href="structeolMesh.html">eolMesh</a> *mesh,
-<a name="l00757"></a>00757     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
-<a name="l00758"></a>00758     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
-<a name="l00759"></a>00759     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
-<a name="l00760"></a>00760     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00761"></a>00761     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha
-<a name="l00762"></a>00762   )
-<a name="l00763"></a>00763 {
-<a name="l00764"></a>00764   <span class="keywordtype">int</span> i;
-<a name="l00765"></a>00765   <a class="code" href="structeolFace.html">eolFace</a>* triangle;
-<a name="l00766"></a>00766   <span class="keywordtype">float</span> trans[4];
-<a name="l00767"></a>00767 
-<a name="l00768"></a>00768   <span class="keywordflow">if</span> (mesh == NULL)
-<a name="l00769"></a>00769   {
-<a name="l00770"></a>00770     <span class="keywordflow">return</span>;
-<a name="l00771"></a>00771   }
-<a name="l00772"></a>00772   glPushMatrix();
-<a name="l00773"></a>00773   trans[3] = alpha;
-<a name="l00774"></a>00774   trans[0] = color.<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>;
-<a name="l00775"></a>00775   trans[1] = color.<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>;
-<a name="l00776"></a>00776   trans[2] = color.<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>;
-<a name="l00777"></a>00777 
-<a name="l00778"></a>00778   glColorMaterial(GL_FRONT,GL_DIFFUSE);
-<a name="l00779"></a>00779   glEnable(GL_NORMALIZE);
-<a name="l00780"></a>00780   glEnable(GL_COLOR_MATERIAL);
-<a name="l00781"></a>00781   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-<a name="l00782"></a>00782   glEnable(GL_BLEND);
-<a name="l00783"></a>00783 
-<a name="l00784"></a>00784   glDepthFunc(GL_LEQUAL);
-<a name="l00785"></a>00785 
-<a name="l00786"></a>00786   glMaterialfv(GL_FRONT,GL_DIFFUSE,trans);
-<a name="l00787"></a>00787 
-<a name="l00788"></a>00788   glTranslatef(position.<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,position.<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,position.<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
-<a name="l00789"></a>00789   glRotatef(rotation.<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>, 1.0f, 0.0f, 0.0f);
-<a name="l00790"></a>00790   glRotatef(rotation.<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>, 0.0f, 1.0f, 0.0f);
-<a name="l00791"></a>00791   glRotatef(rotation.<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>, 0.0f, 0.0f, 1.0f);
-<a name="l00792"></a>00792   glScalef(scale.<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,scale.<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,scale.<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
-<a name="l00793"></a>00793 
-<a name="l00794"></a>00794   glColor3f(color.<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,color.<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,color.<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
-<a name="l00795"></a>00795   glBegin(GL_LINES);
-<a name="l00796"></a>00796   <span class="keywordflow">for</span> (i = 0; i &lt; mesh-&gt;<a class="code" href="structeolMesh.html#a610aa52e54c96f472d46b797a4fdf495">_numFaces</a>; i++)
-<a name="l00797"></a>00797   {
-<a name="l00798"></a>00798     triangle = &amp;mesh-&gt;<a class="code" href="structeolMesh.html#af1f4dfd4b8c26be0b59719679cdd485d">_faces</a>[i];
-<a name="l00799"></a>00799 
-<a name="l00800"></a>00800     glVertex3f(mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
-<a name="l00801"></a>00801                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
-<a name="l00802"></a>00802                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
-<a name="l00803"></a>00803     glVertex3f(mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
-<a name="l00804"></a>00804                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
-<a name="l00805"></a>00805                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
-<a name="l00806"></a>00806 
-<a name="l00807"></a>00807     glVertex3f(mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
-<a name="l00808"></a>00808                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
-<a name="l00809"></a>00809                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
-<a name="l00810"></a>00810     glVertex3f(mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
-<a name="l00811"></a>00811                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
-<a name="l00812"></a>00812                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
-<a name="l00813"></a>00813 
-<a name="l00814"></a>00814     glVertex3f(mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
-<a name="l00815"></a>00815                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
-<a name="l00816"></a>00816                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
-<a name="l00817"></a>00817     glVertex3f(mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
-<a name="l00818"></a>00818                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
-<a name="l00819"></a>00819                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
-<a name="l00820"></a>00820   }
-<a name="l00821"></a>00821   glEnd();
-<a name="l00822"></a>00822 
-<a name="l00823"></a>00823   glDisable(GL_COLOR_MATERIAL);
-<a name="l00824"></a>00824   glDisable(GL_BLEND);
-<a name="l00825"></a>00825   glDisable(GL_NORMALIZE);
-<a name="l00826"></a>00826   glDepthFunc(GL_LESS);
-<a name="l00827"></a>00827   glPopMatrix();
-<a name="l00828"></a>00828 }
-<a name="l00829"></a>00829 
-<a name="l00830"></a>00830 <span class="comment">/*eol@eof*/</span>
+<a name="l00743"></a>00743   glColor4f(1,1,1,1);
+<a name="l00744"></a>00744   glDisable(GL_LIGHTING);
+<a name="l00745"></a>00745   glDisable(GL_COLOR_MATERIAL);
+<a name="l00746"></a>00746   glDisable(GL_BLEND);
+<a name="l00747"></a>00747   <span class="keywordflow">if</span>(skin != NULL)
+<a name="l00748"></a>00748   {
+<a name="l00749"></a>00749     glDisable(GL_TEXTURE_2D);
+<a name="l00750"></a>00750   }
+<a name="l00751"></a>00751   glDisable(GL_NORMALIZE);
+<a name="l00752"></a>00752   glDepthFunc(GL_LESS);
+<a name="l00753"></a>00753   glPopMatrix();
+<a name="l00754"></a>00754 }
+<a name="l00755"></a>00755 
+<a name="l00756"></a><a class="code" href="eol__mesh_8h.html#a29afce30640e1b7ec20e30a94f326223">00756</a> <span class="keywordtype">void</span> <a class="code" href="eol__mesh_8c.html#a29afce30640e1b7ec20e30a94f326223" title="draws the provided mesh to the active draw buffer.">eol_mesh_draw_wire</a>(
+<a name="l00757"></a>00757     <a class="code" href="structeolMesh.html">eolMesh</a> *mesh,
+<a name="l00758"></a>00758     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
+<a name="l00759"></a>00759     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
+<a name="l00760"></a>00760     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
+<a name="l00761"></a>00761     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
+<a name="l00762"></a>00762     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha
+<a name="l00763"></a>00763   )
+<a name="l00764"></a>00764 {
+<a name="l00765"></a>00765   <span class="keywordtype">int</span> i;
+<a name="l00766"></a>00766   <a class="code" href="structeolFace.html">eolFace</a>* triangle;
+<a name="l00767"></a>00767   <span class="keywordtype">float</span> trans[4];
+<a name="l00768"></a>00768 
+<a name="l00769"></a>00769   <span class="keywordflow">if</span> (mesh == NULL)
+<a name="l00770"></a>00770   {
+<a name="l00771"></a>00771     <span class="keywordflow">return</span>;
+<a name="l00772"></a>00772   }
+<a name="l00773"></a>00773   glPushMatrix();
+<a name="l00774"></a>00774   trans[3] = alpha;
+<a name="l00775"></a>00775   trans[0] = color.<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>;
+<a name="l00776"></a>00776   trans[1] = color.<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>;
+<a name="l00777"></a>00777   trans[2] = color.<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>;
+<a name="l00778"></a>00778 
+<a name="l00779"></a>00779   glColorMaterial(GL_FRONT,GL_DIFFUSE);
+<a name="l00780"></a>00780   glEnable(GL_NORMALIZE);
+<a name="l00781"></a>00781   glEnable(GL_COLOR_MATERIAL);
+<a name="l00782"></a>00782   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+<a name="l00783"></a>00783   glEnable(GL_BLEND);
+<a name="l00784"></a>00784 
+<a name="l00785"></a>00785   glDepthFunc(GL_LEQUAL);
+<a name="l00786"></a>00786 
+<a name="l00787"></a>00787   glMaterialfv(GL_FRONT,GL_DIFFUSE,trans);
+<a name="l00788"></a>00788 
+<a name="l00789"></a>00789   glTranslatef(position.<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,position.<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,position.<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
+<a name="l00790"></a>00790   glRotatef(rotation.<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>, 1.0f, 0.0f, 0.0f);
+<a name="l00791"></a>00791   glRotatef(rotation.<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>, 0.0f, 1.0f, 0.0f);
+<a name="l00792"></a>00792   glRotatef(rotation.<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>, 0.0f, 0.0f, 1.0f);
+<a name="l00793"></a>00793   glScalef(scale.<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,scale.<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,scale.<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
+<a name="l00794"></a>00794 
+<a name="l00795"></a>00795   glColor3f(color.<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,color.<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,color.<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
+<a name="l00796"></a>00796   glBegin(GL_LINES);
+<a name="l00797"></a>00797   <span class="keywordflow">for</span> (i = 0; i &lt; mesh-&gt;<a class="code" href="structeolMesh.html#a610aa52e54c96f472d46b797a4fdf495">_numFaces</a>; i++)
+<a name="l00798"></a>00798   {
+<a name="l00799"></a>00799     triangle = &amp;mesh-&gt;<a class="code" href="structeolMesh.html#af1f4dfd4b8c26be0b59719679cdd485d">_faces</a>[i];
+<a name="l00800"></a>00800 
+<a name="l00801"></a>00801     glVertex3f(mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
+<a name="l00802"></a>00802                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
+<a name="l00803"></a>00803                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
+<a name="l00804"></a>00804     glVertex3f(mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
+<a name="l00805"></a>00805                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
+<a name="l00806"></a>00806                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
+<a name="l00807"></a>00807 
+<a name="l00808"></a>00808     glVertex3f(mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
+<a name="l00809"></a>00809                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
+<a name="l00810"></a>00810                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[1]].<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
+<a name="l00811"></a>00811     glVertex3f(mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
+<a name="l00812"></a>00812                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
+<a name="l00813"></a>00813                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
+<a name="l00814"></a>00814 
+<a name="l00815"></a>00815     glVertex3f(mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
+<a name="l00816"></a>00816                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
+<a name="l00817"></a>00817                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[2]].<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
+<a name="l00818"></a>00818     glVertex3f(mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a050da49dcfdf4f32cc4191a1c77f8d2d">x</a>,
+<a name="l00819"></a>00819                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a3c87bef69a8e39e72131e83446b70b3b">y</a>,
+<a name="l00820"></a>00820                mesh-&gt;<a class="code" href="structeolMesh.html#adcca17f3351221f48db7d27b22ce6386">_vertices</a>[triangle-&gt;<a class="code" href="structeolFace.html#ad61842c5c336180eaffc8e63176f0430">vertices</a>[0]].<a class="code" href="structeolVec3D.html#a47369cb881480cba424a4acb1927b243">z</a>);
+<a name="l00821"></a>00821   }
+<a name="l00822"></a>00822   glEnd();
+<a name="l00823"></a>00823 
+<a name="l00824"></a>00824   glColor4f(1,1,1,1);
+<a name="l00825"></a>00825   glDisable(GL_COLOR_MATERIAL);
+<a name="l00826"></a>00826   glDisable(GL_BLEND);
+<a name="l00827"></a>00827   glDisable(GL_NORMALIZE);
+<a name="l00828"></a>00828   glDepthFunc(GL_LESS);
+<a name="l00829"></a>00829   glPopMatrix();
+<a name="l00830"></a>00830 }
 <a name="l00831"></a>00831 
+<a name="l00832"></a>00832 <span class="comment">/*eol@eof*/</span>
+<a name="l00833"></a>00833 
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:24 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:11 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

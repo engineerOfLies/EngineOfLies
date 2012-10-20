@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -30,8 +31,10 @@
 <p><a href="eol__actor_8c_source.html">Go to the source code of this file.</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__actor_8c.html#a0ad79892aac21cf71f1a6cb9af9ff43b">eol_actor_load</a> (<a class="el" href="structeolActor.html">eolActor</a> *act, char *filename)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">loads an actor from file and returns a pointer to it. based on the file information, it will also load up mesh, sprite, etc data.  <a href="#a0ad79892aac21cf71f1a6cb9af9ff43b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolActor.html">eolActor</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__actor_8c.html#ac0eb7a7288882a8c601335c7b580a209">eol_actor_load</a> (char *filename)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">loads an actor from file and returns a pointer to it. based on the file information, it will also load up mesh, sprite, etc data. Actor is a specific instance of a model;  <a href="#ac0eb7a7288882a8c601335c7b580a209"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__actor_8c.html#abf3e6fa592cba264a68cdcc5aa4f0195">eol_actor_load_in_place</a> (<a class="el" href="structeolActor.html">eolActor</a> *act, char *filename)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">loads an actor from file and saves it into the actor data provided. based on the file information, it will also load up mesh, sprite, etc data.  <a href="#abf3e6fa592cba264a68cdcc5aa4f0195"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__actor_8c.html#ad375086fbb746f0a0fccdc9cc69e662e">eol_actor_clear</a> (<a class="el" href="structeolActor.html">eolActor</a> *act)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">clears any of the actor information at the location specified  <a href="#ad375086fbb746f0a0fccdc9cc69e662e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__actor_8c.html#a1149fe3c5650fbd08800ad71c8766402">eol_actor_draw</a> (<a class="el" href="structeolActor.html">eolActor</a> *act, <a class="el" href="structeolVec3D.html">eolVec3D</a> position, <a class="el" href="structeolVec3D.html">eolVec3D</a> rotation, <a class="el" href="structeolVec3D.html">eolVec3D</a> scale, <a class="el" href="structeolVec3D.html">eolVec3D</a> color, <a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha)</td></tr>
@@ -69,7 +72,7 @@
 
 <p>clears any of the actor information at the location specified </p>
 
-<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00020">20</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00028">28</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
 
 </div>
 </div>
@@ -135,7 +138,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00030">30</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00038">38</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
 
 </div>
 </div>
@@ -188,7 +191,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00051">51</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00059">59</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
 
 </div>
 </div>
@@ -216,7 +219,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00103">103</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00111">111</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
 
 </div>
 </div>
@@ -245,16 +248,44 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>a floating point representing the frame. Note that when drawing, it will snap to the floor. </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00177">177</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00185">185</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0ad79892aac21cf71f1a6cb9af9ff43b"></a><!-- doxytag: member="eol_actor.c::eol_actor_load" ref="a0ad79892aac21cf71f1a6cb9af9ff43b" args="(eolActor *act, char *filename)" -->
+<a class="anchor" id="ac0eb7a7288882a8c601335c7b580a209"></a><!-- doxytag: member="eol_actor.c::eol_actor_load" ref="ac0eb7a7288882a8c601335c7b580a209" args="(char *filename)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void eol_actor_load </td>
+          <td class="memname"><a class="el" href="structeolActor.html">eolActor</a>* eol_actor_load </td>
+          <td>(</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>filename</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>loads an actor from file and returns a pointer to it. based on the file information, it will also load up mesh, sprite, etc data. Actor is a specific instance of a model; </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>the</em>&nbsp;</td><td>actor file to load. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00009">9</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abf3e6fa592cba264a68cdcc5aa4f0195"></a><!-- doxytag: member="eol_actor.c::eol_actor_load_in_place" ref="abf3e6fa592cba264a68cdcc5aa4f0195" args="(eolActor *act, char *filename)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eol_actor_load_in_place </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structeolActor.html">eolActor</a> *&nbsp;</td>
           <td class="paramname"> <em>act</em>, </td>
@@ -274,7 +305,7 @@
 </div>
 <div class="memdoc">
 
-<p>loads an actor from file and returns a pointer to it. based on the file information, it will also load up mesh, sprite, etc data. </p>
+<p>loads an actor from file and saves it into the actor data provided. based on the file information, it will also load up mesh, sprite, etc data. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>act</em>&nbsp;</td><td>the actor data to load into. It will clear any existing data. </td></tr>
@@ -283,7 +314,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00010">10</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00018">18</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
 
 </div>
 </div>
@@ -305,7 +336,7 @@
 <p>allocated empty actor data; </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to a valid empty actor or NULL on error </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00088">88</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00096">96</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
 
 </div>
 </div>
@@ -334,7 +365,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if the action has reached the end, false otherwise. looping never returns false pass returns true after a single pass oscillate returns true after a single pass forward and back. </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00136">136</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00144">144</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
 
 </div>
 </div>
@@ -372,7 +403,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00111">111</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00119">119</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
 
 </div>
 </div>
@@ -410,12 +441,12 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00072">72</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__actor_8c_source.html#l00080">80</a> of file <a class="el" href="eol__actor_8c_source.html">eol_actor.c</a>.</p>
 
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:25 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:12 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

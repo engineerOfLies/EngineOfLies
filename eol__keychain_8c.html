@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -37,49 +38,61 @@
 <tr><td colspan="2"><h2>Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a7db9a5926e0f805428e5632555f5a815">eol_g_string_free</a> (char *<a class="el" href="eol__opengl_8h.html#abf1f4a27437a1c89b69aed0dfe77397c">string</a>)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">convenience function when working with GString types.  <a href="#a7db9a5926e0f805428e5632555f5a815"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a7bfeb5841bfa895cd9d07b4f46e72136">eol_keychain_scalar_free</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *scalar)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ab6b6e6c6c7c48d523bdea73a1d51b668">eol_keychain_destroy</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *link)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a7bfeb5841bfa895cd9d07b4f46e72136">eol_keychain_scalar_free</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *scalar)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ab6b6e6c6c7c48d523bdea73a1d51b668">eol_keychain_destroy</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *link)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">destroys the typed pointer passed  <a href="#ab6b6e6c6c7c48d523bdea73a1d51b668"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a7d8b1f18a02ee398ce3a08324e4977cc">eol_keychain_hash_free</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *hash)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ad8d9ed1e8feaa0d8de5e253db8884c8e">eol_keychain_list_free</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *list)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ae6fc299ec6c73b9dfb332dde1c8f3224">eol_keychain_free</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> **link)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">frees the <a class="el" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> and sets the passed in pointer to NULL  <a href="#ae6fc299ec6c73b9dfb332dde1c8f3224"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ac42a21dff81bd37f2e504f20064555fd">eol_keychain_new</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a7d8b1f18a02ee398ce3a08324e4977cc">eol_keychain_hash_free</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *hash)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ad8d9ed1e8feaa0d8de5e253db8884c8e">eol_keychain_list_free</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *list)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ae6fc299ec6c73b9dfb332dde1c8f3224">eol_keychain_free</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> **link)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">frees the eolKeychain and sets the passed in pointer to NULL  <a href="#ae6fc299ec6c73b9dfb332dde1c8f3224"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ac0b19b9bc0ed3f8c4e5698482b708c03">eol_keychain_clone</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *src)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">duplicate a keychain  <a href="#ac0b19b9bc0ed3f8c4e5698482b708c03"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a633c0e513ed028e642e0d0999ecacebb">eol_keychain_clone_string</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *src)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a408705bbb4f0047c17dc1b9a3ee53d89">eol_keychain_clone_list</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *src)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a715782bcf164474ebcfd89b421f7d89a">eol_keychain_clone_hash</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *src)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ac42a21dff81bd37f2e504f20064555fd">eol_keychain_new</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">allocates and returns a pointer to an empty typed pointer  <a href="#ac42a21dff81bd37f2e504f20064555fd"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a304c21290cbc913f75f819c1721405b5">eol_keychain_new_int</a> (<a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> <a class="el" href="eol__opengl_8h.html#af6014f4fe61629a8a7e928c34e9ee5cd">value</a>)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a74c7cda0ce2d21d30b6f0ddf23a3a511">eol_keychain_new_uint</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__opengl_8h.html#af6014f4fe61629a8a7e928c34e9ee5cd">value</a>)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a87af40844795a6be796563cf0481cf12">eol_keychain_new_float</a> (<a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__opengl_8h.html#af6014f4fe61629a8a7e928c34e9ee5cd">value</a>)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#afd625a41933788081d50eaf7eb2c5adf">eol_keychain_new_string</a> (char *text)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a304c21290cbc913f75f819c1721405b5">eol_keychain_new_int</a> (<a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> <a class="el" href="eol__opengl_8h.html#af6014f4fe61629a8a7e928c34e9ee5cd">value</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a74c7cda0ce2d21d30b6f0ddf23a3a511">eol_keychain_new_uint</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="eol__opengl_8h.html#af6014f4fe61629a8a7e928c34e9ee5cd">value</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a87af40844795a6be796563cf0481cf12">eol_keychain_new_float</a> (<a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="eol__opengl_8h.html#af6014f4fe61629a8a7e928c34e9ee5cd">value</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#afd625a41933788081d50eaf7eb2c5adf">eol_keychain_new_string</a> (char *text)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">allocated and sets up a pointer to a GString filled with the default text  <a href="#afd625a41933788081d50eaf7eb2c5adf"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a2389674e231793f280c14a078c68852f">eol_keychain_new_list</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a2389674e231793f280c14a078c68852f">eol_keychain_new_list</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">allocated and sets up a pointer to an Empty GList.  <a href="#a2389674e231793f280c14a078c68852f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a20059c5684722e54fece7ae67e7eb3c2">eol_keychain_new_hash</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a20059c5684722e54fece7ae67e7eb3c2">eol_keychain_new_hash</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">allocated and sets up a pointer to an Empty GHash.  <a href="#a20059c5684722e54fece7ae67e7eb3c2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a03d53f9f88a0845a823793783b7a2bcd">eol_keychain_hash_remove</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *hash, char *key)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Removes a key from the <a class="el" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> of a hash. if it is not a pointer to a hash it will return without doing anything. if found, eol_keychain_destroy is called on the value.  <a href="#a03d53f9f88a0845a823793783b7a2bcd"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a0cb5e74a908c4fc40d6d9e1e42ee8475">eol_keychain_hash_insert</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *hash, char *key, <a class="el" href="structeolKeychain.html">eolKeychain</a> *<a class="el" href="eol__opengl_8h.html#af6014f4fe61629a8a7e928c34e9ee5cd">value</a>)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ac14eb5ffa574b3a1dc86ce8bd1317cea">eol_keychain_list_append</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *list, <a class="el" href="structeolKeychain.html">eolKeychain</a> *item)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">appends a list item to the <a class="el" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> list value. if its not a pointer to a list, it will return without doing anything.  <a href="#ac14eb5ffa574b3a1dc86ce8bd1317cea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a03f8d756446e773e06a4280033414168">eol_keychain_get_hash_value</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#aa22849850d615278dd74fa912d0d9aed">eol_keychain_get_line</a> (<a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> output, <a class="el" href="structkeychain__S.html">eolKeychain</a> *key)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Retrieves the string information for a string keychain. if its not a pointer to a string, it will return without doing anything.  <a href="#aa22849850d615278dd74fa912d0d9aed"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a03d53f9f88a0845a823793783b7a2bcd">eol_keychain_hash_remove</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, char *key)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Removes a key from the eolKeychain of a hash. if it is not a pointer to a hash it will return without doing anything. if found, eol_keychain_destroy is called on the value.  <a href="#a03d53f9f88a0845a823793783b7a2bcd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a0cb5e74a908c4fc40d6d9e1e42ee8475">eol_keychain_hash_insert</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, char *key, <a class="el" href="structkeychain__S.html">eolKeychain</a> *<a class="el" href="eol__opengl_8h.html#af6014f4fe61629a8a7e928c34e9ee5cd">value</a>)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ac14eb5ffa574b3a1dc86ce8bd1317cea">eol_keychain_list_append</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *list, <a class="el" href="structkeychain__S.html">eolKeychain</a> *item)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">appends a list item to the eolKeychain list value. if its not a pointer to a list, it will return without doing anything.  <a href="#ac14eb5ffa574b3a1dc86ce8bd1317cea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a03f8d756446e773e06a4280033414168">eol_keychain_get_hash_value</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">looks up the key in the hash. checks type before any operation  <a href="#a03f8d756446e773e06a4280033414168"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a92ab6369ce369dc819bd191d3bc58946">eol_keychain_get_list_nth</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *list, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> n)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a8e5521041a27b22b84657eb9ed6acc71">eol_keychain_get_hash_count</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *list)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ab5a5842b5dc7cdf13cedb3fc2addca81">eol_keychain_get_list_count</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *list)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">retrieve the count of items in a list keychain  <a href="#ab5a5842b5dc7cdf13cedb3fc2addca81"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a2e977dc54c43b4c3d31bef53305fcea0">eol_keychain_get_hash_nth</a> (<a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key, <a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> n)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a92ab6369ce369dc819bd191d3bc58946">eol_keychain_get_list_nth</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *list, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> n)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">looks up the nth item in the list checks type before any operation  <a href="#a92ab6369ce369dc819bd191d3bc58946"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a8e4b2086639c46738142fe8249a9d9f7">eol_keychain_list_remove_nth</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *list, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> n)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a8e4b2086639c46738142fe8249a9d9f7">eol_keychain_list_remove_nth</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *list, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> n)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">removed the nth item from the list checks type before any operation calls eol_keychain_destroy on the item found.  <a href="#a8e4b2086639c46738142fe8249a9d9f7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#aa0b9eba88a91b78a83fb69a40c7eb3a6">eol_keychain_list_move_nth_top</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *list, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> n)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#aa0b9eba88a91b78a83fb69a40c7eb3a6">eol_keychain_list_move_nth_top</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *list, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> n)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">moves the nth item in the list to the top of the list checks type before any operation  <a href="#aa0b9eba88a91b78a83fb69a40c7eb3a6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a77bb8abb278c3e3dca94ca7ea4027bd8">eol_keychain_list_move_nth_bottom</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *list, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> n)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a77bb8abb278c3e3dca94ca7ea4027bd8">eol_keychain_list_move_nth_bottom</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *list, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> n)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">moves the nth item in the list to the bottom of the list checks type before any operation  <a href="#a77bb8abb278c3e3dca94ca7ea4027bd8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a02cfa40cf9582aa9df8e2e566f21c1af">eol_keychain_get_hash_value_as_uint</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> *output, <a class="el" href="structeolKeychain.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ab7b92deaa0eda88b1ef51eddc1cd3898">eol_keychain_get_hash_value_as_int</a> (<a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> *output, <a class="el" href="structeolKeychain.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a5766ea1b8f17a5e40649276b803a2846">eol_keychain_get_hash_value_as_float</a> (<a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> *output, <a class="el" href="structeolKeychain.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a1f6323c4395c5ae73bf11aaf92620160">eol_keychain_get_hash_value_as_bool</a> (<a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> *output, <a class="el" href="structeolKeychain.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a> (<a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> output, <a class="el" href="structeolKeychain.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a007eac9d89c9c8f46600aa41930ba7ce">eol_keychain_get_hash_value_as_vec3d</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> *output, <a class="el" href="structeolKeychain.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ad489bf234517b5aca9eadaea75f41004">eol_keychain_get_hash_value_as_rect</a> (<a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> *output, <a class="el" href="structeolKeychain.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ad3d4dd888b65c5b4900405ba39d9b1e4">eol_keychain_get_hash_value_as_rectfloat</a> (<a class="el" href="structeolRectFloat.html">eolRectFloat</a> *output, <a class="el" href="structeolKeychain.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a26bb1fa1f0658e16cb814e6bf161d4b9">eol_keychain_print_hash</a> (<a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key, <a class="el" href="structeolKeychain.html">eolKeychain</a> *chain, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> level)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a95c9a374e6d192817fbe537201bdae64">eol_keychain_print</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *chain)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a02cfa40cf9582aa9df8e2e566f21c1af">eol_keychain_get_hash_value_as_uint</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> *output, <a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ab7b92deaa0eda88b1ef51eddc1cd3898">eol_keychain_get_hash_value_as_int</a> (<a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> *output, <a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a5766ea1b8f17a5e40649276b803a2846">eol_keychain_get_hash_value_as_float</a> (<a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> *output, <a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a1f6323c4395c5ae73bf11aaf92620160">eol_keychain_get_hash_value_as_bool</a> (<a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> *output, <a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a> (<a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> output, <a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ae89048b209987d9c256e46315afc5dfa">eol_keychain_get_hash_value_as_vec4d</a> (<a class="el" href="structeolVec4D.html">eolVec4D</a> *output, <a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a007eac9d89c9c8f46600aa41930ba7ce">eol_keychain_get_hash_value_as_vec3d</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> *output, <a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ad489bf234517b5aca9eadaea75f41004">eol_keychain_get_hash_value_as_rect</a> (<a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> *output, <a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#ad3d4dd888b65c5b4900405ba39d9b1e4">eol_keychain_get_hash_value_as_rectfloat</a> (<a class="el" href="structeolRectFloat.html">eolRectFloat</a> *output, <a class="el" href="structkeychain__S.html">eolKeychain</a> *hash, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a26bb1fa1f0658e16cb814e6bf161d4b9">eol_keychain_print_hash</a> (<a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> key, <a class="el" href="structkeychain__S.html">eolKeychain</a> *chain, <a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> level)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__keychain_8c.html#a95c9a374e6d192817fbe537201bdae64">eol_keychain_print</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> *chain)</td></tr>
 </table>
 <hr/><h2>Function Documentation</h2>
 <a class="anchor" id="a7db9a5926e0f805428e5632555f5a815"></a><!-- doxytag: member="eol_keychain.c::eol_g_string_free" ref="a7db9a5926e0f805428e5632555f5a815" args="(char *string)" -->
@@ -110,6 +123,95 @@
 
 </div>
 </div>
+<a class="anchor" id="ac0b19b9bc0ed3f8c4e5698482b708c03"></a><!-- doxytag: member="eol_keychain.c::eol_keychain_clone" ref="ac0b19b9bc0ed3f8c4e5698482b708c03" args="(eolKeychain *src)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_clone </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramname"> <em>src</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>duplicate a keychain </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>src</em>&nbsp;</td><td>the original keychain to be duplicated </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to the duplicated keychain or NULL on error </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00069">69</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a715782bcf164474ebcfd89b421f7d89a"></a><!-- doxytag: member="eol_keychain.c::eol_keychain_clone_hash" ref="a715782bcf164474ebcfd89b421f7d89a" args="(eolKeychain *src)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_clone_hash </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramname"> <em>src</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00100">100</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a408705bbb4f0047c17dc1b9a3ee53d89"></a><!-- doxytag: member="eol_keychain.c::eol_keychain_clone_list" ref="a408705bbb4f0047c17dc1b9a3ee53d89" args="(eolKeychain *src)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_clone_list </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramname"> <em>src</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00083">83</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a633c0e513ed028e642e0d0999ecacebb"></a><!-- doxytag: member="eol_keychain.c::eol_keychain_clone_string" ref="a633c0e513ed028e642e0d0999ecacebb" args="(eolKeychain *src)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_clone_string </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramname"> <em>src</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00076">76</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ab6b6e6c6c7c48d523bdea73a1d51b668"></a><!-- doxytag: member="eol_keychain.c::eol_keychain_destroy" ref="ab6b6e6c6c7c48d523bdea73a1d51b668" args="(eolKeychain *link)" -->
 <div class="memitem">
 <div class="memproto">
@@ -117,7 +219,7 @@
         <tr>
           <td class="memname">void eol_keychain_destroy </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>point</em></td>
           <td>&nbsp;)&nbsp;</td>
           <td></td>
@@ -145,7 +247,7 @@
         <tr>
           <td class="memname">void eol_keychain_free </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> **&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> **&nbsp;</td>
           <td class="paramname"> <em>point</em></td>
           <td>&nbsp;)&nbsp;</td>
           <td></td>
@@ -154,7 +256,7 @@
 </div>
 <div class="memdoc">
 
-<p>frees the <a class="el" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> and sets the passed in pointer to NULL </p>
+<p>frees the eolKeychain and sets the passed in pointer to NULL </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>a</em>&nbsp;</td><td>pointer to a pointer to a typed pointer. </td></tr>
@@ -166,14 +268,69 @@
 
 </div>
 </div>
+<a class="anchor" id="a8e5521041a27b22b84657eb9ed6acc71"></a><!-- doxytag: member="eol_keychain.c::eol_keychain_get_hash_count" ref="a8e5521041a27b22b84657eb9ed6acc71" args="(eolKeychain *list)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> eol_keychain_get_hash_count </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramname"> <em>list</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00297">297</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2e977dc54c43b4c3d31bef53305fcea0"></a><!-- doxytag: member="eol_keychain.c::eol_keychain_get_hash_nth" ref="a2e977dc54c43b4c3d31bef53305fcea0" args="(eolLine key, eolKeychain *hash, eolUint n)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_get_hash_nth </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramname"> <em>hash</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td>
+          <td class="paramname"> <em>n</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00313">313</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a03f8d756446e773e06a4280033414168"></a><!-- doxytag: member="eol_keychain.c::eol_keychain_get_hash_value" ref="a03f8d756446e773e06a4280033414168" args="(eolKeychain *hash, eolLine key)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structeolKeychain.html">eolKeychain</a>* eol_keychain_get_hash_value </td>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_get_hash_value </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>hash</em>, </td>
         </tr>
         <tr>
@@ -201,7 +358,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NULL if not a hash, or not found. A typed pointer to the value if found. </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00214">214</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00278">278</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -218,7 +375,7 @@
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>hash</em>, </td>
         </tr>
         <tr>
@@ -236,7 +393,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00325">325</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00420">420</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -253,7 +410,7 @@
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>hash</em>, </td>
         </tr>
         <tr>
@@ -271,7 +428,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00310">310</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00405">405</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -288,7 +445,7 @@
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>hash</em>, </td>
         </tr>
         <tr>
@@ -306,7 +463,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00295">295</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00390">390</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -323,7 +480,7 @@
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>hash</em>, </td>
         </tr>
         <tr>
@@ -341,7 +498,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00342">342</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00437">437</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -358,7 +515,7 @@
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>hash</em>, </td>
         </tr>
         <tr>
@@ -376,7 +533,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00371">371</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00481">481</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -393,7 +550,7 @@
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>hash</em>, </td>
         </tr>
         <tr>
@@ -411,7 +568,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00386">386</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00496">496</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -428,7 +585,7 @@
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>hash</em>, </td>
         </tr>
         <tr>
@@ -446,7 +603,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00280">280</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00375">375</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -463,7 +620,7 @@
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>hash</em>, </td>
         </tr>
         <tr>
@@ -481,7 +638,110 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00356">356</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00466">466</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae89048b209987d9c256e46315afc5dfa"></a><!-- doxytag: member="eol_keychain.c::eol_keychain_get_hash_value_as_vec4d" ref="ae89048b209987d9c256e46315afc5dfa" args="(eolVec4D *output, eolKeychain *hash, eolLine key)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_keychain_get_hash_value_as_vec4d </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeolVec4D.html">eolVec4D</a> *&nbsp;</td>
+          <td class="paramname"> <em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramname"> <em>hash</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>key</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00451">451</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa22849850d615278dd74fa912d0d9aed"></a><!-- doxytag: member="eol_keychain.c::eol_keychain_get_line" ref="aa22849850d615278dd74fa912d0d9aed" args="(eolLine output, eolKeychain *key)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_keychain_get_line </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a>&nbsp;</td>
+          <td class="paramname"> <em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramname"> <em>key</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Retrieves the string information for a string keychain. if its not a pointer to a string, it will return without doing anything. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>output</em>&nbsp;</td><td>the output eolLine. Untouched on error </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>key</em>&nbsp;</td><td>the eolKeychain string to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>eolTrue if found and returned correctly, eolFalse otherwise </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00233">233</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab5a5842b5dc7cdf13cedb3fc2addca81"></a><!-- doxytag: member="eol_keychain.c::eol_keychain_get_list_count" ref="ab5a5842b5dc7cdf13cedb3fc2addca81" args="(eolKeychain *list)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> eol_keychain_get_list_count </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramname"> <em>list</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>retrieve the count of items in a list keychain </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>list</em>&nbsp;</td><td>the keychain that is a a list </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the number of items in the list (note that any sub items are not counted)) </dd></dl>
+
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00305">305</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -490,9 +750,9 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structeolKeychain.html">eolKeychain</a>* eol_keychain_get_list_nth </td>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_get_list_nth </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>list</em>, </td>
         </tr>
         <tr>
@@ -520,7 +780,7 @@
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NULL if not a list, or not found. A typed pointer to the value if found. </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00233">233</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00328">328</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -531,7 +791,7 @@
         <tr>
           <td class="memname">void eol_keychain_hash_free </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>hash</em></td>
           <td>&nbsp;)&nbsp;</td>
           <td></td>
@@ -551,7 +811,7 @@
         <tr>
           <td class="memname">void eol_keychain_hash_insert </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>hash</em>, </td>
         </tr>
         <tr>
@@ -563,7 +823,7 @@
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>value</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -575,7 +835,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00188">188</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00252">252</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -586,7 +846,7 @@
         <tr>
           <td class="memname">void eol_keychain_hash_remove </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>hash</em>, </td>
         </tr>
         <tr>
@@ -604,7 +864,7 @@
 </div>
 <div class="memdoc">
 
-<p>Removes a key from the <a class="el" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> of a hash. if it is not a pointer to a hash it will return without doing anything. if found, eol_keychain_destroy is called on the value. </p>
+<p>Removes a key from the eolKeychain of a hash. if it is not a pointer to a hash it will return without doing anything. if found, eol_keychain_destroy is called on the value. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>hash</em>&nbsp;</td><td>the typed pointer of a ghash </td></tr>
@@ -613,7 +873,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00178">178</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00242">242</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -624,13 +884,13 @@
         <tr>
           <td class="memname">void eol_keychain_list_append </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>list</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>item</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -642,16 +902,16 @@
 </div>
 <div class="memdoc">
 
-<p>appends a list item to the <a class="el" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> list value. if its not a pointer to a list, it will return without doing anything. </p>
+<p>appends a list item to the eolKeychain list value. if its not a pointer to a list, it will return without doing anything. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>list</em>&nbsp;</td><td>the typed pointer of a glist </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>item</em>&nbsp;</td><td>the <a class="el" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> to the item to be added to the list. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>item</em>&nbsp;</td><td>the eolKeychain to the item to be added to the list. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00206">206</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00270">270</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -662,7 +922,7 @@
         <tr>
           <td class="memname">void eol_keychain_list_free </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>list</em></td>
           <td>&nbsp;)&nbsp;</td>
           <td></td>
@@ -682,7 +942,7 @@
         <tr>
           <td class="memname">void eol_keychain_list_move_nth_bottom </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>list</em>, </td>
         </tr>
         <tr>
@@ -709,7 +969,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00267">267</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00362">362</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -720,7 +980,7 @@
         <tr>
           <td class="memname">void eol_keychain_list_move_nth_top </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>list</em>, </td>
         </tr>
         <tr>
@@ -747,7 +1007,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00254">254</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00349">349</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -758,7 +1018,7 @@
         <tr>
           <td class="memname">void eol_keychain_list_remove_nth </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>list</em>, </td>
         </tr>
         <tr>
@@ -785,7 +1045,7 @@
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00241">241</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00336">336</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -794,7 +1054,7 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structeolKeychain.html">eolKeychain</a>* eol_keychain_new </td>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_new </td>
           <td>(</td>
           <td class="paramname"></td>
           <td>&nbsp;)&nbsp;</td>
@@ -805,9 +1065,9 @@
 <div class="memdoc">
 
 <p>allocates and returns a pointer to an empty typed pointer </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>NULL on allocation error or a zero'd out <a class="el" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>NULL on allocation error or a zero'd out eolKeychain </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00069">69</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00119">119</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -816,7 +1076,7 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structeolKeychain.html">eolKeychain</a>* eol_keychain_new_float </td>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_new_float </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td>
           <td class="paramname"> <em>value</em></td>
@@ -827,7 +1087,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00119">119</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00171">171</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -836,7 +1096,7 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structeolKeychain.html">eolKeychain</a>* eol_keychain_new_hash </td>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_new_hash </td>
           <td>(</td>
           <td class="paramname"></td>
           <td>&nbsp;)&nbsp;</td>
@@ -847,9 +1107,9 @@
 <div class="memdoc">
 
 <p>allocated and sets up a pointer to an Empty GHash. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>NULL on allocation error or a set up <a class="el" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> of a GHashTable </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>NULL on allocation error or a set up eolKeychain of a GHashTable </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00162">162</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00216">216</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -858,7 +1118,7 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structeolKeychain.html">eolKeychain</a>* eol_keychain_new_int </td>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_new_int </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>&nbsp;</td>
           <td class="paramname"> <em>value</em></td>
@@ -869,7 +1129,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00081">81</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00133">133</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -878,7 +1138,7 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structeolKeychain.html">eolKeychain</a>* eol_keychain_new_list </td>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_new_list </td>
           <td>(</td>
           <td class="paramname"></td>
           <td>&nbsp;)&nbsp;</td>
@@ -889,9 +1149,9 @@
 <div class="memdoc">
 
 <p>allocated and sets up a pointer to an Empty GList. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>NULL on allocation error or a set up <a class="el" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> of a GList </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>NULL on allocation error or a set up eolKeychain of a GList </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00150">150</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00203">203</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -900,7 +1160,7 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structeolKeychain.html">eolKeychain</a>* eol_keychain_new_string </td>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_new_string </td>
           <td>(</td>
           <td class="paramtype">char *&nbsp;</td>
           <td class="paramname"> <em>text</em></td>
@@ -918,9 +1178,9 @@
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>NULL on allocation error or a set up <a class="el" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> of a GString </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>NULL on allocation error or a set up eolKeychain of a GString </dd></dl>
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00138">138</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00190">190</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -929,7 +1189,7 @@
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structeolKeychain.html">eolKeychain</a>* eol_keychain_new_uint </td>
+          <td class="memname"><a class="el" href="structkeychain__S.html">eolKeychain</a>* eol_keychain_new_uint </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td>
           <td class="paramname"> <em>value</em></td>
@@ -940,7 +1200,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00100">100</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00152">152</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -951,7 +1211,7 @@
         <tr>
           <td class="memname">void eol_keychain_print </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>chain</em></td>
           <td>&nbsp;)&nbsp;</td>
           <td></td>
@@ -960,7 +1220,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00406">406</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00516">516</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -977,7 +1237,7 @@
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>chain</em>, </td>
         </tr>
         <tr>
@@ -995,7 +1255,7 @@
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00401">401</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__keychain_8c_source.html#l00511">511</a> of file <a class="el" href="eol__keychain_8c_source.html">eol_keychain.c</a>.</p>
 
 </div>
 </div>
@@ -1006,7 +1266,7 @@
         <tr>
           <td class="memname">void eol_keychain_scalar_free </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> *&nbsp;</td>
           <td class="paramname"> <em>scalar</em></td>
           <td>&nbsp;)&nbsp;</td>
           <td></td>
@@ -1020,7 +1280,7 @@
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:26 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:14 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

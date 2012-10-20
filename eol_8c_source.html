@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -53,68 +54,69 @@
 <a name="l00029"></a>00029   <a class="code" href="eol__logger_8c.html#aaf97aa654e077204dec605e2f4521e3a" title="initializes logging system">eol_logger_init</a>();
 <a name="l00030"></a>00030   <a class="code" href="eol__config_8c.html#a64a9bc02e28f6e8d6613d68353bc6618" title="initializes config system">eol_config_init</a>();
 <a name="l00031"></a>00031   <a class="code" href="eol__loader_8c.html#a137653f1a9074818762bf514dce92ce6" title="sets up the physFS internal system">eol_loader_init</a>();
-<a name="l00032"></a>00032   <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea98e086fa37d6cd7302e9ef6016420c55">EOL_GRAPHICS</a>)
-<a name="l00033"></a>00033   {
-<a name="l00034"></a>00034     <a class="code" href="eol__graphics_8c.html#a6b06fbd1b0eb0fc60a2291bda7b54735">eol_graphics_config</a>();
-<a name="l00035"></a>00035     <a class="code" href="eol__graphics_8c.html#a9b7871e1a7d68d885888d0a2a21a97ea" title="Initializes the graphics system for EOL. Will load up the default config file in...">eol_graphics_init</a>();
-<a name="l00036"></a>00036     <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eadafb49333d4dcffb29f6e9b028e425a8">EOL_FONT</a>)
-<a name="l00037"></a>00037     {
-<a name="l00038"></a>00038       <a class="code" href="eol__font_8c.html#af7a86f7530101feec218cffe52622215">eol_font_config</a>();
-<a name="l00039"></a>00039       <a class="code" href="eol__font_8c.html#a66a4d96e17989fb23d5797402e2eb3c1">eol_font_init</a>();
-<a name="l00040"></a>00040     }
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042     <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea7bf180c0213ef95dc63d40c96e228a50">EOL_LIGHTING</a>)
-<a name="l00043"></a>00043     {
-<a name="l00044"></a>00044       <a class="code" href="eol__lighting_8c.html#a775a8065e20d7de24d30ea3b0a573a16" title="configures the lighting system">eol_lighting_config</a>();
-<a name="l00045"></a>00045       <a class="code" href="eol__lighting_8c.html#a277891bc87b72681ba7678fa27ad0e4e" title="initializes the lighting system">eol_lighting_init</a>();
-<a name="l00046"></a>00046     }
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048     <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eaa5b83a062f21f49ec438f3f4d64af96d">EOL_MODEL</a>)
-<a name="l00049"></a>00049     {
-<a name="l00050"></a>00050       <a class="code" href="eol__model_8c.html#a4f4bc73e71893f37176edb56da8f06c4" title="loads up model system config">eol_model_config</a>();
-<a name="l00051"></a>00051       <a class="code" href="eol__model_8c.html#a10de85a49b3c3c026e280212ec6b95c1" title="model system init">eol_model_init</a>();
-<a name="l00052"></a>00052     }
-<a name="l00053"></a>00053     <span class="comment">/*sprite is dependant on graphics*/</span>
-<a name="l00054"></a>00054     <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea0c34c893d7102a71f98c88ff982deb40">EOL_SPRITE</a>)
-<a name="l00055"></a>00055     {
-<a name="l00056"></a>00056       <a class="code" href="eol__sprite_8c.html#a8411db2225aa9ad5c3e7a139825f8be1" title="loads sprite configuration from file, or sets up defaults if no config file found...">eol_sprite_load_config</a>();
-<a name="l00057"></a>00057       <a class="code" href="eol__sprite_8c.html#a8d59683173bdfe40bd66a6cbb2f5b003" title="set up the sprite system for use. Must be called before any sprite functions are...">eol_sprite_init</a>();
-<a name="l00058"></a>00058       <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea8c01b81a9a975140f9dc53e8a517dee3">EOL_MESH</a>)
-<a name="l00059"></a>00059       {
-<a name="l00060"></a>00060         <a class="code" href="eol__mesh_8c.html#aa72c36211949225f050497b9d48e558c" title="loads the eol_mesh configuration from file or loads defaults if no file found.">eol_mesh_load_config</a>();
-<a name="l00061"></a>00061         <a class="code" href="eol__mesh_8c.html#ad5570cec043e748da7d89b8776349e2f" title="initializes internal structures and sets up eol_mesh for use.">eol_mesh_init</a>();
-<a name="l00062"></a>00062       }
-<a name="l00063"></a>00063       <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea97a83ae7247f7b2b5c68d05e4212abb8">EOL_ARMATURE</a>)
-<a name="l00064"></a>00064       {
-<a name="l00065"></a>00065         <a class="code" href="eol__armature_8c.html#ae3e9d5100d4a08b21c0be2872c0cfc19" title="loads up defaults for armatures.">eol_armature_load_config</a>();
-<a name="l00066"></a>00066         <a class="code" href="eol__armature_8c.html#a911d40f7a0b0a5ea606c7f0fd4c6e3aa" title="initializes internal structures for armature system">eol_armature_init</a>();
-<a name="l00067"></a>00067       }
-<a name="l00068"></a>00068     }
-<a name="l00069"></a>00069     <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea20ea2ef2eb0bda69c8c803b615611e2b">EOL_PARTICLE</a>)
-<a name="l00070"></a>00070     {
-<a name="l00071"></a>00071       <a class="code" href="eol__particle_8c.html#a5cc1a5e6109f44536501685c45a0b46c" title="loads the global particle configuration. such as max number of particles.">eol_particle_config</a>();
-<a name="l00072"></a>00072       <a class="code" href="eol__particle_8c.html#a06918fbb925200ace46cd147a4cb5053" title="initializes the particle system based on the loaded configuration.">eol_particle_init</a>();
-<a name="l00073"></a>00073     }
-<a name="l00074"></a>00074     <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea4ff328925413c2323d932a8dd9f5a660">EOL_WINDOW</a>)
-<a name="l00075"></a>00075     {
-<a name="l00076"></a>00076       <a class="code" href="eol__window_8c.html#abf072fa8f463e5389fbd4f33dc88ae8a">eol_window_config</a>();
-<a name="l00077"></a>00077       <a class="code" href="eol__window_8c.html#ae0bf59b57aa890f054d9bf6a25ecb953">eol_window_init</a>();
-<a name="l00078"></a>00078     }
-<a name="l00079"></a>00079   }
-<a name="l00080"></a>00080   <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eae48e73f884a2714bb7c98a7cd5ea9638">EOL_INPUT</a>)
-<a name="l00081"></a>00081   {
-<a name="l00082"></a>00082     <a class="code" href="eol__mouse_8c.html#a51fb6c6d834bf5a2ec44a749f4bc4684" title="Loads mouse configs or sets up defaults.">eol_mouse_config</a>();
-<a name="l00083"></a>00083     <a class="code" href="eol__mouse_8c.html#a0b24a5e19603ef038b1722481706aa10" title="Initializes internal mouse data based on loaded config.">eol_mouse_init</a>();
-<a name="l00084"></a>00084     <a class="code" href="eol__input_8c.html#aa0e135a156c7288289859f989be653c2" title="load the input system configuration and input mappings from files. If no files found...">eol_input_load_config</a>();
-<a name="l00085"></a>00085     <a class="code" href="eol__input_8c.html#a9cd3d21c2438657874233f0eff06d3d2" title="initializes internal components of eol_input">eol_input_init</a>();
-<a name="l00086"></a>00086   }
-<a name="l00087"></a>00087 }
-<a name="l00088"></a>00088 
+<a name="l00032"></a>00032   <a class="code" href="eol__logger_8c.html#a3c1f790b9cdb98835da33bbb7ab4383c" title="loads up configuration from file or if no file available it will set defaults.">eol_logger_load_config</a>();
+<a name="l00033"></a>00033   <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea98e086fa37d6cd7302e9ef6016420c55">EOL_GRAPHICS</a>)
+<a name="l00034"></a>00034   {
+<a name="l00035"></a>00035     <a class="code" href="eol__graphics_8c.html#a6b06fbd1b0eb0fc60a2291bda7b54735">eol_graphics_config</a>();
+<a name="l00036"></a>00036     <a class="code" href="eol__graphics_8c.html#a9b7871e1a7d68d885888d0a2a21a97ea" title="Initializes the graphics system for EOL. Will load up the default config file in...">eol_graphics_init</a>();
+<a name="l00037"></a>00037     <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eadafb49333d4dcffb29f6e9b028e425a8">EOL_FONT</a>)
+<a name="l00038"></a>00038     {
+<a name="l00039"></a>00039       <a class="code" href="eol__font_8c.html#af7a86f7530101feec218cffe52622215">eol_font_config</a>();
+<a name="l00040"></a>00040       <a class="code" href="eol__font_8c.html#a66a4d96e17989fb23d5797402e2eb3c1">eol_font_init</a>();
+<a name="l00041"></a>00041     }
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043     <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea7bf180c0213ef95dc63d40c96e228a50">EOL_LIGHTING</a>)
+<a name="l00044"></a>00044     {
+<a name="l00045"></a>00045       <a class="code" href="eol__lighting_8c.html#a775a8065e20d7de24d30ea3b0a573a16" title="configures the lighting system">eol_lighting_config</a>();
+<a name="l00046"></a>00046       <a class="code" href="eol__lighting_8c.html#a277891bc87b72681ba7678fa27ad0e4e" title="initializes the lighting system">eol_lighting_init</a>();
+<a name="l00047"></a>00047     }
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049     <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eaa5b83a062f21f49ec438f3f4d64af96d">EOL_MODEL</a>)
+<a name="l00050"></a>00050     {
+<a name="l00051"></a>00051       <a class="code" href="eol__model_8c.html#a4f4bc73e71893f37176edb56da8f06c4" title="loads up model system config">eol_model_config</a>();
+<a name="l00052"></a>00052       <a class="code" href="eol__model_8c.html#a10de85a49b3c3c026e280212ec6b95c1" title="model system init">eol_model_init</a>();
+<a name="l00053"></a>00053     }
+<a name="l00054"></a>00054     <span class="comment">/*sprite is dependant on graphics*/</span>
+<a name="l00055"></a>00055     <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea0c34c893d7102a71f98c88ff982deb40">EOL_SPRITE</a>)
+<a name="l00056"></a>00056     {
+<a name="l00057"></a>00057       <a class="code" href="eol__sprite_8c.html#a8411db2225aa9ad5c3e7a139825f8be1" title="loads sprite configuration from file, or sets up defaults if no config file found...">eol_sprite_load_config</a>();
+<a name="l00058"></a>00058       <a class="code" href="eol__sprite_8c.html#a8d59683173bdfe40bd66a6cbb2f5b003" title="set up the sprite system for use. Must be called before any sprite functions are...">eol_sprite_init</a>();
+<a name="l00059"></a>00059       <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea8c01b81a9a975140f9dc53e8a517dee3">EOL_MESH</a>)
+<a name="l00060"></a>00060       {
+<a name="l00061"></a>00061         <a class="code" href="eol__mesh_8c.html#aa72c36211949225f050497b9d48e558c" title="loads the eol_mesh configuration from file or loads defaults if no file found.">eol_mesh_load_config</a>();
+<a name="l00062"></a>00062         <a class="code" href="eol__mesh_8c.html#ad5570cec043e748da7d89b8776349e2f" title="initializes internal structures and sets up eol_mesh for use.">eol_mesh_init</a>();
+<a name="l00063"></a>00063       }
+<a name="l00064"></a>00064       <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea97a83ae7247f7b2b5c68d05e4212abb8">EOL_ARMATURE</a>)
+<a name="l00065"></a>00065       {
+<a name="l00066"></a>00066         <a class="code" href="eol__armature_8c.html#ae3e9d5100d4a08b21c0be2872c0cfc19" title="loads up defaults for armatures.">eol_armature_load_config</a>();
+<a name="l00067"></a>00067         <a class="code" href="eol__armature_8c.html#a911d40f7a0b0a5ea606c7f0fd4c6e3aa" title="initializes internal structures for armature system">eol_armature_init</a>();
+<a name="l00068"></a>00068       }
+<a name="l00069"></a>00069     }
+<a name="l00070"></a>00070     <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea20ea2ef2eb0bda69c8c803b615611e2b">EOL_PARTICLE</a>)
+<a name="l00071"></a>00071     {
+<a name="l00072"></a>00072       <a class="code" href="eol__particle_8c.html#a5cc1a5e6109f44536501685c45a0b46c" title="loads the global particle configuration. such as max number of particles.">eol_particle_config</a>();
+<a name="l00073"></a>00073       <a class="code" href="eol__particle_8c.html#a06918fbb925200ace46cd147a4cb5053" title="initializes the particle system based on the loaded configuration.">eol_particle_init</a>();
+<a name="l00074"></a>00074     }
+<a name="l00075"></a>00075     <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6ea4ff328925413c2323d932a8dd9f5a660">EOL_WINDOW</a>)
+<a name="l00076"></a>00076     {
+<a name="l00077"></a>00077       <a class="code" href="eol__window_8c.html#abf072fa8f463e5389fbd4f33dc88ae8a">eol_window_config</a>();
+<a name="l00078"></a>00078       <a class="code" href="eol__window_8c.html#ae0bf59b57aa890f054d9bf6a25ecb953">eol_window_init</a>();
+<a name="l00079"></a>00079     }
+<a name="l00080"></a>00080   }
+<a name="l00081"></a>00081   <span class="keywordflow">if</span> (components &amp; <a class="code" href="eol_8h.html#a973df9cd9fdf3a0e7d37df47ca5e3b6eae48e73f884a2714bb7c98a7cd5ea9638">EOL_INPUT</a>)
+<a name="l00082"></a>00082   {
+<a name="l00083"></a>00083     <a class="code" href="eol__mouse_8c.html#a51fb6c6d834bf5a2ec44a749f4bc4684" title="Loads mouse configs or sets up defaults.">eol_mouse_config</a>();
+<a name="l00084"></a>00084     <a class="code" href="eol__mouse_8c.html#a0b24a5e19603ef038b1722481706aa10" title="Initializes internal mouse data based on loaded config.">eol_mouse_init</a>();
+<a name="l00085"></a>00085     <a class="code" href="eol__input_8c.html#aa0e135a156c7288289859f989be653c2" title="load the input system configuration and input mappings from files. If no files found...">eol_input_load_config</a>();
+<a name="l00086"></a>00086     <a class="code" href="eol__input_8c.html#a9cd3d21c2438657874233f0eff06d3d2" title="initializes internal components of eol_input">eol_input_init</a>();
+<a name="l00087"></a>00087   }
+<a name="l00088"></a>00088 }
 <a name="l00089"></a>00089 
-<a name="l00090"></a>00090 <span class="comment">/*eol@eof*/</span>
-<a name="l00091"></a>00091 
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091 <span class="comment">/*eol@eof*/</span>
+<a name="l00092"></a>00092 
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:22 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:09 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

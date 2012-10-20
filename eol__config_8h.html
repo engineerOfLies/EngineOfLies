@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -46,8 +47,7 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">loads a configuration file into a <a class="el" href="structeolConfig.html">eolConfig</a> struct  <a href="#ada9ae50380760f6af3fd596ff533b52d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#add43978a550fba94fa63292207c41cc5">eol_config_free</a> (<a class="el" href="structeolConfig.html">eolConfig</a> **config)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">returns the config back to the system.  <a href="#add43978a550fba94fa63292207c41cc5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#acfa6e79bcae428d9c04146035857045f">eol_config_get_keychain</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#a7421347b5b87738585f4c9b34f5546c2">eol_config_get_keychain_by_tag</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> **output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#a7421347b5b87738585f4c9b34f5546c2">eol_config_get_keychain_by_tag</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> **output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">gets the element by tag as a keychain.  <a href="#a7421347b5b87738585f4c9b34f5546c2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#a08380f149757490db94be24109167d06">eol_config_get_vec3d_by_tag</a> (<a class="el" href="structeolVec3D.html">eolVec3D</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#aef032ebdb0d5cbb965f9f38b64ab009b">eol_config_get_int_by_tag</a> (<a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
@@ -56,7 +56,7 @@
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#a8915c3df691facf2f94bd0c07ce0f3ab">eol_config_get_bool_by_tag</a> (<a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#a0e519bfc9b4d76f1030d0eaef21fa4c7">eol_config_get_line_by_tag</a> (<a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#a250e73fdf9277ecb9d0494efc7d36ba9">eol_config_get_list_count_by_tag</a> (<a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#a4b84006b15aa27b9d8b5f3d2b0aa6656">eol_config_get_list_by_tag</a> (<a class="el" href="structeolKeychain.html">eolKeychain</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#a46fe6795f31a05c70e664057c805dfea">eol_config_get_list_by_tag</a> (<a class="el" href="structkeychain__S.html">eolKeychain</a> **output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#ad60b1715e0b5aa4d06714f0f45fafc3e">eol_config_get_rectfloat_by_tag</a> (<a class="el" href="structeolRectFloat.html">eolRectFloat</a> *output, <a class="el" href="structeolConfig.html">eolConfig</a> *conf, <a class="el" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1">eolLine</a> tag)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolConfig.html">eolConfig</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#ab17810866fafd2be7ae42289b056a400">eol_config_load_binary</a> (char *filename)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="eol__config_8h.html#a1b7a33b596b7061e64fc81cc179adfb6">eol_config_save_binary</a> (<a class="el" href="structeolConfig.html">eolConfig</a> *conf, char *filename)</td></tr>
@@ -221,35 +221,6 @@
 
 </div>
 </div>
-<a class="anchor" id="acfa6e79bcae428d9c04146035857045f"></a><!-- doxytag: member="eol_config.h::eol_config_get_keychain" ref="acfa6e79bcae428d9c04146035857045f" args="(eolKeychain *output, eolConfig *conf)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_config_get_keychain </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
-          <td class="paramname"> <em>output</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structeolConfig.html">eolConfig</a> *&nbsp;</td>
-          <td class="paramname"> <em>conf</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Definition at line <a class="el" href="eol__config_8c_source.html#l00234">234</a> of file <a class="el" href="eol__config_8c_source.html">eol_config.c</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a7421347b5b87738585f4c9b34f5546c2"></a><!-- doxytag: member="eol_config.h::eol_config_get_keychain_by_tag" ref="a7421347b5b87738585f4c9b34f5546c2" args="(eolKeychain **output, eolConfig *conf, eolLine tag)" -->
 <div class="memitem">
 <div class="memproto">
@@ -257,7 +228,7 @@
         <tr>
           <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_config_get_keychain_by_tag </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> **&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> **&nbsp;</td>
           <td class="paramname"> <em>output</em>, </td>
         </tr>
         <tr>
@@ -331,14 +302,14 @@
 
 </div>
 </div>
-<a class="anchor" id="a4b84006b15aa27b9d8b5f3d2b0aa6656"></a><!-- doxytag: member="eol_config.h::eol_config_get_list_by_tag" ref="a4b84006b15aa27b9d8b5f3d2b0aa6656" args="(eolKeychain *output, eolConfig *conf, eolLine tag)" -->
+<a class="anchor" id="a46fe6795f31a05c70e664057c805dfea"></a><!-- doxytag: member="eol_config.h::eol_config_get_list_by_tag" ref="a46fe6795f31a05c70e664057c805dfea" args="(eolKeychain **output, eolConfig *conf, eolLine tag)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> eol_config_get_list_by_tag </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structeolKeychain.html">eolKeychain</a> *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="structkeychain__S.html">eolKeychain</a> **&nbsp;</td>
           <td class="paramname"> <em>output</em>, </td>
         </tr>
         <tr>
@@ -621,7 +592,7 @@
 </div>
 </div>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:26 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:13 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

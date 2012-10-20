@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -34,7 +35,7 @@
 <a name="l00010"></a>00010 
 <a name="l00011"></a>00011 <span class="comment">/*local functions*/</span>
 <a name="l00012"></a>00012 <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ac6367dd3c6b1a3715b8d10e7071975d8">eol_config_deinit</a>(<span class="keywordtype">void</span>);
-<a name="l00013"></a>00013 <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(yaml_parser_t *parser, <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *cfg);
+<a name="l00013"></a>00013 <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(yaml_parser_t *parser, <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *cfg);
 <a name="l00014"></a>00014 
 <a name="l00015"></a>00015 <span class="comment">/*function definitions*/</span>
 <a name="l00016"></a>00016 
@@ -151,10 +152,10 @@
 <a name="l00127"></a>00127   *config = NULL;
 <a name="l00128"></a>00128 }
 <a name="l00129"></a>00129 
-<a name="l00130"></a><a class="code" href="eol__config_8c.html#a0bbb480dc906a76f0509bfc9152688cf">00130</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#a0bbb480dc906a76f0509bfc9152688cf">eol_config_parse_sequence</a>(yaml_parser_t *parser, <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *chain)
+<a name="l00130"></a><a class="code" href="eol__config_8c.html#a0bbb480dc906a76f0509bfc9152688cf">00130</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#a0bbb480dc906a76f0509bfc9152688cf">eol_config_parse_sequence</a>(yaml_parser_t *parser, <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *chain)
 <a name="l00131"></a>00131 {
 <a name="l00132"></a>00132   <span class="keywordtype">int</span> done = 0;
-<a name="l00133"></a>00133   <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *next = NULL;
+<a name="l00133"></a>00133   <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *next = NULL;
 <a name="l00134"></a>00134   yaml_event_t event;
 <a name="l00135"></a>00135   <span class="comment">/* First element must be a variable, or we&#39;ll change states to SEQ */</span>
 <a name="l00136"></a>00136   <span class="keywordtype">int</span> <a class="code" href="structeolComponent__S.html#a25926b12650c19838f45bcfb2e9e1228">state</a> = <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea147e71049e3285d642d0d5268dba260f">KEY</a>;
@@ -176,11 +177,11 @@
 <a name="l00152"></a>00152         <span class="comment">/* terminate the while loop, see below */</span>
 <a name="l00153"></a>00153         <span class="keywordflow">break</span>;
 <a name="l00154"></a>00154       <span class="keywordflow">default</span>:
-<a name="l00155"></a>00155         <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;unhandled YAML event %d\n&quot;</span>, event.type);
+<a name="l00155"></a>00155         <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;eol_config: unhandled YAML event %d\n&quot;</span>, event.type);
 <a name="l00156"></a>00156     }
 <a name="l00157"></a>00157     <span class="keywordflow">if</span>(parser-&gt;error != YAML_NO_ERROR)
 <a name="l00158"></a>00158     {
-<a name="l00159"></a>00159       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n&quot;</span>,
+<a name="l00159"></a>00159       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;eol_config: yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n&quot;</span>,
 <a name="l00160"></a>00160                           parser-&gt;error, parser-&gt;context, parser-&gt;problem, parser-&gt;problem_mark.line,
 <a name="l00161"></a>00161                           parser-&gt;problem_mark.column);
 <a name="l00162"></a>00162                           <span class="keywordflow">return</span>;
@@ -189,11 +190,11 @@
 <a name="l00165"></a>00165   }<span class="keywordflow">while</span> (!done);
 <a name="l00166"></a>00166 }
 <a name="l00167"></a>00167 
-<a name="l00168"></a><a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">00168</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(yaml_parser_t *parser, <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *chain)
+<a name="l00168"></a><a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">00168</a> <span class="keywordtype">void</span> <a class="code" href="eol__config_8c.html#ab8011186428fd6aed597d85a0dd46fe6">eol_config_parse_tier</a>(yaml_parser_t *parser, <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *chain)
 <a name="l00169"></a>00169 {
 <a name="l00170"></a>00170   <span class="keywordtype">int</span> done = 0;
 <a name="l00171"></a>00171   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> last_key;
-<a name="l00172"></a>00172   <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *next = NULL;
+<a name="l00172"></a>00172   <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *next = NULL;
 <a name="l00173"></a>00173   yaml_event_t event;
 <a name="l00174"></a>00174   <span class="comment">/* First element must be a variable, or we&#39;ll change states to SEQ */</span>
 <a name="l00175"></a>00175   <span class="keywordtype">int</span> <a class="code" href="structeolComponent__S.html#a25926b12650c19838f45bcfb2e9e1228">state</a> = <a class="code" href="eol__config_8h.html#acf77357bbb5b48a3b161fe56f93c952ea147e71049e3285d642d0d5268dba260f">KEY</a>;
@@ -241,11 +242,11 @@
 <a name="l00217"></a>00217         <span class="comment">/* terminate the while loop, see below */</span>
 <a name="l00218"></a>00218         <span class="keywordflow">break</span>;
 <a name="l00219"></a>00219       <span class="keywordflow">default</span>:
-<a name="l00220"></a>00220         <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;unhandled YAML event %d\n&quot;</span>, event.type);
+<a name="l00220"></a>00220         <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>, <span class="stringliteral">&quot;eol_config: unhandled YAML event %d\n&quot;</span>, event.type);
 <a name="l00221"></a>00221     }
 <a name="l00222"></a>00222     <span class="keywordflow">if</span>(parser-&gt;error != YAML_NO_ERROR)
 <a name="l00223"></a>00223     {
-<a name="l00224"></a>00224       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n&quot;</span>,
+<a name="l00224"></a>00224       <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>( <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>, <span class="stringliteral">&quot;eol_config: yaml_error_type_e %d: %s %s at (line: %lu, col: %lu)\n&quot;</span>,
 <a name="l00225"></a>00225                           parser-&gt;error, parser-&gt;context, parser-&gt;problem, parser-&gt;problem_mark.line,
 <a name="l00226"></a>00226                           parser-&gt;problem_mark.column);
 <a name="l00227"></a>00227                           <span class="keywordflow">return</span>;
@@ -255,7 +256,7 @@
 <a name="l00231"></a>00231   <span class="keywordflow">while</span> (!done);
 <a name="l00232"></a>00232 }
 <a name="l00233"></a>00233 
-<a name="l00234"></a><a class="code" href="eol__config_8h.html#acfa6e79bcae428d9c04146035857045f">00234</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#acfa6e79bcae428d9c04146035857045f">eol_config_get_keychain</a>(<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *output,
+<a name="l00234"></a><a class="code" href="eol__config_8c.html#acfa6e79bcae428d9c04146035857045f">00234</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#acfa6e79bcae428d9c04146035857045f">eol_config_get_keychain</a>(<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *output,
 <a name="l00235"></a>00235                                 <a class="code" href="structeolConfig.html">eolConfig</a> *conf)
 <a name="l00236"></a>00236 {
 <a name="l00237"></a>00237   g_return_val_if_fail(conf-&gt;<a class="code" href="structeolConfig.html#ab3f0c44ed6cc3a5d849b70bfa62f43cc">_node</a>, <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>);
@@ -264,7 +265,7 @@
 <a name="l00240"></a>00240   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
 <a name="l00241"></a>00241 }
 <a name="l00242"></a>00242 
-<a name="l00243"></a><a class="code" href="eol__config_8h.html#a7421347b5b87738585f4c9b34f5546c2">00243</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a7421347b5b87738585f4c9b34f5546c2" title="gets the element by tag as a keychain.">eol_config_get_keychain_by_tag</a>(<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> **output,
+<a name="l00243"></a><a class="code" href="eol__config_8h.html#a7421347b5b87738585f4c9b34f5546c2">00243</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__config_8c.html#a7421347b5b87738585f4c9b34f5546c2" title="gets the element by tag as a keychain.">eol_config_get_keychain_by_tag</a>(<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> **output,
 <a name="l00244"></a>00244                                        <a class="code" href="structeolConfig.html">eolConfig</a> *conf,
 <a name="l00245"></a>00245                                        <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> tag)
 <a name="l00246"></a>00246 {
@@ -331,7 +332,7 @@
 <a name="l00307"></a>00307 <span class="comment">/*eol@eof*/</span>
 <a name="l00308"></a>00308 
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:23 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:10 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

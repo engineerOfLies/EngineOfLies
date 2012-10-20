@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -24,21 +25,68 @@
   </div>
 </div>
 <div class="contents">
-<h1>eolComponentList Struct Reference</h1><!-- doxytag: class="eolComponentList" --><table border="0" cellpadding="0" cellspacing="0">
+<h1>eolComponentList Struct Reference</h1><!-- doxytag: class="eolComponentList" -->
+<p><code>#include &lt;<a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>&gt;</code></p>
+<table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Data Fields</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a30513c0160cec35623619e3f54dd97c6">listCount</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a952fdf92a935dc80274d0a55f93f5802">focusItem</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#aca7031772e8e420cae32d4b44847eab1">listType</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec2D.html">eolVec2D</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#adc97728695ef0519c38451cf9c4603de">itemBounds</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a371ebbce17b7acd0f5528e6cb623ae94">itemCount</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolRectFloat.html">eolRectFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a0d3ae101d7ea603bfd001da3177b41d3">itemBounds</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec2D.html">eolVec2D</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#ab4c600a0ca08e78b9966618fdb873573">itemPadding</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec2D.html">eolVec2D</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a89b7ead21a265f414d063ac8f19020ce">displayItems</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a43d8adb430524aec92220e0b109a8c09">numPerRow</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec2D.html">eolVec2D</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a4a73c264973554bb121c4ef479173219">topOffset</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">GList *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a0f15ab3d32f7639f3c436e3b01b3bbcc">itemList</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">GList *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a94f9d113f78b6c639c208f05e74b8518">topItem</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">GList *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a6231336bb94f35acf02690f725385590">selection</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a3a184653742ba4bf58dd3a955090498f">showHSlider</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a60355cee7b9d272d212c64ea4cbf61e0">showVSlider</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#aec63a6f35526750160e24e136362296e">vSliderBounds</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a21c10184af43c968f8c0f03d9b2117b3">hSliderBounds</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#aaa83533e44c4fb7e5900fa8a2a902d62">hSlider</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolComponent__S.html">eolComponent</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a77a3c20b9ae3ff7c90f13dd82c5f2547">vSlider</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a339a2deaea8b4ea066d6b5ad617e48b5">allowSelection</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a9d8bd7d6b0633c4d1f8e3eeb0582fa94">showBackground</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a490bda7281859ac9e71d6678f4a51a71">multiSelection</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#a1926d6066eb8375c26d5781697f56625">fontSize</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#aa2679eabec90cea98bf6e5c5f390314b">highlightColor</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeolVec3D.html">eolVec3D</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#abc53c83c525dc37740226f76d86ac1a5">textColor</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeolComponentList.html#aaa67ae1dfd5c14c65e4624edd8dcf845">alpha</a></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00087">87</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00032">32</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
 <hr/><h2>Field Documentation</h2>
+<a class="anchor" id="a339a2deaea8b4ea066d6b5ad617e48b5"></a><!-- doxytag: member="eolComponentList::allowSelection" ref="a339a2deaea8b4ea066d6b5ad617e48b5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="el" href="structeolComponentList.html#a339a2deaea8b4ea066d6b5ad617e48b5">eolComponentList::allowSelection</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00050">50</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaa67ae1dfd5c14c65e4624edd8dcf845"></a><!-- doxytag: member="eolComponentList::alpha" ref="aaa67ae1dfd5c14c65e4624edd8dcf845" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="el" href="structeolComponentList.html#aaa67ae1dfd5c14c65e4624edd8dcf845">eolComponentList::alpha</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00056">56</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a89b7ead21a265f414d063ac8f19020ce"></a><!-- doxytag: member="eolComponentList::displayItems" ref="a89b7ead21a265f414d063ac8f19020ce" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -49,39 +97,102 @@
       </table>
 </div>
 <div class="memdoc">
+<p>dimensions for drawing items </p>
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00093">93</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00038">38</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a952fdf92a935dc80274d0a55f93f5802"></a><!-- doxytag: member="eolComponentList::focusItem" ref="a952fdf92a935dc80274d0a55f93f5802" args="" -->
+<a class="anchor" id="a1926d6066eb8375c26d5781697f56625"></a><!-- doxytag: member="eolComponentList::fontSize" ref="a1926d6066eb8375c26d5781697f56625" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> <a class="el" href="structeolComponentList.html#a952fdf92a935dc80274d0a55f93f5802">eolComponentList::focusItem</a></td>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="structeolComponentList.html#a1926d6066eb8375c26d5781697f56625">eolComponentList::fontSize</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00090">90</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00053">53</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="adc97728695ef0519c38451cf9c4603de"></a><!-- doxytag: member="eolComponentList::itemBounds" ref="adc97728695ef0519c38451cf9c4603de" args="" -->
+<a class="anchor" id="aa2679eabec90cea98bf6e5c5f390314b"></a><!-- doxytag: member="eolComponentList::highlightColor" ref="aa2679eabec90cea98bf6e5c5f390314b" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structeolVec2D.html">eolVec2D</a> <a class="el" href="structeolComponentList.html#adc97728695ef0519c38451cf9c4603de">eolComponentList::itemBounds</a></td>
+          <td class="memname"><a class="el" href="structeolVec3D.html">eolVec3D</a> <a class="el" href="structeolComponentList.html#aa2679eabec90cea98bf6e5c5f390314b">eolComponentList::highlightColor</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
-<p>width (x) and height limit of items in the list </p>
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00092">92</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00054">54</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaa83533e44c4fb7e5900fa8a2a902d62"></a><!-- doxytag: member="eolComponentList::hSlider" ref="aaa83533e44c4fb7e5900fa8a2a902d62" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolComponent__S.html">eolComponent</a>* <a class="el" href="structeolComponentList.html#aaa83533e44c4fb7e5900fa8a2a902d62">eolComponentList::hSlider</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>the horizontal slider </p>
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00048">48</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a21c10184af43c968f8c0f03d9b2117b3"></a><!-- doxytag: member="eolComponentList::hSliderBounds" ref="a21c10184af43c968f8c0f03d9b2117b3" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> <a class="el" href="structeolComponentList.html#a21c10184af43c968f8c0f03d9b2117b3">eolComponentList::hSliderBounds</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00047">47</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0d3ae101d7ea603bfd001da3177b41d3"></a><!-- doxytag: member="eolComponentList::itemBounds" ref="a0d3ae101d7ea603bfd001da3177b41d3" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolRectFloat.html">eolRectFloat</a> <a class="el" href="structeolComponentList.html#a0d3ae101d7ea603bfd001da3177b41d3">eolComponentList::itemBounds</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>sub area for drawing items </p>
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00036">36</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a371ebbce17b7acd0f5528e6cb623ae94"></a><!-- doxytag: member="eolComponentList::itemCount" ref="a371ebbce17b7acd0f5528e6cb623ae94" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="structeolComponentList.html#a371ebbce17b7acd0f5528e6cb623ae94">eolComponentList::itemCount</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>number of items in the list </p>
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00035">35</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
 
 </div>
 </div>
@@ -97,22 +208,22 @@
 <div class="memdoc">
 <p>list of eolComponent's </p>
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00094">94</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00041">41</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a30513c0160cec35623619e3f54dd97c6"></a><!-- doxytag: member="eolComponentList::listCount" ref="a30513c0160cec35623619e3f54dd97c6" args="" -->
+<a class="anchor" id="ab4c600a0ca08e78b9966618fdb873573"></a><!-- doxytag: member="eolComponentList::itemPadding" ref="ab4c600a0ca08e78b9966618fdb873573" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="structeolComponentList.html#a30513c0160cec35623619e3f54dd97c6">eolComponentList::listCount</a></td>
+          <td class="memname"><a class="el" href="structeolVec2D.html">eolVec2D</a> <a class="el" href="structeolComponentList.html#ab4c600a0ca08e78b9966618fdb873573">eolComponentList::itemPadding</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00089">89</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00037">37</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
 
 </div>
 </div>
@@ -126,8 +237,41 @@
       </table>
 </div>
 <div class="memdoc">
+<p>see list type enumaration in header </p>
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00091">91</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00034">34</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a490bda7281859ac9e71d6678f4a51a71"></a><!-- doxytag: member="eolComponentList::multiSelection" ref="a490bda7281859ac9e71d6678f4a51a71" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="el" href="structeolComponentList.html#a490bda7281859ac9e71d6678f4a51a71">eolComponentList::multiSelection</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>if more than one item can be selected </p>
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00052">52</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a43d8adb430524aec92220e0b109a8c09"></a><!-- doxytag: member="eolComponentList::numPerRow" ref="a43d8adb430524aec92220e0b109a8c09" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="el" href="structeolComponentList.html#a43d8adb430524aec92220e0b109a8c09">eolComponentList::numPerRow</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>how many items appear per row </p>
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00039">39</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
 
 </div>
 </div>
@@ -141,8 +285,71 @@
       </table>
 </div>
 <div class="memdoc">
+<p>the list item that is selected </p>
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00096">96</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00043">43</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9d8bd7d6b0633c4d1f8e3eeb0582fa94"></a><!-- doxytag: member="eolComponentList::showBackground" ref="a9d8bd7d6b0633c4d1f8e3eeb0582fa94" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="el" href="structeolComponentList.html#a9d8bd7d6b0633c4d1f8e3eeb0582fa94">eolComponentList::showBackground</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00051">51</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3a184653742ba4bf58dd3a955090498f"></a><!-- doxytag: member="eolComponentList::showHSlider" ref="a3a184653742ba4bf58dd3a955090498f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="el" href="structeolComponentList.html#a3a184653742ba4bf58dd3a955090498f">eolComponentList::showHSlider</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>if true, shows the Horizontal slider </p>
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00044">44</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a60355cee7b9d272d212c64ea4cbf61e0"></a><!-- doxytag: member="eolComponentList::showVSlider" ref="a60355cee7b9d272d212c64ea4cbf61e0" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="el" href="structeolComponentList.html#a60355cee7b9d272d212c64ea4cbf61e0">eolComponentList::showVSlider</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>if true, shows the Vertical slider </p>
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00045">45</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abc53c83c525dc37740226f76d86ac1a5"></a><!-- doxytag: member="eolComponentList::textColor" ref="abc53c83c525dc37740226f76d86ac1a5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolVec3D.html">eolVec3D</a> <a class="el" href="structeolComponentList.html#abc53c83c525dc37740226f76d86ac1a5">eolComponentList::textColor</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00055">55</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
 
 </div>
 </div>
@@ -156,16 +363,63 @@
       </table>
 </div>
 <div class="memdoc">
+<p>the top left most item </p>
 
-<p>Definition at line <a class="el" href="eol__component_8c_source.html#l00095">95</a> of file <a class="el" href="eol__component_8c_source.html">eol_component.c</a>.</p>
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00042">42</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4a73c264973554bb121c4ef479173219"></a><!-- doxytag: member="eolComponentList::topOffset" ref="a4a73c264973554bb121c4ef479173219" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolVec2D.html">eolVec2D</a> <a class="el" href="structeolComponentList.html#a4a73c264973554bb121c4ef479173219">eolComponentList::topOffset</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00040">40</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a77a3c20b9ae3ff7c90f13dd82c5f2547"></a><!-- doxytag: member="eolComponentList::vSlider" ref="a77a3c20b9ae3ff7c90f13dd82c5f2547" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structeolComponent__S.html">eolComponent</a>* <a class="el" href="structeolComponentList.html#a77a3c20b9ae3ff7c90f13dd82c5f2547">eolComponentList::vSlider</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>the vertical slider </p>
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00049">49</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aec63a6f35526750160e24e136362296e"></a><!-- doxytag: member="eolComponentList::vSliderBounds" ref="aec63a6f35526750160e24e136362296e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="eol__types_8h.html#a471575fff29f88316943a67b0621096a">eolRect</a> <a class="el" href="structeolComponentList.html#aec63a6f35526750160e24e136362296e">eolComponentList::vSliderBounds</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="eol__component__list_8h_source.html#l00046">46</a> of file <a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li><a class="el" href="eol__component_8c_source.html">eol_component.c</a></li>
+<li><a class="el" href="eol__component__list_8h_source.html">eol_component_list.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:29 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:16 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

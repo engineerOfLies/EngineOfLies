@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -30,183 +31,191 @@
 <a name="l00006"></a>00006 
 <a name="l00007"></a>00007 <span class="comment">/*local function prototypes*/</span>
 <a name="l00008"></a>00008 
-<a name="l00009"></a>00009 
-<a name="l00010"></a><a class="code" href="eol__actor_8h.html#a0ad79892aac21cf71f1a6cb9af9ff43b">00010</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#a0ad79892aac21cf71f1a6cb9af9ff43b" title="loads an actor from file and returns a pointer to it. based on the file information...">eol_actor_load</a>(
-<a name="l00011"></a>00011     <a class="code" href="structeolActor.html">eolActor</a> *act,
-<a name="l00012"></a>00012     <span class="keywordtype">char</span>     *filename
-<a name="l00013"></a>00013   )
-<a name="l00014"></a>00014 {
-<a name="l00015"></a>00015   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span>;
-<a name="l00016"></a>00016   act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a> = <a class="code" href="eol__model_8c.html#a23fffd97c77c9af1e2a50a946e4b097b" title="loads an model from file and returns a pointer to it. based on the file information...">eol_model_load</a>(filename);
-<a name="l00017"></a>00017 }
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019 
-<a name="l00020"></a><a class="code" href="eol__actor_8h.html#ad375086fbb746f0a0fccdc9cc69e662e">00020</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#ad375086fbb746f0a0fccdc9cc69e662e" title="clears any of the actor information at the location specified">eol_actor_clear</a>(<a class="code" href="structeolActor.html">eolActor</a> *act)
-<a name="l00021"></a>00021 {
-<a name="l00022"></a>00022   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span>;
-<a name="l00023"></a>00023   <span class="keywordflow">if</span> (act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a> != NULL)
-<a name="l00024"></a>00024   {
-<a name="l00025"></a>00025     <a class="code" href="eol__model_8c.html#abd816a2a42cfc9b0d91142ede8542ba2" title="frees the model provided and sets your pointer to it to NULL">eol_model_free</a>(&amp;act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>);
-<a name="l00026"></a>00026   }
-<a name="l00027"></a>00027   memset(act,0,<span class="keyword">sizeof</span>(<a class="code" href="structeolActor.html">eolActor</a>));
-<a name="l00028"></a>00028 }
-<a name="l00029"></a>00029 
-<a name="l00030"></a><a class="code" href="eol__actor_8h.html#a1149fe3c5650fbd08800ad71c8766402">00030</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#a1149fe3c5650fbd08800ad71c8766402" title="draw the actor under the current conditions">eol_actor_draw</a>(
-<a name="l00031"></a>00031     <a class="code" href="structeolActor.html">eolActor</a> *act,
-<a name="l00032"></a>00032     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
-<a name="l00033"></a>00033     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
-<a name="l00034"></a>00034     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
-<a name="l00035"></a>00035     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00036"></a>00036     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha
-<a name="l00037"></a>00037   )
-<a name="l00038"></a>00038 {
-<a name="l00039"></a>00039   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span>;
-<a name="l00040"></a>00040   <a class="code" href="eol__model_8c.html#adc93f635c2aab594b059e985d9198bb3" title="draw the model under the current conditions">eol_model_draw</a>(
-<a name="l00041"></a>00041     act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>,
-<a name="l00042"></a>00042     position,
-<a name="l00043"></a>00043     rotation,
-<a name="l00044"></a>00044     scale,
-<a name="l00045"></a>00045     color,
-<a name="l00046"></a>00046     alpha,
-<a name="l00047"></a>00047     act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a>
-<a name="l00048"></a>00048   );
-<a name="l00049"></a>00049 }
-<a name="l00050"></a>00050 
-<a name="l00051"></a><a class="code" href="eol__actor_8h.html#abcbc9762b591e47e825f220036d0bec0">00051</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#abcbc9762b591e47e825f220036d0bec0">eol_actor_draw_wire</a>(
-<a name="l00052"></a>00052     <a class="code" href="structeolActor.html">eolActor</a> *act,
-<a name="l00053"></a>00053     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
-<a name="l00054"></a>00054     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
-<a name="l00055"></a>00055     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
-<a name="l00056"></a>00056     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
-<a name="l00057"></a>00057     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha
-<a name="l00058"></a>00058   )
-<a name="l00059"></a>00059 {
-<a name="l00060"></a>00060   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span>;
-<a name="l00061"></a>00061   <a class="code" href="eol__model_8c.html#a84f8e06437c57f233dd6cbde4a26d040" title="draw the model under the current conditions">eol_model_draw_wire</a>(
-<a name="l00062"></a>00062     act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>,
-<a name="l00063"></a>00063     position,
-<a name="l00064"></a>00064     rotation,
-<a name="l00065"></a>00065     scale,
-<a name="l00066"></a>00066     color,
-<a name="l00067"></a>00067     alpha,
-<a name="l00068"></a>00068     act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a>
-<a name="l00069"></a>00069   );
-<a name="l00070"></a>00070 }
-<a name="l00071"></a>00071 
-<a name="l00072"></a><a class="code" href="eol__actor_8h.html#aa3c933070d38aa1cead32610c3175d18">00072</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#aa3c933070d38aa1cead32610c3175d18" title="sets the actor&amp;#39;s frame change rate. this is in float to allow granular speed...">eol_actor_set_frame_rate</a>(
-<a name="l00073"></a>00073     <a class="code" href="structeolActor.html">eolActor</a> *act,
-<a name="l00074"></a>00074     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> rate
-<a name="l00075"></a>00075   )
-<a name="l00076"></a>00076 {
-<a name="l00077"></a>00077   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span>;
-<a name="l00078"></a>00078   <span class="keywordflow">if</span> (rate == 0)
-<a name="l00079"></a>00079   {
-<a name="l00080"></a>00080     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00081"></a>00081       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
-<a name="l00082"></a>00082       <span class="stringliteral">&quot;eol_actor:passed a 0 frame rate.\n&quot;</span>
-<a name="l00083"></a>00083     );
-<a name="l00084"></a>00084   }
-<a name="l00085"></a>00085   act-&gt;<a class="code" href="structeolActor.html#a3bae69f967c9f1d4e41ff7cf426a03dd">frameRate</a> = rate;
-<a name="l00086"></a>00086 }
-<a name="l00087"></a>00087 
-<a name="l00088"></a><a class="code" href="eol__actor_8h.html#a751fbfe069edbba3cd8c2c2cdaa089af">00088</a> <a class="code" href="structeolActor.html">eolActor</a> * <a class="code" href="eol__actor_8c.html#a751fbfe069edbba3cd8c2c2cdaa089af" title="allocated empty actor data;">eol_actor_new</a>()
-<a name="l00089"></a>00089 {
-<a name="l00090"></a>00090   <a class="code" href="structeolActor.html">eolActor</a> *actor = NULL;
-<a name="l00091"></a>00091   actor = (<a class="code" href="structeolActor.html">eolActor</a> *)malloc(<span class="keyword">sizeof</span>(<a class="code" href="structeolActor.html">eolActor</a>));
-<a name="l00092"></a>00092   <span class="keywordflow">if</span> (actor == NULL)
-<a name="l00093"></a>00093   {
-<a name="l00094"></a>00094     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00095"></a>00095       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
-<a name="l00096"></a>00096       <span class="stringliteral">&quot;eol_actor:unable to allocate actor data!\n&quot;</span>);
-<a name="l00097"></a>00097     <span class="keywordflow">return</span> NULL;
-<a name="l00098"></a>00098   }
-<a name="l00099"></a>00099   memset(actor,0,<span class="keyword">sizeof</span>(<a class="code" href="structeolActor.html">eolActor</a>));
-<a name="l00100"></a>00100   <span class="keywordflow">return</span> actor;
-<a name="l00101"></a>00101 }
-<a name="l00102"></a>00102 
-<a name="l00103"></a><a class="code" href="eol__actor_8h.html#ad6b2dc9751ff1b470d49db444bc59d48">00103</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#ad6b2dc9751ff1b470d49db444bc59d48" title="frees all data pointed to by actor">eol_actor_free</a>(<a class="code" href="structeolActor.html">eolActor</a> **actor)
-<a name="l00104"></a>00104 {
-<a name="l00105"></a>00105   <span class="keywordflow">if</span> ((!actor) || (!*actor))<span class="keywordflow">return</span>;
-<a name="l00106"></a>00106   <a class="code" href="eol__actor_8c.html#ad375086fbb746f0a0fccdc9cc69e662e" title="clears any of the actor information at the location specified">eol_actor_clear</a>(*actor);
-<a name="l00107"></a>00107   free(*actor);
-<a name="l00108"></a>00108   *actor = NULL;
+<a name="l00009"></a><a class="code" href="eol__actor_8h.html#ac0eb7a7288882a8c601335c7b580a209">00009</a> <a class="code" href="structeolActor.html">eolActor</a> * <a class="code" href="eol__actor_8c.html#ac0eb7a7288882a8c601335c7b580a209" title="loads an actor from file and returns a pointer to it. based on the file information...">eol_actor_load</a>(<span class="keywordtype">char</span>  *filename)
+<a name="l00010"></a>00010 {
+<a name="l00011"></a>00011   <a class="code" href="structeolActor.html">eolActor</a> * act;
+<a name="l00012"></a>00012   act = <a class="code" href="eol__actor_8c.html#a751fbfe069edbba3cd8c2c2cdaa089af" title="allocated empty actor data;">eol_actor_new</a>();
+<a name="l00013"></a>00013   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span> NULL;
+<a name="l00014"></a>00014   act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a> = <a class="code" href="eol__model_8c.html#a23fffd97c77c9af1e2a50a946e4b097b" title="loads an model from file and returns a pointer to it. based on the file information...">eol_model_load</a>(filename);
+<a name="l00015"></a>00015   <span class="keywordflow">return</span> act;
+<a name="l00016"></a>00016 }
+<a name="l00017"></a>00017 
+<a name="l00018"></a><a class="code" href="eol__actor_8h.html#abf3e6fa592cba264a68cdcc5aa4f0195">00018</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#abf3e6fa592cba264a68cdcc5aa4f0195" title="loads an actor from file and saves it into the actor data provided. based on the...">eol_actor_load_in_place</a>(
+<a name="l00019"></a>00019     <a class="code" href="structeolActor.html">eolActor</a> *act,
+<a name="l00020"></a>00020     <span class="keywordtype">char</span>     *filename
+<a name="l00021"></a>00021   )
+<a name="l00022"></a>00022 {
+<a name="l00023"></a>00023   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span>;
+<a name="l00024"></a>00024   act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a> = <a class="code" href="eol__model_8c.html#a23fffd97c77c9af1e2a50a946e4b097b" title="loads an model from file and returns a pointer to it. based on the file information...">eol_model_load</a>(filename);
+<a name="l00025"></a>00025 }
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 
+<a name="l00028"></a><a class="code" href="eol__actor_8h.html#ad375086fbb746f0a0fccdc9cc69e662e">00028</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#ad375086fbb746f0a0fccdc9cc69e662e" title="clears any of the actor information at the location specified">eol_actor_clear</a>(<a class="code" href="structeolActor.html">eolActor</a> *act)
+<a name="l00029"></a>00029 {
+<a name="l00030"></a>00030   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span>;
+<a name="l00031"></a>00031   <span class="keywordflow">if</span> (act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a> != NULL)
+<a name="l00032"></a>00032   {
+<a name="l00033"></a>00033     <a class="code" href="eol__model_8c.html#abd816a2a42cfc9b0d91142ede8542ba2" title="frees the model provided and sets your pointer to it to NULL">eol_model_free</a>(&amp;act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>);
+<a name="l00034"></a>00034   }
+<a name="l00035"></a>00035   memset(act,0,<span class="keyword">sizeof</span>(<a class="code" href="structeolActor.html">eolActor</a>));
+<a name="l00036"></a>00036 }
+<a name="l00037"></a>00037 
+<a name="l00038"></a><a class="code" href="eol__actor_8h.html#a1149fe3c5650fbd08800ad71c8766402">00038</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#a1149fe3c5650fbd08800ad71c8766402" title="draw the actor under the current conditions">eol_actor_draw</a>(
+<a name="l00039"></a>00039     <a class="code" href="structeolActor.html">eolActor</a> *act,
+<a name="l00040"></a>00040     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
+<a name="l00041"></a>00041     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
+<a name="l00042"></a>00042     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
+<a name="l00043"></a>00043     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
+<a name="l00044"></a>00044     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha
+<a name="l00045"></a>00045   )
+<a name="l00046"></a>00046 {
+<a name="l00047"></a>00047   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span>;
+<a name="l00048"></a>00048   <a class="code" href="eol__model_8c.html#adc93f635c2aab594b059e985d9198bb3" title="draw the model under the current conditions">eol_model_draw</a>(
+<a name="l00049"></a>00049     act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>,
+<a name="l00050"></a>00050     position,
+<a name="l00051"></a>00051     rotation,
+<a name="l00052"></a>00052     scale,
+<a name="l00053"></a>00053     color,
+<a name="l00054"></a>00054     alpha,
+<a name="l00055"></a>00055     act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a>
+<a name="l00056"></a>00056   );
+<a name="l00057"></a>00057 }
+<a name="l00058"></a>00058 
+<a name="l00059"></a><a class="code" href="eol__actor_8h.html#abcbc9762b591e47e825f220036d0bec0">00059</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#abcbc9762b591e47e825f220036d0bec0">eol_actor_draw_wire</a>(
+<a name="l00060"></a>00060     <a class="code" href="structeolActor.html">eolActor</a> *act,
+<a name="l00061"></a>00061     <a class="code" href="structeolVec3D.html">eolVec3D</a> position,
+<a name="l00062"></a>00062     <a class="code" href="structeolVec3D.html">eolVec3D</a> rotation,
+<a name="l00063"></a>00063     <a class="code" href="structeolVec3D.html">eolVec3D</a> scale,
+<a name="l00064"></a>00064     <a class="code" href="structeolVec3D.html">eolVec3D</a> color,
+<a name="l00065"></a>00065     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> alpha
+<a name="l00066"></a>00066   )
+<a name="l00067"></a>00067 {
+<a name="l00068"></a>00068   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span>;
+<a name="l00069"></a>00069   <a class="code" href="eol__model_8c.html#a84f8e06437c57f233dd6cbde4a26d040" title="draw the model under the current conditions">eol_model_draw_wire</a>(
+<a name="l00070"></a>00070     act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>,
+<a name="l00071"></a>00071     position,
+<a name="l00072"></a>00072     rotation,
+<a name="l00073"></a>00073     scale,
+<a name="l00074"></a>00074     color,
+<a name="l00075"></a>00075     alpha,
+<a name="l00076"></a>00076     act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a>
+<a name="l00077"></a>00077   );
+<a name="l00078"></a>00078 }
+<a name="l00079"></a>00079 
+<a name="l00080"></a><a class="code" href="eol__actor_8h.html#aa3c933070d38aa1cead32610c3175d18">00080</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#aa3c933070d38aa1cead32610c3175d18" title="sets the actor&amp;#39;s frame change rate. this is in float to allow granular speed...">eol_actor_set_frame_rate</a>(
+<a name="l00081"></a>00081     <a class="code" href="structeolActor.html">eolActor</a> *act,
+<a name="l00082"></a>00082     <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> rate
+<a name="l00083"></a>00083   )
+<a name="l00084"></a>00084 {
+<a name="l00085"></a>00085   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span>;
+<a name="l00086"></a>00086   <span class="keywordflow">if</span> (rate == 0)
+<a name="l00087"></a>00087   {
+<a name="l00088"></a>00088     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00089"></a>00089       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
+<a name="l00090"></a>00090       <span class="stringliteral">&quot;eol_actor:passed a 0 frame rate.\n&quot;</span>
+<a name="l00091"></a>00091     );
+<a name="l00092"></a>00092   }
+<a name="l00093"></a>00093   act-&gt;<a class="code" href="structeolActor.html#a3bae69f967c9f1d4e41ff7cf426a03dd">frameRate</a> = rate;
+<a name="l00094"></a>00094 }
+<a name="l00095"></a>00095 
+<a name="l00096"></a><a class="code" href="eol__actor_8h.html#a751fbfe069edbba3cd8c2c2cdaa089af">00096</a> <a class="code" href="structeolActor.html">eolActor</a> * <a class="code" href="eol__actor_8c.html#a751fbfe069edbba3cd8c2c2cdaa089af" title="allocated empty actor data;">eol_actor_new</a>()
+<a name="l00097"></a>00097 {
+<a name="l00098"></a>00098   <a class="code" href="structeolActor.html">eolActor</a> *actor = NULL;
+<a name="l00099"></a>00099   actor = (<a class="code" href="structeolActor.html">eolActor</a> *)malloc(<span class="keyword">sizeof</span>(<a class="code" href="structeolActor.html">eolActor</a>));
+<a name="l00100"></a>00100   <span class="keywordflow">if</span> (actor == NULL)
+<a name="l00101"></a>00101   {
+<a name="l00102"></a>00102     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00103"></a>00103       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
+<a name="l00104"></a>00104       <span class="stringliteral">&quot;eol_actor:unable to allocate actor data!\n&quot;</span>);
+<a name="l00105"></a>00105     <span class="keywordflow">return</span> NULL;
+<a name="l00106"></a>00106   }
+<a name="l00107"></a>00107   memset(actor,0,<span class="keyword">sizeof</span>(<a class="code" href="structeolActor.html">eolActor</a>));
+<a name="l00108"></a>00108   <span class="keywordflow">return</span> actor;
 <a name="l00109"></a>00109 }
 <a name="l00110"></a>00110 
-<a name="l00111"></a><a class="code" href="eol__actor_8h.html#abbbd1b2025bd2b61ce63550c5781fe36">00111</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#a119de8323d1f42836bd45fbf69802c01" title="set the actor to the begining of the specified action">eol_actor_set_action</a>(
-<a name="l00112"></a>00112     <a class="code" href="structeolActor.html">eolActor</a> * act,
-<a name="l00113"></a>00113     <a class="code" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb" title="16 character buffer used for short tags">eolWord</a>    actionName
-<a name="l00114"></a>00114   )
-<a name="l00115"></a>00115 {
-<a name="l00116"></a>00116   <a class="code" href="structeolAction.html">eolAction</a> *action;
-<a name="l00117"></a>00117   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span>;
-<a name="l00118"></a>00118   <span class="keywordflow">if</span> (!act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>)<span class="keywordflow">return</span>;
-<a name="l00119"></a>00119   <span class="keywordflow">if</span> (strlen(actionName) &lt;= 0)<span class="keywordflow">return</span>;
-<a name="l00120"></a>00120   action = <a class="code" href="eol__model_8c.html#a84aa8ab311b8a9a6eb5f2c70275f3155" title="searches for the model&amp;#39;s action by name">eol_model_get_action</a>(act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>,actionName);
-<a name="l00121"></a>00121   <span class="keywordflow">if</span> (action == NULL)
-<a name="l00122"></a>00122   {
-<a name="l00123"></a>00123     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00124"></a>00124       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
-<a name="l00125"></a>00125       <span class="stringliteral">&quot;eol_actor: model %s does not have action %s\n&quot;</span>,
-<a name="l00126"></a>00126       act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>-&gt;<a class="code" href="structeolModel.html#ac4cefea9d40874bb3cb8afcbf600f872">name</a>,actionName);
-<a name="l00127"></a>00127     <span class="keywordflow">return</span>;
-<a name="l00128"></a>00128   }
-<a name="l00129"></a>00129   act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a> = action;
-<a name="l00130"></a>00130   strncpy(act-&gt;<a class="code" href="structeolActor.html#a2ee17f192e72a19208089eabfd753b6b">actionName</a>,actionName,<a class="code" href="eol__types_8h.html#aa5ecd856fbc9365537868e120f9d4929">EOLWORDLEN</a>);
-<a name="l00131"></a>00131   act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = action-&gt;<a class="code" href="structeolAction.html#ad5e99ca36f82dfe30db1d0f3edfb96e0">begin</a>;
-<a name="l00132"></a>00132   act-&gt;<a class="code" href="structeolActor.html#a3bae69f967c9f1d4e41ff7cf426a03dd">frameRate</a> = action-&gt;<a class="code" href="structeolAction.html#ae7d7e722b1629bac6e0ce92c272c8728">frameRate</a>;
-<a name="l00133"></a>00133   act-&gt;<a class="code" href="structeolActor.html#a8d8df5c969cd1a8fb438039746389efe">frameDirection</a> = 1;
-<a name="l00134"></a>00134 }
-<a name="l00135"></a>00135 
-<a name="l00136"></a><a class="code" href="eol__actor_8h.html#a4135df2094ea584ff9471f459e263f07">00136</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__actor_8c.html#a4135df2094ea584ff9471f459e263f07" title="steps an actor to the next frame in an action. lets caller know if if the action...">eol_actor_next_frame</a>(<a class="code" href="structeolActor.html">eolActor</a> * act)
-<a name="l00137"></a>00137 {
-<a name="l00138"></a>00138   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00139"></a>00139   <span class="keywordflow">if</span> (!act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>)<span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00140"></a>00140   <span class="keywordflow">if</span> (!act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>)<span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00141"></a>00141   act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> + (act-&gt;<a class="code" href="structeolActor.html#a3bae69f967c9f1d4e41ff7cf426a03dd">frameRate</a> * act-&gt;<a class="code" href="structeolActor.html#a8d8df5c969cd1a8fb438039746389efe">frameDirection</a>);
-<a name="l00142"></a>00142   <span class="keywordflow">if</span> (act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> &gt; act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#af42f306e3529b187b0672c9fd5dc3c2b">end</a>)
-<a name="l00143"></a>00143   {
-<a name="l00144"></a>00144     <span class="keywordflow">switch</span>(act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#a878280ffcdb70a7665d611f004c78478">type</a>)
-<a name="l00145"></a>00145     {
-<a name="l00146"></a>00146       <span class="keywordflow">case</span> <a class="code" href="eol__model_8h.html#a3fd8c19d858d5ed4e55bd37e104438fba81057176c7951e748cc19cb968fe3670">eolActionLoop</a>:
-<a name="l00147"></a>00147         act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#ad5e99ca36f82dfe30db1d0f3edfb96e0">begin</a>;
-<a name="l00148"></a>00148         <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00149"></a>00149       <span class="keywordflow">case</span> <a class="code" href="eol__model_8h.html#a3fd8c19d858d5ed4e55bd37e104438fba525cb368e1f5c323b9d254a7fb06c7c4">eolActionPass</a>:
-<a name="l00150"></a>00150         act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#af42f306e3529b187b0672c9fd5dc3c2b">end</a>;
-<a name="l00151"></a>00151         <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
-<a name="l00152"></a>00152       <span class="keywordflow">case</span> <a class="code" href="eol__model_8h.html#a3fd8c19d858d5ed4e55bd37e104438fba8b72470641d91baf5417da88082ffe49">eolActionOsci</a>:
-<a name="l00153"></a>00153         act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#af42f306e3529b187b0672c9fd5dc3c2b">end</a>;
-<a name="l00154"></a>00154         act-&gt;<a class="code" href="structeolActor.html#a8d8df5c969cd1a8fb438039746389efe">frameDirection</a> = -1;
-<a name="l00155"></a>00155         <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00156"></a>00156     }
-<a name="l00157"></a>00157   }
-<a name="l00158"></a>00158   <span class="keywordflow">if</span> (act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> &lt; act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#ad5e99ca36f82dfe30db1d0f3edfb96e0">begin</a>)
-<a name="l00159"></a>00159   {
-<a name="l00160"></a>00160     <span class="keywordflow">switch</span>(act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#a878280ffcdb70a7665d611f004c78478">type</a>)
-<a name="l00161"></a>00161     {
-<a name="l00162"></a>00162       <span class="keywordflow">case</span> <a class="code" href="eol__model_8h.html#a3fd8c19d858d5ed4e55bd37e104438fba81057176c7951e748cc19cb968fe3670">eolActionLoop</a>:
-<a name="l00163"></a>00163         act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#ad5e99ca36f82dfe30db1d0f3edfb96e0">begin</a>;
-<a name="l00164"></a>00164         <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00165"></a>00165       <span class="keywordflow">case</span> <a class="code" href="eol__model_8h.html#a3fd8c19d858d5ed4e55bd37e104438fba525cb368e1f5c323b9d254a7fb06c7c4">eolActionPass</a>:
-<a name="l00166"></a>00166         act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#ad5e99ca36f82dfe30db1d0f3edfb96e0">begin</a>;
-<a name="l00167"></a>00167         <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00168"></a>00168       <span class="keywordflow">case</span> <a class="code" href="eol__model_8h.html#a3fd8c19d858d5ed4e55bd37e104438fba8b72470641d91baf5417da88082ffe49">eolActionOsci</a>:
-<a name="l00169"></a>00169         act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#ad5e99ca36f82dfe30db1d0f3edfb96e0">begin</a>;
-<a name="l00170"></a>00170         act-&gt;<a class="code" href="structeolActor.html#a8d8df5c969cd1a8fb438039746389efe">frameDirection</a> = 1;
-<a name="l00171"></a>00171         <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
-<a name="l00172"></a>00172     }
-<a name="l00173"></a>00173   }
-<a name="l00174"></a>00174   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00175"></a>00175 }
-<a name="l00176"></a>00176 
-<a name="l00177"></a><a class="code" href="eol__actor_8h.html#ac960280d3731b890cc3e22f968dc36ba">00177</a> <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__actor_8c.html#ac960280d3731b890cc3e22f968dc36ba" title="retrieve the current frame of an actor">eol_actor_get_frame</a>(<a class="code" href="structeolActor.html">eolActor</a> *act)
-<a name="l00178"></a>00178 {
-<a name="l00179"></a>00179   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span> 0;
-<a name="l00180"></a>00180   <span class="keywordflow">return</span> act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a>;
-<a name="l00181"></a>00181 }
-<a name="l00182"></a>00182 <span class="comment">/*eol@eof*/</span>
-<a name="l00183"></a>00183 
+<a name="l00111"></a><a class="code" href="eol__actor_8h.html#ad6b2dc9751ff1b470d49db444bc59d48">00111</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#ad6b2dc9751ff1b470d49db444bc59d48" title="frees all data pointed to by actor">eol_actor_free</a>(<a class="code" href="structeolActor.html">eolActor</a> **actor)
+<a name="l00112"></a>00112 {
+<a name="l00113"></a>00113   <span class="keywordflow">if</span> ((!actor) || (!*actor))<span class="keywordflow">return</span>;
+<a name="l00114"></a>00114   <a class="code" href="eol__actor_8c.html#ad375086fbb746f0a0fccdc9cc69e662e" title="clears any of the actor information at the location specified">eol_actor_clear</a>(*actor);
+<a name="l00115"></a>00115   free(*actor);
+<a name="l00116"></a>00116   *actor = NULL;
+<a name="l00117"></a>00117 }
+<a name="l00118"></a>00118 
+<a name="l00119"></a><a class="code" href="eol__actor_8h.html#abbbd1b2025bd2b61ce63550c5781fe36">00119</a> <span class="keywordtype">void</span> <a class="code" href="eol__actor_8c.html#a119de8323d1f42836bd45fbf69802c01" title="set the actor to the begining of the specified action">eol_actor_set_action</a>(
+<a name="l00120"></a>00120     <a class="code" href="structeolActor.html">eolActor</a> * act,
+<a name="l00121"></a>00121     <a class="code" href="eol__types_8h.html#a4841af10c09bf670d7bc733a1403ddbb" title="16 character buffer used for short tags">eolWord</a>    actionName
+<a name="l00122"></a>00122   )
+<a name="l00123"></a>00123 {
+<a name="l00124"></a>00124   <a class="code" href="structeolAction.html">eolAction</a> *action;
+<a name="l00125"></a>00125   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span>;
+<a name="l00126"></a>00126   <span class="keywordflow">if</span> (!act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>)<span class="keywordflow">return</span>;
+<a name="l00127"></a>00127   <span class="keywordflow">if</span> (strlen(actionName) &lt;= 0)<span class="keywordflow">return</span>;
+<a name="l00128"></a>00128   action = <a class="code" href="eol__model_8c.html#a84aa8ab311b8a9a6eb5f2c70275f3155" title="searches for the model&amp;#39;s action by name">eol_model_get_action</a>(act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>,actionName);
+<a name="l00129"></a>00129   <span class="keywordflow">if</span> (action == NULL)
+<a name="l00130"></a>00130   {
+<a name="l00131"></a>00131     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00132"></a>00132       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968a659e43131122cba76a0e6613d53b9e68">EOL_LOG_WARN</a>,
+<a name="l00133"></a>00133       <span class="stringliteral">&quot;eol_actor: model %s does not have action %s\n&quot;</span>,
+<a name="l00134"></a>00134       act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>-&gt;<a class="code" href="structeolModel.html#ac4cefea9d40874bb3cb8afcbf600f872">name</a>,actionName);
+<a name="l00135"></a>00135     <span class="keywordflow">return</span>;
+<a name="l00136"></a>00136   }
+<a name="l00137"></a>00137   act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a> = action;
+<a name="l00138"></a>00138   strncpy(act-&gt;<a class="code" href="structeolActor.html#a2ee17f192e72a19208089eabfd753b6b">actionName</a>,actionName,<a class="code" href="eol__types_8h.html#aa5ecd856fbc9365537868e120f9d4929">EOLWORDLEN</a>);
+<a name="l00139"></a>00139   act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = action-&gt;<a class="code" href="structeolAction.html#ad5e99ca36f82dfe30db1d0f3edfb96e0">begin</a>;
+<a name="l00140"></a>00140   act-&gt;<a class="code" href="structeolActor.html#a3bae69f967c9f1d4e41ff7cf426a03dd">frameRate</a> = action-&gt;<a class="code" href="structeolAction.html#ae7d7e722b1629bac6e0ce92c272c8728">frameRate</a>;
+<a name="l00141"></a>00141   act-&gt;<a class="code" href="structeolActor.html#a8d8df5c969cd1a8fb438039746389efe">frameDirection</a> = 1;
+<a name="l00142"></a>00142 }
+<a name="l00143"></a>00143 
+<a name="l00144"></a><a class="code" href="eol__actor_8h.html#a4135df2094ea584ff9471f459e263f07">00144</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__actor_8c.html#a4135df2094ea584ff9471f459e263f07" title="steps an actor to the next frame in an action. lets caller know if if the action...">eol_actor_next_frame</a>(<a class="code" href="structeolActor.html">eolActor</a> * act)
+<a name="l00145"></a>00145 {
+<a name="l00146"></a>00146   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00147"></a>00147   <span class="keywordflow">if</span> (!act-&gt;<a class="code" href="structeolActor.html#a99ca89550c69e89271c4296f5dbb912a">model</a>)<span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00148"></a>00148   <span class="keywordflow">if</span> (!act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>)<span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00149"></a>00149   act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> + (act-&gt;<a class="code" href="structeolActor.html#a3bae69f967c9f1d4e41ff7cf426a03dd">frameRate</a> * act-&gt;<a class="code" href="structeolActor.html#a8d8df5c969cd1a8fb438039746389efe">frameDirection</a>);
+<a name="l00150"></a>00150   <span class="keywordflow">if</span> (act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> &gt; act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#af42f306e3529b187b0672c9fd5dc3c2b">end</a>)
+<a name="l00151"></a>00151   {
+<a name="l00152"></a>00152     <span class="keywordflow">switch</span>(act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#a878280ffcdb70a7665d611f004c78478">type</a>)
+<a name="l00153"></a>00153     {
+<a name="l00154"></a>00154       <span class="keywordflow">case</span> <a class="code" href="eol__model_8h.html#a3fd8c19d858d5ed4e55bd37e104438fba81057176c7951e748cc19cb968fe3670">eolActionLoop</a>:
+<a name="l00155"></a>00155         act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#ad5e99ca36f82dfe30db1d0f3edfb96e0">begin</a>;
+<a name="l00156"></a>00156         <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00157"></a>00157       <span class="keywordflow">case</span> <a class="code" href="eol__model_8h.html#a3fd8c19d858d5ed4e55bd37e104438fba525cb368e1f5c323b9d254a7fb06c7c4">eolActionPass</a>:
+<a name="l00158"></a>00158         act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#af42f306e3529b187b0672c9fd5dc3c2b">end</a>;
+<a name="l00159"></a>00159         <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
+<a name="l00160"></a>00160       <span class="keywordflow">case</span> <a class="code" href="eol__model_8h.html#a3fd8c19d858d5ed4e55bd37e104438fba8b72470641d91baf5417da88082ffe49">eolActionOsci</a>:
+<a name="l00161"></a>00161         act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#af42f306e3529b187b0672c9fd5dc3c2b">end</a>;
+<a name="l00162"></a>00162         act-&gt;<a class="code" href="structeolActor.html#a8d8df5c969cd1a8fb438039746389efe">frameDirection</a> = -1;
+<a name="l00163"></a>00163         <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00164"></a>00164     }
+<a name="l00165"></a>00165   }
+<a name="l00166"></a>00166   <span class="keywordflow">if</span> (act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> &lt; act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#ad5e99ca36f82dfe30db1d0f3edfb96e0">begin</a>)
+<a name="l00167"></a>00167   {
+<a name="l00168"></a>00168     <span class="keywordflow">switch</span>(act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#a878280ffcdb70a7665d611f004c78478">type</a>)
+<a name="l00169"></a>00169     {
+<a name="l00170"></a>00170       <span class="keywordflow">case</span> <a class="code" href="eol__model_8h.html#a3fd8c19d858d5ed4e55bd37e104438fba81057176c7951e748cc19cb968fe3670">eolActionLoop</a>:
+<a name="l00171"></a>00171         act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#ad5e99ca36f82dfe30db1d0f3edfb96e0">begin</a>;
+<a name="l00172"></a>00172         <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00173"></a>00173       <span class="keywordflow">case</span> <a class="code" href="eol__model_8h.html#a3fd8c19d858d5ed4e55bd37e104438fba525cb368e1f5c323b9d254a7fb06c7c4">eolActionPass</a>:
+<a name="l00174"></a>00174         act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#ad5e99ca36f82dfe30db1d0f3edfb96e0">begin</a>;
+<a name="l00175"></a>00175         <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00176"></a>00176       <span class="keywordflow">case</span> <a class="code" href="eol__model_8h.html#a3fd8c19d858d5ed4e55bd37e104438fba8b72470641d91baf5417da88082ffe49">eolActionOsci</a>:
+<a name="l00177"></a>00177         act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a> = act-&gt;<a class="code" href="structeolActor.html#ab450fd0d40a356e6c40631c8a09aca8c">action</a>-&gt;<a class="code" href="structeolAction.html#ad5e99ca36f82dfe30db1d0f3edfb96e0">begin</a>;
+<a name="l00178"></a>00178         act-&gt;<a class="code" href="structeolActor.html#a8d8df5c969cd1a8fb438039746389efe">frameDirection</a> = 1;
+<a name="l00179"></a>00179         <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
+<a name="l00180"></a>00180     }
+<a name="l00181"></a>00181   }
+<a name="l00182"></a>00182   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00183"></a>00183 }
+<a name="l00184"></a>00184 
+<a name="l00185"></a><a class="code" href="eol__actor_8h.html#ac960280d3731b890cc3e22f968dc36ba">00185</a> <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__actor_8c.html#ac960280d3731b890cc3e22f968dc36ba" title="retrieve the current frame of an actor">eol_actor_get_frame</a>(<a class="code" href="structeolActor.html">eolActor</a> *act)
+<a name="l00186"></a>00186 {
+<a name="l00187"></a>00187   <span class="keywordflow">if</span> (!act)<span class="keywordflow">return</span> 0;
+<a name="l00188"></a>00188   <span class="keywordflow">return</span> act-&gt;<a class="code" href="structeolActor.html#a70113f7d7044e2c4510f6c4cc033144d">frame</a>;
+<a name="l00189"></a>00189 }
+<a name="l00190"></a>00190 <span class="comment">/*eol@eof*/</span>
+<a name="l00191"></a>00191 
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:22 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:09 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

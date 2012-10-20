@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -79,14 +80,14 @@
 <a name="l00070"></a>00070 
 <a name="l00074"></a>00074 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8c.html#aef0efb726703297cbc5072b5f5ecc218" title="sets up the camera for this frame within the current context">eol_camera_setup</a>();
 <a name="l00075"></a>00075 
-<a name="l00080"></a>00080 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8h.html#a5dbd2a7a826d4447d54e2857862cf64b" title="Tell the camera to follow an entity.">eol_camera_set_target</a>(<span class="keywordtype">void</span> *<a class="code" href="structeolCamera__S.html#afa45f135881789559a0cb2347cb84bfa">target</a>);
+<a name="l00080"></a>00080 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8c.html#a5dbd2a7a826d4447d54e2857862cf64b" title="Tell the camera to follow an entity.">eol_camera_set_target</a>(<span class="keywordtype">void</span> *<a class="code" href="structeolCamera__S.html#afa45f135881789559a0cb2347cb84bfa">target</a>);
 <a name="l00081"></a>00081 
 <a name="l00082"></a>00082 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8c.html#a65a320b884f26976d002683663f46011">eol_camera_set_height</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> dist);
 <a name="l00083"></a>00083 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8h.html#ac72f176cd25461bffe205eeefb112f28">eol_camera_set_near_clip</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> clip);
 <a name="l00084"></a>00084 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8h.html#a51c8404c070d344792631b29a9fbb8c1">eol_camera_set_far_clip</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> clip);
 <a name="l00085"></a>00085 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8h.html#ad5343f39fb21b635fcaaf1a6f4db710d">eol_camera_set_aspect_ratio</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> aspect);
 <a name="l00086"></a>00086 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8h.html#a066c83ab5e0ec73afedb0afd9b34a2af">eol_camera_set_view_angle</a>(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> clip);
-<a name="l00087"></a>00087 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8h.html#a1874947d1e3e4a0aaecbe65080733962">eol_camera_set_target_orientation</a>(<a class="code" href="eol__camera_8h.html#a330d1851947e33167ab6c9dc5891bd31" title="function pointer prototype for getting the target&amp;#39;s orientation">eolCameraGetTargetOri</a> targetFunc);
+<a name="l00087"></a>00087 <span class="keywordtype">void</span> <a class="code" href="eol__camera_8c.html#a1874947d1e3e4a0aaecbe65080733962">eol_camera_set_target_orientation</a>(<a class="code" href="eol__camera_8h.html#a330d1851947e33167ab6c9dc5891bd31" title="function pointer prototype for getting the target&amp;#39;s orientation">eolCameraGetTargetOri</a> targetFunc);
 <a name="l00088"></a>00088 
 <a name="l00089"></a>00089 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__camera_8h.html#a223eb3906cdf1c9fcc5c19be30d31cd3">eol_camera_is_rect_in_view</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> point, <a class="code" href="structeolRectFloat.html">eolRectFloat</a> <a class="code" href="structeolCamera__S.html#a0e2d49539122b7eef7132ee88db70fa4">bounds</a>);
 <a name="l00090"></a>00090 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__camera_8h.html#a8126a234aad250493c4600b701adeb6e">eol_camera_is_circle_in_view</a>(<a class="code" href="structeolVec3D.html">eolVec3D</a> point, <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> radius);
@@ -95,7 +96,7 @@
 <a name="l00093"></a>00093 
 <a name="l00094"></a>00094 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:23 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:09 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

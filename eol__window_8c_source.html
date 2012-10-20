@@ -14,6 +14,7 @@
       <li><a href="main.html"><span>Main&nbsp;Page</span></a></li>
       <li><a href="annotated.html"><span>Data&nbsp;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -151,584 +152,593 @@
 <a name="l00128"></a>00128     }
 <a name="l00129"></a>00129   }
 <a name="l00130"></a>00130 }
-<a name="l00131"></a><a class="code" href="eol__window_8h.html#a919e696698fb9226404efdfd8aa0ca77">00131</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a919e696698fb9226404efdfd8aa0ca77">eol_window_update_all</a>()
-<a name="l00132"></a>00132 {
-<a name="l00133"></a>00133   GList *l = NULL;
-<a name="l00134"></a>00134   GList *c = NULL;
-<a name="l00135"></a>00135   GList *<a class="code" href="structEntity__S.html#abb418c4f96ec33c69b7bc1c665152709">update</a> = NULL;
-<a name="l00136"></a>00136   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> updateHandled = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00137"></a>00137   <a class="code" href="structeolWindow__S.html">eolWindow</a> *win;
-<a name="l00138"></a>00138   <span class="keywordflow">if</span> (!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>())<span class="keywordflow">return</span>;
-<a name="l00139"></a>00139   l = g_list_last(<a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a>);
-<a name="l00140"></a>00140   <span class="keywordflow">for</span> (;l != NULL;l = l-&gt;prev)
-<a name="l00141"></a>00141   {
-<a name="l00142"></a>00142     win = (<a class="code" href="structeolWindow__S.html">eolWindow</a>*)l-&gt;data;
-<a name="l00143"></a>00143     if ((win != NULL)&amp;&amp;(win-&gt;<a class="code" href="structeolWindow__S.html#a6fe030fa5521b74751dddc421f9ce22c">update</a> != NULL)&amp;&amp; (!win-&gt;<a class="code" href="structeolWindow__S.html#a3358db7ee974975d5b979d098025dcb3">sleeping</a>))
-<a name="l00144"></a>00144     {
-<a name="l00145"></a>00145       <span class="comment">/*update all components*/</span>
-<a name="l00146"></a>00146       <span class="keywordflow">for</span> (c = win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a>;c != NULL; c= c-&gt;next)
-<a name="l00147"></a>00147       {
-<a name="l00148"></a>00148         <span class="keywordflow">if</span> (c-&gt;data != NULL)
-<a name="l00149"></a>00149         {
-<a name="l00150"></a>00150           <span class="keywordflow">if</span> (<a class="code" href="eol__component_8c.html#af84dcb044903d7a869b93048f729ffb6" title="runs the appropriate update function on the component. This is called automatically...">eol_component_update</a>(c-&gt;data))
-<a name="l00151"></a>00151           {
-<a name="l00152"></a>00152             update = g_list_append(update,c-&gt;data);
-<a name="l00153"></a>00153           }
-<a name="l00154"></a>00154         }
-<a name="l00155"></a>00155       }
-<a name="l00156"></a>00156     }
-<a name="l00157"></a>00157     <span class="comment">/*call update for window*/</span>
-<a name="l00158"></a>00158     updateHandled = win-&gt;<a class="code" href="structeolWindow__S.html#a6fe030fa5521b74751dddc421f9ce22c">update</a>(win,update);
-<a name="l00159"></a>00159     <span class="keywordflow">if</span> (update != NULL)
-<a name="l00160"></a>00160     {
-<a name="l00161"></a>00161       g_list_free(update);
-<a name="l00162"></a>00162       update = NULL;
-<a name="l00163"></a>00163     }
-<a name="l00164"></a>00164     <span class="keywordflow">if</span> ((updateHandled) || (!win-&gt;<a class="code" href="structeolWindow__S.html#abc8de401f2eb01f1b7a217b858099f98">passesInput</a>))<span class="keywordflow">break</span>;
-<a name="l00165"></a>00165   }
-<a name="l00166"></a>00166 }
-<a name="l00167"></a>00167 
-<a name="l00168"></a><a class="code" href="eol__window_8h.html#a9eccca7d357ef728aa83b97af7fe2443">00168</a> <a class="code" href="structeolWindow__S.html">eolWindow</a> *<a class="code" href="eol__window_8c.html#a9eccca7d357ef728aa83b97af7fe2443">eol_window_new</a>()
-<a name="l00169"></a>00169 {
-<a name="l00170"></a>00170   <a class="code" href="structeolWindow__S.html">eolWindow</a> *win = NULL;
-<a name="l00171"></a>00171   <span class="keywordflow">if</span> (!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>())
-<a name="l00172"></a>00172   {
-<a name="l00173"></a>00173     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00174"></a>00174       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00175"></a>00175       <span class="stringliteral">&quot;eol_window:used uninitialized\n&quot;</span>);
-<a name="l00176"></a>00176     <span class="keywordflow">return</span> NULL;
-<a name="l00177"></a>00177   }
-<a name="l00178"></a>00178   win = (<a class="code" href="structeolWindow__S.html">eolWindow</a> *)<a class="code" href="eol__resource_8c.html#aeb3e7d608eb643eca2e3136e2b035d1b" title="returns a pointer to a new allocated element or NULL on error">eol_resource_new_element</a>(_eol_window_manager);
-<a name="l00179"></a>00179   <span class="keywordflow">if</span> (win == NULL)
-<a name="l00180"></a>00180   {
-<a name="l00181"></a>00181     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00182"></a>00182       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
-<a name="l00183"></a>00183       <span class="stringliteral">&quot;eol_window:failed to get new resource\n&quot;</span>);
-<a name="l00184"></a>00184     <span class="keywordflow">return</span> NULL;
-<a name="l00185"></a>00185   }
-<a name="l00186"></a>00186   <span class="comment">/*new windows are added at the top of the stack, ie: last to draw*/</span>
-<a name="l00187"></a>00187   win-&gt;<a class="code" href="structeolWindow__S.html#adfa20f4e10dee732d3060919a32839f3">id</a> = <a class="code" href="eol__resource_8c.html#ab60140467b8950a843cd369f32287441" title="returns the index of the element passed.">eol_resource_element_get_id</a>(_eol_window_manager,win);
-<a name="l00188"></a>00188   <a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a> = g_list_append(<a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a>,win);
-<a name="l00189"></a>00189   <span class="keywordflow">return</span> win;
-<a name="l00190"></a>00190 }
-<a name="l00191"></a>00191 
-<a name="l00192"></a><a class="code" href="eol__window_8h.html#ac0b3fa50b77de1b89562f1951e2a5667">00192</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ac0b3fa50b77de1b89562f1951e2a5667">eol_window_free</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> **win)
-<a name="l00193"></a>00193 {
-<a name="l00194"></a>00194   <span class="keywordflow">if</span> (!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>())<span class="keywordflow">return</span>;
-<a name="l00195"></a>00195   <a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a> = g_list_remove(<a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a>,*win);
-<a name="l00196"></a>00196   <a class="code" href="eol__resource_8c.html#a04a80e2833dab61ed23ac62dc3977df9" title="reduces the reference count to the element passed in. if data in the manager is unique...">eol_resource_free_element</a>(_eol_window_manager,(<span class="keywordtype">void</span> **)win);
-<a name="l00197"></a>00197 }
-<a name="l00198"></a>00198 
-<a name="l00199"></a><a class="code" href="eol__window_8c.html#ae9d89fb6e4a12d8568b4b121e98db320">00199</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ae9d89fb6e4a12d8568b4b121e98db320">eol_window_delete</a>(<span class="keywordtype">void</span> *window)
-<a name="l00200"></a>00200 {
-<a name="l00201"></a>00201   GList *l = NULL;
-<a name="l00202"></a>00202   <a class="code" href="structeolWindow__S.html">eolWindow</a> *win;
-<a name="l00203"></a>00203   <span class="keywordflow">if</span> (!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>())<span class="keywordflow">return</span>;
-<a name="l00204"></a>00204   <span class="keywordflow">if</span> (window)<span class="keywordflow">return</span>;
-<a name="l00205"></a>00205   win = (<a class="code" href="structeolWindow__S.html">eolWindow</a> *)window;
-<a name="l00206"></a>00206   <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#aaa60307344dcb51c4a833d6555e956d5">customData</a> != NULL)
-<a name="l00207"></a>00207   {
-<a name="l00208"></a>00208     <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#a79adcbe21ba26fa33140ee1cd7764050">custom_delete</a> != NULL)
-<a name="l00209"></a>00209     {
-<a name="l00210"></a>00210       win-&gt;<a class="code" href="structeolWindow__S.html#a79adcbe21ba26fa33140ee1cd7764050">custom_delete</a>(win-&gt;<a class="code" href="structeolWindow__S.html#aaa60307344dcb51c4a833d6555e956d5">customData</a>);
-<a name="l00211"></a>00211     }
-<a name="l00212"></a>00212   }
-<a name="l00213"></a>00213   <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a> != NULL)
-<a name="l00214"></a>00214   {
-<a name="l00215"></a>00215     <span class="keywordflow">for</span> (l = win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a>;l != NULL;l = l-&gt;next)
-<a name="l00216"></a>00216     {
-<a name="l00217"></a>00217       <span class="keywordflow">if</span> (l-&gt;data != NULL)
-<a name="l00218"></a>00218       {
-<a name="l00219"></a>00219         <a class="code" href="eol__component_8c.html#a34a08766043096794753799d4ce3f661" title="frees a previously allocated component">eol_component_free</a>((<a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a>**)&amp;l-&gt;data);
-<a name="l00220"></a>00220       }
-<a name="l00221"></a>00221     }
-<a name="l00222"></a>00222     g_list_free(win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a>);
-<a name="l00223"></a>00223     win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a> = NULL;
-<a name="l00224"></a>00224   }
-<a name="l00225"></a>00225   <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a> != NULL)
-<a name="l00226"></a>00226   {
-<a name="l00227"></a>00227     free(win-&gt;<a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a>);
-<a name="l00228"></a>00228   }
-<a name="l00229"></a>00229   <a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a> = g_list_remove(<a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a>,win);
-<a name="l00230"></a>00230   memset(win, 0, <span class="keyword">sizeof</span>(<a class="code" href="structeolWindow__S.html">eolWindow</a>));
-<a name="l00231"></a>00231 }
-<a name="l00232"></a>00232 
-<a name="l00233"></a><a class="code" href="eol__window_8c.html#a3bab71fc395efdfc3d1b05c679be21c4">00233</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a3bab71fc395efdfc3d1b05c679be21c4">eol_window_load_label</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *def)
-<a name="l00234"></a>00234 {
-<a name="l00235"></a>00235   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>       <a class="code" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>;
-<a name="l00236"></a>00236   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>       text;
-<a name="l00237"></a>00237   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>       <a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>;
-<a name="l00238"></a>00238   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>       justify;
-<a name="l00239"></a>00239   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>       wordWrap;
-<a name="l00240"></a>00240   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>       fontSize;
-<a name="l00241"></a>00241   <a class="code" href="structeolVec3D.html">eolVec3D</a>      color = {1,1,1};
-<a name="l00242"></a>00242   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>      alpha = 1;
-<a name="l00243"></a>00243   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>       fontfile; 
-<a name="l00244"></a>00244   <a class="code" href="structeolRectFloat.html">eolRectFloat</a>  rect;
-<a name="l00245"></a>00245   <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp;
-<a name="l00246"></a>00246   <span class="keywordtype">char</span>        * font = NULL;
-<a name="l00247"></a>00247   
-<a name="l00248"></a>00248   <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(fontfile,<span class="stringliteral">&quot;\0&quot;</span>);
-<a name="l00249"></a>00249   <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(justify,<span class="stringliteral">&quot;\0&quot;</span>);
-<a name="l00250"></a>00250   <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(wordWrap,<span class="stringliteral">&quot;\0&quot;</span>);
-<a name="l00251"></a>00251   <span class="keywordflow">if</span> ((!win) || (!def))<span class="keywordflow">return</span>;
-<a name="l00252"></a>00252   
-<a name="l00253"></a>00253   <a class="code" href="eol__keychain_8c.html#a02cfa40cf9582aa9df8e2e566f21c1af">eol_keychain_get_hash_value_as_uint</a>(&amp;<span class="keywordtype">id</span>, def, <span class="stringliteral">&quot;id&quot;</span>);
-<a name="l00254"></a>00254   <a class="code" href="eol__keychain_8c.html#a02cfa40cf9582aa9df8e2e566f21c1af">eol_keychain_get_hash_value_as_uint</a>(&amp;fontSize, def, <span class="stringliteral">&quot;fontSize&quot;</span>);
-<a name="l00255"></a>00255   <a class="code" href="eol__keychain_8c.html#ad3d4dd888b65c5b4900405ba39d9b1e4">eol_keychain_get_hash_value_as_rectfloat</a>(&amp;rect, def, <span class="stringliteral">&quot;rect&quot;</span>);
-<a name="l00256"></a>00256   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(text, def, <span class="stringliteral">&quot;text&quot;</span>);
-<a name="l00257"></a>00257   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(name, def, <span class="stringliteral">&quot;name&quot;</span>);
-<a name="l00258"></a>00258   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(justify, def, <span class="stringliteral">&quot;justify&quot;</span>);
-<a name="l00259"></a>00259   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(fontfile, def, <span class="stringliteral">&quot;fontName&quot;</span>);
-<a name="l00260"></a>00260   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(wordWrap, def, <span class="stringliteral">&quot;wordWrap&quot;</span>);
-<a name="l00261"></a>00261   <a class="code" href="eol__keychain_8c.html#a007eac9d89c9c8f46600aa41930ba7ce">eol_keychain_get_hash_value_as_vec3d</a>(&amp;color, def, <span class="stringliteral">&quot;color&quot;</span>);
-<a name="l00262"></a>00262   <a class="code" href="eol__keychain_8c.html#a5766ea1b8f17a5e40649276b803a2846">eol_keychain_get_hash_value_as_float</a>(&amp;alpha, def, <span class="stringliteral">&quot;alpha&quot;</span>);
-<a name="l00263"></a>00263   
-<a name="l00264"></a>00264   <span class="keywordflow">if</span> (strlen(fontfile) &gt; 0)font = fontfile;
-<a name="l00265"></a>00265   comp = <a class="code" href="eol__component_8c.html#ac175ad1e771c44045cf6fbe377901d92" title="creates a new label component">eol_label_new</a>(
-<a name="l00266"></a>00266     <span class="keywordtype">id</span>,
-<a name="l00267"></a>00267     name,
-<a name="l00268"></a>00268     rect,
-<a name="l00269"></a>00269     win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
-<a name="l00270"></a>00270     <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>,
-<a name="l00271"></a>00271     text,
-<a name="l00272"></a>00272     <a class="code" href="eol__font_8c.html#a9b35284f9ad3c04247b0d90f449fe5e9">eol_font_justify_from_string</a>(justify),
-<a name="l00273"></a>00273     <a class="code" href="eol__types_8c.html#a9858707765891ded1c79fcff00339519" title="checks if a string says &amp;quot;true&amp;quot; accepts &amp;quot;true&amp;quot;, &amp;quot;TRUE&amp;quot;...">eol_true_from_string</a>(wordWrap),
-<a name="l00274"></a>00274     fontSize,
-<a name="l00275"></a>00275     font,
-<a name="l00276"></a>00276     color,
-<a name="l00277"></a>00277     alpha
-<a name="l00278"></a>00278   );
-<a name="l00279"></a>00279   <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
-<a name="l00280"></a>00280 }
-<a name="l00281"></a>00281 
-<a name="l00282"></a><a class="code" href="eol__window_8c.html#a325ad82492b1d2a68f6808582a69591e">00282</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a325ad82492b1d2a68f6808582a69591e">eol_window_load_slider</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *def)
-<a name="l00283"></a>00283 {
-<a name="l00284"></a>00284   <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp = NULL;
-<a name="l00285"></a>00285   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>        <a class="code" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>;
-<a name="l00286"></a>00286   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        <a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>;
-<a name="l00287"></a>00287   <a class="code" href="structeolRectFloat.html">eolRectFloat</a>   rect;
-<a name="l00288"></a>00288   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        vertical;
-<a name="l00289"></a>00289   <a class="code" href="structeolVec3D.html">eolVec3D</a>       barColor;
-<a name="l00290"></a>00290   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        sliderType;
-<a name="l00291"></a>00291   
-<a name="l00292"></a>00292   <span class="keywordflow">if</span> ((!win) || (!def))<span class="keywordflow">return</span>;
-<a name="l00293"></a>00293   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(name, def, <span class="stringliteral">&quot;name&quot;</span>);
-<a name="l00294"></a>00294   <a class="code" href="eol__keychain_8c.html#a02cfa40cf9582aa9df8e2e566f21c1af">eol_keychain_get_hash_value_as_uint</a>(&amp;<span class="keywordtype">id</span>, def, <span class="stringliteral">&quot;id&quot;</span>);
-<a name="l00295"></a>00295   <a class="code" href="eol__keychain_8c.html#ad3d4dd888b65c5b4900405ba39d9b1e4">eol_keychain_get_hash_value_as_rectfloat</a>(&amp;rect, def, <span class="stringliteral">&quot;rect&quot;</span>);
-<a name="l00296"></a>00296   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(vertical, def, <span class="stringliteral">&quot;vertical&quot;</span>);
-<a name="l00297"></a>00297   <a class="code" href="eol__keychain_8c.html#a007eac9d89c9c8f46600aa41930ba7ce">eol_keychain_get_hash_value_as_vec3d</a>(&amp;barColor, def, <span class="stringliteral">&quot;barColor&quot;</span>);
-<a name="l00298"></a>00298   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(sliderType, def, <span class="stringliteral">&quot;sliderType&quot;</span>);
-<a name="l00299"></a>00299   
-<a name="l00300"></a>00300   <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(sliderType,<span class="stringliteral">&quot;COMMON&quot;</span>) == 0)
-<a name="l00301"></a>00301   {
-<a name="l00302"></a>00302     
-<a name="l00303"></a>00303     comp = <a class="code" href="eol__component_8c.html#a30eb249977a2b7764638237b4ad15b4d" title="created a new slider component using common settings">eol_slider_common_new</a>(
-<a name="l00304"></a>00304       <span class="keywordtype">id</span>,
-<a name="l00305"></a>00305       name,
-<a name="l00306"></a>00306       rect,
-<a name="l00307"></a>00307       win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
-<a name="l00308"></a>00308       <a class="code" href="eol__types_8c.html#a9858707765891ded1c79fcff00339519" title="checks if a string says &amp;quot;true&amp;quot; accepts &amp;quot;true&amp;quot;, &amp;quot;TRUE&amp;quot;...">eol_true_from_string</a>(vertical),
-<a name="l00309"></a>00309       barColor,
-<a name="l00310"></a>00310       0,
-<a name="l00311"></a>00311       <a class="code" href="eol__component_8h.html#a54fc2c2ce335b9ddfb7b091956f38684a56ad08769ca3cc61bd2b402ed3bcf9b8">eolSliderCommon</a>
-<a name="l00312"></a>00312     );
-<a name="l00313"></a>00313     <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
-<a name="l00314"></a>00314   }
-<a name="l00315"></a>00315 }
-<a name="l00316"></a>00316 
-<a name="l00317"></a><a class="code" href="eol__window_8c.html#af38c53798d6ec96d7bef061848d4eb6f">00317</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#af38c53798d6ec96d7bef061848d4eb6f">eol_window_load_button</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *def)
-<a name="l00318"></a>00318 {
-<a name="l00319"></a>00319   <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp;
-<a name="l00320"></a>00320   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> buttonType;
-<a name="l00321"></a>00321   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>;
-<a name="l00322"></a>00322   <a class="code" href="structeolRectFloat.html">eolRectFloat</a> rect;
-<a name="l00323"></a>00323   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> justify;
-<a name="l00324"></a>00324   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> buttonText;
-<a name="l00325"></a>00325   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> <a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>;
-<a name="l00326"></a>00326   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> hotkey;
-<a name="l00327"></a>00327   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> hotmod;
-<a name="l00328"></a>00328   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> hotkeybutton;
-<a name="l00329"></a>00329   <a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> hotkeymod;
-<a name="l00330"></a>00330   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> buttonFile;
-<a name="l00331"></a>00331   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> buttonHighFile;
-<a name="l00332"></a>00332   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> buttonHitFile;
-<a name="l00333"></a>00333   
-<a name="l00334"></a>00334   <span class="keywordflow">if</span> ((!win) || (!def))<span class="keywordflow">return</span>;
-<a name="l00335"></a>00335   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(buttonType, def, <span class="stringliteral">&quot;buttonType&quot;</span>);
-<a name="l00336"></a>00336   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(name, def, <span class="stringliteral">&quot;name&quot;</span>);
-<a name="l00337"></a>00337   <a class="code" href="eol__keychain_8c.html#a02cfa40cf9582aa9df8e2e566f21c1af">eol_keychain_get_hash_value_as_uint</a>(&amp;<span class="keywordtype">id</span>, def, <span class="stringliteral">&quot;id&quot;</span>);
-<a name="l00338"></a>00338   <a class="code" href="eol__keychain_8c.html#ad3d4dd888b65c5b4900405ba39d9b1e4">eol_keychain_get_hash_value_as_rectfloat</a>(&amp;rect, def, <span class="stringliteral">&quot;rect&quot;</span>);
-<a name="l00339"></a>00339   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(justify, def, <span class="stringliteral">&quot;justify&quot;</span>);<span class="comment">/*NOTE: not used*/</span>
-<a name="l00340"></a>00340   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(buttonText, def, <span class="stringliteral">&quot;buttonText&quot;</span>);
-<a name="l00341"></a>00341   
-<a name="l00342"></a>00342   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(hotkey, def, <span class="stringliteral">&quot;hotkey&quot;</span>);
-<a name="l00343"></a>00343   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(hotmod, def, <span class="stringliteral">&quot;hotkeymod&quot;</span>);
-<a name="l00344"></a>00344   
-<a name="l00345"></a>00345   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(buttonFile, def, <span class="stringliteral">&quot;buttonImage&quot;</span>);
-<a name="l00346"></a>00346   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(buttonHighFile, def, <span class="stringliteral">&quot;buttonHigh&quot;</span>);
-<a name="l00347"></a>00347   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(buttonHitFile, def, <span class="stringliteral">&quot;buttonHit&quot;</span>);
-<a name="l00348"></a>00348   
-<a name="l00349"></a>00349   hotkeybutton = <a class="code" href="eol__input_8c.html#a88b420bd1b5a3c0afec16f8f9649e353" title="converts input config into sdl_key info">eol_input_parse</a>(<span class="stringliteral">&quot;key&quot;</span>, hotkey);
-<a name="l00350"></a>00350   hotkeymod = <a class="code" href="eol__input_8c.html#a88b420bd1b5a3c0afec16f8f9649e353" title="converts input config into sdl_key info">eol_input_parse</a>(<span class="stringliteral">&quot;mod&quot;</span>,hotmod);
-<a name="l00351"></a>00351   <span class="keywordflow">if</span> (hotkeymod &lt; 0)hotkeymod = 0;
-<a name="l00352"></a>00352   <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(buttonType,<span class="stringliteral">&quot;STOCK&quot;</span>) == 0)
-<a name="l00353"></a>00353   {
-<a name="l00354"></a>00354     comp = <a class="code" href="eol__component_8c.html#adb599ad6ca0522c12fcb2345a038991d" title="creates a new button component with common options">eol_button_stock_new</a>(
-<a name="l00355"></a>00355       <span class="keywordtype">id</span>,
-<a name="l00356"></a>00356       name,
-<a name="l00357"></a>00357       rect,
-<a name="l00358"></a>00358       win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
-<a name="l00359"></a>00359       buttonText,
-<a name="l00360"></a>00360       hotkeybutton,
-<a name="l00361"></a>00361       hotkeymod,
-<a name="l00362"></a>00362       <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>
-<a name="l00363"></a>00363     );
-<a name="l00364"></a>00364     <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
-<a name="l00365"></a>00365   }
-<a name="l00366"></a>00366   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(buttonType,<span class="stringliteral">&quot;TEXT&quot;</span>) == 0)
-<a name="l00367"></a>00367   {
-<a name="l00368"></a>00368     comp = <a class="code" href="eol__component_8c.html#af77b0026a2514d4e321d25834f2aadc8" title="creates a new button component setup for use as a text button">eol_button_text_new</a>(
-<a name="l00369"></a>00369       <span class="keywordtype">id</span>,
-<a name="l00370"></a>00370       name,
-<a name="l00371"></a>00371       rect,
-<a name="l00372"></a>00372       win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
-<a name="l00373"></a>00373       buttonText,
-<a name="l00374"></a>00374       hotkeybutton,
-<a name="l00375"></a>00375       hotkeymod,
-<a name="l00376"></a>00376       <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>
-<a name="l00377"></a>00377     );
-<a name="l00378"></a>00378     <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
-<a name="l00379"></a>00379   }
-<a name="l00380"></a>00380   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(buttonType,<span class="stringliteral">&quot;CUSTOM&quot;</span>) == 0)
-<a name="l00381"></a>00381   {
-<a name="l00382"></a>00382     comp = <a class="code" href="eol__component_8c.html#afb9be2d5b219f0f76148694bfc0a2b81" title="creates a new button component">eol_button_new</a>(
-<a name="l00383"></a>00383       <span class="keywordtype">id</span>,
-<a name="l00384"></a>00384       name,
-<a name="l00385"></a>00385       rect,
-<a name="l00386"></a>00386       win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
-<a name="l00387"></a>00387       buttonText,
-<a name="l00388"></a>00388       <a class="code" href="eol__component_8h.html#a4d310a5599d0cac89f4237d7a5099aa8a1345bdbf856ce142e029d387162467fc">eolButtonCustom</a>,
-<a name="l00389"></a>00389       hotkeybutton,
-<a name="l00390"></a>00390       hotkeymod,
-<a name="l00391"></a>00391       <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>,
-<a name="l00392"></a>00392       buttonFile,
-<a name="l00393"></a>00393       buttonHighFile,
-<a name="l00394"></a>00394       buttonHitFile
-<a name="l00395"></a>00395     );
-<a name="l00396"></a>00396     <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
+<a name="l00131"></a>00131 
+<a name="l00132"></a><a class="code" href="eol__window_8h.html#a919e696698fb9226404efdfd8aa0ca77">00132</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a919e696698fb9226404efdfd8aa0ca77">eol_window_update_all</a>()
+<a name="l00133"></a>00133 {
+<a name="l00134"></a>00134   GList *l = NULL;
+<a name="l00135"></a>00135   GList *c = NULL;
+<a name="l00136"></a>00136   GList *update = NULL;
+<a name="l00137"></a>00137   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> updateHandled = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00138"></a>00138   <a class="code" href="structeolWindow__S.html">eolWindow</a> *win;
+<a name="l00139"></a>00139   <span class="keywordflow">if</span> (!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>())<span class="keywordflow">return</span>;
+<a name="l00140"></a>00140   l = g_list_last(<a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a>);
+<a name="l00141"></a>00141   <span class="keywordflow">for</span> (;l != NULL;l = l-&gt;prev)
+<a name="l00142"></a>00142   {
+<a name="l00143"></a>00143     win = (<a class="code" href="structeolWindow__S.html">eolWindow</a>*)l-&gt;data;
+<a name="l00144"></a>00144     if ((win != NULL)&amp;&amp;(win-&gt;<a class="code" href="structeolWindow__S.html#a6fe030fa5521b74751dddc421f9ce22c">update</a> != NULL)&amp;&amp; (!win-&gt;<a class="code" href="structeolWindow__S.html#a3358db7ee974975d5b979d098025dcb3">sleeping</a>))
+<a name="l00145"></a>00145     {
+<a name="l00146"></a>00146       <span class="comment">/*update all components*/</span>
+<a name="l00147"></a>00147       <span class="keywordflow">for</span> (c = win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a>;c != NULL; c= c-&gt;next)
+<a name="l00148"></a>00148       {
+<a name="l00149"></a>00149         <span class="keywordflow">if</span> (c-&gt;data != NULL)
+<a name="l00150"></a>00150         {
+<a name="l00151"></a>00151           <span class="keywordflow">if</span> (<a class="code" href="eol__component_8c.html#af84dcb044903d7a869b93048f729ffb6" title="runs the appropriate update function on the component. This is called automatically...">eol_component_update</a>(c-&gt;data))
+<a name="l00152"></a>00152           {
+<a name="l00153"></a>00153             update = g_list_append(update,c-&gt;data);
+<a name="l00154"></a>00154           }
+<a name="l00155"></a>00155         }
+<a name="l00156"></a>00156       }
+<a name="l00157"></a>00157     }
+<a name="l00158"></a>00158     <span class="comment">/*call update for window*/</span>
+<a name="l00159"></a>00159     updateHandled = win-&gt;<a class="code" href="structeolWindow__S.html#a6fe030fa5521b74751dddc421f9ce22c">update</a>(win,update);
+<a name="l00160"></a>00160     <span class="keywordflow">if</span> (update != NULL)
+<a name="l00161"></a>00161     {
+<a name="l00162"></a>00162       g_list_free(update);
+<a name="l00163"></a>00163       update = NULL;
+<a name="l00164"></a>00164     }
+<a name="l00165"></a>00165     <span class="keywordflow">if</span> ((updateHandled) || (!win-&gt;<a class="code" href="structeolWindow__S.html#abc8de401f2eb01f1b7a217b858099f98">passesInput</a>))<span class="keywordflow">break</span>;
+<a name="l00166"></a>00166   }
+<a name="l00167"></a>00167 }
+<a name="l00168"></a>00168 
+<a name="l00169"></a><a class="code" href="eol__window_8h.html#a9eccca7d357ef728aa83b97af7fe2443">00169</a> <a class="code" href="structeolWindow__S.html">eolWindow</a> *<a class="code" href="eol__window_8c.html#a9eccca7d357ef728aa83b97af7fe2443">eol_window_new</a>()
+<a name="l00170"></a>00170 {
+<a name="l00171"></a>00171   <a class="code" href="structeolWindow__S.html">eolWindow</a> *win = NULL;
+<a name="l00172"></a>00172   <span class="keywordflow">if</span> (!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>())
+<a name="l00173"></a>00173   {
+<a name="l00174"></a>00174     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00175"></a>00175       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00176"></a>00176       <span class="stringliteral">&quot;eol_window:used uninitialized\n&quot;</span>);
+<a name="l00177"></a>00177     <span class="keywordflow">return</span> NULL;
+<a name="l00178"></a>00178   }
+<a name="l00179"></a>00179   win = (<a class="code" href="structeolWindow__S.html">eolWindow</a> *)<a class="code" href="eol__resource_8c.html#aeb3e7d608eb643eca2e3136e2b035d1b" title="returns a pointer to a new allocated element or NULL on error">eol_resource_new_element</a>(_eol_window_manager);
+<a name="l00180"></a>00180   <span class="keywordflow">if</span> (win == NULL)
+<a name="l00181"></a>00181   {
+<a name="l00182"></a>00182     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00183"></a>00183       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968afe5720116616f4eed506952cb750eed2">EOL_LOG_INFO</a>,
+<a name="l00184"></a>00184       <span class="stringliteral">&quot;eol_window:failed to get new resource\n&quot;</span>);
+<a name="l00185"></a>00185     <span class="keywordflow">return</span> NULL;
+<a name="l00186"></a>00186   }
+<a name="l00187"></a>00187   <span class="comment">/*new windows are added at the top of the stack, ie: last to draw*/</span>
+<a name="l00188"></a>00188   win-&gt;<a class="code" href="structeolWindow__S.html#adfa20f4e10dee732d3060919a32839f3">id</a> = <a class="code" href="eol__resource_8c.html#ab60140467b8950a843cd369f32287441" title="returns the index of the element passed.">eol_resource_element_get_id</a>(_eol_window_manager,win);
+<a name="l00189"></a>00189   <a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a> = g_list_append(<a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a>,win);
+<a name="l00190"></a>00190   <span class="keywordflow">return</span> win;
+<a name="l00191"></a>00191 }
+<a name="l00192"></a>00192 
+<a name="l00193"></a><a class="code" href="eol__window_8h.html#ac0b3fa50b77de1b89562f1951e2a5667">00193</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ac0b3fa50b77de1b89562f1951e2a5667">eol_window_free</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> **win)
+<a name="l00194"></a>00194 {
+<a name="l00195"></a>00195   <span class="keywordflow">if</span> (!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>())<span class="keywordflow">return</span>;
+<a name="l00196"></a>00196   <a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a> = g_list_remove(<a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a>,*win);
+<a name="l00197"></a>00197   <a class="code" href="eol__resource_8c.html#a04a80e2833dab61ed23ac62dc3977df9" title="reduces the reference count to the element passed in. if data in the manager is unique...">eol_resource_free_element</a>(_eol_window_manager,(<span class="keywordtype">void</span> **)win);
+<a name="l00198"></a>00198 }
+<a name="l00199"></a>00199 
+<a name="l00200"></a><a class="code" href="eol__window_8c.html#ae9d89fb6e4a12d8568b4b121e98db320">00200</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ae9d89fb6e4a12d8568b4b121e98db320">eol_window_delete</a>(<span class="keywordtype">void</span> *window)
+<a name="l00201"></a>00201 {
+<a name="l00202"></a>00202   GList *l = NULL;
+<a name="l00203"></a>00203   <a class="code" href="structeolWindow__S.html">eolWindow</a> *win;
+<a name="l00204"></a>00204   <span class="keywordflow">if</span> (!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>())<span class="keywordflow">return</span>;
+<a name="l00205"></a>00205   <span class="keywordflow">if</span> (window)<span class="keywordflow">return</span>;
+<a name="l00206"></a>00206   win = (<a class="code" href="structeolWindow__S.html">eolWindow</a> *)window;
+<a name="l00207"></a>00207   <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#aaa60307344dcb51c4a833d6555e956d5">customData</a> != NULL)
+<a name="l00208"></a>00208   {
+<a name="l00209"></a>00209     <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#a79adcbe21ba26fa33140ee1cd7764050">custom_delete</a> != NULL)
+<a name="l00210"></a>00210     {
+<a name="l00211"></a>00211       win-&gt;<a class="code" href="structeolWindow__S.html#a79adcbe21ba26fa33140ee1cd7764050">custom_delete</a>(win-&gt;<a class="code" href="structeolWindow__S.html#aaa60307344dcb51c4a833d6555e956d5">customData</a>);
+<a name="l00212"></a>00212     }
+<a name="l00213"></a>00213   }
+<a name="l00214"></a>00214   <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a> != NULL)
+<a name="l00215"></a>00215   {
+<a name="l00216"></a>00216     <span class="keywordflow">for</span> (l = win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a>;l != NULL;l = l-&gt;next)
+<a name="l00217"></a>00217     {
+<a name="l00218"></a>00218       <span class="keywordflow">if</span> (l-&gt;data != NULL)
+<a name="l00219"></a>00219       {
+<a name="l00220"></a>00220         <a class="code" href="eol__component_8c.html#a34a08766043096794753799d4ce3f661" title="frees a previously allocated component">eol_component_free</a>((<a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a>**)&amp;l-&gt;data);
+<a name="l00221"></a>00221       }
+<a name="l00222"></a>00222     }
+<a name="l00223"></a>00223     g_list_free(win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a>);
+<a name="l00224"></a>00224     win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a> = NULL;
+<a name="l00225"></a>00225   }
+<a name="l00226"></a>00226   <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a> != NULL)
+<a name="l00227"></a>00227   {
+<a name="l00228"></a>00228     free(win-&gt;<a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a>);
+<a name="l00229"></a>00229   }
+<a name="l00230"></a>00230   <a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a> = g_list_remove(<a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a>,win);
+<a name="l00231"></a>00231   memset(win, 0, <span class="keyword">sizeof</span>(<a class="code" href="structeolWindow__S.html">eolWindow</a>));
+<a name="l00232"></a>00232 }
+<a name="l00233"></a>00233 
+<a name="l00234"></a><a class="code" href="eol__window_8c.html#a3bab71fc395efdfc3d1b05c679be21c4">00234</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a3bab71fc395efdfc3d1b05c679be21c4">eol_window_load_label</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *def)
+<a name="l00235"></a>00235 {
+<a name="l00236"></a>00236   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>       <a class="code" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>;
+<a name="l00237"></a>00237   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>       text;
+<a name="l00238"></a>00238   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>       <a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>;
+<a name="l00239"></a>00239   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>       justify;
+<a name="l00240"></a>00240   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>       wordWrap;
+<a name="l00241"></a>00241   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>       fontSize;
+<a name="l00242"></a>00242   <a class="code" href="structeolVec3D.html">eolVec3D</a>      color = {1,1,1};
+<a name="l00243"></a>00243   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>      alpha = 1;
+<a name="l00244"></a>00244   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>       fontfile; 
+<a name="l00245"></a>00245   <a class="code" href="structeolRectFloat.html">eolRectFloat</a>  rect;
+<a name="l00246"></a>00246   <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp;
+<a name="l00247"></a>00247   <span class="keywordtype">char</span>        * font = NULL;
+<a name="l00248"></a>00248   
+<a name="l00249"></a>00249   <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(fontfile,<span class="stringliteral">&quot;\0&quot;</span>);
+<a name="l00250"></a>00250   <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(justify,<span class="stringliteral">&quot;\0&quot;</span>);
+<a name="l00251"></a>00251   <a class="code" href="eol__types_8h.html#a4c06aa654812597e30b3b22c7d704860">eol_line_cpy</a>(wordWrap,<span class="stringliteral">&quot;\0&quot;</span>);
+<a name="l00252"></a>00252   <span class="keywordflow">if</span> ((!win) || (!def))<span class="keywordflow">return</span>;
+<a name="l00253"></a>00253   
+<a name="l00254"></a>00254   <a class="code" href="eol__keychain_8c.html#a02cfa40cf9582aa9df8e2e566f21c1af">eol_keychain_get_hash_value_as_uint</a>(&amp;<span class="keywordtype">id</span>, def, <span class="stringliteral">&quot;id&quot;</span>);
+<a name="l00255"></a>00255   <a class="code" href="eol__keychain_8c.html#a02cfa40cf9582aa9df8e2e566f21c1af">eol_keychain_get_hash_value_as_uint</a>(&amp;fontSize, def, <span class="stringliteral">&quot;fontSize&quot;</span>);
+<a name="l00256"></a>00256   <a class="code" href="eol__keychain_8c.html#ad3d4dd888b65c5b4900405ba39d9b1e4">eol_keychain_get_hash_value_as_rectfloat</a>(&amp;rect, def, <span class="stringliteral">&quot;rect&quot;</span>);
+<a name="l00257"></a>00257   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(text, def, <span class="stringliteral">&quot;text&quot;</span>);
+<a name="l00258"></a>00258   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(name, def, <span class="stringliteral">&quot;name&quot;</span>);
+<a name="l00259"></a>00259   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(justify, def, <span class="stringliteral">&quot;justify&quot;</span>);
+<a name="l00260"></a>00260   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(fontfile, def, <span class="stringliteral">&quot;fontName&quot;</span>);
+<a name="l00261"></a>00261   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(wordWrap, def, <span class="stringliteral">&quot;wordWrap&quot;</span>);
+<a name="l00262"></a>00262   <a class="code" href="eol__keychain_8c.html#a007eac9d89c9c8f46600aa41930ba7ce">eol_keychain_get_hash_value_as_vec3d</a>(&amp;color, def, <span class="stringliteral">&quot;color&quot;</span>);
+<a name="l00263"></a>00263   <a class="code" href="eol__keychain_8c.html#a5766ea1b8f17a5e40649276b803a2846">eol_keychain_get_hash_value_as_float</a>(&amp;alpha, def, <span class="stringliteral">&quot;alpha&quot;</span>);
+<a name="l00264"></a>00264   
+<a name="l00265"></a>00265   <span class="keywordflow">if</span> (strlen(fontfile) &gt; 0)font = fontfile;
+<a name="l00266"></a>00266   comp = <a class="code" href="eol__component_8c.html#ac175ad1e771c44045cf6fbe377901d92" title="creates a new label component">eol_label_new</a>(
+<a name="l00267"></a>00267     <span class="keywordtype">id</span>,
+<a name="l00268"></a>00268     name,
+<a name="l00269"></a>00269     rect,
+<a name="l00270"></a>00270     win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
+<a name="l00271"></a>00271     <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>,
+<a name="l00272"></a>00272     text,
+<a name="l00273"></a>00273     <a class="code" href="eol__font_8c.html#a9b35284f9ad3c04247b0d90f449fe5e9">eol_font_justify_from_string</a>(justify),
+<a name="l00274"></a>00274     <a class="code" href="eol__types_8c.html#a9858707765891ded1c79fcff00339519" title="checks if a string says &amp;quot;true&amp;quot; accepts &amp;quot;true&amp;quot;, &amp;quot;TRUE&amp;quot;...">eol_true_from_string</a>(wordWrap),
+<a name="l00275"></a>00275     fontSize,
+<a name="l00276"></a>00276     font,
+<a name="l00277"></a>00277     color,
+<a name="l00278"></a>00278     alpha
+<a name="l00279"></a>00279   );
+<a name="l00280"></a>00280   <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
+<a name="l00281"></a>00281 }
+<a name="l00282"></a>00282 
+<a name="l00283"></a><a class="code" href="eol__window_8c.html#a0a5daf0e28a63829b1e2c5fec43767f6">00283</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a0a5daf0e28a63829b1e2c5fec43767f6">eol_window_load_percent_bar</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *def)
+<a name="l00284"></a>00284 {
+<a name="l00285"></a>00285   <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp = NULL;
+<a name="l00286"></a>00286   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>       <a class="code" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>;
+<a name="l00287"></a>00287   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>       <a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>;
+<a name="l00288"></a>00288   <a class="code" href="structeolRectFloat.html">eolRectFloat</a>  rect;
+<a name="l00289"></a>00289   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>     vertical = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00290"></a>00290   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>     ascending = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00291"></a>00291   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>    percent = 0;
+<a name="l00292"></a>00292   <a class="code" href="structeolVec3D.html">eolVec3D</a>    statusColor = {1,1,1};
+<a name="l00293"></a>00293   <a class="code" href="structeolVec3D.html">eolVec3D</a>    backgroundColor = {0,0,0};
+<a name="l00294"></a>00294   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>    statusAlpha = 1;
+<a name="l00295"></a>00295   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>    backgroundAlpha = 1;
+<a name="l00296"></a>00296 
+<a name="l00297"></a>00297   <span class="keywordflow">if</span> ((!win) || (!def))<span class="keywordflow">return</span>;
+<a name="l00298"></a>00298 
+<a name="l00299"></a>00299   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(name, def, <span class="stringliteral">&quot;name&quot;</span>);
+<a name="l00300"></a>00300   <a class="code" href="eol__keychain_8c.html#a02cfa40cf9582aa9df8e2e566f21c1af">eol_keychain_get_hash_value_as_uint</a>(&amp;<span class="keywordtype">id</span>, def, <span class="stringliteral">&quot;id&quot;</span>);
+<a name="l00301"></a>00301   <a class="code" href="eol__keychain_8c.html#ad3d4dd888b65c5b4900405ba39d9b1e4">eol_keychain_get_hash_value_as_rectfloat</a>(&amp;rect, def, <span class="stringliteral">&quot;rect&quot;</span>);
+<a name="l00302"></a>00302   <a class="code" href="eol__keychain_8c.html#a1f6323c4395c5ae73bf11aaf92620160">eol_keychain_get_hash_value_as_bool</a>(&amp;vertical, def, <span class="stringliteral">&quot;vertical&quot;</span>);
+<a name="l00303"></a>00303   <a class="code" href="eol__keychain_8c.html#a1f6323c4395c5ae73bf11aaf92620160">eol_keychain_get_hash_value_as_bool</a>(&amp;ascending, def, <span class="stringliteral">&quot;ascending&quot;</span>);
+<a name="l00304"></a>00304   <a class="code" href="eol__keychain_8c.html#a5766ea1b8f17a5e40649276b803a2846">eol_keychain_get_hash_value_as_float</a>(&amp;percent, def, <span class="stringliteral">&quot;percent&quot;</span>);
+<a name="l00305"></a>00305   <a class="code" href="eol__keychain_8c.html#a007eac9d89c9c8f46600aa41930ba7ce">eol_keychain_get_hash_value_as_vec3d</a>(&amp;statusColor, def, <span class="stringliteral">&quot;statusColor&quot;</span>);
+<a name="l00306"></a>00306   <a class="code" href="eol__keychain_8c.html#a007eac9d89c9c8f46600aa41930ba7ce">eol_keychain_get_hash_value_as_vec3d</a>(&amp;backgroundColor, def, <span class="stringliteral">&quot;backgroundColor&quot;</span>);
+<a name="l00307"></a>00307   <a class="code" href="eol__keychain_8c.html#a5766ea1b8f17a5e40649276b803a2846">eol_keychain_get_hash_value_as_float</a>(&amp;statusAlpha, def, <span class="stringliteral">&quot;statusAlpha&quot;</span>);
+<a name="l00308"></a>00308   <a class="code" href="eol__keychain_8c.html#a5766ea1b8f17a5e40649276b803a2846">eol_keychain_get_hash_value_as_float</a>(&amp;backgroundAlpha, def, <span class="stringliteral">&quot;backgroundAlpha&quot;</span>);
+<a name="l00309"></a>00309 
+<a name="l00310"></a>00310   comp = <a class="code" href="eol__component_8h.html#a3dd3a6213766fbfdf574f9c902789028">eol_percent_bar_new</a>(
+<a name="l00311"></a>00311     <span class="keywordtype">id</span>,
+<a name="l00312"></a>00312     name,
+<a name="l00313"></a>00313     rect,
+<a name="l00314"></a>00314     win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
+<a name="l00315"></a>00315     vertical,
+<a name="l00316"></a>00316     ascending,
+<a name="l00317"></a>00317     percent,
+<a name="l00318"></a>00318     statusColor,
+<a name="l00319"></a>00319     backgroundColor,
+<a name="l00320"></a>00320     statusAlpha,
+<a name="l00321"></a>00321     backgroundAlpha
+<a name="l00322"></a>00322   );
+<a name="l00323"></a>00323   
+<a name="l00324"></a>00324   <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
+<a name="l00325"></a>00325 }
+<a name="l00326"></a>00326 
+<a name="l00327"></a><a class="code" href="eol__window_8c.html#ac12b9e9a80e55cc47b529a719db49acb">00327</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ac12b9e9a80e55cc47b529a719db49acb">eol_window_load_list</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *def)
+<a name="l00328"></a>00328 {
+<a name="l00329"></a>00329   <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp = NULL;
+<a name="l00330"></a>00330 
+<a name="l00331"></a>00331   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
+<a name="l00332"></a>00332   comp = <a class="code" href="eol__component_8h.html#a8bd67fecfcb26b23b96bfbd8616b2970" title="created a list component, grabbing parameters from the supplied keychain config.">eol_list_create_from_config</a>(win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,def);
+<a name="l00333"></a>00333   <span class="keywordflow">if</span> (!comp)<span class="keywordflow">return</span>;
+<a name="l00334"></a>00334   <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
+<a name="l00335"></a>00335 }
+<a name="l00336"></a>00336 
+<a name="l00337"></a><a class="code" href="eol__window_8c.html#a325ad82492b1d2a68f6808582a69591e">00337</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a325ad82492b1d2a68f6808582a69591e">eol_window_load_slider</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *def)
+<a name="l00338"></a>00338 {
+<a name="l00339"></a>00339   <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp = NULL;
+<a name="l00340"></a>00340   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a>        <a class="code" href="eol__opengl_8h.html#a58c2a664503e14ffb8f21012aabff3e9">id</a>;
+<a name="l00341"></a>00341   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        <a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>;
+<a name="l00342"></a>00342   <a class="code" href="structeolRectFloat.html">eolRectFloat</a>   rect;
+<a name="l00343"></a>00343   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        vertical;
+<a name="l00344"></a>00344   <a class="code" href="structeolVec3D.html">eolVec3D</a>       barColor;
+<a name="l00345"></a>00345   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a>        sliderType;
+<a name="l00346"></a>00346   
+<a name="l00347"></a>00347   <span class="keywordflow">if</span> ((!win) || (!def))<span class="keywordflow">return</span>;
+<a name="l00348"></a>00348   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(name, def, <span class="stringliteral">&quot;name&quot;</span>);
+<a name="l00349"></a>00349   <a class="code" href="eol__keychain_8c.html#a02cfa40cf9582aa9df8e2e566f21c1af">eol_keychain_get_hash_value_as_uint</a>(&amp;<span class="keywordtype">id</span>, def, <span class="stringliteral">&quot;id&quot;</span>);
+<a name="l00350"></a>00350   <a class="code" href="eol__keychain_8c.html#ad3d4dd888b65c5b4900405ba39d9b1e4">eol_keychain_get_hash_value_as_rectfloat</a>(&amp;rect, def, <span class="stringliteral">&quot;rect&quot;</span>);
+<a name="l00351"></a>00351   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(vertical, def, <span class="stringliteral">&quot;vertical&quot;</span>);
+<a name="l00352"></a>00352   <a class="code" href="eol__keychain_8c.html#a007eac9d89c9c8f46600aa41930ba7ce">eol_keychain_get_hash_value_as_vec3d</a>(&amp;barColor, def, <span class="stringliteral">&quot;barColor&quot;</span>);
+<a name="l00353"></a>00353   <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(sliderType, def, <span class="stringliteral">&quot;sliderType&quot;</span>);
+<a name="l00354"></a>00354   
+<a name="l00355"></a>00355   <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(sliderType,<span class="stringliteral">&quot;COMMON&quot;</span>) == 0)
+<a name="l00356"></a>00356   {
+<a name="l00357"></a>00357     comp = <a class="code" href="eol__component_8c.html#a818313ff207b77a368d616eb8e764a37" title="created a new slider component using common settings">eol_slider_common_new</a>(
+<a name="l00358"></a>00358       <span class="keywordtype">id</span>,
+<a name="l00359"></a>00359       name,
+<a name="l00360"></a>00360       rect,
+<a name="l00361"></a>00361       win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,
+<a name="l00362"></a>00362       <a class="code" href="eol__types_8c.html#a9858707765891ded1c79fcff00339519" title="checks if a string says &amp;quot;true&amp;quot; accepts &amp;quot;true&amp;quot;, &amp;quot;TRUE&amp;quot;...">eol_true_from_string</a>(vertical),
+<a name="l00363"></a>00363       barColor,
+<a name="l00364"></a>00364       0
+<a name="l00365"></a>00365     );
+<a name="l00366"></a>00366     <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
+<a name="l00367"></a>00367   }
+<a name="l00368"></a>00368 }
+<a name="l00369"></a>00369 
+<a name="l00370"></a><a class="code" href="eol__window_8c.html#af38c53798d6ec96d7bef061848d4eb6f">00370</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#af38c53798d6ec96d7bef061848d4eb6f">eol_window_load_button</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *def)
+<a name="l00371"></a>00371 {
+<a name="l00372"></a>00372   <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp;
+<a name="l00373"></a>00373   comp = <a class="code" href="eol__component_8h.html#a153518ed7e6b02072cf1e7f6c2037b37" title="creates a new button component based on the config provided">eol_component_button_load</a>(win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>,def);
+<a name="l00374"></a>00374   <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(win,comp);
+<a name="l00375"></a>00375   <span class="keywordflow">return</span>;
+<a name="l00376"></a>00376 }
+<a name="l00377"></a>00377 
+<a name="l00378"></a><a class="code" href="eol__window_8c.html#ad43b96bd5b636e1355732fd7bab64fc5">00378</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__window_8c.html#ad43b96bd5b636e1355732fd7bab64fc5">eol_window_load_data_from_file</a>(<span class="keywordtype">char</span> * filename,<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)
+<a name="l00379"></a>00379 {
+<a name="l00380"></a>00380   <a class="code" href="structeolWindow__S.html">eolWindow</a> *window;
+<a name="l00381"></a>00381   <a class="code" href="structeolConfig.html">eolConfig</a> *conf;
+<a name="l00382"></a>00382   <a class="code" href="structkeychain__S.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *chain, *item;
+<a name="l00383"></a>00383   <span class="keywordtype">int</span> i;
+<a name="l00384"></a>00384   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> typecheck;
+<a name="l00385"></a>00385   <a class="code" href="structeolRectFloat.html">eolRectFloat</a> tempr;
+<a name="l00386"></a>00386   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> sw,sh;
+<a name="l00387"></a>00387   <span class="keywordflow">if</span> (!data)<span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00388"></a>00388   window = (<a class="code" href="structeolWindow__S.html">eolWindow</a> *)data;
+<a name="l00389"></a>00389   conf = <a class="code" href="eol__config_8c.html#ada9ae50380760f6af3fd596ff533b52d" title="loads a configuration file into a eolConfig struct">eol_config_load</a>(filename);
+<a name="l00390"></a>00390   <span class="keywordflow">if</span> (!conf)<span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00391"></a>00391   <a class="code" href="eol__graphics_8c.html#a9183e2efc235c4059cca17bd7535813d" title="retrieves the current graphics frame time index">eol_graphics_get_size</a>(&amp;sw,&amp;sh);
+<a name="l00392"></a>00392   <a class="code" href="eol__config_8c.html#a0e519bfc9b4d76f1030d0eaef21fa4c7">eol_config_get_line_by_tag</a>(window-&gt;<a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">name</a>,conf,<span class="stringliteral">&quot;name&quot;</span>);
+<a name="l00393"></a>00393   <a class="code" href="eol__config_8c.html#ad60b1715e0b5aa4d06714f0f45fafc3e">eol_config_get_rectfloat_by_tag</a>(&amp;tempr,conf,<span class="stringliteral">&quot;rect&quot;</span>);
+<a name="l00394"></a>00394   <span class="keywordflow">if</span> (tempr.<a class="code" href="structeolRectFloat.html#ab233b4540efe30a0ef3b08712a4f5dfe">x</a> &lt; 0)
+<a name="l00395"></a>00395   {
+<a name="l00396"></a>00396     tempr.<a class="code" href="structeolRectFloat.html#ab233b4540efe30a0ef3b08712a4f5dfe">x</a> = sw + tempr.<a class="code" href="structeolRectFloat.html#ab233b4540efe30a0ef3b08712a4f5dfe">x</a>;
 <a name="l00397"></a>00397   }
-<a name="l00398"></a>00398 }
-<a name="l00399"></a>00399 
-<a name="l00400"></a><a class="code" href="eol__window_8c.html#ad43b96bd5b636e1355732fd7bab64fc5">00400</a> <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__window_8c.html#ad43b96bd5b636e1355732fd7bab64fc5">eol_window_load_data_from_file</a>(<span class="keywordtype">char</span> * filename,<span class="keywordtype">void</span> *<a class="code" href="eol__opengl_8h.html#a3ad26bded9e319dde9a7a0ce6ac75f30">data</a>)
-<a name="l00401"></a>00401 {
-<a name="l00402"></a>00402   <a class="code" href="structeolWindow__S.html">eolWindow</a> *window;
-<a name="l00403"></a>00403   <a class="code" href="structeolConfig.html">eolConfig</a> *conf;
-<a name="l00404"></a>00404   <a class="code" href="structeolKeychain.html" title="his structure wraps description information for a pointer to a container type it...">eolKeychain</a> *chain, *item;
-<a name="l00405"></a>00405   <span class="keywordtype">int</span> i;
-<a name="l00406"></a>00406   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> typecheck;
-<a name="l00407"></a>00407   <a class="code" href="structeolRectFloat.html">eolRectFloat</a> tempr;
-<a name="l00408"></a>00408   <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> sw,sh;
-<a name="l00409"></a>00409   <span class="keywordflow">if</span> (!data)<span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00410"></a>00410   window = (<a class="code" href="structeolWindow__S.html">eolWindow</a> *)data;
-<a name="l00411"></a>00411   conf = <a class="code" href="eol__config_8c.html#ada9ae50380760f6af3fd596ff533b52d" title="loads a configuration file into a eolConfig struct">eol_config_load</a>(filename);
-<a name="l00412"></a>00412   <span class="keywordflow">if</span> (!conf)<span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00413"></a>00413   <a class="code" href="eol__graphics_8c.html#a9183e2efc235c4059cca17bd7535813d" title="retrieves the current graphics frame time index">eol_graphics_get_size</a>(&amp;sw,&amp;sh);
-<a name="l00414"></a>00414   <a class="code" href="eol__config_8c.html#a0e519bfc9b4d76f1030d0eaef21fa4c7">eol_config_get_line_by_tag</a>(window-&gt;<a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">name</a>,conf,<span class="stringliteral">&quot;name&quot;</span>);
-<a name="l00415"></a>00415   <a class="code" href="eol__config_8c.html#ad60b1715e0b5aa4d06714f0f45fafc3e">eol_config_get_rectfloat_by_tag</a>(&amp;tempr,conf,<span class="stringliteral">&quot;rect&quot;</span>);
-<a name="l00416"></a>00416   <span class="keywordflow">if</span> (tempr.<a class="code" href="structeolRectFloat.html#ab233b4540efe30a0ef3b08712a4f5dfe">x</a> &lt; 0)
-<a name="l00417"></a>00417   {
-<a name="l00418"></a>00418     tempr.<a class="code" href="structeolRectFloat.html#ab233b4540efe30a0ef3b08712a4f5dfe">x</a> = sw + tempr.<a class="code" href="structeolRectFloat.html#ab233b4540efe30a0ef3b08712a4f5dfe">x</a>;
-<a name="l00419"></a>00419   }
-<a name="l00420"></a>00420   <span class="keywordflow">if</span> (tempr.<a class="code" href="structeolRectFloat.html#a46a6b82b8f6e0cd0a43d7b5ce5e54a5c">y</a> &lt; 0)
-<a name="l00421"></a>00421   {
-<a name="l00422"></a>00422     tempr.<a class="code" href="structeolRectFloat.html#a46a6b82b8f6e0cd0a43d7b5ce5e54a5c">y</a> = sh + tempr.<a class="code" href="structeolRectFloat.html#a46a6b82b8f6e0cd0a43d7b5ce5e54a5c">y</a>;
-<a name="l00423"></a>00423   }
-<a name="l00424"></a>00424   <span class="keywordflow">if</span> (tempr.<a class="code" href="structeolRectFloat.html#a284f203fa60dbcbde28606677110b139">w</a> &lt;= 0)
-<a name="l00425"></a>00425   {
-<a name="l00426"></a>00426     tempr.<a class="code" href="structeolRectFloat.html#a284f203fa60dbcbde28606677110b139">w</a> = sw - tempr.<a class="code" href="structeolRectFloat.html#a284f203fa60dbcbde28606677110b139">w</a> - tempr.<a class="code" href="structeolRectFloat.html#ab233b4540efe30a0ef3b08712a4f5dfe">x</a>;
-<a name="l00427"></a>00427   }
-<a name="l00428"></a>00428   <span class="keywordflow">if</span> (tempr.<a class="code" href="structeolRectFloat.html#a029a7217aa762b204dd028587083a900">h</a> &lt;= 0)
-<a name="l00429"></a>00429   {
-<a name="l00430"></a>00430     tempr.<a class="code" href="structeolRectFloat.html#a029a7217aa762b204dd028587083a900">h</a> = sh - tempr.<a class="code" href="structeolRectFloat.html#a029a7217aa762b204dd028587083a900">h</a> - tempr.<a class="code" href="structeolRectFloat.html#a46a6b82b8f6e0cd0a43d7b5ce5e54a5c">y</a>;
-<a name="l00431"></a>00431   }
-<a name="l00432"></a>00432   window-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x = tempr.<a class="code" href="structeolRectFloat.html#ab233b4540efe30a0ef3b08712a4f5dfe">x</a>;
-<a name="l00433"></a>00433   window-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y = tempr.<a class="code" href="structeolRectFloat.html#a46a6b82b8f6e0cd0a43d7b5ce5e54a5c">y</a>;
-<a name="l00434"></a>00434   window-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w = tempr.<a class="code" href="structeolRectFloat.html#a284f203fa60dbcbde28606677110b139">w</a>;
-<a name="l00435"></a>00435   window-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h = tempr.<a class="code" href="structeolRectFloat.html#a029a7217aa762b204dd028587083a900">h</a>;
-<a name="l00436"></a>00436   <a class="code" href="eol__config_8c.html#a8915c3df691facf2f94bd0c07ce0f3ab">eol_config_get_bool_by_tag</a>(&amp;window-&gt;<a class="code" href="structeolWindow__S.html#afcd63bc8e3500fc99728a7fd43a4e197">canHasFocus</a>,conf,<span class="stringliteral">&quot;canHasFocus&quot;</span>);
-<a name="l00437"></a>00437   <a class="code" href="eol__config_8c.html#a8915c3df691facf2f94bd0c07ce0f3ab">eol_config_get_bool_by_tag</a>(&amp;window-&gt;<a class="code" href="structeolWindow__S.html#ad925ff4c3c4589b611c94e9ee2089095">drawGeneric</a> ,conf,<span class="stringliteral">&quot;drawGeneric&quot;</span>);
-<a name="l00438"></a>00438   <a class="code" href="eol__config_8c.html#a8915c3df691facf2f94bd0c07ce0f3ab">eol_config_get_bool_by_tag</a>(&amp;window-&gt;<a class="code" href="structeolWindow__S.html#abc8de401f2eb01f1b7a217b858099f98">passesInput</a> ,conf,<span class="stringliteral">&quot;passesInput&quot;</span>);
-<a name="l00439"></a>00439   
-<a name="l00440"></a>00440   <span class="comment">/*add components*/</span>
-<a name="l00441"></a>00441   <span class="keywordflow">if</span> (<a class="code" href="eol__config_8c.html#a7421347b5b87738585f4c9b34f5546c2" title="gets the element by tag as a keychain.">eol_config_get_keychain_by_tag</a>(&amp;chain,conf,<span class="stringliteral">&quot;components&quot;</span>))
-<a name="l00442"></a>00442   {
-<a name="l00443"></a>00443     <span class="keywordflow">if</span> (chain != NULL)
-<a name="l00444"></a>00444     {
-<a name="l00445"></a>00445       <span class="keywordflow">if</span> (chain-&gt;<a class="code" href="structeolKeychain.html#af3607bc229cf9a3a867604b408429514">keyType</a> == <a class="code" href="eol__keychain_8h.html#a889169076c31a15947cdd2dd05fd03f2a90e3430f135df637c4dec04964a314cc">eolKeychainList</a>)
-<a name="l00446"></a>00446       {
-<a name="l00447"></a>00447         <span class="keywordflow">for</span> (i = 0; i &lt; chain-&gt;<a class="code" href="structeolKeychain.html#a1f5ad244dec5e48d4c9bb718748adf99">itemCount</a>; i++)
-<a name="l00448"></a>00448         {
-<a name="l00449"></a>00449           item = <a class="code" href="eol__keychain_8c.html#a92ab6369ce369dc819bd191d3bc58946" title="looks up the nth item in the list checks type before any operation">eol_keychain_get_list_nth</a>(chain, i);
-<a name="l00450"></a>00450           <span class="keywordflow">if</span> (item != NULL)
-<a name="l00451"></a>00451           {
-<a name="l00452"></a>00452             <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(typecheck, item, <span class="stringliteral">&quot;type&quot;</span>);
-<a name="l00453"></a>00453             <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(typecheck,<span class="stringliteral">&quot;BUTTON&quot;</span>) == 0)
-<a name="l00454"></a>00454             {
-<a name="l00455"></a>00455               <a class="code" href="eol__window_8c.html#af38c53798d6ec96d7bef061848d4eb6f">eol_window_load_button</a>(window,item);
-<a name="l00456"></a>00456               <span class="keywordflow">continue</span>;
-<a name="l00457"></a>00457             }
-<a name="l00458"></a>00458             <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(typecheck,<span class="stringliteral">&quot;LABEL&quot;</span>) == 0)
-<a name="l00459"></a>00459             {
-<a name="l00460"></a>00460               <a class="code" href="eol__window_8c.html#a3bab71fc395efdfc3d1b05c679be21c4">eol_window_load_label</a>(window,item);
-<a name="l00461"></a>00461               <span class="keywordflow">continue</span>;
-<a name="l00462"></a>00462             }
-<a name="l00463"></a>00463             <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(typecheck,<span class="stringliteral">&quot;SLIDER&quot;</span>) == 0)
-<a name="l00464"></a>00464             {
-<a name="l00465"></a>00465               <a class="code" href="eol__window_8c.html#a325ad82492b1d2a68f6808582a69591e">eol_window_load_slider</a>(window,item);
-<a name="l00466"></a>00466               <span class="keywordflow">continue</span>;
-<a name="l00467"></a>00467             }
-<a name="l00468"></a>00468           }
-<a name="l00469"></a>00469         }        
-<a name="l00470"></a>00470       }
-<a name="l00471"></a>00471     }
-<a name="l00472"></a>00472   }                                      
-<a name="l00473"></a>00473   
-<a name="l00474"></a>00474   <a class="code" href="eol__config_8c.html#add43978a550fba94fa63292207c41cc5" title="returns the config back to the system.">eol_config_free</a>(&amp;conf);
-<a name="l00475"></a>00475   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
-<a name="l00476"></a>00476 }
-<a name="l00477"></a>00477 
-<a name="l00478"></a><a class="code" href="eol__window_8h.html#a3ee9da97c18bdd0f6099692932ff7a94">00478</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a3ee9da97c18bdd0f6099692932ff7a94">eol_window_free_if_outside_click</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> **win)
-<a name="l00479"></a>00479 {
-<a name="l00480"></a>00480   <span class="keywordflow">if</span> ((!win) || (!*win))<span class="keywordflow">return</span>;
-<a name="l00481"></a>00481   <span class="keywordflow">if</span> ((<a class="code" href="eol__mouse_8c.html#a11fec8d28db97af65edef133ecc2de43" title="returns the state of the mouse button specified">eol_mouse_input_state</a>(<a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5faca44ef94b892c093e230318c2f697e53">eolMouseLeft</a>)) ||
-<a name="l00482"></a>00482     (<a class="code" href="eol__mouse_8c.html#a11fec8d28db97af65edef133ecc2de43" title="returns the state of the mouse button specified">eol_mouse_input_state</a>(<a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5fa36ba279cccddf15ee96787770a33046d">eolMouseRight</a>)))
-<a name="l00483"></a>00483   {
-<a name="l00484"></a>00484     <span class="keywordflow">if</span> (!<a class="code" href="eol__mouse_8c.html#a0e757ef0952e02d1cc8f4d3d08c29403" title="checks if the mouse is within the rect specified.">eol_mouse_in_rect</a>((*win)-&gt;rect))
-<a name="l00485"></a>00485     {
-<a name="l00486"></a>00486       <a class="code" href="eol__window_8c.html#ac0b3fa50b77de1b89562f1951e2a5667">eol_window_free</a>(win);
-<a name="l00487"></a>00487     }
-<a name="l00488"></a>00488   }
-<a name="l00489"></a>00489 }
-<a name="l00490"></a>00490 
-<a name="l00491"></a><a class="code" href="eol__window_8c.html#a50af5a718c41112f8db75b3d3303622b">00491</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a50af5a718c41112f8db75b3d3303622b">eol_window_draw_generic</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win)
-<a name="l00492"></a>00492 {
-<a name="l00493"></a>00493   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> scaleX = 1,scaleY = 1;
-<a name="l00494"></a>00494   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
-<a name="l00495"></a>00495   <span class="keywordflow">if</span> (!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>())<span class="keywordflow">return</span>;
-<a name="l00496"></a>00496   <span class="comment">/*draw the background*/</span>
-<a name="l00497"></a>00497   <span class="keywordflow">if</span> ((_eol_window_sprites[0] != NULL) &amp;&amp;
-<a name="l00498"></a>00498     (_eol_window_sprites[0]-&gt;frameWidth != 0) &amp;&amp;
-<a name="l00499"></a>00499     (_eol_window_sprites[0]-&gt;frameHeight != 0))
+<a name="l00398"></a>00398   <span class="keywordflow">if</span> (tempr.<a class="code" href="structeolRectFloat.html#a46a6b82b8f6e0cd0a43d7b5ce5e54a5c">y</a> &lt; 0)
+<a name="l00399"></a>00399   {
+<a name="l00400"></a>00400     tempr.<a class="code" href="structeolRectFloat.html#a46a6b82b8f6e0cd0a43d7b5ce5e54a5c">y</a> = sh + tempr.<a class="code" href="structeolRectFloat.html#a46a6b82b8f6e0cd0a43d7b5ce5e54a5c">y</a>;
+<a name="l00401"></a>00401   }
+<a name="l00402"></a>00402   <span class="keywordflow">if</span> (tempr.<a class="code" href="structeolRectFloat.html#a284f203fa60dbcbde28606677110b139">w</a> &lt;= 0)
+<a name="l00403"></a>00403   {
+<a name="l00404"></a>00404     tempr.<a class="code" href="structeolRectFloat.html#a284f203fa60dbcbde28606677110b139">w</a> = sw - tempr.<a class="code" href="structeolRectFloat.html#a284f203fa60dbcbde28606677110b139">w</a> - tempr.<a class="code" href="structeolRectFloat.html#ab233b4540efe30a0ef3b08712a4f5dfe">x</a>;
+<a name="l00405"></a>00405   }
+<a name="l00406"></a>00406   <span class="keywordflow">if</span> (tempr.<a class="code" href="structeolRectFloat.html#a029a7217aa762b204dd028587083a900">h</a> &lt;= 0)
+<a name="l00407"></a>00407   {
+<a name="l00408"></a>00408     tempr.<a class="code" href="structeolRectFloat.html#a029a7217aa762b204dd028587083a900">h</a> = sh - tempr.<a class="code" href="structeolRectFloat.html#a029a7217aa762b204dd028587083a900">h</a> - tempr.<a class="code" href="structeolRectFloat.html#a46a6b82b8f6e0cd0a43d7b5ce5e54a5c">y</a>;
+<a name="l00409"></a>00409   }
+<a name="l00410"></a>00410   window-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x = tempr.<a class="code" href="structeolRectFloat.html#ab233b4540efe30a0ef3b08712a4f5dfe">x</a>;
+<a name="l00411"></a>00411   window-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y = tempr.<a class="code" href="structeolRectFloat.html#a46a6b82b8f6e0cd0a43d7b5ce5e54a5c">y</a>;
+<a name="l00412"></a>00412   window-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w = tempr.<a class="code" href="structeolRectFloat.html#a284f203fa60dbcbde28606677110b139">w</a>;
+<a name="l00413"></a>00413   window-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h = tempr.<a class="code" href="structeolRectFloat.html#a029a7217aa762b204dd028587083a900">h</a>;
+<a name="l00414"></a>00414   <a class="code" href="eol__config_8c.html#a8915c3df691facf2f94bd0c07ce0f3ab">eol_config_get_bool_by_tag</a>(&amp;window-&gt;<a class="code" href="structeolWindow__S.html#afcd63bc8e3500fc99728a7fd43a4e197">canHasFocus</a>,conf,<span class="stringliteral">&quot;canHasFocus&quot;</span>);
+<a name="l00415"></a>00415   <a class="code" href="eol__config_8c.html#a8915c3df691facf2f94bd0c07ce0f3ab">eol_config_get_bool_by_tag</a>(&amp;window-&gt;<a class="code" href="structeolWindow__S.html#ad925ff4c3c4589b611c94e9ee2089095">drawGeneric</a> ,conf,<span class="stringliteral">&quot;drawGeneric&quot;</span>);
+<a name="l00416"></a>00416   <a class="code" href="eol__config_8c.html#a8915c3df691facf2f94bd0c07ce0f3ab">eol_config_get_bool_by_tag</a>(&amp;window-&gt;<a class="code" href="structeolWindow__S.html#abc8de401f2eb01f1b7a217b858099f98">passesInput</a> ,conf,<span class="stringliteral">&quot;passesInput&quot;</span>);
+<a name="l00417"></a>00417   
+<a name="l00418"></a>00418   <span class="comment">/*add components*/</span>
+<a name="l00419"></a>00419   <span class="keywordflow">if</span> (<a class="code" href="eol__config_8c.html#a7421347b5b87738585f4c9b34f5546c2" title="gets the element by tag as a keychain.">eol_config_get_keychain_by_tag</a>(&amp;chain,conf,<span class="stringliteral">&quot;components&quot;</span>))
+<a name="l00420"></a>00420   {
+<a name="l00421"></a>00421     <span class="keywordflow">if</span> (chain != NULL)
+<a name="l00422"></a>00422     {
+<a name="l00423"></a>00423       <span class="keywordflow">if</span> (chain-&gt;<a class="code" href="structkeychain__S.html#ac816c9776ae15b4da15cee0f63f64f8a">keyType</a> == <a class="code" href="eol__keychain_8h.html#a889169076c31a15947cdd2dd05fd03f2a90e3430f135df637c4dec04964a314cc">eolKeychainList</a>)
+<a name="l00424"></a>00424       {
+<a name="l00425"></a>00425         <span class="keywordflow">for</span> (i = 0; i &lt; chain-&gt;<a class="code" href="structkeychain__S.html#af23d6aa52f5d1005fa7e743f6f65ed84">itemCount</a>; i++)
+<a name="l00426"></a>00426         {
+<a name="l00427"></a>00427           item = <a class="code" href="eol__keychain_8c.html#a92ab6369ce369dc819bd191d3bc58946" title="looks up the nth item in the list checks type before any operation">eol_keychain_get_list_nth</a>(chain, i);
+<a name="l00428"></a>00428           <span class="keywordflow">if</span> (item != NULL)
+<a name="l00429"></a>00429           {
+<a name="l00430"></a>00430             <a class="code" href="eol__keychain_8c.html#af6ad576b753140d253c830bbe235d488">eol_keychain_get_hash_value_as_line</a>(typecheck, item, <span class="stringliteral">&quot;type&quot;</span>);
+<a name="l00431"></a>00431             <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(typecheck,<span class="stringliteral">&quot;BUTTON&quot;</span>) == 0)
+<a name="l00432"></a>00432             {
+<a name="l00433"></a>00433               <a class="code" href="eol__window_8c.html#af38c53798d6ec96d7bef061848d4eb6f">eol_window_load_button</a>(window,item);
+<a name="l00434"></a>00434               <span class="keywordflow">continue</span>;
+<a name="l00435"></a>00435             }
+<a name="l00436"></a>00436             <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(typecheck,<span class="stringliteral">&quot;LABEL&quot;</span>) == 0)
+<a name="l00437"></a>00437             {
+<a name="l00438"></a>00438               <a class="code" href="eol__window_8c.html#a3bab71fc395efdfc3d1b05c679be21c4">eol_window_load_label</a>(window,item);
+<a name="l00439"></a>00439               <span class="keywordflow">continue</span>;
+<a name="l00440"></a>00440             }
+<a name="l00441"></a>00441             <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(typecheck,<span class="stringliteral">&quot;SLIDER&quot;</span>) == 0)
+<a name="l00442"></a>00442             {
+<a name="l00443"></a>00443               <a class="code" href="eol__window_8c.html#a325ad82492b1d2a68f6808582a69591e">eol_window_load_slider</a>(window,item);
+<a name="l00444"></a>00444               <span class="keywordflow">continue</span>;
+<a name="l00445"></a>00445             }
+<a name="l00446"></a>00446             <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(typecheck,<span class="stringliteral">&quot;PERCENT&quot;</span>) == 0)
+<a name="l00447"></a>00447             {
+<a name="l00448"></a>00448               <a class="code" href="eol__window_8c.html#a0a5daf0e28a63829b1e2c5fec43767f6">eol_window_load_percent_bar</a>(window,item);
+<a name="l00449"></a>00449               <span class="keywordflow">continue</span>;
+<a name="l00450"></a>00450             }
+<a name="l00451"></a>00451             <span class="keywordflow">if</span> (<a class="code" href="eol__types_8h.html#a17648b70bba869c0520a6af9528c5dce">eol_line_cmp</a>(typecheck,<span class="stringliteral">&quot;LIST&quot;</span>) == 0)
+<a name="l00452"></a>00452             {
+<a name="l00453"></a>00453               <a class="code" href="eol__window_8c.html#ac12b9e9a80e55cc47b529a719db49acb">eol_window_load_list</a>(window,item);
+<a name="l00454"></a>00454               <span class="keywordflow">continue</span>;
+<a name="l00455"></a>00455             }
+<a name="l00456"></a>00456           }
+<a name="l00457"></a>00457         }        
+<a name="l00458"></a>00458       }
+<a name="l00459"></a>00459     }
+<a name="l00460"></a>00460   }                                      
+<a name="l00461"></a>00461   
+<a name="l00462"></a>00462   <a class="code" href="eol__config_8c.html#add43978a550fba94fa63292207c41cc5" title="returns the config back to the system.">eol_config_free</a>(&amp;conf);
+<a name="l00463"></a>00463   <span class="keywordflow">return</span> <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
+<a name="l00464"></a>00464 }
+<a name="l00465"></a>00465 
+<a name="l00466"></a><a class="code" href="eol__window_8h.html#a3ee9da97c18bdd0f6099692932ff7a94">00466</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a3ee9da97c18bdd0f6099692932ff7a94">eol_window_free_if_outside_click</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> **win)
+<a name="l00467"></a>00467 {
+<a name="l00468"></a>00468   <span class="keywordflow">if</span> ((!win) || (!*win))<span class="keywordflow">return</span>;
+<a name="l00469"></a>00469   <span class="keywordflow">if</span> ((<a class="code" href="eol__mouse_8c.html#a11fec8d28db97af65edef133ecc2de43" title="returns the state of the mouse button specified">eol_mouse_input_state</a>(<a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5faca44ef94b892c093e230318c2f697e53">eolMouseLeft</a>)) ||
+<a name="l00470"></a>00470     (<a class="code" href="eol__mouse_8c.html#a11fec8d28db97af65edef133ecc2de43" title="returns the state of the mouse button specified">eol_mouse_input_state</a>(<a class="code" href="eol__mouse_8h.html#ab5003bd704855fe5b3bb052b92124c5fa36ba279cccddf15ee96787770a33046d">eolMouseRight</a>)))
+<a name="l00471"></a>00471   {
+<a name="l00472"></a>00472     <span class="keywordflow">if</span> (!<a class="code" href="eol__mouse_8c.html#a0e757ef0952e02d1cc8f4d3d08c29403" title="checks if the mouse is within the rect specified.">eol_mouse_in_rect</a>((*win)-&gt;rect))
+<a name="l00473"></a>00473     {
+<a name="l00474"></a>00474       <a class="code" href="eol__window_8c.html#ac0b3fa50b77de1b89562f1951e2a5667">eol_window_free</a>(win);
+<a name="l00475"></a>00475     }
+<a name="l00476"></a>00476   }
+<a name="l00477"></a>00477 }
+<a name="l00478"></a>00478 
+<a name="l00479"></a><a class="code" href="eol__window_8c.html#a50af5a718c41112f8db75b3d3303622b">00479</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a50af5a718c41112f8db75b3d3303622b">eol_window_draw_generic</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win)
+<a name="l00480"></a>00480 {
+<a name="l00481"></a>00481   <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> scaleX = 1,scaleY = 1;
+<a name="l00482"></a>00482   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
+<a name="l00483"></a>00483   <span class="keywordflow">if</span> (!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>())<span class="keywordflow">return</span>;
+<a name="l00484"></a>00484   <span class="comment">/*draw the background*/</span>
+<a name="l00485"></a>00485   <span class="keywordflow">if</span> ((_eol_window_sprites[0] != NULL) &amp;&amp;
+<a name="l00486"></a>00486     (_eol_window_sprites[0]-&gt;frameWidth != 0) &amp;&amp;
+<a name="l00487"></a>00487     (_eol_window_sprites[0]-&gt;frameHeight != 0))
+<a name="l00488"></a>00488   {
+<a name="l00489"></a>00489     scaleX = win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w / (float)_eol_window_sprites[0]-&gt;frameWidth;
+<a name="l00490"></a>00490     scaleY = win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h / (float)_eol_window_sprites[0]-&gt;frameHeight;
+<a name="l00491"></a>00491     <a class="code" href="eol__sprite_8c.html#ac868ec5af120431b8d0c5a49b9ac983d" title="draw a given sprite to the screen buffer with the given transformation information...">eol_sprite_draw_transformed</a>(_eol_window_sprites[0],0,win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x,win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y,
+<a name="l00492"></a>00492                                 scaleX,scaleY,0,0,0,
+<a name="l00493"></a>00493                                 <a class="code" href="eol__types_8c.html#ad9642ff032955fe0e6d34e41eb53b64a" title="create and return an eolVec3D">eol_vec3d</a>(1,1,1),1);
+<a name="l00494"></a>00494   }
+<a name="l00495"></a>00495   <span class="comment">/*draw the borders*/</span>
+<a name="l00496"></a>00496   <span class="comment">/*top*/</span>
+<a name="l00497"></a>00497   <span class="keywordflow">if</span> ((_eol_window_sprites[5] != NULL) &amp;&amp;
+<a name="l00498"></a>00498     (_eol_window_sprites[5]-&gt;frameWidth != 0) &amp;&amp;
+<a name="l00499"></a>00499     (_eol_window_sprites[5]-&gt;frameHeight != 0))
 <a name="l00500"></a>00500   {
-<a name="l00501"></a>00501     scaleX = win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w / (float)_eol_window_sprites[0]-&gt;frameWidth;
-<a name="l00502"></a>00502     scaleY = win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h / (float)_eol_window_sprites[0]-&gt;frameHeight;
-<a name="l00503"></a>00503     <a class="code" href="eol__sprite_8c.html#ac868ec5af120431b8d0c5a49b9ac983d" title="draw a given sprite to the screen buffer with the given transformation information...">eol_sprite_draw_transformed</a>(_eol_window_sprites[0],0,win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x,win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y,
-<a name="l00504"></a>00504                                 scaleX,scaleY,0,0,0,
+<a name="l00501"></a>00501     scaleX = win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w / (float)_eol_window_sprites[5]-&gt;frameWidth;
+<a name="l00502"></a>00502     <a class="code" href="eol__sprite_8c.html#ac868ec5af120431b8d0c5a49b9ac983d" title="draw a given sprite to the screen buffer with the given transformation information...">eol_sprite_draw_transformed</a>(_eol_window_sprites[5],0,win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x,
+<a name="l00503"></a>00503                                 win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y - _eol_window_sprites[5]-&gt;<a class="code" href="structeolSprite.html#a677ec84d1f8dfb82c906f511289982ba">frameHeight</a>,
+<a name="l00504"></a>00504                                 scaleX,1,0,0,0,
 <a name="l00505"></a>00505                                 <a class="code" href="eol__types_8c.html#ad9642ff032955fe0e6d34e41eb53b64a" title="create and return an eolVec3D">eol_vec3d</a>(1,1,1),1);
 <a name="l00506"></a>00506   }
-<a name="l00507"></a>00507   <span class="comment">/*draw the borders*/</span>
-<a name="l00508"></a>00508   <span class="comment">/*top*/</span>
-<a name="l00509"></a>00509   <span class="keywordflow">if</span> ((_eol_window_sprites[5] != NULL) &amp;&amp;
-<a name="l00510"></a>00510     (_eol_window_sprites[5]-&gt;frameWidth != 0) &amp;&amp;
-<a name="l00511"></a>00511     (_eol_window_sprites[5]-&gt;frameHeight != 0))
-<a name="l00512"></a>00512   {
-<a name="l00513"></a>00513     scaleX = win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w / (float)_eol_window_sprites[5]-&gt;frameWidth;
-<a name="l00514"></a>00514     <a class="code" href="eol__sprite_8c.html#ac868ec5af120431b8d0c5a49b9ac983d" title="draw a given sprite to the screen buffer with the given transformation information...">eol_sprite_draw_transformed</a>(_eol_window_sprites[5],0,win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x,
-<a name="l00515"></a>00515                                 win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y - _eol_window_sprites[5]-&gt;<a class="code" href="structeolSprite.html#a677ec84d1f8dfb82c906f511289982ba">frameHeight</a>,
-<a name="l00516"></a>00516                                 scaleX,1,0,0,0,
+<a name="l00507"></a>00507   <span class="comment">/*left*/</span>
+<a name="l00508"></a>00508   <span class="keywordflow">if</span> ((_eol_window_sprites[6] != NULL) &amp;&amp;
+<a name="l00509"></a>00509     (_eol_window_sprites[6]-&gt;frameWidth != 0) &amp;&amp;
+<a name="l00510"></a>00510     (_eol_window_sprites[6]-&gt;frameHeight != 0))
+<a name="l00511"></a>00511   {
+<a name="l00512"></a>00512     scaleY = win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h / (float)_eol_window_sprites[6]-&gt;frameHeight;
+<a name="l00513"></a>00513     <a class="code" href="eol__sprite_8c.html#ac868ec5af120431b8d0c5a49b9ac983d" title="draw a given sprite to the screen buffer with the given transformation information...">eol_sprite_draw_transformed</a>(_eol_window_sprites[6],0,
+<a name="l00514"></a>00514                                 win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x - _eol_window_sprites[6]-&gt;<a class="code" href="structeolSprite.html#a15de8219e6ba16a3cd216bbab84e680b">frameWidth</a>,
+<a name="l00515"></a>00515                                 win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y,
+<a name="l00516"></a>00516                                 1,scaleY,0,0,0,
 <a name="l00517"></a>00517                                 <a class="code" href="eol__types_8c.html#ad9642ff032955fe0e6d34e41eb53b64a" title="create and return an eolVec3D">eol_vec3d</a>(1,1,1),1);
 <a name="l00518"></a>00518   }
-<a name="l00519"></a>00519   <span class="comment">/*left*/</span>
-<a name="l00520"></a>00520   <span class="keywordflow">if</span> ((_eol_window_sprites[6] != NULL) &amp;&amp;
-<a name="l00521"></a>00521     (_eol_window_sprites[6]-&gt;frameWidth != 0) &amp;&amp;
-<a name="l00522"></a>00522     (_eol_window_sprites[6]-&gt;frameHeight != 0))
+<a name="l00519"></a>00519   <span class="comment">/*bottom*/</span>
+<a name="l00520"></a>00520   <span class="keywordflow">if</span> ((_eol_window_sprites[7] != NULL) &amp;&amp;
+<a name="l00521"></a>00521     (_eol_window_sprites[7]-&gt;frameWidth != 0) &amp;&amp;
+<a name="l00522"></a>00522     (_eol_window_sprites[7]-&gt;frameHeight != 0))
 <a name="l00523"></a>00523   {
-<a name="l00524"></a>00524     scaleY = win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h / (float)_eol_window_sprites[6]-&gt;frameHeight;
-<a name="l00525"></a>00525     <a class="code" href="eol__sprite_8c.html#ac868ec5af120431b8d0c5a49b9ac983d" title="draw a given sprite to the screen buffer with the given transformation information...">eol_sprite_draw_transformed</a>(_eol_window_sprites[6],0,
-<a name="l00526"></a>00526                                 win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x - _eol_window_sprites[6]-&gt;<a class="code" href="structeolSprite.html#a15de8219e6ba16a3cd216bbab84e680b">frameWidth</a>,
-<a name="l00527"></a>00527                                 win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y,
-<a name="l00528"></a>00528                                 1,scaleY,0,0,0,
-<a name="l00529"></a>00529                                 <a class="code" href="eol__types_8c.html#ad9642ff032955fe0e6d34e41eb53b64a" title="create and return an eolVec3D">eol_vec3d</a>(1,1,1),1);
-<a name="l00530"></a>00530   }
-<a name="l00531"></a>00531   <span class="comment">/*bottom*/</span>
-<a name="l00532"></a>00532   <span class="keywordflow">if</span> ((_eol_window_sprites[7] != NULL) &amp;&amp;
-<a name="l00533"></a>00533     (_eol_window_sprites[7]-&gt;frameWidth != 0) &amp;&amp;
-<a name="l00534"></a>00534     (_eol_window_sprites[7]-&gt;frameHeight != 0))
-<a name="l00535"></a>00535   {
-<a name="l00536"></a>00536     scaleX = win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w / (float)_eol_window_sprites[7]-&gt;frameWidth;
-<a name="l00537"></a>00537     <a class="code" href="eol__sprite_8c.html#ac868ec5af120431b8d0c5a49b9ac983d" title="draw a given sprite to the screen buffer with the given transformation information...">eol_sprite_draw_transformed</a>(_eol_window_sprites[7],0,win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x,
-<a name="l00538"></a>00538                                 win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y + win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h,
-<a name="l00539"></a>00539                                 scaleX,1,0,0,0,
+<a name="l00524"></a>00524     scaleX = win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w / (float)_eol_window_sprites[7]-&gt;frameWidth;
+<a name="l00525"></a>00525     <a class="code" href="eol__sprite_8c.html#ac868ec5af120431b8d0c5a49b9ac983d" title="draw a given sprite to the screen buffer with the given transformation information...">eol_sprite_draw_transformed</a>(_eol_window_sprites[7],0,win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x,
+<a name="l00526"></a>00526                                 win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y + win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h,
+<a name="l00527"></a>00527                                 scaleX,1,0,0,0,
+<a name="l00528"></a>00528                                 <a class="code" href="eol__types_8c.html#ad9642ff032955fe0e6d34e41eb53b64a" title="create and return an eolVec3D">eol_vec3d</a>(1,1,1),1);
+<a name="l00529"></a>00529   }
+<a name="l00530"></a>00530   <span class="comment">/*right*/</span>
+<a name="l00531"></a>00531   <span class="keywordflow">if</span> ((_eol_window_sprites[8] != NULL) &amp;&amp;
+<a name="l00532"></a>00532     (_eol_window_sprites[8]-&gt;frameWidth != 0) &amp;&amp;
+<a name="l00533"></a>00533     (_eol_window_sprites[8]-&gt;frameHeight != 0))
+<a name="l00534"></a>00534   {
+<a name="l00535"></a>00535     scaleY = win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h / (float)_eol_window_sprites[8]-&gt;frameHeight;
+<a name="l00536"></a>00536     <a class="code" href="eol__sprite_8c.html#ac868ec5af120431b8d0c5a49b9ac983d" title="draw a given sprite to the screen buffer with the given transformation information...">eol_sprite_draw_transformed</a>(_eol_window_sprites[8],0,
+<a name="l00537"></a>00537                                 win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x + win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w,
+<a name="l00538"></a>00538                                 win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y,
+<a name="l00539"></a>00539                                 1,scaleY,0,0,0,
 <a name="l00540"></a>00540                                 <a class="code" href="eol__types_8c.html#ad9642ff032955fe0e6d34e41eb53b64a" title="create and return an eolVec3D">eol_vec3d</a>(1,1,1),1);
 <a name="l00541"></a>00541   }
-<a name="l00542"></a>00542   <span class="comment">/*right*/</span>
-<a name="l00543"></a>00543   <span class="keywordflow">if</span> ((_eol_window_sprites[8] != NULL) &amp;&amp;
-<a name="l00544"></a>00544     (_eol_window_sprites[8]-&gt;frameWidth != 0) &amp;&amp;
-<a name="l00545"></a>00545     (_eol_window_sprites[8]-&gt;frameHeight != 0))
-<a name="l00546"></a>00546   {
-<a name="l00547"></a>00547     scaleY = win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h / (float)_eol_window_sprites[8]-&gt;frameHeight;
-<a name="l00548"></a>00548     <a class="code" href="eol__sprite_8c.html#ac868ec5af120431b8d0c5a49b9ac983d" title="draw a given sprite to the screen buffer with the given transformation information...">eol_sprite_draw_transformed</a>(_eol_window_sprites[8],0,
-<a name="l00549"></a>00549                                 win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x + win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w,
-<a name="l00550"></a>00550                                 win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y,
-<a name="l00551"></a>00551                                 1,scaleY,0,0,0,
-<a name="l00552"></a>00552                                 <a class="code" href="eol__types_8c.html#ad9642ff032955fe0e6d34e41eb53b64a" title="create and return an eolVec3D">eol_vec3d</a>(1,1,1),1);
+<a name="l00542"></a>00542   
+<a name="l00543"></a>00543   <span class="comment">/*draw the corner stones*/</span>
+<a name="l00544"></a>00544   <span class="comment">/*UL*/</span>
+<a name="l00545"></a>00545   <span class="keywordflow">if</span> ((_eol_window_sprites[1] != NULL) &amp;&amp;
+<a name="l00546"></a>00546     (_eol_window_sprites[1]-&gt;frameWidth != 0) &amp;&amp;
+<a name="l00547"></a>00547     (_eol_window_sprites[1]-&gt;frameHeight != 0))
+<a name="l00548"></a>00548   {
+<a name="l00549"></a>00549     <a class="code" href="eol__sprite_8c.html#ac4bac9b1955325945516ede11b3269e0" title="draw a given sprite to the screen buffer">eol_sprite_draw</a>(_eol_window_sprites[1],
+<a name="l00550"></a>00550                     0,
+<a name="l00551"></a>00551                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x - _eol_window_sprites[1]-&gt;<a class="code" href="structeolSprite.html#a15de8219e6ba16a3cd216bbab84e680b">frameWidth</a>),
+<a name="l00552"></a>00552                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y - _eol_window_sprites[1]-&gt;<a class="code" href="structeolSprite.html#a677ec84d1f8dfb82c906f511289982ba">frameHeight</a>));
 <a name="l00553"></a>00553   }
-<a name="l00554"></a>00554   
-<a name="l00555"></a>00555   <span class="comment">/*draw the corner stones*/</span>
-<a name="l00556"></a>00556   <span class="comment">/*UL*/</span>
-<a name="l00557"></a>00557   <span class="keywordflow">if</span> ((_eol_window_sprites[1] != NULL) &amp;&amp;
-<a name="l00558"></a>00558     (_eol_window_sprites[1]-&gt;frameWidth != 0) &amp;&amp;
-<a name="l00559"></a>00559     (_eol_window_sprites[1]-&gt;frameHeight != 0))
-<a name="l00560"></a>00560   {
-<a name="l00561"></a>00561     <a class="code" href="eol__sprite_8c.html#ac4bac9b1955325945516ede11b3269e0" title="draw a given sprite to the screen buffer">eol_sprite_draw</a>(_eol_window_sprites[1],
-<a name="l00562"></a>00562                     0,
-<a name="l00563"></a>00563                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x - _eol_window_sprites[1]-&gt;<a class="code" href="structeolSprite.html#a15de8219e6ba16a3cd216bbab84e680b">frameWidth</a>),
-<a name="l00564"></a>00564                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y - _eol_window_sprites[1]-&gt;<a class="code" href="structeolSprite.html#a677ec84d1f8dfb82c906f511289982ba">frameHeight</a>));
-<a name="l00565"></a>00565   }
-<a name="l00566"></a>00566   <span class="comment">/*UR*/</span>
-<a name="l00567"></a>00567   <span class="keywordflow">if</span> ((_eol_window_sprites[2] != NULL) &amp;&amp;
-<a name="l00568"></a>00568     (_eol_window_sprites[2]-&gt;frameWidth != 0) &amp;&amp;
-<a name="l00569"></a>00569     (_eol_window_sprites[2]-&gt;frameHeight != 0))
-<a name="l00570"></a>00570   {
-<a name="l00571"></a>00571     <a class="code" href="eol__sprite_8c.html#ac4bac9b1955325945516ede11b3269e0" title="draw a given sprite to the screen buffer">eol_sprite_draw</a>(_eol_window_sprites[2],
-<a name="l00572"></a>00572                     0,
-<a name="l00573"></a>00573                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x + win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w),
-<a name="l00574"></a>00574                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y - _eol_window_sprites[2]-&gt;<a class="code" href="structeolSprite.html#a677ec84d1f8dfb82c906f511289982ba">frameHeight</a>));
-<a name="l00575"></a>00575   }
-<a name="l00576"></a>00576   <span class="comment">/*BL*/</span>
-<a name="l00577"></a>00577   <span class="keywordflow">if</span> ((_eol_window_sprites[3] != NULL) &amp;&amp;
-<a name="l00578"></a>00578     (_eol_window_sprites[3]-&gt;frameWidth != 0) &amp;&amp;
-<a name="l00579"></a>00579     (_eol_window_sprites[3]-&gt;frameHeight != 0))
-<a name="l00580"></a>00580   {
-<a name="l00581"></a>00581     <a class="code" href="eol__sprite_8c.html#ac4bac9b1955325945516ede11b3269e0" title="draw a given sprite to the screen buffer">eol_sprite_draw</a>(_eol_window_sprites[3],
-<a name="l00582"></a>00582                     0,
-<a name="l00583"></a>00583                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x - _eol_window_sprites[3]-&gt;<a class="code" href="structeolSprite.html#a15de8219e6ba16a3cd216bbab84e680b">frameWidth</a>),
-<a name="l00584"></a>00584                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y + win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h));
-<a name="l00585"></a>00585   }
-<a name="l00586"></a>00586   <span class="comment">/*BR*/</span>
-<a name="l00587"></a>00587   <span class="keywordflow">if</span> ((_eol_window_sprites[4] != NULL) &amp;&amp;
-<a name="l00588"></a>00588     (_eol_window_sprites[4]-&gt;frameWidth != 0) &amp;&amp;
-<a name="l00589"></a>00589     (_eol_window_sprites[4]-&gt;frameHeight != 0))
-<a name="l00590"></a>00590   {
-<a name="l00591"></a>00591     <a class="code" href="eol__sprite_8c.html#ac4bac9b1955325945516ede11b3269e0" title="draw a given sprite to the screen buffer">eol_sprite_draw</a>(_eol_window_sprites[4],
-<a name="l00592"></a>00592                     0,
-<a name="l00593"></a>00593                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x + win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w),
-<a name="l00594"></a>00594                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y + win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h));
-<a name="l00595"></a>00595   }
-<a name="l00596"></a>00596 }
-<a name="l00597"></a>00597 
-<a name="l00598"></a><a class="code" href="eol__window_8h.html#a76330254e579fef1e64ca8607be8e64c">00598</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp)
-<a name="l00599"></a>00599 {
-<a name="l00600"></a>00600   <span class="keywordflow">if</span> ((win == NULL)||(comp == NULL)||(!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>()))
-<a name="l00601"></a>00601   {
-<a name="l00602"></a>00602     <span class="keywordflow">return</span>;
-<a name="l00603"></a>00603   }
-<a name="l00604"></a>00604   win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a> = g_list_append(win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a>,comp);
-<a name="l00605"></a>00605   <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a> == NULL)
-<a name="l00606"></a>00606   {
-<a name="l00607"></a>00607     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00608"></a>00608       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
-<a name="l00609"></a>00609       <span class="stringliteral">&quot;eol_window:unable to add new component!\n&quot;</span>);
-<a name="l00610"></a>00610   }
-<a name="l00611"></a>00611 }
-<a name="l00612"></a>00612 
-<a name="l00613"></a><a class="code" href="eol__window_8h.html#a27a3a9b9d7778ee22a2a7e60e8f3b9c5">00613</a> <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *<a class="code" href="eol__window_8c.html#a27a3a9b9d7778ee22a2a7e60e8f3b9c5">eol_window_get_component_by_id</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <span class="keywordtype">id</span>)
-<a name="l00614"></a>00614 {
-<a name="l00615"></a>00615   GList *c = NULL;
-<a name="l00616"></a>00616   <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp;
-<a name="l00617"></a>00617   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span> NULL;
-<a name="l00618"></a>00618   <span class="keywordflow">for</span> (c = win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a>;c != NULL;c = c-&gt;next)
-<a name="l00619"></a>00619   {
-<a name="l00620"></a>00620     <span class="keywordflow">if</span> (c-&gt;data != NULL)
-<a name="l00621"></a>00621     {
-<a name="l00622"></a>00622       comp = (<a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *)c-&gt;data;
-<a name="l00623"></a>00623       if (comp-&gt;<a class="code" href="structeolComponent__S.html#a8f85d78c3f9a045487e3dfc1dfdf48fa">id</a> == <span class="keywordtype">id</span>)<span class="keywordflow">return</span> comp;
-<a name="l00624"></a>00624     }
-<a name="l00625"></a>00625   }
-<a name="l00626"></a>00626   <span class="keywordflow">return</span> NULL;
-<a name="l00627"></a>00627 }
-<a name="l00628"></a>00628 
-<a name="l00629"></a><a class="code" href="eol__window_8h.html#ad9b402b7ddb558f087070600a1c856e3">00629</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ad9b402b7ddb558f087070600a1c856e3">eol_window_allocat_callbacks</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__opengl_8h.html#a619bc20e8198de3bd3f3d7fc34de66b2">count</a>)
-<a name="l00630"></a>00630 {
-<a name="l00631"></a>00631   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
-<a name="l00632"></a>00632   <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a> != NULL)
-<a name="l00633"></a>00633   {
-<a name="l00634"></a>00634     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00635"></a>00635       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
-<a name="l00636"></a>00636       <span class="stringliteral">&quot;eol_window:attempted to re-allocated window callbacks for window %s\n&quot;</span>,
-<a name="l00637"></a>00637       win-&gt;<a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">name</a>);
-<a name="l00638"></a>00638     <span class="keywordflow">return</span>;
-<a name="l00639"></a>00639   }
-<a name="l00640"></a>00640   win-&gt;<a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a> = (<a class="code" href="eol__window_8h.html#aa03ae453c4a9ae7aab334c116eb1d79d">eolWindowCallback</a>*)malloc(<span class="keyword">sizeof</span>(<a class="code" href="eol__window_8h.html#aa03ae453c4a9ae7aab334c116eb1d79d">eolWindowCallback</a>)*count);
-<a name="l00641"></a>00641   <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a> == NULL)
-<a name="l00642"></a>00642   {
-<a name="l00643"></a>00643     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
-<a name="l00644"></a>00644       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
-<a name="l00645"></a>00645       <span class="stringliteral">&quot;eol_window:cannot allocate callbacks for window %s\n&quot;</span>,
-<a name="l00646"></a>00646       win-&gt;<a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">name</a>);
-<a name="l00647"></a>00647     <span class="keywordflow">return</span>;
-<a name="l00648"></a>00648   }
-<a name="l00649"></a>00649   memset(win-&gt;<a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a>,0,<span class="keyword">sizeof</span>(<a class="code" href="eol__window_8h.html#aa03ae453c4a9ae7aab334c116eb1d79d">eolWindowCallback</a>)*count);
-<a name="l00650"></a>00650   win-&gt;<a class="code" href="structeolWindow__S.html#af2c88a8fc5a313774e04be4a0954f18f">callbackCount</a> = count;
-<a name="l00651"></a>00651 }
-<a name="l00652"></a>00652 
-<a name="l00653"></a><a class="code" href="eol__window_8h.html#a1135fa87f14bbcc759bf2910528e2698">00653</a> <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__window_8c.html#a1135fa87f14bbcc759bf2910528e2698">eol_window_get_relative_position</a>(<a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> position,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> range)
-<a name="l00654"></a>00654 {
-<a name="l00655"></a>00655   <span class="keywordflow">if</span> (range == 0)<span class="keywordflow">return</span> 0;
-<a name="l00656"></a>00656   <span class="keywordflow">return</span> (<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>)position/(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>)range;
-<a name="l00657"></a>00657 }
-<a name="l00658"></a>00658 
-<a name="l00659"></a><a class="code" href="eol__window_8h.html#a0ec60a586386a89e87baef20d4c6c674">00659</a> <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__window_8c.html#a0ec60a586386a89e87baef20d4c6c674">eol_window_get_refcount</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> * window)
-<a name="l00660"></a>00660 {
-<a name="l00661"></a>00661   <span class="keywordflow">return</span> <a class="code" href="eol__resource_8c.html#a038594970c8e385021c9ae71cacf205e">eol_resource_element_get_refcount</a>(_eol_window_manager,window);
-<a name="l00662"></a>00662 }
-<a name="l00663"></a>00663 
-<a name="l00664"></a><a class="code" href="eol__window_8h.html#a08c178084fe4ea36579e0923cd6cb0bd">00664</a> <a class="code" href="structeolWindow__S.html">eolWindow</a> * <a class="code" href="eol__window_8c.html#a08c178084fe4ea36579e0923cd6cb0bd">eol_window_load_from_file</a>(<a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> file)
-<a name="l00665"></a>00665 {
-<a name="l00666"></a>00666   <a class="code" href="structeolWindow__S.html">eolWindow</a> *window;
-<a name="l00667"></a>00667   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> filename;
-<a name="l00668"></a>00668   <span class="keywordflow">if</span> (!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>())
-<a name="l00669"></a>00669   {
-<a name="l00670"></a>00670     <span class="keywordflow">return</span> NULL;
-<a name="l00671"></a>00671   }
-<a name="l00672"></a>00672   window =
-<a name="l00673"></a>00673   (<a class="code" href="structeolWindow__S.html">eolWindow</a> *)<a class="code" href="eol__resource_8c.html#abddc583b5a364c8243bac63e23c859dd" title="Allocated and loads a resource from file. Calls the manager&amp;#39;s data load function...">eol_resource_manager_load_resource</a>(_eol_window_manager,file);
-<a name="l00674"></a>00674   <span class="keywordflow">if</span> (window == NULL)<span class="keywordflow">return</span> NULL;
-<a name="l00675"></a>00675   window-&gt;<a class="code" href="structeolWindow__S.html#adfa20f4e10dee732d3060919a32839f3">id</a> = <a class="code" href="eol__resource_8c.html#ab60140467b8950a843cd369f32287441" title="returns the index of the element passed.">eol_resource_element_get_id</a>(_eol_window_manager,window);
-<a name="l00676"></a>00676   <a class="code" href="eol__resource_8c.html#a4f445f05848c5ee1f6d7c6a6c21f0934">eol_resource_element_get_filename</a>(filename, _eol_window_manager,window);
-<a name="l00677"></a>00677   <a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a> = g_list_append(<a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a>,window);
-<a name="l00678"></a>00678   <span class="keywordflow">return</span> window;
-<a name="l00679"></a>00679 }
-<a name="l00680"></a>00680 
-<a name="l00681"></a><a class="code" href="eol__window_8h.html#aec0d922b70d59f382e7740c2f70d8b0c">00681</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#aec0d922b70d59f382e7740c2f70d8b0c">eol_window_hide</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win)
-<a name="l00682"></a>00682 {
-<a name="l00683"></a>00683   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
-<a name="l00684"></a>00684   win-&gt;<a class="code" href="structeolWindow__S.html#adf90fdfcd36114a7e70b3e8a7c41e5c7">hidden</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
-<a name="l00685"></a>00685 }
-<a name="l00686"></a>00686 
-<a name="l00687"></a><a class="code" href="eol__window_8h.html#aa7ed6725fd4c65e87bf241e514101048">00687</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#aa7ed6725fd4c65e87bf241e514101048">eol_window_show</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win)
-<a name="l00688"></a>00688 {
-<a name="l00689"></a>00689   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
-<a name="l00690"></a>00690   win-&gt;<a class="code" href="structeolWindow__S.html#adf90fdfcd36114a7e70b3e8a7c41e5c7">hidden</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00691"></a>00691 }
-<a name="l00692"></a>00692 
-<a name="l00693"></a><a class="code" href="eol__window_8h.html#a6d5960d599b2f7d6b4a043dd1a709b1d">00693</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a6d5960d599b2f7d6b4a043dd1a709b1d">eol_window_sleep</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win)
-<a name="l00694"></a>00694 {
-<a name="l00695"></a>00695   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
-<a name="l00696"></a>00696   win-&gt;<a class="code" href="structeolWindow__S.html#a3358db7ee974975d5b979d098025dcb3">sleeping</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
-<a name="l00697"></a>00697 }
-<a name="l00698"></a>00698 
-<a name="l00699"></a><a class="code" href="eol__window_8h.html#a1f30ef74a8b05dca89e78e78ba648e3c">00699</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a1f30ef74a8b05dca89e78e78ba648e3c">eol_window_wakeup</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win)
-<a name="l00700"></a>00700 {
-<a name="l00701"></a>00701   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
-<a name="l00702"></a>00702   win-&gt;<a class="code" href="structeolWindow__S.html#a3358db7ee974975d5b979d098025dcb3">sleeping</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
-<a name="l00703"></a>00703 }
-<a name="l00704"></a>00704 
-<a name="l00705"></a>00705 
-<a name="l00706"></a>00706 <span class="comment">/*eol@eof*/</span>
+<a name="l00554"></a>00554   <span class="comment">/*UR*/</span>
+<a name="l00555"></a>00555   <span class="keywordflow">if</span> ((_eol_window_sprites[2] != NULL) &amp;&amp;
+<a name="l00556"></a>00556     (_eol_window_sprites[2]-&gt;frameWidth != 0) &amp;&amp;
+<a name="l00557"></a>00557     (_eol_window_sprites[2]-&gt;frameHeight != 0))
+<a name="l00558"></a>00558   {
+<a name="l00559"></a>00559     <a class="code" href="eol__sprite_8c.html#ac4bac9b1955325945516ede11b3269e0" title="draw a given sprite to the screen buffer">eol_sprite_draw</a>(_eol_window_sprites[2],
+<a name="l00560"></a>00560                     0,
+<a name="l00561"></a>00561                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x + win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w),
+<a name="l00562"></a>00562                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y - _eol_window_sprites[2]-&gt;<a class="code" href="structeolSprite.html#a677ec84d1f8dfb82c906f511289982ba">frameHeight</a>));
+<a name="l00563"></a>00563   }
+<a name="l00564"></a>00564   <span class="comment">/*BL*/</span>
+<a name="l00565"></a>00565   <span class="keywordflow">if</span> ((_eol_window_sprites[3] != NULL) &amp;&amp;
+<a name="l00566"></a>00566     (_eol_window_sprites[3]-&gt;frameWidth != 0) &amp;&amp;
+<a name="l00567"></a>00567     (_eol_window_sprites[3]-&gt;frameHeight != 0))
+<a name="l00568"></a>00568   {
+<a name="l00569"></a>00569     <a class="code" href="eol__sprite_8c.html#ac4bac9b1955325945516ede11b3269e0" title="draw a given sprite to the screen buffer">eol_sprite_draw</a>(_eol_window_sprites[3],
+<a name="l00570"></a>00570                     0,
+<a name="l00571"></a>00571                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x - _eol_window_sprites[3]-&gt;<a class="code" href="structeolSprite.html#a15de8219e6ba16a3cd216bbab84e680b">frameWidth</a>),
+<a name="l00572"></a>00572                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y + win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h));
+<a name="l00573"></a>00573   }
+<a name="l00574"></a>00574   <span class="comment">/*BR*/</span>
+<a name="l00575"></a>00575   <span class="keywordflow">if</span> ((_eol_window_sprites[4] != NULL) &amp;&amp;
+<a name="l00576"></a>00576     (_eol_window_sprites[4]-&gt;frameWidth != 0) &amp;&amp;
+<a name="l00577"></a>00577     (_eol_window_sprites[4]-&gt;frameHeight != 0))
+<a name="l00578"></a>00578   {
+<a name="l00579"></a>00579     <a class="code" href="eol__sprite_8c.html#ac4bac9b1955325945516ede11b3269e0" title="draw a given sprite to the screen buffer">eol_sprite_draw</a>(_eol_window_sprites[4],
+<a name="l00580"></a>00580                     0,
+<a name="l00581"></a>00581                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x + win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.w),
+<a name="l00582"></a>00582                     (win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y + win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.h));
+<a name="l00583"></a>00583   }
+<a name="l00584"></a>00584 }
+<a name="l00585"></a>00585 
+<a name="l00586"></a><a class="code" href="eol__window_8h.html#a76330254e579fef1e64ca8607be8e64c">00586</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp)
+<a name="l00587"></a>00587 {
+<a name="l00588"></a>00588   <span class="keywordflow">if</span> ((win == NULL)||(comp == NULL)||(!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>()))
+<a name="l00589"></a>00589   {
+<a name="l00590"></a>00590     <span class="keywordflow">return</span>;
+<a name="l00591"></a>00591   }
+<a name="l00592"></a>00592   win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a> = g_list_append(win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a>,comp);
+<a name="l00593"></a>00593   <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a> == NULL)
+<a name="l00594"></a>00594   {
+<a name="l00595"></a>00595     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00596"></a>00596       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
+<a name="l00597"></a>00597       <span class="stringliteral">&quot;eol_window:unable to add new component!\n&quot;</span>);
+<a name="l00598"></a>00598   }
+<a name="l00599"></a>00599 }
+<a name="l00600"></a>00600 
+<a name="l00601"></a><a class="code" href="eol__window_8h.html#a27a3a9b9d7778ee22a2a7e60e8f3b9c5">00601</a> <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *<a class="code" href="eol__window_8c.html#a27a3a9b9d7778ee22a2a7e60e8f3b9c5">eol_window_get_component_by_id</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <span class="keywordtype">id</span>)
+<a name="l00602"></a>00602 {
+<a name="l00603"></a>00603   GList *c = NULL;
+<a name="l00604"></a>00604   <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp;
+<a name="l00605"></a>00605   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span> NULL;
+<a name="l00606"></a>00606   <span class="keywordflow">for</span> (c = win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a>;c != NULL;c = c-&gt;next)
+<a name="l00607"></a>00607   {
+<a name="l00608"></a>00608     <span class="keywordflow">if</span> (c-&gt;data != NULL)
+<a name="l00609"></a>00609     {
+<a name="l00610"></a>00610       comp = (<a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *)c-&gt;data;
+<a name="l00611"></a>00611       if (comp-&gt;<a class="code" href="structeolComponent__S.html#a8f85d78c3f9a045487e3dfc1dfdf48fa">id</a> == <span class="keywordtype">id</span>)<span class="keywordflow">return</span> comp;
+<a name="l00612"></a>00612     }
+<a name="l00613"></a>00613   }
+<a name="l00614"></a>00614   <span class="keywordflow">return</span> NULL;
+<a name="l00615"></a>00615 }
+<a name="l00616"></a>00616 
+<a name="l00617"></a><a class="code" href="eol__window_8h.html#ad9b402b7ddb558f087070600a1c856e3">00617</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ad9b402b7ddb558f087070600a1c856e3">eol_window_allocat_callbacks</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__opengl_8h.html#a619bc20e8198de3bd3f3d7fc34de66b2">count</a>)
+<a name="l00618"></a>00618 {
+<a name="l00619"></a>00619   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
+<a name="l00620"></a>00620   <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a> != NULL)
+<a name="l00621"></a>00621   {
+<a name="l00622"></a>00622     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00623"></a>00623       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
+<a name="l00624"></a>00624       <span class="stringliteral">&quot;eol_window:attempted to re-allocated window callbacks for window %s\n&quot;</span>,
+<a name="l00625"></a>00625       win-&gt;<a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">name</a>);
+<a name="l00626"></a>00626     <span class="keywordflow">return</span>;
+<a name="l00627"></a>00627   }
+<a name="l00628"></a>00628   win-&gt;<a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a> = (<a class="code" href="eol__window_8h.html#aa03ae453c4a9ae7aab334c116eb1d79d">eolWindowCallback</a>*)malloc(<span class="keyword">sizeof</span>(<a class="code" href="eol__window_8h.html#aa03ae453c4a9ae7aab334c116eb1d79d">eolWindowCallback</a>)*count);
+<a name="l00629"></a>00629   <span class="keywordflow">if</span> (win-&gt;<a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a> == NULL)
+<a name="l00630"></a>00630   {
+<a name="l00631"></a>00631     <a class="code" href="eol__logger_8c.html#aeb86980a9e11fb8938d3e4dac6e62834" title="log a message at the specified warning levels. It will ignore warning levels below...">eol_logger_message</a>(
+<a name="l00632"></a>00632       <a class="code" href="eol__logger_8h.html#a00ea7ac1e164cb45b223d03ef228c968ad7f0aacd56edcfd303cdefb903329486">EOL_LOG_ERROR</a>,
+<a name="l00633"></a>00633       <span class="stringliteral">&quot;eol_window:cannot allocate callbacks for window %s\n&quot;</span>,
+<a name="l00634"></a>00634       win-&gt;<a class="code" href="structeolWindow__S.html#ad25ce1cc9ceaaedeae74fa94d6415acb">name</a>);
+<a name="l00635"></a>00635     <span class="keywordflow">return</span>;
+<a name="l00636"></a>00636   }
+<a name="l00637"></a>00637   memset(win-&gt;<a class="code" href="structeolWindow__S.html#ac406ae1d8dbb0f5fead28c0d1798a50b">callbacks</a>,0,<span class="keyword">sizeof</span>(<a class="code" href="eol__window_8h.html#aa03ae453c4a9ae7aab334c116eb1d79d">eolWindowCallback</a>)*count);
+<a name="l00638"></a>00638   win-&gt;<a class="code" href="structeolWindow__S.html#af2c88a8fc5a313774e04be4a0954f18f">callbackCount</a> = count;
+<a name="l00639"></a>00639 }
+<a name="l00640"></a>00640 
+<a name="l00641"></a><a class="code" href="eol__window_8h.html#a1135fa87f14bbcc759bf2910528e2698">00641</a> <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__window_8c.html#a1135fa87f14bbcc759bf2910528e2698">eol_window_get_relative_position</a>(<a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> position,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> range)
+<a name="l00642"></a>00642 {
+<a name="l00643"></a>00643   <span class="keywordflow">if</span> (range == 0)<span class="keywordflow">return</span> 0;
+<a name="l00644"></a>00644   <span class="keywordflow">return</span> (<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>)position/(<a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a>)range;
+<a name="l00645"></a>00645 }
+<a name="l00646"></a>00646 
+<a name="l00647"></a><a class="code" href="eol__window_8h.html#a0ec60a586386a89e87baef20d4c6c674">00647</a> <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__window_8c.html#a0ec60a586386a89e87baef20d4c6c674">eol_window_get_refcount</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> * window)
+<a name="l00648"></a>00648 {
+<a name="l00649"></a>00649   <span class="keywordflow">return</span> <a class="code" href="eol__resource_8c.html#a038594970c8e385021c9ae71cacf205e">eol_resource_element_get_refcount</a>(_eol_window_manager,window);
+<a name="l00650"></a>00650 }
+<a name="l00651"></a>00651 
+<a name="l00652"></a><a class="code" href="eol__window_8h.html#a7b574c88940788771f53799e0a088f15">00652</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a7b574c88940788771f53799e0a088f15">eol_window_move_to</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structeolVec2D.html">eolVec2D</a> position)
+<a name="l00653"></a>00653 {
+<a name="l00654"></a>00654   GList *c = NULL;
+<a name="l00655"></a>00655   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
+<a name="l00656"></a>00656   win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.x = position.<a class="code" href="structeolVec2D.html#a05813d1d57b3b946b03d91c70dd138a9">x</a>;
+<a name="l00657"></a>00657   win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>.y = position.<a class="code" href="structeolVec2D.html#a61e7aa983b05eabe2b4c54bc4d765eed">y</a>;
+<a name="l00658"></a>00658   <span class="keywordflow">for</span> (c = win-&gt;<a class="code" href="structeolWindow__S.html#a6f6edaacffa4ce7b38fddded86def699">components</a>;c != NULL;c = c-&gt;next)
+<a name="l00659"></a>00659   {
+<a name="l00660"></a>00660     <span class="keywordflow">if</span> (c-&gt;data == NULL)<span class="keywordflow">continue</span>;
+<a name="l00661"></a>00661     <a class="code" href="eol__component_8c.html#a2ab8e1f70302b697dc620bf52338884c" title="updates the draw positioning for the component">eol_component_move</a>((<a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *)c-&gt;data,win-&gt;<a class="code" href="structeolWindow__S.html#a7f0e7f04b9d7271e8762db9dc714bd69">rect</a>);
+<a name="l00662"></a>00662   }
+<a name="l00663"></a>00663 }
+<a name="l00664"></a>00664 
+<a name="l00665"></a><a class="code" href="eol__window_8h.html#a45484deaaf272afa0d40ba654ca9c079">00665</a> <a class="code" href="structeolWindow__S.html">eolWindow</a> * <a class="code" href="eol__window_8c.html#a45484deaaf272afa0d40ba654ca9c079">eol_window_load_from_file_to</a>(<a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> file,<a class="code" href="structeolVec2D.html">eolVec2D</a> position)
+<a name="l00666"></a>00666 {
+<a name="l00667"></a>00667   <a class="code" href="structeolWindow__S.html">eolWindow</a> * win;
+<a name="l00668"></a>00668   win = <a class="code" href="eol__window_8c.html#a08c178084fe4ea36579e0923cd6cb0bd">eol_window_load_from_file</a>(file);
+<a name="l00669"></a>00669   <a class="code" href="eol__window_8c.html#a7b574c88940788771f53799e0a088f15">eol_window_move_to</a>(win,position);
+<a name="l00670"></a>00670   <span class="keywordflow">return</span> win;
+<a name="l00671"></a>00671 }
+<a name="l00672"></a>00672 
+<a name="l00673"></a><a class="code" href="eol__window_8h.html#a08c178084fe4ea36579e0923cd6cb0bd">00673</a> <a class="code" href="structeolWindow__S.html">eolWindow</a> * <a class="code" href="eol__window_8c.html#a08c178084fe4ea36579e0923cd6cb0bd">eol_window_load_from_file</a>(<a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> file)
+<a name="l00674"></a>00674 {
+<a name="l00675"></a>00675   <a class="code" href="structeolWindow__S.html">eolWindow</a> *window;
+<a name="l00676"></a>00676   <a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> filename;
+<a name="l00677"></a>00677   <span class="keywordflow">if</span> (!<a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>())
+<a name="l00678"></a>00678   {
+<a name="l00679"></a>00679     <span class="keywordflow">return</span> NULL;
+<a name="l00680"></a>00680   }
+<a name="l00681"></a>00681   window =
+<a name="l00682"></a>00682   (<a class="code" href="structeolWindow__S.html">eolWindow</a> *)<a class="code" href="eol__resource_8c.html#abddc583b5a364c8243bac63e23c859dd" title="Allocated and loads a resource from file. Calls the manager&amp;#39;s data load function...">eol_resource_manager_load_resource</a>(_eol_window_manager,file);
+<a name="l00683"></a>00683   <span class="keywordflow">if</span> (window == NULL)<span class="keywordflow">return</span> NULL;
+<a name="l00684"></a>00684   window-&gt;<a class="code" href="structeolWindow__S.html#adfa20f4e10dee732d3060919a32839f3">id</a> = <a class="code" href="eol__resource_8c.html#ab60140467b8950a843cd369f32287441" title="returns the index of the element passed.">eol_resource_element_get_id</a>(_eol_window_manager,window);
+<a name="l00685"></a>00685   <a class="code" href="eol__resource_8c.html#a4f445f05848c5ee1f6d7c6a6c21f0934">eol_resource_element_get_filename</a>(filename, _eol_window_manager,window);
+<a name="l00686"></a>00686   <a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a> = g_list_append(<a class="code" href="eol__window_8c.html#ac83ea9c1680ad261e11c73d5f70b23d0">_eol_window_stack</a>,window);
+<a name="l00687"></a>00687   <span class="keywordflow">return</span> window;
+<a name="l00688"></a>00688 }
+<a name="l00689"></a>00689 
+<a name="l00690"></a><a class="code" href="eol__window_8h.html#aec0d922b70d59f382e7740c2f70d8b0c">00690</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#aec0d922b70d59f382e7740c2f70d8b0c">eol_window_hide</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win)
+<a name="l00691"></a>00691 {
+<a name="l00692"></a>00692   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
+<a name="l00693"></a>00693   win-&gt;<a class="code" href="structeolWindow__S.html#adf90fdfcd36114a7e70b3e8a7c41e5c7">hidden</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
+<a name="l00694"></a>00694 }
+<a name="l00695"></a>00695 
+<a name="l00696"></a><a class="code" href="eol__window_8h.html#aa7ed6725fd4c65e87bf241e514101048">00696</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#aa7ed6725fd4c65e87bf241e514101048">eol_window_show</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win)
+<a name="l00697"></a>00697 {
+<a name="l00698"></a>00698   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
+<a name="l00699"></a>00699   win-&gt;<a class="code" href="structeolWindow__S.html#adf90fdfcd36114a7e70b3e8a7c41e5c7">hidden</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00700"></a>00700 }
+<a name="l00701"></a>00701 
+<a name="l00702"></a><a class="code" href="eol__window_8h.html#a6d5960d599b2f7d6b4a043dd1a709b1d">00702</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a6d5960d599b2f7d6b4a043dd1a709b1d">eol_window_sleep</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win)
+<a name="l00703"></a>00703 {
+<a name="l00704"></a>00704   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
+<a name="l00705"></a>00705   win-&gt;<a class="code" href="structeolWindow__S.html#a3358db7ee974975d5b979d098025dcb3">sleeping</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a1ccbeff6bcfdd81dad879593a1c859a7">eolTrue</a>;
+<a name="l00706"></a>00706 }
+<a name="l00707"></a>00707 
+<a name="l00708"></a><a class="code" href="eol__window_8h.html#a1f30ef74a8b05dca89e78e78ba648e3c">00708</a> <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a1f30ef74a8b05dca89e78e78ba648e3c">eol_window_wakeup</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win)
+<a name="l00709"></a>00709 {
+<a name="l00710"></a>00710   <span class="keywordflow">if</span> (!win)<span class="keywordflow">return</span>;
+<a name="l00711"></a>00711   win-&gt;<a class="code" href="structeolWindow__S.html#a3358db7ee974975d5b979d098025dcb3">sleeping</a> = <a class="code" href="eol__types_8h.html#ace26262f5479832c35e71ff94a5ca4f9a3022b161029854a17d9534a80cff370f">eolFalse</a>;
+<a name="l00712"></a>00712 }
+<a name="l00713"></a>00713 
+<a name="l00714"></a>00714 
+<a name="l00715"></a>00715 <span class="comment">/*eol@eof*/</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Aug 15 18:01:25 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:12 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
