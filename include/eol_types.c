@@ -60,10 +60,19 @@ eolFloat eol_vec4d_magnitude (eolVec4D V)
   return sqrt (V.x * V.x + V.y * V.y + V.z * V.z + V.w * V.w);
 }
 
+eolFloat eol_vec2d_magnitude_squared(eolVec2D V)
+{
+  return (V.x * V.x + V.y * V.y);
+}
 
 eolFloat eol_vec3d_magnitude_squared(eolVec3D V)
 {
   return (V.x * V.x + V.y * V.y + V.z * V.z);
+}
+
+eolFloat eol_vec4d_magnitude_squared(eolVec4D V)
+{
+  return (V.x * V.x + V.y * V.y + V.z * V.z + V.w * V.w);
 }
 
 void eol_vec2d_set_magnitude(eolVec2D * V,eolFloat magnitude)

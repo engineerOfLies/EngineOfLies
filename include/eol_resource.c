@@ -27,6 +27,14 @@ void *eol_resource_manager_load_resource(eolResourceManager *manager,char *filen
 {
   eolResourceHeader * element = NULL;
   if (!filename)return NULL;
+  if (!manager)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_resource:passed in NULL resource manager for loading resource file: %s\n",
+      filename);
+    return NULL;
+  }
   if (manager->data_load == NULL)
   {
     return NULL;
