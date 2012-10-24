@@ -69,38 +69,54 @@
 <a name="l00046"></a><a class="code" href="structeolWindow__S.html#a6fe030fa5521b74751dddc421f9ce22c">00046</a>   <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a>             (*<a class="code" href="structeolWindow__S.html#a6fe030fa5521b74751dddc421f9ce22c">update</a>)(<span class="keyword">struct </span><a class="code" href="structeolWindow__S.html">eolWindow_S</a> *<span class="keyword">self</span>,GList *updates);
 <a name="l00048"></a>00048 }<a class="code" href="structeolWindow__S.html">eolWindow</a>;
 <a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ae0bf59b57aa890f054d9bf6a25ecb953">eol_window_init</a>();
-<a name="l00051"></a>00051 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#abf072fa8f463e5389fbd4f33dc88ae8a">eol_window_config</a>();
-<a name="l00052"></a>00052 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a6192a9e410b03762d825f9fab8e4890e">eol_window_clean</a>();
-<a name="l00053"></a>00053 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a99112b1e674f9ff37e6063ddc2ea615f">eol_window_close</a>();
-<a name="l00054"></a>00054 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0">eol_window_initialized</a>();
+<a name="l00054"></a>00054 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ae0bf59b57aa890f054d9bf6a25ecb953" title="initializes the window system">eol_window_init</a>();
 <a name="l00055"></a>00055 
-<a name="l00056"></a>00056 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a1104c1aea6158f6b81c93682624572c2">eol_window_draw_all</a>();
-<a name="l00057"></a>00057 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a919e696698fb9226404efdfd8aa0ca77">eol_window_update_all</a>();
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059 <a class="code" href="structeolWindow__S.html">eolWindow</a> * <a class="code" href="eol__window_8c.html#a45484deaaf272afa0d40ba654ca9c079">eol_window_load_from_file_to</a>(<a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> file,<a class="code" href="structeolVec2D.html">eolVec2D</a> position);
-<a name="l00060"></a>00060 <a class="code" href="structeolWindow__S.html">eolWindow</a> * <a class="code" href="eol__window_8c.html#a08c178084fe4ea36579e0923cd6cb0bd">eol_window_load_from_file</a>(<a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> file);
-<a name="l00061"></a>00061 <a class="code" href="structeolWindow__S.html">eolWindow</a> * <a class="code" href="eol__window_8c.html#a9eccca7d357ef728aa83b97af7fe2443">eol_window_new</a>();
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a7b574c88940788771f53799e0a088f15">eol_window_move_to</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structeolVec2D.html">eolVec2D</a> position);
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ac0b3fa50b77de1b89562f1951e2a5667">eol_window_free</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> **win);
-<a name="l00066"></a>00066 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a3ee9da97c18bdd0f6099692932ff7a94">eol_window_free_if_outside_click</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> **win);
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c">eol_window_add_component</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp);
-<a name="l00069"></a>00069 <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *<a class="code" href="eol__window_8c.html#a27a3a9b9d7778ee22a2a7e60e8f3b9c5">eol_window_get_component_by_id</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <span class="keywordtype">id</span>);
-<a name="l00070"></a>00070 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ad9b402b7ddb558f087070600a1c856e3">eol_window_allocat_callbacks</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__opengl_8h.html#a619bc20e8198de3bd3f3d7fc34de66b2">count</a>);
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__window_8c.html#a1135fa87f14bbcc759bf2910528e2698">eol_window_get_relative_position</a>(<a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> position,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> range);
-<a name="l00073"></a>00073 <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__window_8c.html#a0ec60a586386a89e87baef20d4c6c674">eol_window_get_refcount</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> * window);
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#aec0d922b70d59f382e7740c2f70d8b0c">eol_window_hide</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
-<a name="l00076"></a>00076 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#aa7ed6725fd4c65e87bf241e514101048">eol_window_show</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
-<a name="l00077"></a>00077 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a6d5960d599b2f7d6b4a043dd1a709b1d">eol_window_sleep</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
-<a name="l00078"></a>00078 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a1f30ef74a8b05dca89e78e78ba648e3c">eol_window_wakeup</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
-<a name="l00079"></a>00079 <span class="preprocessor">#endif</span>
+<a name="l00059"></a>00059 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#abf072fa8f463e5389fbd4f33dc88ae8a" title="configures the window system defaults">eol_window_config</a>();
+<a name="l00060"></a>00060 
+<a name="l00064"></a>00064 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a6192a9e410b03762d825f9fab8e4890e" title="frees unused window resources">eol_window_clean</a>();
+<a name="l00065"></a>00065 
+<a name="l00069"></a>00069 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a99112b1e674f9ff37e6063ddc2ea615f" title="closes the window system. Called automatically at exit">eol_window_close</a>();
+<a name="l00070"></a>00070 
+<a name="l00075"></a>00075 <a class="code" href="eol__types_8h.html#ae3728b39ff0032c8a9ec060dc81dc115">eolBool</a> <a class="code" href="eol__window_8c.html#a1cf6ceb22cab5c873e6934de492da2d0" title="checks window system initialization status">eol_window_initialized</a>();
+<a name="l00076"></a>00076 
+<a name="l00080"></a>00080 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a1104c1aea6158f6b81c93682624572c2" title="Draws all visible windows to screen. Should be called every frame in main loop.">eol_window_draw_all</a>();
+<a name="l00081"></a>00081 
+<a name="l00085"></a>00085 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a919e696698fb9226404efdfd8aa0ca77" title="Updates all active windows. Should be called every frame.">eol_window_update_all</a>();
+<a name="l00086"></a>00086 
+<a name="l00093"></a>00093 <a class="code" href="structeolWindow__S.html">eolWindow</a> * <a class="code" href="eol__window_8c.html#a45484deaaf272afa0d40ba654ca9c079" title="Loads a window from config file and moves it to the position specified.">eol_window_load_from_file_to</a>(<a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> file,<a class="code" href="structeolVec2D.html">eolVec2D</a> position);
+<a name="l00094"></a>00094 
+<a name="l00100"></a>00100 <a class="code" href="structeolWindow__S.html">eolWindow</a> * <a class="code" href="eol__window_8c.html#a08c178084fe4ea36579e0923cd6cb0bd" title="Loads a window from config file.">eol_window_load_from_file</a>(<a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> file);
+<a name="l00101"></a>00101 
+<a name="l00106"></a>00106 <a class="code" href="structeolWindow__S.html">eolWindow</a> * <a class="code" href="eol__window_8c.html#a9eccca7d357ef728aa83b97af7fe2443" title="creates an initialized window. Must be provided with data before it is used.">eol_window_new</a>();
+<a name="l00107"></a>00107 
+<a name="l00113"></a>00113 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a7b574c88940788771f53799e0a088f15" title="moves the specified window to new coordinates">eol_window_move_to</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structeolVec2D.html">eolVec2D</a> position);
+<a name="l00114"></a>00114 
+<a name="l00119"></a>00119 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ac0b3fa50b77de1b89562f1951e2a5667" title="let the window system know you are done with the window. Set your pointer to the...">eol_window_free</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> **win);
+<a name="l00120"></a>00120 
+<a name="l00125"></a>00125 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a3ee9da97c18bdd0f6099692932ff7a94" title="automatically frees the window provided if the mouse has clicked outside of the window...">eol_window_free_if_outside_click</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> **win);
+<a name="l00126"></a>00126 
+<a name="l00132"></a>00132 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a76330254e579fef1e64ca8607be8e64c" title="Adds a component to the window. Component should already be set up.">eol_window_add_component</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *comp);
+<a name="l00133"></a>00133 
+<a name="l00141"></a>00141 <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *<a class="code" href="eol__window_8c.html#a27a3a9b9d7778ee22a2a7e60e8f3b9c5" title="returns a pointer to the window component with the id provided">eol_window_get_component_by_id</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <span class="keywordtype">id</span>);
+<a name="l00142"></a>00142 
+<a name="l00150"></a>00150 <a class="code" href="structeolComponent__S.html" title="this structure serves as a header for all components">eolComponent</a> *<a class="code" href="eol__window_8c.html#a92a4229043f9e4ea8778f8c63b4844c4" title="returns a pointer to the window component with the name provided">eol_window_get_component_by_name</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="eol__types_8h.html#a69a6c5b32807c4eb5e52b404dd5db0a1" title="128 character buffer used for statements">eolLine</a> <a class="code" href="eol__opengl_8h.html#a5c4947d4516dd7cfa3505ce3a648a4ef">name</a>);
+<a name="l00151"></a>00151 
+<a name="l00158"></a>00158 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#ad9b402b7ddb558f087070600a1c856e3" title="Allocated window callbacks for the window.">eol_window_allocat_callbacks</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__opengl_8h.html#a619bc20e8198de3bd3f3d7fc34de66b2">count</a>);
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160 <a class="code" href="eol__types_8h.html#ad9743cfe244e11a083758a44e35ae080">eolFloat</a> <a class="code" href="eol__window_8c.html#a1135fa87f14bbcc759bf2910528e2698">eol_window_get_relative_position</a>(<a class="code" href="eol__types_8h.html#a7f34f0e945b4ead0fa8f912ea37edcfb">eolInt</a> position,<a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> range);
+<a name="l00161"></a>00161 
+<a name="l00167"></a>00167 <a class="code" href="eol__types_8h.html#ad9718fff0d6b6166a58b74814a5ef687">eolUint</a> <a class="code" href="eol__window_8c.html#a0ec60a586386a89e87baef20d4c6c674" title="get the number of references to the window">eol_window_get_refcount</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> * window);
+<a name="l00168"></a>00168 
+<a name="l00172"></a>00172 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#aec0d922b70d59f382e7740c2f70d8b0c" title="hides a window (prevents it from being drawn">eol_window_hide</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
+<a name="l00173"></a>00173 
+<a name="l00177"></a>00177 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#aa7ed6725fd4c65e87bf241e514101048" title="marks a window and allows it to be drawn">eol_window_show</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
+<a name="l00178"></a>00178 
+<a name="l00182"></a>00182 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a6d5960d599b2f7d6b4a043dd1a709b1d" title="puts a window to &amp;quot;sleep&amp;quot; preventing updates">eol_window_sleep</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
+<a name="l00183"></a>00183 
+<a name="l00187"></a>00187 <span class="keywordtype">void</span> <a class="code" href="eol__window_8c.html#a1f30ef74a8b05dca89e78e78ba648e3c" title="&amp;quot;wakes&amp;quot; a window and resumes updates">eol_window_wakeup</a>(<a class="code" href="structeolWindow__S.html">eolWindow</a> *win);
+<a name="l00188"></a>00188 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 19 23:50:12 2012 for EngineOfLies by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Wed Oct 24 18:02:33 2012 for EngineOfLies by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
