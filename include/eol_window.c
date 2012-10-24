@@ -614,6 +614,22 @@ eolComponent *eol_window_get_component_by_id(eolWindow *win,eolUint id)
   return NULL;
 }
 
+eolComponent *eol_window_get_component_by_name(eolWindow *win,eolLine name)
+{
+  GList *c = NULL;
+  eolComponent *comp;
+  if (!win)return NULL;
+  for (c = win->components;c != NULL;c = c->next)
+  {
+    if (c->data != NULL)
+    {
+      comp = (eolComponent *)c->data;
+      if (eol_line_cmp(comp->name,name) == 0)return comp;
+    }
+  }
+  return NULL;
+}
+
 void eol_window_allocat_callbacks(eolWindow *win,eolUint count)
 {
   if (!win)return;

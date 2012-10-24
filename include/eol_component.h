@@ -92,7 +92,7 @@ enum eolListTypes {
 typedef struct eolComponent_S
 {
   eolUint       id;
-  eolWord       name;
+  eolLine       name;
   eolRectFloat  rect;           /**<relative position to draw*/
   eolRect       bounds;         /**<calculated position to draw*/
   eolBool       canHasFocus;    /**<I apologize for the lolcat reference*/
