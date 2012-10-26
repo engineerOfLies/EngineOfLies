@@ -62,6 +62,14 @@ void eol_button_configure(eolConfig *conf)
   _eol_component_stock_button[2] = eol_sprite_load(buttonhitfile,-1,-1);
 }
 
+void eol_button_set_text(eolComponent *button,eolLine newText)
+{
+  eolComponentButton *buttonData = NULL;
+  buttonData = eol_component_get_button_data(button);
+  if (!buttonData)return;
+  eol_line_cpy(buttonData->buttonText,newText);
+}
+
 void eol_button_get_stock_size(eolUint *w, eolUint *h)
 {
   if (_eol_component_stock_button[0] == NULL)return;
@@ -258,7 +266,8 @@ void eol_component_make_button(
     eolVec3D       backgroundColor,
     eolFloat       backgroundAlpha,
     eolVec3D       highlightColor,
-    eolVec3D       pressColor
+    eolVec3D       pressColor,
+    eolUint        fontSize
   )
 {
   eolRect r;
@@ -272,7 +281,7 @@ void eol_component_make_button(
     return;
   }
   button->alpha = 1;
-  button->fontSize = 3;
+  button->fontSize = fontSize;
   button->input = buttonHotkey;
   button->hotkeymod = buttonHotkeymod;
 
@@ -360,6 +369,7 @@ eolComponent *eol_button_stock_new(
     rect,
     bounds,
     buttonText,
+    3,
     eolButtonStock,
     buttonHotkey,
     buttonHotkeymod,
@@ -380,6 +390,7 @@ eolComponent *eol_button_text_new(
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
+    eolUint        fontSize,
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
     eolBool        center
@@ -391,6 +402,7 @@ eolComponent *eol_button_text_new(
     rect,
     bounds,
     buttonText,
+    fontSize,
     eolButtonText,
     buttonHotkey,
     buttonHotkeymod,
@@ -411,6 +423,7 @@ eolComponent *eol_button_new(
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
+    eolUint        fontSize,
     eolUint        buttonType,
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
@@ -441,7 +454,8 @@ eolComponent *eol_button_new(
     backgroundColor,
     backgroundAlpha,
     highlightColor,
-    pressColor
+    pressColor,
+    fontSize
   );
   button = eol_component_get_button_data(component);
   if (button == NULL)
@@ -476,6 +490,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
   eolComponent *comp = NULL;
   eolLine buttonType;
   eolUint id;
+  eolUint fontSize = 3;
   eolRectFloat rect;
   eolLine justify;
   eolLine buttonText;
@@ -498,6 +513,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
   eol_keychain_get_hash_value_as_line(buttonType, def, "buttonType");
   eol_keychain_get_hash_value_as_line(name, def, "name");
   eol_keychain_get_hash_value_as_uint(&id, def, "id");
+  eol_keychain_get_hash_value_as_uint(&fontSize, def, "fontSize");
   eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
   eol_keychain_get_hash_value_as_line(justify, def, "justify");
   eol_keychain_get_hash_value_as_line(buttonText, def, "buttonText");
@@ -542,6 +558,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
       rect,
       winrect,
       buttonText,
+      fontSize,
       hotkeybutton,
       hotkeymod,
       eolFalse
@@ -555,6 +572,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
       rect,
       winrect,
       buttonText,
+      fontSize,
       eolButtonRect,
       hotkeybutton,
       hotkeymod,
@@ -576,6 +594,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
       rect,
       winrect,
       buttonText,
+      fontSize,
       eolButtonCustom,
       hotkeybutton,
       hotkeymod,

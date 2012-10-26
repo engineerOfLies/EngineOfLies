@@ -326,6 +326,7 @@ eolComponent *eol_button_new(
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
+    eolUint        fontSize,
     eolUint        buttonType,
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
@@ -380,11 +381,17 @@ eolComponent *eol_button_text_new(
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
+    eolUint        fontSize,
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
     eolBool        center
   );
 
+/**
+ * @brief assign new text to a button.
+ */
+void eol_button_set_text(eolComponent *button,eolLine newText);
+  
 /**
  * @brief gets the dimensions for a stock button
  * @param w output.  if set, it will return the width of the stock button in pixels
@@ -485,6 +492,12 @@ void eol_list_add_text_item(
     eolUint         itemId,
     eolLine         text
   );
+
+/**
+ * @brief removes all items in the list
+ * @param component the list to purge
+ */
+void eol_component_list_clear(eolComponent *component);
 
 /**
  * @brief deselects any items in the list that may be selected

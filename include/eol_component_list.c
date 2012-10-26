@@ -5,6 +5,7 @@
 #include "eol_mouse.h"
 
 /*local function prototypes*/
+void eol_list_item_free(eolComponentListItem **item);
 void eol_component_list_free(eolComponent *component);
 void eol_component_list_new(eolComponent *component);
 eolComponentList *eol_component_get_list_data(eolComponent *component);
@@ -145,19 +146,29 @@ eolComponent *eol_list_new(
   return component;
 }
 
-
-void eol_component_list_free(eolComponent *component)
+void eol_component_list_clear(eolComponent *component)
 {
   GList *l;
   eolComponentList * list = eol_component_get_list_data(component);
   if (list == NULL)return;
+  for (l = list->itemList;l != NULL;l = l->next)
+  {
+    eol_list_item_free((eolComponentListItem **)&l->data);
+  }
+  g_list_free(list->itemList);
+  list->itemList = NULL;
+  list->selection = NULL;
+  list->topItem = NULL;
+  list->itemCount = 0;
+}
+
+void eol_component_list_free(eolComponent *component)
+{
+  eolComponentList * list = eol_component_get_list_data(component);
+  if (list == NULL)return;
+  eol_component_list_clear(component);
   eol_component_free(&list->vSlider);
   eol_component_free(&list->hSlider);
-  l = list->itemList;
-  while (l != NULL)
-  {
-    eol_component_free((eolComponent**)&l->data);
-  }
   g_list_free(list->itemList);
   list->itemList = NULL;
   free(list);

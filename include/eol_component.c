@@ -290,7 +290,7 @@ void eol_component_label_free(eolComponent *component)
 {
   eolComponentLabel *label = eol_component_get_label_data(component);
   if (label == NULL)return;
-  if (label->buffer != NULL)free(label->buffer);
+  if (label->buffer != NULL)g_string_free(label->buffer,0);
   if (label->font != NULL)eol_font_free(&label->font);
   free(label);
   label = NULL;
