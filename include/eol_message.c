@@ -299,9 +299,8 @@ void eol_message_timeout()
     mess = (eolMessage *)it->data;
     if ((mess->deathTime != 0) && (mess->deathTime < now))
     {
-      last = it->prev;
+      eol_message_free(&mess);
       data->messageList = g_list_delete_link(data->messageList,it);
-      it = last;
     }
   }
 }
@@ -330,7 +329,10 @@ eolBool eol_message_window_update(eolWindow *self,GList *updates)
   if (!data)return eolFalse;
   /*purge old items in the list*/
   eol_message_timeout();
-  if (data->update)data->update(self,updates);
+  if (data->update)
+  {
+    return data->update(self,updates);
+  }
   return eolFalse;
 }
 
