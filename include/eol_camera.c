@@ -127,6 +127,36 @@ void eol_camera_set_target(void *target)
   _eol_camera.target = target;
 }
 
+void eol_camera_set_yaw(eolFloat yaw)
+{
+  _eol_camera.rotation.z = yaw;
+}
+
+void eol_camera_set_roll(eolFloat roll)
+{
+  _eol_camera.rotation.y = roll;
+}
+
+void eol_camera_set_pitch(eolFloat pitch)
+{
+  _eol_camera.rotation.x = pitch;
+}
+
+void eol_camera_set_rotation(eolVec3D rotation)
+{
+  eol_vec3d_copy(_eol_camera.rotation,rotation);
+}
+
+void eol_camera_set_position_2d(eolVec2D position)
+{
+  eol_vec2d_copy(_eol_camera.position,position);
+}
+
+void eol_camera_set_position(eolVec3D position)
+{
+  eol_vec3d_copy(_eol_camera.position,position);
+}
+
 eolUint eol_camera_get_type_by_string(char *camtype)
 {
   if (!camtype)return 0;

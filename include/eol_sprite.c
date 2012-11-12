@@ -316,7 +316,6 @@ void eol_sprite_draw_transformed_3d(
   
   glTexCoord2f(right,top);
   glVertex3f(sprite->x3D/2,-sprite->y3D/2,0.0f);
-  
   glEnd( );
   glPopMatrix();
   glColor4f(1,1,1,1);

@@ -286,7 +286,7 @@ eolBool eol_model_load_data_from_file(char * filename,void *data)
       fscanf(file->file, "%i %i",&sw,&sh);
       continue;
     }
-    if(strcmp(buf,"sprite_is_3D") == 0)
+    if(strcmp(buf,"sprite_is_3D:") == 0)
     {
       fscanf(file->file, "%i",&temp);
       if (temp != eolFalse)
@@ -373,6 +373,9 @@ void eol_model_draw(
       (scale.z == 0))
   {
     /*cannot draw a zero scaled model*/
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_model: cannot draw a zero scaled model\n");
     return;
   }
   /*TODO: check to see if the model is on camera...*/

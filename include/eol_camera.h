@@ -85,6 +85,13 @@ void eol_camera_set_far_clip(eolFloat clip);
 void eol_camera_set_aspect_ratio(eolFloat aspect);
 void eol_camera_set_view_angle(eolFloat clip);
 void eol_camera_set_target_orientation(eolCameraGetTargetOri targetFunc);
+void eol_camera_set_position_2d(eolVec2D position);
+void eol_camera_set_position(eolVec3D position);
+void eol_camera_set_rotation(eolVec3D rotation);
+void eol_camera_set_roll(eolFloat roll);
+void eol_camera_set_pitch(eolFloat pitch);
+void eol_camera_set_yaw(eolFloat yaw);
+
 
 eolBool eol_camera_is_rect_in_view(eolVec3D point, eolRectFloat bounds);
 eolBool eol_camera_is_circle_in_view(eolVec3D point, eolFloat radius);
