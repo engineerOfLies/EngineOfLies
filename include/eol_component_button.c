@@ -270,7 +270,6 @@ void eol_component_make_button(
     eolUint        fontSize
   )
 {
-  eolRect r;
   eolComponentButton * button = NULL;
   if (!component)return;
   eol_component_button_new(component);
@@ -297,16 +296,11 @@ void eol_component_make_button(
       button->button[eolButtonHighlight] = eol_sprite_load(buttonHighFile,-1,-1);
       button->button[eolButtonPressed] = eol_sprite_load(buttonDownFile,-1,-1);
       button->justify = eolJustifyCenter;
-      component->bounds.w = button->button[eolButtonIdle]->frameWidth;
-      component->bounds.h = button->button[eolButtonIdle]->frameHeight;
       break;
     case eolButtonText:
       button->button[eolButtonIdle] = NULL;
       button->button[eolButtonHighlight] = NULL;
       button->button[eolButtonPressed] = NULL;
-      r = eol_font_get_bounds(buttonText,button->fontSize);
-      component->bounds.w = r.w;
-      component->bounds.h = r.h;
       button->justify = eolJustifyLeft;
       break;
     case eolButtonStock:
@@ -314,11 +308,6 @@ void eol_component_make_button(
       button->button[eolButtonHighlight] = _eol_component_stock_button[eolButtonHighlight];
       button->button[eolButtonPressed] = _eol_component_stock_button[eolButtonPressed];
       button->justify = eolJustifyCenter;
-      if (button->button[eolButtonIdle] != NULL)
-      {
-        component->bounds.w = button->button[eolButtonIdle]->frameWidth;
-        component->bounds.h = button->button[eolButtonIdle]->frameHeight;
-      }
       break;
     case eolButtonRect:
       component->data_draw = eol_component_button_draw_rect;
@@ -417,6 +406,49 @@ eolComponent *eol_button_text_new(
   );
 }
 
+void eol_button_move(eolComponent *component,eolRect newbounds)
+{
+  eolRect r;
+  eolComponentButton *button = NULL;
+  button = eol_component_get_button_data(component);
+  if (!button)return;
+  eol_component_get_rect_from_bounds(&component->bounds,newbounds,component->rect);
+  switch (button->buttonType)
+  {
+    case eolButtonCustom:
+      component->bounds.w = button->button[eolButtonIdle]->frameWidth;
+      component->bounds.h = button->button[eolButtonIdle]->frameHeight;
+      break;
+    case eolButtonText:
+      r = eol_font_get_bounds(button->buttonText,button->fontSize);
+      component->bounds.w = r.w;
+      component->bounds.h = r.h;
+      break;
+    case eolButtonStock:
+      if (button->button[eolButtonIdle] != NULL)
+      {
+        component->bounds.w = button->button[eolButtonIdle]->frameWidth;
+        component->bounds.h = button->button[eolButtonIdle]->frameHeight;
+      }
+      break;
+    case eolButtonRect:
+      break;
+  }
+  if (button->centered)
+  {
+    component->bounds.x -= component->bounds.w/2;
+    component->bounds.y -= component->bounds.h/2;
+    if (newbounds.w != 0)
+    {
+      component->rect.x -= (component->bounds.w/(float)newbounds.w)/2;
+    }
+    if (newbounds.h != 0)
+    {
+      component->rect.y -= (component->bounds.h/(float)newbounds.h)/2;
+    }
+  }
+}
+
 eolComponent *eol_button_new(
     eolUint        id,
     eolWord        name,
@@ -441,7 +473,6 @@ eolComponent *eol_button_new(
   eolComponent *component = NULL;
   component = eol_component_new();
   if (!component)return NULL;
-  eol_component_get_rect_from_bounds(&component->bounds,bounds,rect);
   eol_component_make_button(
     component,
     buttonText,
@@ -457,31 +488,19 @@ eolComponent *eol_button_new(
     pressColor,
     fontSize
   );
+  eol_rectf_copy(&component->rect,rect);
   button = eol_component_get_button_data(component);
   if (button == NULL)
   {
     eol_component_free(&component);
     return NULL;
   }
+  button->centered = center;
+  eol_button_move(component,bounds);
   component->id = id;
   strncpy(component->name,name,EOLWORDLEN);
-  eol_rectf_copy(&component->rect,rect);
   component->canHasFocus = eolTrue;
   component->type = eolButtonComponent;
-  if (center)
-  {
-    button->centered = center;
-    component->bounds.x -= component->bounds.w/2;
-    component->bounds.y -= component->bounds.h/2;
-    if (bounds.w != 0)
-    {
-      component->rect.x -= (component->bounds.w/(float)bounds.w)/2;
-    }
-    if (bounds.h != 0)
-    {
-      component->rect.y -= (component->bounds.h/(float)bounds.h)/2;
-    }
-  }
   return component;
 }
 
