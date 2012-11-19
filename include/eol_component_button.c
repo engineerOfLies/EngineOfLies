@@ -211,9 +211,9 @@ void eol_component_button_draw(eolComponent *component,eolRect bounds)
   eolInt x,y;
   eolUint ofx = 0, ofy = 0;
   button = eol_component_get_button_data(component);
-  x = bounds.x;
-  y = bounds.y;
   if (button == NULL)return;
+  x = component->bounds.x;
+  y = component->bounds.y;
   r = eol_font_get_bounds(
     button->buttonText,
     button->fontSize
@@ -227,10 +227,10 @@ void eol_component_button_draw(eolComponent *component,eolRect bounds)
     {
       eol_sprite_draw(img,
                       0,
-                      bounds.x,
-                      bounds.y);
-      x = bounds.x + (img->frameWidth/2);
-      y = bounds.y + (img->frameHeight/2) - (r.h*0.5);
+                      x,
+                      y);
+      x = x + (img->frameWidth/2);
+      y = y + (img->frameHeight/2) - (r.h*0.5);
       ofx = _eol_component_button_offset_x;
       ofy = _eol_component_button_offset_y;
     }
@@ -416,8 +416,11 @@ void eol_button_move(eolComponent *component,eolRect newbounds)
   switch (button->buttonType)
   {
     case eolButtonCustom:
-      component->bounds.w = button->button[eolButtonIdle]->frameWidth;
-      component->bounds.h = button->button[eolButtonIdle]->frameHeight;
+      if (button->button[eolButtonIdle] != NULL)
+      {
+        component->bounds.w = button->button[eolButtonIdle]->frameWidth;
+        component->bounds.h = button->button[eolButtonIdle]->frameHeight;
+      }
       break;
     case eolButtonText:
       r = eol_font_get_bounds(button->buttonText,button->fontSize);
@@ -438,14 +441,6 @@ void eol_button_move(eolComponent *component,eolRect newbounds)
   {
     component->bounds.x -= component->bounds.w/2;
     component->bounds.y -= component->bounds.h/2;
-    if (newbounds.w != 0)
-    {
-      component->rect.x -= (component->bounds.w/(float)newbounds.w)/2;
-    }
-    if (newbounds.h != 0)
-    {
-      component->rect.y -= (component->bounds.h/(float)newbounds.h)/2;
-    }
   }
 }
 
@@ -496,11 +491,12 @@ eolComponent *eol_button_new(
     return NULL;
   }
   button->centered = center;
-  eol_button_move(component,bounds);
   component->id = id;
   strncpy(component->name,name,EOLWORDLEN);
   component->canHasFocus = eolTrue;
   component->type = eolButtonComponent;
+  component->data_move = eol_button_move;
+  eol_button_move(component,bounds);
   return component;
 }
 
@@ -625,7 +621,6 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
       backgroundAlpha,
       highlightColor,
       pressColor
-
     );
   }
   return comp;

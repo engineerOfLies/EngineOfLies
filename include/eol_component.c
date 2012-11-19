@@ -529,18 +529,9 @@ void eol_component_label_draw(eolComponent *component, eolRect bounds)
 
 void eol_component_draw(eolComponent *component,eolRect bounds)
 {
-  eolRect drawRect;
   if (!component)return;
   if (component->data_draw == NULL)return;
-  drawRect.x = bounds.x + (bounds.w * component->rect.x);
-  drawRect.y = bounds.y + (bounds.h * component->rect.y);
-  if(component->rect.w <= 1)
-    drawRect.w = (bounds.w * component->rect.w);
-  else drawRect.w = component->rect.w;
-  if(component->rect.h <= 1)
-    drawRect.h = (bounds.h * component->rect.h);
-  else drawRect.h = component->rect.h;
-  component->data_draw(component,drawRect);
+  component->data_draw(component,bounds);
 }
 
 /*
