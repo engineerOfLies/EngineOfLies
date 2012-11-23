@@ -37,7 +37,7 @@ enum eolActionTypes {
 
 typedef struct
 {
-  eolWord name;       /**<the name of the action*/
+  eolLine name;       /**<the name of the action*/
   eolUint begin;      /**<the begin frame of animation for an action*/
   eolUint end;        /**<the end frame of an action*/
   eolInt  type;       /**<the eolActionType for this action*/

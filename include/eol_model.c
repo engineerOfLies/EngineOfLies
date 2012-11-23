@@ -1,7 +1,7 @@
 #include "eol_model.h"
 #include "eol_logger.h"
-#include "eol_loader.h"
 #include "eol_resource.h"
+#include "eol_config.h"
 
 /*local global variables*/
 
@@ -36,7 +36,11 @@ void eol_model_init()
 
 void eol_model_config()
 {
+  eolConfig *conf;
   _eol_model_max = 2048;
+  conf = eol_config_load("system/model.cfg");
+  if (!conf)return;
+  eol_config_get_uint_by_tag(&_eol_model_max,conf,"model_max");
 }
 
 void eol_model_free(
@@ -116,43 +120,29 @@ void eol_model_close()
       "eol_model:closed\n");
 }
 
-eolUint eol_model_load_action_count(eolFile *file)
-{
-  eolUint count = 0;
-  eolLine buf;
-  if ((!file) || (!file->file))return 0;
-  rewind(file->file);
-  while(fscanf(file->file, "%s", buf) != EOF)
-  {
-    if(strcmp(buf,"action:") == 0)
-    {
-      count++;
-      continue;
-    }
-  }
-  return count;
-}
-
 eolBool eol_model_load_data_from_file(char * filename,void *data)
 {
-  eolInt actionIndex = -1;
-  eolUint actionCount = 0;
-  eolWord tempWord;
-  eolLine buf;
-  eolFile *file;
-  eolModel *model;
-  eolInt temp;
+  int i;
+  eolKeychain *key,*actions;
+  eolLine temp,tempWord;
   eolInt sw = -1,sh = -1;
+  eolUint actionCount = 0;
+  eolConfig *config = NULL;
+  eolModel *model;
   if (data == NULL)
     return eolFalse;
-  
-  file = eol_loader_read_file(filename);
-  if (file == NULL)
+  config = eol_config_load(filename);
+  if (!config)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_model:failed to load model %s\n",filename);
     return eolFalse;
+  }
   
   model = (eolModel *)data;
-  
-  actionCount = eol_model_load_action_count(file);
+  eol_config_get_keychain_by_tag(&actions,config,"actions");
+  actionCount = eol_keychain_get_list_count(actions);
   if (actionCount > 0)
   {
     model->_actionList = (eolAction *)malloc(sizeof(eolAction)*actionCount);
@@ -161,146 +151,55 @@ eolBool eol_model_load_data_from_file(char * filename,void *data)
       eol_logger_message(
         EOL_LOG_ERROR,
         "eol_model:unable to allocate action list for model\n");
-        eol_loader_close_file(&file);
+        eol_config_free(&config);
         return eolFalse;
     }
+
     memset(model->_actionList,0,sizeof(eolAction)*actionCount);
     model->numActions = actionCount;
+    for (i = 0; i < actionCount;i++)
+    {
+      key = eol_keychain_get_list_nth(actions, i);
+      if (!key)continue;
+      eol_keychain_get_hash_value_as_line(model->_actionList[i].name, key, "action");
+      eol_keychain_get_hash_value_as_uint(&model->_actionList[i].begin, key, "begin");
+      eol_keychain_get_hash_value_as_uint(&model->_actionList[i].end, key, "end");
+      eol_keychain_get_hash_value_as_float(&model->_actionList[i].frameRate, key, "framerate");
+      if (eol_keychain_get_hash_value_as_line(tempWord, key, "type"))
+      {
+        if (strncmp(tempWord,"loop",EOLWORDLEN) == 0)
+        {
+          model->_actionList[i].type = eolActionLoop;
+        }
+        if (strncmp(tempWord,"pass",EOLWORDLEN) == 0)
+        {
+          model->_actionList[i].type = eolActionPass;
+        }
+        if (strncmp(tempWord,"osci",EOLWORDLEN) == 0)
+        {
+          model->_actionList[i].type = eolActionOsci;
+        }
+      }
+    }
   }
-  
-  rewind(file->file);
-  actionIndex = -1;
-	eol_vec3d_set(model->scale,1,1,1);
-  while(fscanf(file->file, "%s", buf) != EOF)
+
+  eol_config_get_line_by_tag(model->name,config,"model");
+  eol_config_get_line_by_tag(model->_meshFile,config,"mesh");
+  eol_config_get_line_by_tag(model->_skinFile,config,"skin");
+  if (!eol_config_get_vec3d_by_tag(&model->scale,config,"scale"))
   {
-    if(strcmp(buf,"action:") == 0)
-    {
-      actionIndex++;
-      if ((actionIndex >= model->numActions)||
-          (actionIndex < 0))
-      {
-        eol_logger_message(EOL_LOG_ERROR,"eol_model:over/under seeking in action list\n");
-        continue;
-      }
-      fscanf(file->file, "%s",model->_actionList[actionIndex].name);
-      continue;
-    }
-    if(strcmp(buf,"action_type:") == 0)
-    {
-      if ((actionIndex >= model->numActions)||
-        (actionIndex < 0))
-      {
-        eol_logger_message(EOL_LOG_ERROR,"eol_model:over/under seeking in action list\n");
-        continue;
-      }
-      fscanf(file->file, "%s",tempWord);
-      if (strncmp(tempWord,"loop",EOLWORDLEN) == 0)
-      {
-        model->_actionList[actionIndex].type = eolActionLoop;
-      }
-      if (strncmp(tempWord,"pass",EOLWORDLEN) == 0)
-      {
-        model->_actionList[actionIndex].type = eolActionPass;
-      }
-      if (strncmp(tempWord,"osci",EOLWORDLEN) == 0)
-      {
-        model->_actionList[actionIndex].type = eolActionOsci;
-      }
-      continue;
-    }
-    if(strcmp(buf,"action_framerate:") == 0)
-    {
-      if ((actionIndex >= model->numActions)||
-        (actionIndex < 0))
-      {
-        eol_logger_message(EOL_LOG_ERROR,"eol_model:over/under seeking in action list\n");
-        continue;
-      }
-      fscanf(file->file, "%f",&model->_actionList[actionIndex].frameRate);
-      continue;
-    }
-    if(strcmp(buf,"action_begin:") == 0)
-    {
-      if ((actionIndex >= model->numActions)||
-        (actionIndex < 0))
-      {
-        eol_logger_message(EOL_LOG_ERROR,"eol_model:over/under seeking in action list\n");
-        continue;
-      }
-      fscanf(file->file, "%ui",&model->_actionList[actionIndex].begin);
-      continue;
-    }
-    if(strcmp(buf,"action_end:") == 0)
-    {
-      if ((actionIndex >= model->numActions)||
-        (actionIndex < 0))
-      {
-        eol_logger_message(EOL_LOG_ERROR,"eol_model:over/under seeking in action list\n");
-        continue;
-      }
-      fscanf(file->file, "%ui",&model->_actionList[actionIndex].end);
-      continue;
-    }
-    if(strcmp(buf,"model:") == 0)
-    {
-      fscanf(file->file, "%s",model->name);
-      continue;
-    }
-    if(strcmp(buf,"mesh:") == 0)
-    {
-      fscanf(file->file, "%s",model->_meshFile);
-      continue;
-    }
-    if(strcmp(buf,"skin:") == 0)
-    {
-      fscanf(file->file, "%s",model->_skinFile);
-      continue;
-    }
-    if(strcmp(buf,"scale:") == 0)
-    {
-      fscanf(file->file, "%lf,%lf,%lf",&model->scale.x,&model->scale.y,&model->scale.z);
-      continue;
-    }
-    if(strcmp(buf,"offset:") == 0)
-    {
-      fscanf(file->file, "%lf,%lf,%lf",&model->offset.x,&model->offset.y,&model->offset.z);
-      continue;
-    }
-    if(strcmp(buf,"rotation:") == 0)
-    {
-      fscanf(file->file, "%lf,%lf,%lf",&model->rotation.x,&model->rotation.y,&model->rotation.z);
-      continue;
-    }
-    if(strcmp(buf,"arm:") == 0)
-    {
-      fscanf(file->file, "%s",model->_armFile);
-      continue;
-    }
-    if(strcmp(buf,"sprite:") == 0)
-    {
-      fscanf(file->file, "%s",model->_spriteFile);
-      continue;
-    }
-    if(strcmp(buf,"spritecellsize:") == 0)
-    {
-      fscanf(file->file, "%i %i",&sw,&sh);
-      continue;
-    }
-    if(strcmp(buf,"sprite_is_3D:") == 0)
-    {
-      fscanf(file->file, "%i",&temp);
-      if (temp != eolFalse)
-      {
-        model->_sprite_3D = eolTrue;
-      }
-      else
-      {
-        model->_sprite_3D = eolFalse;
-      }
-      continue;
-    }
+    eol_vec3d_set(model->scale,1,1,1);
   }
-  eol_loader_close_file(&file);
+  eol_config_get_vec3d_by_tag(&model->rotation,config,"rotation");
+  eol_config_get_line_by_tag(model->_armFile,config,"arm");
+  eol_config_get_line_by_tag(model->_spriteFile,config,"sprite");
+  if (eol_config_get_line_by_tag(temp,config,"spritecellsize"))
+  {
+    sscanf(temp, "%i %i",&sw,&sh);
+  }
+  eol_config_get_bool_by_tag(&model->_sprite_3D,config,"sprite_is_3D");
+
+  /*load the requested assets*/
   if (strlen(model->_spriteFile) > 0)
   {
     model->_sprite = eol_sprite_load(model->_spriteFile,sw,sh);
@@ -321,6 +220,7 @@ eolBool eol_model_load_data_from_file(char * filename,void *data)
       eol_armature_link_mesh(model->_arm,model->_mesh);
     }
   }
+  eol_config_free(&config);
   return eolTrue;
 }
 
@@ -363,11 +263,6 @@ void eol_model_draw(
     /*cannot draw a clear model, so don't waste the math*/
     return;
   }
-  scale.x *= model->scale.x;
-  scale.y *= model->scale.y;
-  scale.z *= model->scale.z;
-  eol_vec3d_add(position,model->offset,position);
-  eol_vec3d_add(rotation,model->rotation,rotation);
   if ((scale.x == 0) &&
       (scale.y == 0) &&
       (scale.z == 0))
@@ -379,6 +274,15 @@ void eol_model_draw(
     return;
   }
   /*TODO: check to see if the model is on camera...*/
+  glPushMatrix();
+  glTranslatef(position.x,position.y,position.z);
+  glRotatef(rotation.x, 1.0f, 0.0f, 0.0f);
+  glRotatef(rotation.y, 0.0f, 1.0f, 0.0f);
+  glRotatef(rotation.z, 0.0f, 0.0f, 1.0f);
+  glScalef(scale.x,
+           scale.y,
+           scale.z);
+
   if (model->_mesh != NULL)
   {
     if (model->_arm != NULL)
@@ -387,9 +291,9 @@ void eol_model_draw(
     }
     eol_mesh_draw(
         model->_mesh,
-        position,
-        rotation,
-        scale,
+        model->offset,
+        model->rotation,
+        model->scale,
         color,
         alpha,
         model->_skin
@@ -402,9 +306,9 @@ void eol_model_draw(
       eol_sprite_draw_transformed_3d(
         model->_sprite,
         frame,
-        position,
-        scale,
-        rotation,
+        model->offset,
+        model->scale,
+        model->rotation,
         color,
         alpha
       );
@@ -414,11 +318,11 @@ void eol_model_draw(
       eol_sprite_draw_transformed(
         model->_sprite,
         frame,
-        position.x,
-        position.y,
-        scale.x,
-        scale.y,
-        rotation.z,
+        model->offset.x,
+        model->offset.y,
+        model->scale.x,
+        model->scale.y,
+        model->rotation.z,
         eolFalse,
         eolFalse,
         color,
@@ -426,6 +330,7 @@ void eol_model_draw(
       );
     }
   }
+  glPopMatrix();
 }
 
 void eol_model_draw_wire(
