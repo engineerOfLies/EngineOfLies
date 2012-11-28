@@ -62,7 +62,8 @@ enum eolButtonTypes {
 enum eolButtonStates {
   eolButtonIdle       = 0,  /**<no activity*/
   eolButtonHighlight  = 1,  /**<mouse is over the button or the button has focus*/
-  eolButtonPressed    = 2   /**<mouse or hotkey is pressed on the button*/
+  eolButtonPressed    = 2,  /**<mouse or hotkey is pressed on the button*/
+  eolButtonSleep      = 3   /**<button is marked inactive*/
 };
 #define eolButtonStateMax 4
 
@@ -389,9 +390,15 @@ eolComponent *eol_button_text_new(
 
 /**
  * @brief assign new text to a button.
+ * @param button the component to get the new text
+ * @param newText the new text to assign
  */
 void eol_button_set_text(eolComponent *button,eolLine newText);
-  
+
+void eol_button_set_inactive(eolComponent *button);
+void eol_button_set_active(eolComponent *button);
+
+
 /**
  * @brief gets the dimensions for a stock button
  * @param w output.  if set, it will return the width of the stock button in pixels

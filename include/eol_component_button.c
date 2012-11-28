@@ -11,26 +11,29 @@ void eol_component_button_free(eolComponent *component);
 void eol_component_button_new(eolComponent *component);
 
 /*local global variables*/
-eolSprite * _eol_component_stock_button[3] = {NULL,NULL,NULL};
-eolVec3D    _eol_component_button_color[3];
+eolSprite * _eol_component_stock_button[eolButtonStateMax] = {NULL,NULL,NULL,NULL};
+eolVec3D    _eol_component_button_color[eolButtonStateMax];
 eolInt      _eol_component_button_offset_x = 0;
 eolInt      _eol_component_button_offset_y = 0;
 eolBool     _eol_component_button_text_outline = eolTrue;
+eolFloat    _eol_component_button_alpha = 1;
 
 /*function definitions*/
 
 void eol_button_configure(eolConfig *conf)
 {
   eolLine buf;
-  eolLine buttonfile,buttonhitfile,buttonhighfile;
+  eolLine buttonfile,buttonhitfile,buttonhighfile,buttonsleepfile;
   _eol_component_button_offset_x = 0;
   _eol_component_button_offset_y = 0;
   eol_vec3d_set(_eol_component_button_color[0],0.8,0.8,0.8);
   eol_vec3d_set(_eol_component_button_color[1],1,1,0);
   eol_vec3d_set(_eol_component_button_color[2],0.6,0.6,0.6);
+  eol_vec3d_set(_eol_component_button_color[3],0.3,0.2,0.3);
   eol_line_cpy(buttonfile,"images/UI/btn.png");
   eol_line_cpy(buttonhitfile,"images/UI/btn_hit.png");
   eol_line_cpy(buttonhighfile,"images/UI/btn_high.png");
+  eol_line_cpy(buttonsleepfile,"images/UI/btn_sleep.png");
   if (conf != NULL)
   {
     eol_config_get_int_by_tag(&_eol_component_button_offset_x,conf,"button_x_offset");
@@ -52,14 +55,35 @@ void eol_button_configure(eolConfig *conf)
     {
       eol_line_cpy(buttonhitfile,buf);
     }
+    eol_config_get_line_by_tag(buf,conf,"button_sleep_file");
+    if (strlen(buf) > 0)
+    {
+      eol_line_cpy(buttonsleepfile,buf);
+    }
     eol_config_get_vec3d_by_tag(&_eol_component_button_color[0],conf,"button_text_color");
     eol_config_get_vec3d_by_tag(&_eol_component_button_color[1],conf,"button_high_text_color");
     eol_config_get_vec3d_by_tag(&_eol_component_button_color[2],conf,"button_hit_text_color");
+    eol_config_get_vec3d_by_tag(&_eol_component_button_color[3],conf,"button_sleep_text_color");
     eol_config_get_bool_by_tag(&_eol_component_button_text_outline,conf,"button_text_outline");
+    eol_config_get_float_by_tag(&_eol_component_button_alpha,conf,"button_alpha");
   }
   _eol_component_stock_button[0] = eol_sprite_load(buttonfile,-1,-1);
   _eol_component_stock_button[1] = eol_sprite_load(buttonhighfile,-1,-1);
   _eol_component_stock_button[2] = eol_sprite_load(buttonhitfile,-1,-1);
+  _eol_component_stock_button[3] = eol_sprite_load(buttonsleepfile,-1,-1);
+}
+
+void eol_button_set_inactive(eolComponent *button)
+{
+  if (!eol_component_get_button_data(button))return;
+  button->state = eolButtonSleep;
+}
+
+void eol_button_set_active(eolComponent *button)
+{
+  if (!eol_component_get_button_data(button))return;
+  if (button->state == eolButtonSleep)
+    button->state = eolButtonIdle;
 }
 
 void eol_button_set_text(eolComponent *button,eolLine newText)
@@ -114,6 +138,8 @@ eolBool eol_component_button_update(eolComponent *component)
   eolComponentButton *button = NULL;
   if (!component)return eolFalse;
   button = eol_component_get_button_data(component);
+  if (!button)return eolFalse;
+  if (component->state == eolButtonSleep)return eolFalse;
 
   component->oldState = component->state;
   eol_mouse_get_position(&x,&y);
@@ -188,7 +214,7 @@ void eol_component_button_draw_rect(eolComponent *component,eolRect bounds)
     button->buttonText,
     component->bounds.x + 2,
     component->bounds.y + 2,
-    _eol_component_button_color[component->state],
+    button->textColor[component->state],
     button->alpha,
     button->fontSize,
     button->justify
@@ -240,7 +266,7 @@ void eol_component_button_draw(eolComponent *component,eolRect bounds)
       button->buttonText,
       r.x,
       r.y,
-      _eol_component_button_color[component->state],
+      button->textColor[component->state],
       button->alpha,
       button->fontSize,
       button->justify
@@ -464,6 +490,7 @@ eolComponent *eol_button_new(
     eolVec3D       pressColor
   )
 {
+  int i;
   eolComponentButton *button = NULL;
   eolComponent *component = NULL;
   component = eol_component_new();
@@ -496,6 +523,10 @@ eolComponent *eol_button_new(
   component->canHasFocus = eolTrue;
   component->type = eolButtonComponent;
   component->data_move = eol_button_move;
+  for (i = 0; i < eolButtonStateMax;i++)
+  {
+    eol_vec3d_copy(button->textColor[i],_eol_component_button_color[i]);
+  }
   eol_button_move(component,bounds);
   return component;
 }

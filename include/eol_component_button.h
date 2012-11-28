@@ -36,6 +36,7 @@ typedef struct
   eolUint     buttonType;               /**<if its an image, or raw text or both*/
   eolSprite * button[eolButtonStateMax];/**<if defined, it will use these over
   stock button images*/
+  eolVec3D    textColor[eolButtonStateMax];
   eolVec3D    backgroundColor;
   eolFloat    backgroundAlpha;
   eolVec3D    highlightColor;
