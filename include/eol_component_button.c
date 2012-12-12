@@ -9,6 +9,10 @@
 eolComponentButton *eol_component_get_button_data(eolComponent *component);
 void eol_component_button_free(eolComponent *component);
 void eol_component_button_new(eolComponent *component);
+void eol_component_button_set_activation(eolComponent* comp,
+                                         eolBool release,
+                                         eolBool press,
+                                         eolBool hold);
 
 /*local global variables*/
 eolSprite * _eol_component_stock_button[eolButtonStateMax] = {NULL,NULL,NULL,NULL};
@@ -17,6 +21,9 @@ eolInt      _eol_component_button_offset_x = 0;
 eolInt      _eol_component_button_offset_y = 0;
 eolBool     _eol_component_button_text_outline = eolTrue;
 eolFloat    _eol_component_button_alpha = 1;
+eolBool     _eol_component_button_press_active = eolFalse;
+eolBool     _eol_component_button_hold_active = eolFalse;
+eolBool     _eol_component_button_release_active = eolTrue;
 
 /*function definitions*/
 
@@ -26,6 +33,9 @@ void eol_button_configure(eolConfig *conf)
   eolLine buttonfile,buttonhitfile,buttonhighfile,buttonsleepfile;
   _eol_component_button_offset_x = 0;
   _eol_component_button_offset_y = 0;
+  _eol_component_button_press_active = eolFalse;
+  _eol_component_button_hold_active = eolFalse;
+  _eol_component_button_release_active = eolTrue;
   eol_vec3d_set(_eol_component_button_color[0],0.8,0.8,0.8);
   eol_vec3d_set(_eol_component_button_color[1],1,1,0);
   eol_vec3d_set(_eol_component_button_color[2],0.6,0.6,0.6);
@@ -36,6 +46,10 @@ void eol_button_configure(eolConfig *conf)
   eol_line_cpy(buttonsleepfile,"images/UI/btn_sleep.png");
   if (conf != NULL)
   {
+    eol_config_get_bool_by_tag(&_eol_component_button_press_active,conf,"active_on_press");
+    eol_config_get_bool_by_tag(&_eol_component_button_hold_active,conf,"active_on_hold");
+    eol_config_get_bool_by_tag(&_eol_component_button_release_active,conf,"active_on_release");
+
     eol_config_get_int_by_tag(&_eol_component_button_offset_x,conf,"button_x_offset");
     eol_config_get_int_by_tag(&_eol_component_button_offset_y,
                               conf,
@@ -71,6 +85,12 @@ void eol_button_configure(eolConfig *conf)
   _eol_component_stock_button[1] = eol_sprite_load(buttonhighfile,-1,-1);
   _eol_component_stock_button[2] = eol_sprite_load(buttonhitfile,-1,-1);
   _eol_component_stock_button[3] = eol_sprite_load(buttonsleepfile,-1,-1);
+}
+
+eolUint eol_button_get_state(eolComponent *button)
+{
+  if (!eol_component_get_button_data(button))return 0;
+  return button->state;
 }
 
 void eol_button_set_inactive(eolComponent *button)
@@ -154,17 +174,17 @@ eolBool eol_component_button_update(eolComponent *component)
     if (eol_input_is_key_pressed(button->input))
     {
       component->state = eolButtonPressed;
-      return eolFalse;
+      return button->activeOnPress;
     }
     if (eol_input_is_key_held(button->input))
     {
       component->state = eolButtonPressed;
-      return eolFalse;
+      return button->activeOnHold;
     }
     if (eol_input_is_key_released(button->input))
     {
       component->state = eolButtonIdle;
-      return eolTrue;
+      return button->activeOnRelease;
     }
   }
   if (eol_vec_in_rect(v,component->bounds))
@@ -173,17 +193,17 @@ eolBool eol_component_button_update(eolComponent *component)
     if (eol_mouse_input_held(eolMouseLeft))
     {
       component->state = eolButtonPressed;
-      return eolFalse;
+      return button->activeOnHold;
     }
     if (eol_mouse_input_pressed(eolMouseLeft))
     {
       component->state = eolButtonPressed;
-      return eolFalse;
+      return button->activeOnPress;
     }
     else if (eol_mouse_input_released(eolMouseLeft))
     {
       component->state = eolButtonIdle;
-      return eolTrue;
+      return button->activeOnRelease;
     }
     return eolFalse;
   }
@@ -528,7 +548,24 @@ eolComponent *eol_button_new(
     eol_vec3d_copy(button->textColor[i],_eol_component_button_color[i]);
   }
   eol_button_move(component,bounds);
+  eol_component_button_set_activation(component,
+                                      _eol_component_button_release_active,
+                                      _eol_component_button_press_active,
+                                      _eol_component_button_hold_active);
   return component;
+}
+
+void eol_component_button_set_activation(eolComponent* comp,
+                                         eolBool release,
+                                         eolBool press,
+                                         eolBool hold)
+{
+  eolComponentButton *button = NULL;
+  button = eol_component_get_button_data(comp);
+  if (button == NULL)return;
+  button->activeOnRelease = release;
+  button->activeOnPress = press;
+  button->activeOnHold = hold;
 }
 
 eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
@@ -548,6 +585,9 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
   eolLine buttonFile;
   eolLine buttonHighFile;
   eolLine buttonHitFile;
+  eolBool active_on_hold;
+  eolBool active_on_press;
+  eolBool active_on_release;
   eolVec3D backgroundColor;
   eolFloat backgroundAlpha;
   eolVec3D highlightColor;
@@ -555,6 +595,13 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
   eolBool  center = eolFalse;
 
   if (!def)return NULL;
+  active_on_hold = _eol_component_button_hold_active;
+  active_on_press = _eol_component_button_press_active;
+  active_on_release = _eol_component_button_release_active;
+
+  eol_keychain_get_hash_value_as_bool(&active_on_release, def, "active_on_release");
+  eol_keychain_get_hash_value_as_bool(&active_on_press, def, "active_on_press");
+  eol_keychain_get_hash_value_as_bool(&active_on_hold, def, "active_on_hold");
   
   eol_keychain_get_hash_value_as_line(buttonType, def, "buttonType");
   eol_keychain_get_hash_value_as_line(name, def, "name");
@@ -654,6 +701,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
       pressColor
     );
   }
+  eol_component_button_set_activation(comp,active_on_release,active_on_press,active_on_hold);
   return comp;
 }
 

@@ -426,6 +426,16 @@ void eol_vec3d_cross_product(eolVec3D *out, eolVec3D v1, eolVec3D v2);
 #define eol_vec4d_copy(dst,src)  (dst.x = src.x,dst.y = src.y,dst.z = src.z,dst.w=src.w)
 
 /**
+ * @brief checks if vectors are exactly matches of each other
+ *
+ * @param a one vector to check
+ * @param b other vector to check
+ */
+#define eol_vec2d_equal(a,b) ((a.x == b.x)&&(a.y == b.y))
+#define eol_vec3d_equal(a,b) ((a.x == b.x)&&(a.y == b.y)&&(a.z == b.z))
+#define eol_vec4d_equal(a,b) ((a.x == b.x)&&(a.y == b.y)&&(a.z == b.z)&&(a.w == b.w))
+
+/**
  * @brief Macro to subtract two vectors
  * varient ending in p takes a pointer to eolVect3D instead.
  * Varients ending with 2D only operate on the x an y components of vectors

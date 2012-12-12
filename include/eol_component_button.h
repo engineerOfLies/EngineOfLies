@@ -32,6 +32,9 @@ typedef struct
   eolBool     centered;
   eolUint     fontSize;
   eolFloat    alpha;
+  eolBool     activeOnPress;
+  eolBool     activeOnHold;
+  eolBool     activeOnRelease;
   eolLine     buttonText;               /**<text to display over button...should it be a label component?*/
   eolUint     buttonType;               /**<if its an image, or raw text or both*/
   eolSprite * button[eolButtonStateMax];/**<if defined, it will use these over

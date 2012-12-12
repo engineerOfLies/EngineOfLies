@@ -398,6 +398,7 @@ void eol_button_set_text(eolComponent *button,eolLine newText);
 void eol_button_set_inactive(eolComponent *button);
 void eol_button_set_active(eolComponent *button);
 
+eolUint eol_button_get_state(eolComponent *button);
 
 /**
  * @brief gets the dimensions for a stock button
