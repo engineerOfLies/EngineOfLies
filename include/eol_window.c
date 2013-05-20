@@ -381,6 +381,8 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
   eolConfig *conf;
   eolKeychain *chain, *item;
   int i;
+  eolBool centerLeftRight = eolFalse;
+  eolBool centerTopBottom = eolFalse;
   eolLine typecheck;
   eolRectFloat tempr;
   eolUint sw,sh;
@@ -389,6 +391,8 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
   conf = eol_config_load(filename);
   if (!conf)return eolFalse;
   eol_graphics_get_size(&sw,&sh);
+  eol_config_get_bool_by_tag(&centerLeftRight,conf,"centerLeftRight");
+  eol_config_get_bool_by_tag(&centerTopBottom,conf,"centerTopBottom");
   eol_config_get_line_by_tag(window->name,conf,"name");
   eol_config_get_rectfloat_by_tag(&tempr,conf,"rect");
   if (tempr.x < 0)
@@ -406,6 +410,14 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
   if (tempr.h <= 0)
   {
     tempr.h = sh - tempr.h - tempr.y;
+  }
+  if (centerLeftRight)
+  {
+    tempr.x = (sw - tempr.w )/2;
+  }
+  if (centerTopBottom)
+  {
+    tempr.y = (sh - tempr.h )/2;
   }
   window->rect.x = tempr.x;
   window->rect.y = tempr.y;

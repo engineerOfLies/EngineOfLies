@@ -286,7 +286,7 @@ eolUint eol_message_draw(eolMessage *message,eolVec2D position)
 
 void eol_message_timeout()
 {
-  GList *it, *last;
+  GList *it;
   eolUint now;
   eolMessage* mess;
   eolMessageData *data = eol_message_get_data();
