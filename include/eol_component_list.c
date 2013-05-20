@@ -571,7 +571,7 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
   eolBool       showBackground = eolTrue;
   eolBool       showVslider = eolTrue,showHslider = eolTrue;
   eolVec2D      itemDim;
-
+  eolComponent * list = NULL;
   if (!def)return NULL;
   eol_keychain_get_hash_value_as_line(name, def, "name");
   eol_keychain_get_hash_value_as_uint(&id, def, "id");
@@ -581,7 +581,8 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
   eol_keychain_get_hash_value_as_uint(&fontSize, def, "fontSize");
   eol_keychain_get_hash_value_as_bool(&showBackground, def, "showBackground");
   eol_keychain_get_hash_value_as_bool(&allowSelection, def, "allowSelection");
-  return eol_list_new(
+  
+  list = eol_list_new(
     id,
     name,
     rect,
@@ -596,6 +597,12 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
     eol_vec3d(1,1,1),
     1
   );
+  if (!list)
+  {
+    return NULL;
+  }
+  
+  return list;
 }
 
 /*eol@eof*/

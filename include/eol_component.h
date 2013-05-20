@@ -217,6 +217,14 @@ eolComponent *eol_slider_new(
 );
 
 /**
+ * @brief create a slider component based on config data
+ * @param def the config data to shape the slider
+ * @param parentRect the counding rect for shaping the slider
+ * @return NULL on failure, or a slider component on success
+ */
+eolComponent *eol_percent_bar_create_from_config(eolKeychain *def,eolRect parentRect);
+
+/**
  * @brief created a new slider component using common settings
  * @param id the id for this component. This should be unique per window.
  * @param name the name of this component.  This should be unique per window.
@@ -291,6 +299,14 @@ eolComponent *eol_label_new(
  * @param text the text to change it to
  */
 void eol_label_set_text(eolComponent *comp,char *text);
+
+/**
+ * @brief create a label from config data
+ * @param config loaded config data to determine label information
+ * @param parentRect confine to these bounds
+ * @return NULL on failure or a pointer a label component
+ */
+eolComponent *eol_component_create_label_from_config(eolKeychain *config,eolRect parentRect);
 
 /* Button Functions*/
 

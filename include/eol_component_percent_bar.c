@@ -182,4 +182,48 @@ void eol_component_percent_bar_set(eolComponent *component,eolFloat percent)
   bar->percent = percent;
 }
 
+eolComponent *eol_percent_bar_create_from_config(eolKeychain *def,eolRect parentRect)
+{
+  eolUint       id;
+  eolLine       name;
+  eolRectFloat  rect;
+  eolBool     vertical = eolFalse;
+  eolBool     ascending = eolFalse;
+  eolFloat    percent = 0;
+  eolVec3D    statusColor = {1,1,1};
+  eolVec3D    backgroundColor = {0,0,0};
+  eolFloat    statusAlpha = 1;
+  eolFloat    backgroundAlpha = 1;
+
+  if (!def)
+  {
+    eol_logger_message(EOL_LOG_WARN,"eol_component_get_percent_bar: passed bad def parameter");
+    return NULL;
+  }
+
+  eol_keychain_get_hash_value_as_line(name, def, "name");
+  eol_keychain_get_hash_value_as_uint(&id, def, "id");
+  eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
+  eol_keychain_get_hash_value_as_bool(&vertical, def, "vertical");
+  eol_keychain_get_hash_value_as_bool(&ascending, def, "ascending");
+  eol_keychain_get_hash_value_as_float(&percent, def, "percent");
+  eol_keychain_get_hash_value_as_vec3d(&statusColor, def, "statusColor");
+  eol_keychain_get_hash_value_as_vec3d(&backgroundColor, def, "backgroundColor");
+  eol_keychain_get_hash_value_as_float(&statusAlpha, def, "statusAlpha");
+  eol_keychain_get_hash_value_as_float(&backgroundAlpha, def, "backgroundAlpha");
+
+  return eol_percent_bar_new(
+    id,
+    name,
+    rect,
+    parentRect,
+    vertical,
+    ascending,
+    percent,
+    statusColor,
+    backgroundColor,
+    statusAlpha,
+    backgroundAlpha
+  );
+}
 /*eol@eof*/

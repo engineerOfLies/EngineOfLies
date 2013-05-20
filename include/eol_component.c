@@ -924,6 +924,59 @@ void eol_component_slider_new(eolComponent *component)
   component->type = eolSliderComponent;
 }
 
+eolComponent *eol_component_create_label_from_config(eolKeychain *def,eolRect parentRect)
+{
+  eolUint       id;
+  eolLine       text;
+  eolLine       name;
+  eolLine       justify;
+  eolLine       wordWrap;
+  eolUint       fontSize;
+  eolVec3D      color = {1,1,1};
+  eolFloat      alpha = 1;
+  eolLine       fontfile; 
+  eolRectFloat  rect;
+  eolComponent *comp;
+  char        * font = NULL;
+  
+  if (!def)
+  {
+    eol_logger_message(EOL_LOG_WARN,"eol_component: Passed bad def parameter!");
+    return NULL;
+  }
+  
+  eol_line_cpy(fontfile,"\0");
+  eol_line_cpy(justify,"\0");
+  eol_line_cpy(wordWrap,"\0");
+  
+  eol_keychain_get_hash_value_as_uint(&id, def, "id");
+  eol_keychain_get_hash_value_as_uint(&fontSize, def, "fontSize");
+  eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
+  eol_keychain_get_hash_value_as_line(text, def, "text");
+  eol_keychain_get_hash_value_as_line(name, def, "name");
+  eol_keychain_get_hash_value_as_line(justify, def, "justify");
+  eol_keychain_get_hash_value_as_line(fontfile, def, "fontName");
+  eol_keychain_get_hash_value_as_line(wordWrap, def, "wordWrap");
+  eol_keychain_get_hash_value_as_vec3d(&color, def, "color");
+  eol_keychain_get_hash_value_as_float(&alpha, def, "alpha");
+  
+  if (strlen(fontfile) > 0)font = fontfile;
+  return eol_label_new(
+    id,
+    name,
+    rect,
+    parentRect,
+    eolTrue,
+    text,
+    eol_font_justify_from_string(justify),
+    eol_true_from_string(wordWrap),
+    fontSize,
+    font,
+    color,
+    alpha
+  );
+}
+
 void eol_component_label_new(eolComponent *component)
 {
   if (component->componentData != NULL)
