@@ -354,17 +354,18 @@ void eol_component_slider_draw(eolComponent *component, eolRect bounds)
   eolVec2D drawPosition;
   eolComponentSlider *slider = eol_component_get_slider_data(component);
   if (slider == NULL)return;
-  eol_rect_copy(&r,bounds);
+  eol_rect_copy(&r,component->bounds);
+
   if (slider->vertical)
   {
-    r.w = bounds.w * 0.5;
+    r.w = component->bounds.w * 0.5;
     r.x += r.w * 0.5;
     drawPosition.x = r.x + (r.w * 0.5);
     drawPosition.y = r.y + (r.h * slider->position);
   }
   else
   {
-    r.h = bounds.h * 0.5;
+    r.h = component->bounds.h * 0.5;
     r.y += r.h * 0.5;
     drawPosition.y = r.y + (r.h * 0.5);
     drawPosition.x = r.x + (r.w * slider->position);
@@ -550,6 +551,7 @@ eolBool eol_component_slider_update(eolComponent *component)
   if (!component)return eolFalse;
   slider = eol_component_get_slider_data(component);
   if (slider == NULL)return eolFalse;
+
   eol_mouse_get_position(&x,&y);
   
   if (slider->vertical)
@@ -755,6 +757,7 @@ void eol_component_make_slider(
   slider->vertical = vertical;
   switch(sliderType)
   {
+    case eolSliderStock:
     case eolSliderCommon:
       if (vertical)
       {
@@ -767,7 +770,6 @@ void eol_component_make_slider(
         slider->sliderHigh = _eol_component_slider[3];
       }
       break;
-    case eolSliderStock:
     case eolSliderCustom:
       slider->slider = eol_sprite_load(sliderFile,-1,-1);
       slider->sliderHigh = eol_sprite_load(sliderHigh,-1,-1);
@@ -936,7 +938,6 @@ eolComponent *eol_component_create_label_from_config(eolKeychain *def,eolRect pa
   eolFloat      alpha = 1;
   eolLine       fontfile; 
   eolRectFloat  rect;
-  eolComponent *comp;
   char        * font = NULL;
   
   if (!def)
@@ -1100,7 +1101,8 @@ eolComponent *eol_slider_new(
   eolComponent *component = NULL;
   component = eol_component_new();
   if (!component)return NULL;
-  
+  fprintf(stdout,"bounds: %i,%i,%i,%i\n",bounds.x,bounds.y,bounds.w,bounds.h);
+  fprintf(stdout,"rect: %f,%f,%f,%f\n",rect.x,rect.y,rect.w,rect.h);
   eol_component_make_slider(component,
                             vertical,
                             slider,
@@ -1129,9 +1131,66 @@ eolComponent *eol_slider_new(
   if ((rect.h <= 1)  && (rect.h >= 0))
     component->bounds.h = bounds.h * rect.h;
   else component->bounds.h = rect.h;
+  fprintf(stdout,"final componentbounds: %i,%i,%i,%i\n",component->bounds.x,component->bounds.y,component->bounds.w,component->bounds.h);
   return component;
 
 }
+
+eolComponent *eol_slider_create_from_config(eolKeychain *def,eolRect parentRect)
+{
+  eolUint        id;
+  eolLine        name;
+  eolRectFloat   rect;
+  eolBool        vertical = eolFalse;
+  eolVec3D       barColor;
+  eolFloat       startPosition = 0;
+  eolLine        sliderType;
+  eolInt         sliderStyle = eolSliderStock;
+  eolLine        slider = "";
+  eolLine        sliderHigh = "";
+  eolLine        bar = "";
+  eolLine        cap1 = "";
+  eolLine        cap2 = "";
+  
+  if (!def)
+  {
+    eol_logger_message(EOL_LOG_WARN,"eol_component: passed bad config parameter");
+    return NULL;
+  }
+  eol_keychain_get_hash_value_as_line(name, def, "name");
+  eol_keychain_get_hash_value_as_uint(&id, def, "id");
+  eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
+  eol_keychain_get_hash_value_as_bool(&vertical, def, "vertical");
+  eol_keychain_get_hash_value_as_vec3d(&barColor, def, "barColor");
+  eol_keychain_get_hash_value_as_line(sliderType, def, "sliderType");
+  eol_keychain_get_hash_value_as_line(slider, def, "slider");
+  eol_keychain_get_hash_value_as_line(sliderHigh, def, "sliderHigh");
+  eol_keychain_get_hash_value_as_line(bar, def, "bar");
+  eol_keychain_get_hash_value_as_line(cap1, def, "cap1");
+  eol_keychain_get_hash_value_as_line(cap2, def, "cap2");
+  eol_keychain_get_hash_value_as_float(&startPosition, def, "startPosition");
+
+  if (eol_line_cmp(sliderType,"COMMON") == 0)
+  {
+    sliderStyle = eolSliderCommon;
+  }
+  return eol_slider_new(id,
+                        name,
+                        rect,
+                        parentRect,
+                        vertical,
+                        slider,
+                        sliderHigh,
+                        bar,
+                        cap1,
+                        cap2,
+                        barColor,
+                        eol_vec3d(1,1,1),
+                        startPosition,
+                        sliderStyle
+                      );
+}
+
 
 eolComponent *eol_label_new(
     eolUint        id,

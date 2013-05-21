@@ -246,6 +246,14 @@ eolComponent *eol_slider_common_new(
 );
 
 /**
+ * @brief create a slider component based on config data
+ * @param def the config data
+ * @param parentRect the bounds of the parent component or window
+ * @return NULL on failure or a pointer to a slider component
+ */
+eolComponent *eol_slider_create_from_config(eolKeychain *def,eolRect parentRect);
+
+/**
  * @brief gets the current position of a slider component
  * does component type checking
  * @param the component to check

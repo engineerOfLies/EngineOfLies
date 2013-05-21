@@ -601,7 +601,6 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
   {
     return NULL;
   }
-  
   return list;
 }
 
