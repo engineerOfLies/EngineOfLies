@@ -27,7 +27,6 @@ typedef struct
 
 typedef struct
 {
-  char    * output;      /**<only on confirmation will the output be changed.*/
   GString * buffer;
   eolInt    bufferLimit; /**<if -1 no limit, otherwise its the maximum character
   that will be added to buffer*/
@@ -39,6 +38,8 @@ typedef struct
   eolVec3D  color;
   eolVec3D  bgcolor;
   eolFloat  alpha;
+  void      (*entry_callback)(void *data,eolLine output);/**< callback when entry is changed*/
+  void    * callback_data;/**<custom data to be passed along with the callback*/
 }eolComponentEntry;
 
 typedef struct
@@ -406,12 +407,12 @@ void eol_component_entry_draw(eolComponent *component, eolRect bounds)
   eolRect r;
   eolComponentEntry *entry = eol_component_get_entry_data(component);
   if (entry == NULL)return;
-  r.x = bounds.x - 1;
-  r.y = bounds.y - 1;
-  r.w = bounds.w + 2;
-  r.h = bounds.h + 2;
+  r.x = component->bounds.x - 1;
+  r.y = component->bounds.y - 1;
+  r.w = component->bounds.w + 2;
+  r.h = component->bounds.h + 2;
   eol_draw_solid_rect(r,eol_vec3d(1,1,1),1);
-  eol_draw_solid_rect(bounds,entry->bgcolor,1);
+  eol_draw_solid_rect(component->bounds,entry->bgcolor,1);
   if (entry->buffer->len <= 0)return;
   if (entry->font == NULL)
   {
@@ -419,9 +420,9 @@ void eol_component_entry_draw(eolComponent *component, eolRect bounds)
     {
       eol_font_draw_text_block(
       entry->buffer->str,
-      bounds.x,
-      bounds.y,
-      bounds.w,
+      component->bounds.x,
+      component->bounds.y,
+      component->bounds.w,
       0,
       entry->color,
       entry->alpha,
@@ -432,8 +433,8 @@ void eol_component_entry_draw(eolComponent *component, eolRect bounds)
     {
       eol_font_draw_text_justify(
         entry->buffer->str,
-        bounds.x,
-        bounds.y,
+        component->bounds.x,
+        component->bounds.y,
         entry->color,
         entry->alpha,
         entry->fontSize,
@@ -447,7 +448,7 @@ void eol_component_entry_draw(eolComponent *component, eolRect bounds)
     {
       eol_font_draw_text_block_custom(
         entry->buffer->str,
-        bounds,
+        component->bounds,
         entry->color,
         entry->alpha,
         entry->font
@@ -457,8 +458,8 @@ void eol_component_entry_draw(eolComponent *component, eolRect bounds)
     {
       eol_font_draw_text_justify_custom(
         entry->buffer->str,
-        bounds.x,
-        bounds.y,
+        component->bounds.x,
+        component->bounds.y,
         entry->color,
         entry->alpha,
         entry->font,
@@ -647,6 +648,7 @@ eolBool eol_component_entry_update(eolComponent *component)
   eolComponentEntry *entry;
   
   if (!component)return eolFalse;
+  if (!component->hasFocus)return eolFalse;
   entry = eol_component_get_entry_data(component);
   if (entry == NULL)return eolFalse;
   if (eol_input_is_key_released(SDLK_BACKSPACE))
@@ -708,6 +710,19 @@ eolBool eol_component_entry_update(eolComponent *component)
   return eolFalse;
 }
 
+void eol_entry_assign_callback(eolComponent *component,void *data, void (*callback)(void *data, eolLine output))
+{
+  eolComponentEntry * entry = NULL;
+  entry = eol_component_get_entry_data(component);
+  if (entry == NULL)
+  {
+    eol_logger_message(EOL_LOG_WARN,"eol_component:unable to assign entry output\n");
+    return;
+  }
+  entry->entry_callback = callback;
+  entry->callback_data = data;
+}
+
 void eol_entry_assign_output(eolComponent *component)
 {
   eolComponentEntry * entry = NULL;
@@ -717,12 +732,12 @@ void eol_entry_assign_output(eolComponent *component)
     eol_logger_message(EOL_LOG_WARN,"eol_component:unable to assign entry output\n");
     return;
   }
-  if (entry->output == NULL)
+  if (entry->entry_callback == NULL)
   {
-    eol_logger_message(EOL_LOG_WARN,"eol_component:unable to assign output.  NULL pointer specified\n");
+    eol_logger_message(EOL_LOG_WARN,"eol_component:unable to assign output.  No callback specified\n");
     return;
   }
-  strncpy(entry->output,entry->buffer->str,entry->bufferLimit);
+  entry->entry_callback(entry->callback_data,entry->buffer->str);
 }
 
 /*
@@ -790,7 +805,7 @@ void eol_component_make_slider(
 
 void eol_component_make_entry(
     eolComponent * component,
-    char         * output,
+    eolLine        startingText,
     eolUint        outputLimit,
     eolUint        justify,
     eolUint        fontSize,
@@ -810,7 +825,7 @@ void eol_component_make_entry(
     return;
   }
  
-  entry->buffer = g_string_new(output);
+  entry->buffer = g_string_new(startingText);
   if (entry->buffer == NULL)
   {
     eol_logger_message(
@@ -819,7 +834,7 @@ void eol_component_make_entry(
     eol_component_entry_free(component);
     return;
   }
-  entry->output = output;
+  
   entry->bufferLimit = outputLimit;
   entry->justify = justify;
   entry->fontSize = fontSize;
@@ -1101,8 +1116,6 @@ eolComponent *eol_slider_new(
   eolComponent *component = NULL;
   component = eol_component_new();
   if (!component)return NULL;
-  fprintf(stdout,"bounds: %i,%i,%i,%i\n",bounds.x,bounds.y,bounds.w,bounds.h);
-  fprintf(stdout,"rect: %f,%f,%f,%f\n",rect.x,rect.y,rect.w,rect.h);
   eol_component_make_slider(component,
                             vertical,
                             slider,
@@ -1121,7 +1134,6 @@ eolComponent *eol_slider_new(
   }
   component->id = id;
   eol_word_cpy(component->name,name);
-  component->canHasFocus = eolTrue;
   component->type = eolSliderComponent;
   eol_rectf_copy(&component->rect,rect);
   eol_component_get_rect_from_bounds(&component->bounds,bounds, rect);
@@ -1131,9 +1143,7 @@ eolComponent *eol_slider_new(
   if ((rect.h <= 1)  && (rect.h >= 0))
     component->bounds.h = bounds.h * rect.h;
   else component->bounds.h = rect.h;
-  fprintf(stdout,"final componentbounds: %i,%i,%i,%i\n",component->bounds.x,component->bounds.y,component->bounds.w,component->bounds.h);
   return component;
-
 }
 
 eolComponent *eol_slider_create_from_config(eolKeychain *def,eolRect parentRect)
@@ -1230,9 +1240,17 @@ eolComponent *eol_label_new(
   component->id = id;
   strncpy(component->name,name,EOLWORDLEN);
   eol_rectf_copy(&component->rect,rect);
-  component->canHasFocus = canHasFocus;
   component->type = eolLabelComponent;
   return component;
+}
+
+void eol_entry_get_line(eolComponent *component,eolLine output)
+{
+  eolComponentEntry * entry = NULL;
+  if (!component)return;
+  entry = eol_component_get_entry_data(component);
+  if (entry == NULL)return;
+  eol_line_cpy(output,entry->buffer->str);
 }
 
 eolComponent *eol_line_entry_new(
@@ -1261,6 +1279,57 @@ eolComponent *eol_line_entry_new(
   );
 }
 
+eolComponent *eol_entry_create_from_config(eolKeychain *def, eolRect parentRect)
+{
+  eolUint       id;
+  eolLine       text;
+  eolLine       name;
+  eolLine       justify = "";
+  eolBool       wordWrap = eolFalse;
+  eolBool       limitNumbers = eolFalse;
+  eolUint       fontSize;
+  eolVec3D      color = {1,1,1};
+  eolVec3D      bgcolor = {0,0,0};
+  eolFloat      alpha = 1;
+  eolLine       fontName = ""; 
+  eolRectFloat  rect;
+  
+  if (!def)
+  {
+    eol_logger_message(EOL_LOG_WARN,"eol_component: Passed bad def parameter!");
+    return NULL;
+  }
+  
+  eol_keychain_get_hash_value_as_uint(&id, def, "id");
+  eol_keychain_get_hash_value_as_line(name, def, "name");
+  eol_keychain_get_hash_value_as_uint(&fontSize, def, "fontSize");
+  eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
+  eol_keychain_get_hash_value_as_line(text, def, "text");
+  eol_keychain_get_hash_value_as_line(justify, def, "justify");
+  eol_keychain_get_hash_value_as_line(fontName, def, "fontName");
+  eol_keychain_get_hash_value_as_bool(&wordWrap, def, "wordWrap");
+  eol_keychain_get_hash_value_as_vec3d(&color, def, "color");
+  eol_keychain_get_hash_value_as_vec3d(&bgcolor, def, "bgcolor");
+  eol_keychain_get_hash_value_as_float(&alpha, def, "alpha");
+  eol_keychain_get_hash_value_as_bool(&limitNumbers, def, "limitNumbers");
+  
+  return eol_entry_new(
+    id,
+    name,
+    rect,
+    parentRect,
+    NULL,
+    EOLLINELEN,
+    eol_font_justify_from_string(justify),
+    wordWrap,
+    fontSize,
+    fontName,
+    limitNumbers,
+    color,
+    alpha,
+    bgcolor
+  );
+}
 
 eolComponent *eol_entry_new(
     eolUint       id,
@@ -1303,7 +1372,6 @@ eolComponent *eol_entry_new(
   component->id = id;
   strncpy(component->name,name,EOLWORDLEN);
   eol_rectf_copy(&component->rect,rect);
-  component->canHasFocus = eolTrue;
   component->type = eolEntryComponent;
   eol_component_get_rect_from_bounds(&component->bounds,bounds, rect);
   return component;
@@ -1392,6 +1460,47 @@ void eol_component_get_rect_from_bounds(eolRect *rect,eolRect canvas, eolRectFlo
   rect->y = canvas.y + (rbounds.y * canvas.h);
   rect->w = canvas.w * rbounds.w;
   rect->h = canvas.h * rbounds.h;
+}
+
+eolComponent * eol_component_make_from_config(eolKeychain *config,eolRect boundingRect)
+{
+  eolLine typecheck = "";
+  eolComponent *comp = NULL;
+  if (!eol_keychain_get_hash_value_as_line(typecheck, config, "type"))
+  {
+    eol_logger_message(EOL_LOG_WARN,"eol_component: Config missing component data\n");
+    return NULL;
+  }
+  if (eol_line_cmp(typecheck,"BUTTON") == 0)
+  {
+    comp = eol_component_button_load(boundingRect,config);
+  }
+  else if (eol_line_cmp(typecheck,"LABEL") == 0)
+  {
+    comp = eol_component_create_label_from_config(config,boundingRect);
+  }
+  else if (eol_line_cmp(typecheck,"SLIDER") == 0)
+  {
+    comp = eol_slider_create_from_config(config,boundingRect);
+  }
+  else if (eol_line_cmp(typecheck,"PERCENT") == 0)
+  {
+    comp = eol_percent_bar_create_from_config(config,boundingRect);
+  }
+  else if (eol_line_cmp(typecheck,"LIST") == 0)
+  {
+    comp = eol_list_create_from_config(boundingRect,config);
+  }
+  else if (eol_line_cmp(typecheck,"ENTRY") == 0)
+  {
+    comp = eol_entry_create_from_config(config,boundingRect);
+  }
+  else eol_logger_message(EOL_LOG_WARN,"eol_component: Config component type unsupported\n");
+  if (!comp)return NULL;
+  /*common to all components config*/
+  eol_keychain_get_hash_value_as_bool(&comp->canHasFocus, config, "canHaveFocus");
+  eol_keychain_get_hash_value_as_bool(&comp->hasFocus, config, "focusDefault");
+  return comp;
 }
 
 /*eol@eof*/

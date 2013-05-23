@@ -57,6 +57,7 @@ void eol_list_move(eolComponent *component,eolRect newbounds)
     list->hSliderBounds.w = component->bounds.w;
     list->hSliderBounds.x = component->bounds.x;
     list->hSliderBounds.y = component->bounds.y + component->bounds.h;
+    /*TODO move all list items*/
 }
 
 eolComponent *eol_list_new(
@@ -103,7 +104,6 @@ eolComponent *eol_list_new(
   list->showBackground = showBackground;
   component->id = id;
   eol_word_cpy(component->name,name);
-  component->canHasFocus = eolTrue;
   list->itemBounds.x = component->bounds.x;
   list->itemBounds.y = component->bounds.y;
   list->itemBounds.w = component->bounds.w;
@@ -144,6 +144,18 @@ eolComponent *eol_list_new(
   eol_vec3d_copy(list->textColor,textColor);
   list->alpha = alpha;
   return component;
+}
+
+eolBool eol_component_list_get_count(
+    eolUint      *count,
+    eolComponent *component
+  )
+{
+  eolComponentList * list = eol_component_get_list_data(component);
+  if (list == NULL)return eolFalse;
+  if (!count)return eolFalse;
+  *count = list->itemCount;
+  return eolTrue;
 }
 
 void eol_component_list_clear(eolComponent *component)

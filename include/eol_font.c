@@ -257,7 +257,32 @@ void eol_font_draw_text(
     _eol_font_size[size]
   );
 }
-  
+/*output of this function needs to be freed*/
+char * eol_font_clean_control_characters(char *in)
+{
+  char *out;
+  int outIndex = 0;
+  int inIndex = 0;
+  out = malloc(strlen(in)*2);
+  if (!out)return NULL;
+  for (inIndex = 0;inIndex < strlen(in);inIndex++,outIndex++)
+  {
+    if (in[inIndex] == '\t')
+    {
+      out[outIndex++] = ' ';
+      out[outIndex] = ' ';
+      continue;
+    }
+    if (in[inIndex] == '\r')
+    {
+      out[outIndex] = ' ';
+      continue;
+    }
+    out[outIndex] = in[inIndex];
+  }
+  out[outIndex] = '\0';
+  return out;
+}
 
 void eol_font_draw_text_custom(
     char    *text,
@@ -270,6 +295,7 @@ void eol_font_draw_text_custom(
 {
   eolVec3D pos,pos2;
   int w,h;
+  char *renderText = NULL;
   GLuint image;
   SDL_Surface *temp1 = NULL;
   SDL_Surface *temp = NULL;
@@ -304,7 +330,16 @@ void eol_font_draw_text_custom(
   colortype.g = 255 * color.y;
   colortype.b = 255 * color.z;
   colortype.unused = SDL_ALPHA_OPAQUE;
-  temp = TTF_RenderText_Blended(font->_font, text,colortype);
+  renderText = eol_font_clean_control_characters(text);
+  if (!renderText)
+  {
+    temp = TTF_RenderText_Blended(font->_font, text,colortype);
+  }
+  else
+  {
+    temp = TTF_RenderText_Blended(font->_font, renderText,colortype);
+    free(renderText);
+  }
   if (temp == NULL)
   {
     eol_logger_message(
@@ -434,6 +469,7 @@ void eol_font_draw_text_block_custom(
   eolText temptextline;
   eolText text;
   eolLine word;
+  eolBool whitespace;
   int drawheight = block.y;
   int w,h;
   int i;
@@ -467,12 +503,22 @@ void eol_font_draw_text_block_custom(
   {
     space = 0;
     i = 0;
+    whitespace = eolFalse;
     do
     {
       if(sscanf(&text[i],"%c",&word[0]) == EOF)break;
-      if(word[0] == ' ')space++;
+      if(word[0] == ' ')
+      {
+        space++;
+        whitespace = eolTrue;
+      }
+      if(word[0] == '\t')
+      {
+        space+=2;
+        whitespace = eolTrue;
+      }
       i++;
-    }while (word[0] == ' ');
+    }while (whitespace);
     if (sscanf(text,"%s",word) == EOF)
     {
       block.y=drawheight+h;
@@ -591,6 +637,7 @@ eolRect eol_font_get_block_bounds_custom(
   eolText temptextline;
   eolText text;
   eolLine word;
+  eolBool whitespace;
   int tw = 0, th = 0;
   int drawheight = 0;
   int i = 0;
@@ -615,12 +662,22 @@ eolRect eol_font_get_block_bounds_custom(
   {
     space = 0;
     i = 0;
+    whitespace = eolFalse;
     do
     {
       if(sscanf(&text[i],"%c",&word[0]) == EOF)break;
-      if(word[0] == ' ')space++;
+      if(word[0] == ' ')
+      {
+        space++;
+        whitespace = eolTrue;
+      }
+      if(word[0] == '\t')
+      {
+        space+=2;
+        whitespace = eolTrue;
+      }
       i++;
-    }while(word[0] == ' ');
+    }while(whitespace);
     
     if(sscanf(text,"%s",word) == EOF)
     {

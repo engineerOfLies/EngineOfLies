@@ -33,6 +33,11 @@ typedef struct eolWindow_S
   eolBool             passesInput;   /**<if false, prevent input from hitting windows below this one*/
   eolBool             canHasFocus;   /**<if the window can receive focus*/
   eolBool             hasFocus;      /**<if the window HAS focus*/
+  eolUint             inputFocusNext;/**<what input steps through to next focus component*/
+  eolUint             modFocusNext;  /**<what input steps through to next focus component*/
+  eolUint             inputFocusPrev;/**<what input steps through to previous focus component*/
+  eolUint             modFocusPrev;  /**<what input steps through to next focus component*/
+  eolComponent      * focusComponent;/**<if defined, points to the component that has focus*/
   eolBool             drawGeneric;   /**<if the window uses the stock draw*/
   eolUint             componentCount;/**<how many components this window has*/
   GList             * components;    /**<list of window components*/

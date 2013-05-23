@@ -467,6 +467,23 @@ eolComponent *eol_entry_new(
 );
 
 /**
+ * @brief sets up a callback function to be invoked when the entry is entered.
+ * @param component the entry component to be set up
+ * @Param data this will be passed to the callback on confirm
+ * @param callback the function to call when the entry is confirmed.
+ */
+void eol_entry_assign_callback(eolComponent *component,void * data, void (*callback)(void *data,eolLine output));
+
+/**
+ * @brief creates an entry component from config data.
+ * Only sets up the component.  A future call to eol_entry_assign_callback is needed
+ * @param def the config information containing the Entry data
+ * @param parentRect the bounds of the parent rect
+ * @return NULL on failure or a configured Entry Component.
+ */
+eolComponent *eol_entry_create_from_config(eolKeychain *def, eolRect parentRect);
+
+/**
  * @brief creates a new entry component set up with common options for single line input
  * @param id the id for this component. This should be unique per window.
  * @param name the name of this component.  This should be unique per window.
@@ -540,6 +557,17 @@ void eol_component_list_deselect_all(
   );
 
 /**
+ * @brief retrieves the number of items in the list
+ * @param count output set to count if list component is valid
+ * @param component a list component.  this function is a no-op if it is not.
+ * @return eolTrue if successful, eolFalse otherwise
+ */
+eolBool eol_component_list_get_count(
+    eolUint      *count,
+    eolComponent *component
+  );
+
+/**
  * @brief Selects the item at index n in the list.  If the list does not allow multiple
  * selections, then all other items are deselected.
  * @param component the list component
@@ -574,6 +602,13 @@ eolBool eol_component_list_get_selected_item(eolComponent **itemOut,eolComponent
 void eol_entry_assign_output(eolComponent *component);
 
 /**
+ * @brief get the current text in the entry buffer
+ * @param component the component to check
+ * @param output output parameter
+ */
+void eol_entry_get_line(eolComponent *component,eolLine output);
+
+/**
  * @brief utility to calculate draw rect from bounds and canvas rect
  */
 void eol_component_get_rect_from_bounds(eolRect *rect,eolRect canvas, eolRectFloat bounds);
@@ -595,5 +630,13 @@ eolComponent *eol_percent_bar_new(
 
 void eol_component_percent_bar_set(eolComponent *component,eolFloat percent);
 void eol_component_percent_bar_assign_values(eolComponent *component,eolFloat *max,eolFloat *value);
+
+/**
+ * @brief creates a component as described bby the config data.
+ * @param config the data describing a UI component
+ * @param boundingRect the rect of the parent container, used to set up position and sizing
+ * @return NULL on error, or a valid component
+ */
+eolComponent * eol_component_make_from_config(eolKeychain *config,eolRect boundingRect);
 
 #endif

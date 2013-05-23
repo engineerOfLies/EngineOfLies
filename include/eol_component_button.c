@@ -540,7 +540,6 @@ eolComponent *eol_button_new(
   button->centered = center;
   component->id = id;
   strncpy(component->name,name,EOLWORDLEN);
-  component->canHasFocus = eolTrue;
   component->type = eolButtonComponent;
   component->data_move = eol_button_move;
   for (i = 0; i < eolButtonStateMax;i++)

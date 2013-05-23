@@ -250,6 +250,8 @@ eolLevel *eol_level_new()
       "eol_level:failed to get new resource\n");
     return NULL;
   }
+  eol_word_cpy(level->idName,"Untitled");
+  level->keys = eol_keychain_new_list();
   return level;
 }
 

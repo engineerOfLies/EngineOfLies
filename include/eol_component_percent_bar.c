@@ -94,7 +94,6 @@ eolComponent *eol_percent_bar_new(
   }
   component->id = id;
   eol_word_cpy(component->name,name);
-  component->canHasFocus = eolTrue;
 
   return component;
 }

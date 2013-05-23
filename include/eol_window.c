@@ -129,11 +129,76 @@ void eol_window_draw_all()
   }
 }
 
+void eol_window_focus_next_component(eolWindow *win)
+{
+  GList *c = NULL;
+  GList *n = NULL;
+  eolComponent *comp;
+  if (!win)return;
+  if (!win->components)return;
+  if (!win->focusComponent)
+  {
+    for (c = win->components;c != NULL; c= c->next)
+    {
+      if (c->data != NULL)
+      {
+        comp = (eolComponent*)c->data;
+        if (comp->canHasFocus)
+        {
+          win->focusComponent = comp;
+          comp->hasFocus = eolTrue;
+          return;
+        }
+      }
+    }
+    eol_logger_message(EOL_LOG_DEBUG,"eol_window_focus_next_component: window has no components that can have focus!\n");
+    return;
+  }
+  for (c = win->components;c != NULL; c= c->next)
+  {
+    if (c->data != NULL)
+    {
+      if (c->data == win->focusComponent)
+      {
+        /*found it*/
+        break;
+      }
+    }
+  }
+  if (c == NULL)
+  {
+    win->focusComponent = NULL;
+    return;
+  }
+  /*loop through the components, looking for the next valid component that can has focus*/
+  for (n = c->next;n != c; n = n->next)
+  {
+    if (n == NULL)
+    {
+      n = win->components;
+      printf("looping\n");
+    }
+    if (n->data != NULL)
+    {
+      comp = (eolComponent *)n->data;
+      if (comp->canHasFocus)
+      {
+        comp->hasFocus = eolTrue;
+        win->focusComponent->hasFocus = eolFalse;
+        win->focusComponent = comp;
+        return;
+      }
+    }
+  }
+  /*at this point no other components could get focus, so retain it*/
+}
+
 void eol_window_update_all()
 {
   GList *l = NULL;
   GList *c = NULL;
   GList *update = NULL;
+  eolBool mod = eolTrue;
   eolBool updateHandled = eolFalse;
   eolWindow *win;
   if (!eol_window_initialized())return;
@@ -162,7 +227,40 @@ void eol_window_update_all()
       g_list_free(update);
       update = NULL;
     }
-    if ((updateHandled) || (!win->passesInput))break;
+    if (updateHandled)break;
+    if (win->canHasFocus)
+    {
+      /*check if next component has been selected*/
+      mod = eolTrue;
+      if (win->modFocusNext)
+      {
+        mod = eol_input_is_mod_held(win->modFocusNext);
+      }
+      if ((mod) && (win->inputFocusNext))
+      {
+        if (eol_input_is_key_released(win->inputFocusNext))
+        {
+          /*select Next component*/
+          eol_window_focus_next_component(win);
+          break;
+        }
+      }
+      /*now check for prev*/
+      mod = eolTrue;
+      if (win->modFocusPrev)
+      {
+        mod = eol_input_is_mod_held(win->modFocusPrev);
+      }
+      if ((mod) && (win->inputFocusPrev))
+      {
+        if (eol_input_is_key_released(win->inputFocusPrev))
+        {
+          /*select Prev component*/
+          break;
+        }
+      }
+    }
+    if (!win->passesInput)break;
   }
 }
 
@@ -231,70 +329,16 @@ void eol_window_delete(void *window)
   memset(win, 0, sizeof(eolWindow));
 }
 
-void eol_window_load_label(eolWindow *win,eolKeychain *def)
-{
-  eolComponent *comp;
-
-  if ((!win) || (!def))return;
-  
-  comp = eol_component_create_label_from_config(def,win->rect);
-  if (comp)
-  {
-    eol_window_add_component(win,comp);
-  }
-}
-
-void eol_window_load_percent_bar(eolWindow *win,eolKeychain *def)
-{
-  eolComponent *comp = NULL;
-
-  if ((!win) || (!def))return;
-
-  comp = eol_percent_bar_create_from_config(def,win->rect);
-  if (comp)
-  {
-    eol_window_add_component(win,comp);
-  }
-}
-
-void eol_window_load_list(eolWindow *win,eolKeychain *def)
-{
-  eolComponent *comp = NULL;
-
-  if (!win)return;
-  comp = eol_list_create_from_config(win->rect,def);
-  if (!comp)return;
-  eol_window_add_component(win,comp);
-}
-
-void eol_window_load_slider(eolWindow *win,eolKeychain *def)
-{
-  eolComponent *comp = NULL;
-  if ((!win) || (!def))return;
-  comp = eol_slider_create_from_config(def,win->rect);
-  if (comp)
-  {
-    eol_window_add_component(win,comp);
-  }
-}
-
-void eol_window_load_button(eolWindow *win,eolKeychain *def)
-{
-  eolComponent *comp;
-  comp = eol_component_button_load(win->rect,def);
-  eol_window_add_component(win,comp);
-  return;
-}
-
 eolBool eol_window_load_data_from_file(char * filename,void *data)
 {
   eolWindow *window;
   eolConfig *conf;
   eolKeychain *chain, *item;
+  eolComponent *comp;
+  eolLine hotkey,hotmod;
   int i;
   eolBool centerLeftRight = eolFalse;
   eolBool centerTopBottom = eolFalse;
-  eolLine typecheck;
   eolRectFloat tempr;
   eolUint sw,sh;
   if (!data)return eolFalse;
@@ -302,10 +346,34 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
   conf = eol_config_load(filename);
   if (!conf)return eolFalse;
   eol_graphics_get_size(&sw,&sh);
+  eol_config_get_bool_by_tag(&window->canHasFocus,conf,"canHasFocus");
+  eol_config_get_bool_by_tag(&window->drawGeneric ,conf,"drawGeneric");
+  eol_config_get_bool_by_tag(&window->passesInput ,conf,"passesInput");
   eol_config_get_bool_by_tag(&centerLeftRight,conf,"centerLeftRight");
   eol_config_get_bool_by_tag(&centerTopBottom,conf,"centerTopBottom");
   eol_config_get_line_by_tag(window->name,conf,"name");
   eol_config_get_rectfloat_by_tag(&tempr,conf,"rect");
+  if (eol_config_get_line_by_tag(hotkey, conf, "nextFocusHotkey"))
+  {
+    window->inputFocusNext = eol_input_parse("key", hotkey);
+  }
+  else
+  {
+    window->inputFocusNext = eol_input_parse("key", "TAB");
+  }
+  if (eol_config_get_line_by_tag(hotmod, conf, "nextFocusHotkeymod"))
+  {
+    window->modFocusNext = eol_input_parse("mod",hotmod);
+  }
+  if (eol_config_get_line_by_tag(hotkey, conf, "prevFocusHotkey"))
+  {
+    window->inputFocusPrev = eol_input_parse("key", hotkey);
+  }
+  if (eol_config_get_line_by_tag(hotmod, conf, "prevFocusHotkeymod"))
+  {
+    window->modFocusPrev = eol_input_parse("mod",hotmod);
+  }
+
   if (tempr.x < 0)
   {
     tempr.x = sw + tempr.x;
@@ -334,9 +402,6 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
   window->rect.y = tempr.y;
   window->rect.w = tempr.w;
   window->rect.h = tempr.h;
-  eol_config_get_bool_by_tag(&window->canHasFocus,conf,"canHasFocus");
-  eol_config_get_bool_by_tag(&window->drawGeneric ,conf,"drawGeneric");
-  eol_config_get_bool_by_tag(&window->passesInput ,conf,"passesInput");
   
   /*add components*/
   if (eol_config_get_keychain_by_tag(&chain,conf,"components"))
@@ -350,31 +415,14 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
           item = eol_keychain_get_list_nth(chain, i);
           if (item != NULL)
           {
-            eol_keychain_get_hash_value_as_line(typecheck, item, "type");
-            if (eol_line_cmp(typecheck,"BUTTON") == 0)
+            comp = eol_component_make_from_config(item,window->rect);
+            if (comp)
             {
-              eol_window_load_button(window,item);
-              continue;
-            }
-            if (eol_line_cmp(typecheck,"LABEL") == 0)
-            {
-              eol_window_load_label(window,item);
-              continue;
-            }
-            if (eol_line_cmp(typecheck,"SLIDER") == 0)
-            {
-              eol_window_load_slider(window,item);
-              continue;
-            }
-            if (eol_line_cmp(typecheck,"PERCENT") == 0)
-            {
-              eol_window_load_percent_bar(window,item);
-              continue;
-            }
-            if (eol_line_cmp(typecheck,"LIST") == 0)
-            {
-              eol_window_load_list(window,item);
-              continue;
+              eol_window_add_component(window,comp);
+              if (comp->hasFocus)
+              {
+                window->focusComponent = comp;
+              }
             }
           }
         }        
