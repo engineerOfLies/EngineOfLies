@@ -500,6 +500,22 @@ void eol_component_list_deselect_all(
   }
 }
 
+eolBool eol_component_list_get_nth_item(eolComponent **itemOut,eolComponent *list,eolUint n)
+{
+  GList *l;
+  eolComponentListItem *item;
+  eolComponentList * ldata;
+  if (!itemOut)return eolFalse;
+  ldata = eol_component_get_list_data(list);
+  if (!ldata)return eolFalse;
+  l = g_list_nth(ldata->itemList,n);
+  if (!l)return eolFalse;
+  item = (eolComponentListItem *)l->data;
+  if (!item)return eolFalse;
+  *itemOut = item->item;
+  return eolTrue;
+}
+
 eolBool eol_component_list_get_selected_item(eolComponent **itemOut,eolComponent *list)
 {
   eolComponentListItem *item;
@@ -511,6 +527,20 @@ eolBool eol_component_list_get_selected_item(eolComponent **itemOut,eolComponent
   item = (eolComponentListItem *)ldata->selection->data;
   if (!item)return eolFalse;
   *itemOut = item->item;
+  return eolTrue;
+}
+
+eolBool eol_component_list_delete_selected_item(eolComponent *list)
+{
+  eolComponentListItem *item;
+  eolComponentList * ldata;
+  ldata = eol_component_get_list_data(list);
+  if (!ldata)return eolFalse;
+  if (ldata->selection == NULL)return eolFalse;
+  item = (eolComponentListItem *)ldata->selection->data;
+  eol_list_item_free(&item);
+  ldata->itemList = g_list_delete_link (ldata->itemList,ldata->selection);
+  ldata->selection = NULL;
   return eolTrue;
 }
 

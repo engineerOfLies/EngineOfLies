@@ -309,6 +309,13 @@ eolComponent *eol_label_new(
 void eol_label_set_text(eolComponent *comp,char *text);
 
 /**
+ * @brief gets the text form the specified label
+ * @param comp the label component to get text from.  No-op if not a label
+ * @param text output, this buffer is filled with the text
+ */
+void eol_label_get_text(eolComponent *comp,eolLine text);
+
+/**
  * @brief create a label from config data
  * @param config loaded config data to determine label information
  * @param parentRect confine to these bounds
@@ -594,6 +601,15 @@ eolBool eol_component_list_get_selected_id(eolUint *id,eolComponent *list);
  */
 eolBool eol_component_list_get_selected_item(eolComponent **itemOut,eolComponent *list);
 
+/**
+ * @brief delete the item that is selected in the list.  If no items are selected
+ * or the component passed is not a list, this is a no-op
+ * @param the list component to delete an item from
+ * @return eolTrue if something was deleted
+ */
+eolBool eol_component_list_delete_selected_item(eolComponent *list);
+
+eolBool eol_component_list_get_nth_item(eolComponent **itemOut,eolComponent *list,eolUint n);
 
 /**
  * @brief changes what is in the output buffer for the entry.

@@ -198,6 +198,13 @@ void eol_keychain_list_move_nth_bottom(eolKeychain *list, eolUint n);
 */
 void eol_keychain_list_move_nth_top(eolKeychain *list, eolUint n);
 
+/**
+ * @brief clears all items from the list, resetting it back to new
+ * @param list the keychain to be cleared.  No-op if this is not a keychain list
+ */
+void eol_keychain_list_clear(eolKeychain *list);
+
+
 void eol_keychain_print_string(eolLine key, eolKeychain *chain,eolUint level);
 
 /**

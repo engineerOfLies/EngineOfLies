@@ -1014,6 +1014,14 @@ void eol_component_label_new(eolComponent *component)
   component->type = eolLabelComponent;
 }
 
+void eol_label_get_text(eolComponent *comp,eolLine text)
+{
+  eolComponentLabel * label = NULL;
+  label = eol_component_get_label_data(comp);
+  if (label == NULL)return;
+  eol_line_cpy(text,label->buffer->str);
+}
+
 void eol_label_set_text(eolComponent *comp,char *text)
 {
   eolComponentLabel * label = NULL;

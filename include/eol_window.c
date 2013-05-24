@@ -176,7 +176,6 @@ void eol_window_focus_next_component(eolWindow *win)
     if (n == NULL)
     {
       n = win->components;
-      printf("looping\n");
     }
     if (n->data != NULL)
     {

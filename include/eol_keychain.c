@@ -47,6 +47,20 @@ void eol_keychain_list_free(eolKeychain *list)
   free(list);
 }
 
+void eol_keychain_list_clear(eolKeychain *list)
+{
+  GList *it = NULL;
+  if (!list)return;
+  if (list->keyType != eolKeychainList)return;
+  for (it = list->keyValue;it != NULL;it = it->next)
+  {
+    eol_keychain_destroy(it->data);
+  }
+  g_list_free(list->keyValue);
+  list->keyValue = NULL;
+  list->itemCount = 0;
+}
+
 void eol_keychain_free(eolKeychain **link)
 {
   if (!link)return;
