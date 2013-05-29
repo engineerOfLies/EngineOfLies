@@ -104,7 +104,7 @@ eolSprite *eol_sprite_load(
   SDL_Surface *temp;
   SDL_Surface *temp1;
   int w, h;
-  Uint32 clearColor;
+/*  Uint32 clearColor;*/
   Uint8 r,g,b,a;
   /*first see if the sprite is already in memory*/
   eolSprite *newSprite = NULL;
@@ -173,7 +173,7 @@ eolSprite *eol_sprite_load(
   );
 
   /*Sets the clear color on the surface*/
-  clearColor = SDL_MapRGBA(newSprite->_sdlSurface->format, 0, 0, 0,255);
+/*  clearColor = SDL_MapRGBA(newSprite->_sdlSurface->format, 0, 0, 0,255);*/
   /* 
    * This goes through the pixel data copying it and checking each pixel for the
    * clear color, when found sets the alpha to 0

@@ -30,9 +30,10 @@
  */
 typedef struct
 {
-  eolWord type; /**<name of the spawn type, ie: play_start, exit, arrow_trap*/
-  eolUint id;   /**<idintifier inuque to the level*/
-  eolKeychain *keys; /**<definition of all keys for this spawn*/
+  eolLine type;       /**<name of the spawn type, ie: play_start, exit, arrow_trap*/
+  eolUint id;         /**<idintifier inuque to the level*/
+  eolOrientation ori; /**<orientation of the spawn*/
+  eolKeychain *keys;  /**<definition of all keys for this spawn*/
 }eolSpawn;
 
 /**
@@ -50,7 +51,7 @@ eolBool eol_spawn_setup(eolSpawn *spawn);
 
 /**
 * @brief frees up internally allocated memory, including the Spawn itself.
-* @param spawn a pointer to a pointer to the spawn to be deleted.  After call 
+* @param spawn a pointer tmodelFileo a pointer to the spawn to be deleted.  After call 
 * the pointer will be set to NULL
 */
 void eol_spawn_delete(eolSpawn **spawn);
@@ -122,12 +123,25 @@ eolBool eol_spawn_get_key_line(eolLine out, eolSpawn *spawn,eolWord key,eolInt *
 eolBool eol_spawn_get_key_text(eolText out, eolSpawn *spawn,eolWord key,eolInt *n);
 
 /**
- *****NOT IMPLEMENTED******
- * @brief copies the data from one spawn to another;
- *
- * @param out a pointer to a previously setup spawn that will receive a copy of in's data
- * @param in the spawn that will copied.
+ * @brief creates a keychain describing the spawn
+ * used in saving the data.
+ * @param spawn the spawn to convert to a keychain
+ * @return NULL on error or a populated keychain for the spawn
  */
-void eol_spawn_copy(eolSpawn *out, eolSpawn in);
+eolKeychain *eol_spawn_build_keychain(eolSpawn *spawn);
+
+/**
+ * @brief creates a new spawn based on config information in the keychain
+ * @param conf configuration information that describes a spawn
+ * @return NULL on error or a loaded and configed spawn
+ */
+eolSpawn *eol_spawn_create_from_keychain(eolKeychain *conf);
+
+/**
+ * @brief copies the data from one spawn to another;
+ * @param in the spawn that will copied.
+ * @return NULL on error or a duplicated spawn
+ */
+eolSpawn *eol_spawn_clone(eolSpawn *in);
 
 #endif

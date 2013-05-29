@@ -84,6 +84,7 @@ eolUint eol_true_from_string(char * truth);
 */
 eolUint eol_false_from_string(char * truth);
 
+char *eol_string_from_bool(eolBool b);
 
 /*
  * The Floating point numbers 

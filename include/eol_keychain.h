@@ -85,6 +85,18 @@ eolKeychain *eol_keychain_clone(eolKeychain *src);
 */
 eolKeychain *eol_keychain_new_string(char *text);
 
+/*creates new key values based on inputs of different types*/
+
+eolKeychain *eol_keychain_new_bool(eolBool n);
+eolKeychain *eol_keychain_new_int(eolInt n);
+eolKeychain *eol_keychain_new_uint(eolInt n);
+eolKeychain *eol_keychain_new_float(eolFloat n);
+eolKeychain *eol_keychain_new_vec3d(eolVec3D n);
+eolKeychain *eol_keychain_new_vec4d(eolVec4D n);
+eolKeychain *eol_keychain_new_rect(eolRect n);
+eolKeychain *eol_keychain_new_rectf(eolRectFloat n);
+eolKeychain *eol_keychain_new_orientation(eolOrientation ori);
+
 
 /**
 * @brief allocated and sets up a pointer to an Empty GList.
@@ -156,6 +168,7 @@ eolBool eol_keychain_get_hash_value_as_vec3d(eolVec3D *output, eolKeychain *hash
 eolBool eol_keychain_get_hash_value_as_vec4d(eolVec4D *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_rect(eolRect *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_rectfloat(eolRectFloat *output, eolKeychain *hash, eolLine key);
+eolBool eol_keychain_get_hash_value_as_orientation(eolOrientation *output, eolKeychain *hash, eolLine key);
 
 /**
 * @brief looks up the nth item in the list

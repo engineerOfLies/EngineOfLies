@@ -44,6 +44,12 @@ void eol_config_init();
 eolBool eol_config_initialized();
 
 /**
+ * @brief allocates and initializes an empy config.
+ * @return NULL on error, or a valid pointer to a config.
+ */
+eolConfig *eol_config_new();
+
+/**
  * @brief loads a configuration file into a eolConfig struct
  *
  * @param filename the config file to load.

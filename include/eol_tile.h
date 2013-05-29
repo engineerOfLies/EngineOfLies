@@ -20,6 +20,7 @@
 
 #include "eol_types.h"
 #include "eol_actor.h"
+#include "eol_keychain.h"
 
 #include <glib/glist.h>
 
@@ -36,23 +37,24 @@
 typedef struct
 {
   eolUint        id;        /**<unique tile id.  Must be unique per map*/
-  eolUint        footwidth; /**<Number of tile spaces wide this tile takes up*/
-  eolUint        footheight;/**<Number of tile spaces high this tile takes up.  Cannot be 0*/
+  eolUint        footWidth; /**<Number of tile spaces wide this tile takes up*/
+  eolUint        footHeight;/**<Number of tile spaces high this tile takes up.  Cannot be 0*/
   eolOrientation ori;       /**<default orientation*/
-  eolLine        modelFile; /**<filename of the mode file to load.*/
+  eolLine        actorFile; /**<filename of the mode file to load.*/
 }eolTileType;
 
 typedef struct
 {
-  eolUint          x,y;     /**<which tile space this tile is in.*/
+  eolUint          id;      /**<which tile type this tile is*/
+  eolInt           x,y;     /**<which tile space this tile is in.*/
   eolActor       * actor;   /**<the actor holding the tile*/
   eolOrientation   ori;     /**<orientation of THIS tile*/
 }eolTile;
 
 typedef struct
 {
-  eolFloat    tilewidth;      /**<width of tile spaces in gl coordinate space*/
-  eolFloat    tileheight;     /**<height of tile spaces*/
+  eolFloat    tileWidth;      /**<width of tile spaces in gl coordinate space*/
+  eolFloat    tileHeight;     /**<height of tile spaces*/
   eolUint     spaceWidth;     /**<number of tiles wide the space is*/
   eolUint     spaceHeight;    /**<number of tiles high the space is*/
   eolUint     tileIdPool;     /**<makes sure the same tile id is not used twice*/
@@ -60,8 +62,51 @@ typedef struct
   GList     * map;            /**<the list of all tiles in the map*/
 }eolTileMap;
 
+/**
+ * @brief allocated and initializes a new tile map
+ * @return NULL on error or a valid, zero'd eolTileMap
+ */
 eolTileMap * eol_tile_map_new();
+
+/**
+ * @brief free's all data associated with the tile map
+ * @param map the tile map to be destroyed
+ */
 void eol_tile_map_delete(eolTileMap *map);
+
+/**
+ * @brief free's all data associated with the tile map and sets pointer to NULL
+ * @param map a pointer to your map pointer.
+ */
+void eol_tile_map_free(eolTileMap **map);
+
+
 void eol_tile_map_draw(eolTileMap *map);
 void eol_tile_map_add_to_space(eolTileMap *map, cpSpace *space);
+
+/**
+ * @brief given coordinates in tile space, return the tile that exists there or NULL on not found
+ * @param map the tile map to search
+ * @param x the x coordinate to check at
+ * @param y the y coordinate to check at
+ * @return NULL on error or not found or the tile at the location
+ */
+eolTile *eol_tile_map_get_by_tilexy(eolTileMap *map,eolInt x, eolInt y);
+
+/**
+ * @brief given coordinates in draw space, return the tile that exists there or NULL on not found
+ * @param map the tile map to search
+ * @param x the x coordinate to check at
+ * @param y the y coordinate to check at
+ * @return NULL on error or not found or the tile at the location
+ */
+eolTile *eol_tile_map_get_by_spacexy(eolTileMap *map,eolFloat x, eolFloat y);
+
+/**
+ * @brief creates a tile map keychain to be saved to disk
+ * @param map the map to create the keychain from
+ * @return NULL on error or the configured keychain that describes the tile map
+ */
+eolKeychain *eol_tile_map_build_keychain(eolTileMap *map);
+
 #endif

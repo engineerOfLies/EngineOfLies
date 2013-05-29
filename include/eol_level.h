@@ -61,32 +61,34 @@ typedef struct
  */
 typedef struct
 {
-  eolWord      idName;       /**<unique id for the level layer.  This should be unique*/
+  eolLine       idName;       /**<unique id for the level layer.  This should be unique*/
 
-  eolFloat     alpha;        /**<translucency to apply to all layer assets.  by setting it to 0, you turn off
+  eolFloat      alpha;        /**<translucency to apply to all layer assets.  by setting it to 0, you turn off
                                  rendering for the layer*/
-  eolVec3D     color;        /**<Color shift applied to whole level.*/
-  eolRectFloat bounds;       /**<absolute bounds in model space for the layer*/
-  eolBool      usesClipMesh; /**<if true, the layer will build collision data from clip mesh*/
-  eolBool      usesTileMap;  /**<if true, the layer will build collision data from tile map*/
+  eolVec3D      color;        /**<Color shift applied to whole level.*/
+  eolRectFloat  bounds;       /**<absolute bounds in model space for the layer*/
+  eolBool       usesClipMesh; /**<if true, the layer will build collision data from clip mesh*/
+  eolBool       usesTileMap;  /**<if true, the layer will build collision data from tile map*/
   
-  eolLine      clipMeshFile; /**<the file to load for a clip mask*/
-  eolLine      tileSet;      /**<the group of tiles to use,  Generally a sprite where each cell is a tile*/
+  eolLine       clipMeshFile; /**<the file to load for a clip mask*/
+  eolLine       tileSet;      /**<the group of tiles to use,  Generally a sprite where each cell is a tile*/
   
   eolOrientation clipMaskOri;/**<offset for where the clipmask is set in 3D space*/
   /*allocated data that needs to be cleaned up*/
-  eolTileMap   tileMap;      /**<the loaded tile map*/
-  GList      * spawnList;    /**<the loaded spawn candidates*/
-  GList      * backgrounds;  /**<a list of background display models.*/
-  cpSpace    * space;        /**<the collision space for this layer*/
-  eolMesh    * clipMesh;     /**<the collision mask as mesh data*/
-  GList      * entities;     /**<entites that have been added to the layer*/
+  eolTileMap  * tileMap;      /**<the loaded tile map*/
   eolKeychain * keys;        /**<config keys for the layer*/
+  GList       * spawnList;    /**<the loaded spawn candidates*/
+  GList       * backgrounds;  /**<a list of background display models.*/
+  
+  /*live data*/
+  cpSpace     * space;        /**<the collision space for this layer*/
+  eolMesh     * clipMesh;     /**<the collision mask as mesh data*/
+  GList       * entities;     /**<entites that have been added to the layer*/
 }eolLevelLayer;
 
 typedef struct
 {
-  eolWord         idName;     /**<unique level name.  Searchable, should be part of the filename*/
+  eolLine         idName;     /**<unique level name.  Searchable, should be part of the filename*/
   eolUint         layerCount; /**<how many layers the level contains*/
   eolUint         active;     /**<the layer that is active*/
   eolFloat        cameraDist; /**<Camera follow distance*/
@@ -143,6 +145,13 @@ eolBackground *eol_level_add_background_to_layer(eolLevelLayer *layer);
  * @return a pointer to the loaded level from file.
  */
 eolLevel *eol_level_load(char *filename);
+
+/**
+ * @brief saves the level information to disk into the file name specified.
+ * @param filename what this file should be known as.
+ * @param level the level to be saved.
+ */
+void eol_level_save(char *filename,eolLevel *level);
 
 /**
  * @brief frees the level passed and sets the pointer to it to NULL

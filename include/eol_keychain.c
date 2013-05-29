@@ -144,7 +144,7 @@ eolKeychain *eol_keychain_new()
 
 
 
-eolKeychain *eol_keychain_new_int(eolInt value)
+eolKeychain *eol_keychain_new_int_scaler(eolInt value)
 {
   eolInt *cast;
   eolKeychain *link;
@@ -163,7 +163,7 @@ eolKeychain *eol_keychain_new_int(eolInt value)
   return link;
 }
 
-eolKeychain *eol_keychain_new_uint(eolUint value)
+eolKeychain *eol_keychain_new_uint_scaler(eolUint value)
 {
   eolUint *cast;
   eolKeychain *link;
@@ -182,7 +182,7 @@ eolKeychain *eol_keychain_new_uint(eolUint value)
   return link;
 }
 
-eolKeychain *eol_keychain_new_float(eolFloat value)
+eolKeychain *eol_keychain_new_float_scaler(eolFloat value)
 {
   eolFloat *cast;
   eolKeychain *link;
@@ -199,6 +199,75 @@ eolKeychain *eol_keychain_new_float(eolFloat value)
   cast = (eolFloat *)link->keyValue;
   *cast = value;
   return link;
+}
+
+eolKeychain *eol_keychain_new_bool(eolBool n)
+{
+  eolLine text;
+  snprintf(text,EOLLINELEN,"%s",eol_string_from_bool(n));
+  return eol_keychain_new_string(text);
+}
+
+eolKeychain *eol_keychain_new_int(eolInt n)
+{
+  eolLine text;
+  snprintf(text,EOLLINELEN,"%i",n);
+  return eol_keychain_new_string(text);
+}
+
+eolKeychain *eol_keychain_new_uint(eolInt n)
+{
+  eolLine text;
+  snprintf(text,EOLLINELEN,"%ui",n);
+  return eol_keychain_new_string(text);
+}
+
+eolKeychain *eol_keychain_new_float(eolFloat n)
+{
+  eolLine text;
+  snprintf(text,EOLLINELEN,"%f",n);
+  return eol_keychain_new_string(text);
+}
+
+eolKeychain *eol_keychain_new_vec3d(eolVec3D n)
+{
+  eolLine text;
+  snprintf(text,EOLLINELEN,"%f,%f,%f",n.x,n.y,n.z);
+  return eol_keychain_new_string(text);
+}
+
+eolKeychain *eol_keychain_new_vec4d(eolVec4D n)
+{
+  eolLine text;
+  snprintf(text,EOLLINELEN,"%f,%f,%f,%f",n.x,n.y,n.z,n.w);
+  return eol_keychain_new_string(text);
+}
+
+eolKeychain *eol_keychain_new_rect(eolRect n)
+{
+  eolLine text;
+  snprintf(text,EOLLINELEN,"%i,%i,%i,%i",n.x,n.y,n.w,n.h);
+  return eol_keychain_new_string(text);
+}
+
+eolKeychain *eol_keychain_new_rectf(eolRectFloat n)
+{
+  eolLine text;
+  snprintf(text,EOLLINELEN,"%f,%f,%f,%f",n.x,n.y,n.w,n.h);
+  return eol_keychain_new_string(text);
+}
+
+eolKeychain *eol_keychain_new_orientation(eolOrientation ori)
+{
+  eolKeychain *oriHash;
+  oriHash = eol_keychain_new_hash();
+  if (!oriHash)return NULL;
+  eol_keychain_hash_insert(oriHash,"position",eol_keychain_new_vec3d(ori.position));
+  eol_keychain_hash_insert(oriHash,"scale",eol_keychain_new_vec3d(ori.scale));
+  eol_keychain_hash_insert(oriHash,"rotation",eol_keychain_new_vec3d(ori.rotation));
+  eol_keychain_hash_insert(oriHash,"color",eol_keychain_new_vec3d(ori.color));
+  eol_keychain_hash_insert(oriHash,"alpha",eol_keychain_new_float(ori.alpha));
+  return oriHash;
 }
 
 eolKeychain *eol_keychain_new_string(char *text)
@@ -489,6 +558,22 @@ eolBool eol_keychain_get_hash_value_as_vec3d(eolVec3D *output, eolKeychain *hash
   eol_line_cpy(keyValue,chain->keyValue);
   if (sscanf(keyValue,"%lf,%lf,%lf",&temp.x,&temp.y,&temp.z) != 3)return eolFalse;
   eol_vec3d_copy((*output),temp);
+  return eolTrue;
+}
+
+eolBool eol_keychain_get_hash_value_as_orientation(eolOrientation *output, eolKeychain *hash, eolLine key)
+{
+  eolKeychain *chain;
+  if ((!hash) || (!output) || (strlen(key) == 0))return eolFalse;
+  chain = eol_keychain_get_hash_value(hash,key);
+  if (!chain)return eolFalse;
+  if (chain->keyType != eolKeychainHash)return eolFalse;
+  /*now parse the hash further*/
+  eol_keychain_get_hash_value_as_vec3d(&output->position,chain,"position");
+  eol_keychain_get_hash_value_as_vec3d(&output->rotation,chain,"rotation");
+  eol_keychain_get_hash_value_as_vec3d(&output->scale,chain,"scale");
+  eol_keychain_get_hash_value_as_vec3d(&output->scale,chain,"color");
+  eol_keychain_get_hash_value_as_float(&output->alpha,chain,"alpha");
   return eolTrue;
 }
 

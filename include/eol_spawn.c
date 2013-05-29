@@ -1,11 +1,31 @@
 #include "eol_spawn.h"
 #include "eol_logger.h"
 
-/*
-TODO:  need to actually store type information in the hash before this can work
-void eol_spawn_copy(eolSpawn *out, eolSpawn in)
+eolSpawn *eol_spawn_clone(eolSpawn *in)
 {
-}*/
+  eolSpawn *out;
+  if (!in)return NULL;
+  out = eol_spawn_new();
+  if (!out)return NULL;
+  eol_line_cpy(out->type,in->type);
+  out->id = in->id;
+  eol_orientation_copy(&out->ori,in->ori);
+  out->keys = eol_keychain_clone(in->keys);
+  return out;
+}
+
+eolKeychain *eol_spawn_build_keychain(eolSpawn *spawn)
+{
+  eolKeychain * spawnKey = NULL;
+  if (!spawn)return NULL;
+  spawnKey = eol_keychain_new_hash();
+  if (!spawnKey)return NULL;
+  eol_keychain_hash_insert(spawnKey,"type",eol_keychain_new_string(spawn->type));
+  eol_keychain_hash_insert(spawnKey,"id",eol_keychain_new_uint(spawn->id));
+  eol_keychain_hash_insert(spawnKey,"ori",eol_keychain_new_orientation(spawn->ori));
+  eol_keychain_hash_insert(spawnKey,"keys",eol_keychain_clone(spawn->keys));
+  return spawnKey;
+}
 
 eolBool eol_spawn_setup(eolSpawn *spawn)
 {
@@ -20,6 +40,19 @@ eolBool eol_spawn_setup(eolSpawn *spawn)
     return eolFalse;
   }
   return eolTrue;
+}
+
+eolSpawn *eol_spawn_create_from_keychain(eolKeychain *conf)
+{
+  eolSpawn *spawn;
+  if (!conf)return NULL;
+  spawn = eol_spawn_new();
+  if (!spawn)return NULL;
+  spawn->keys = eol_keychain_get_hash_value(conf,"keys");
+  eol_keychain_get_hash_value_as_orientation(&spawn->ori, conf, "ori");
+  eol_keychain_get_hash_value_as_uint(&spawn->id, conf, "id");
+  eol_keychain_get_hash_value_as_line(spawn->type, conf, "type");
+  return spawn;
 }
 
 eolSpawn * eol_spawn_new()

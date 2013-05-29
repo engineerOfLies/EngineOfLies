@@ -569,6 +569,19 @@ eolInt eol_bool_from_string(char * truth)
   return -1;
 }
 
+char *eol_string_from_bool(eolBool b)
+{
+  if (b == eolTrue)
+  {
+    return "true";
+  }
+  else if (b == eolFalse)
+  {
+    return "false";
+  }
+  else return "ERROR";
+}
+
 
 /*eol @ eof*/
 

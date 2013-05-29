@@ -131,10 +131,9 @@ void eol_level_delete_layer(eolLevelLayer * level)
   GList *s,*e;
   if (!level)return;
 
-  /*TODO: free tile set*/
   eol_mesh_free(&level->clipMesh);
   
-  if (level->tileMap.map != NULL)free(level->tileMap.map);
+  eol_tile_map_free(&level->tileMap);
   
   for (s = level->spawnList; s != NULL; s = s->next)
   {
@@ -254,6 +253,134 @@ eolLevel *eol_level_new()
   level->keys = eol_keychain_new_list();
   return level;
 }
+
+/*
+  *** LOAD AND SAVING ***
+ */
+eolLevel *eol_level_load(char *filename)
+{
+  eolLevel *level;
+  if ((!filename)||(strlen(filename) == 0))return NULL;
+  level = eol_level_new();
+  if (!level)return NULL;
+  /*load config*/
+  /*parse it*/
+  return level;
+}
+
+
+eolKeychain *eol_level_build_backgrounds_keychain(GList *backgrounds)
+{
+  eolKeychain *bgList;
+  eolKeychain *bgItem;
+  GList *l;
+  eolBackground *bg;
+  if (!backgrounds)return NULL;
+  bgList = eol_keychain_new_list();
+  if (!bgList)return NULL;
+  for (l = backgrounds;l != NULL;l = l->next)
+  {
+    if (l->data)
+    {
+      bg = (eolBackground*)l->data;
+      bgItem = eol_keychain_new_hash();
+      if (!bgItem)continue;
+      eol_keychain_hash_insert(bgItem,"ori",eol_keychain_new_orientation(bg->ori));
+      eol_keychain_hash_insert(bgItem,"modelFile",eol_keychain_new_string(bg->modelFile));
+      eol_keychain_hash_insert(bgItem,"followCam",eol_keychain_new_float(bg->followCam));
+      eol_keychain_list_append(bgList,bgItem);
+    }
+  }
+  return bgList;
+}
+
+eolKeychain *eol_level_build_spawn_list(GList *spawnList)
+{
+  GList *l;
+  eolKeychain *spawnKeys;
+  if (!spawnList)return NULL;
+  spawnKeys = eol_keychain_new_list();
+  if (!spawnKeys)return NULL;
+  for (l = spawnList;l != NULL;l = l->next)
+  {
+    if (!l->data)continue;
+    eol_keychain_list_append(spawnKeys,eol_spawn_build_keychain(l->data));
+  }
+  return spawnKeys;
+}
+
+eolKeychain *eol_level_build_layer_keychain(eolLevelLayer *layer)
+{
+  eolKeychain *keys;
+  if (!layer)return NULL;
+  keys = eol_keychain_new_hash();
+  if (!keys)return NULL;
+  eol_keychain_hash_insert(keys,"idName",eol_keychain_new_string(layer->idName));
+  eol_keychain_hash_insert(keys,"keys",eol_keychain_clone(layer->keys));
+  eol_keychain_hash_insert(keys,"alpha",eol_keychain_new_float(layer->alpha));
+  eol_keychain_hash_insert(keys,"color",eol_keychain_new_vec3d(layer->color));
+  eol_keychain_hash_insert(keys,"bounds",eol_keychain_new_rectf(layer->bounds));
+  eol_keychain_hash_insert(keys,"usesClipMesh",eol_keychain_new_bool(layer->usesClipMesh));
+  eol_keychain_hash_insert(keys,"usesTileMap",eol_keychain_new_bool(layer->usesTileMap));
+  eol_keychain_hash_insert(keys,"clipMeshFile",eol_keychain_new_string(layer->clipMeshFile));
+  eol_keychain_hash_insert(keys,"tileSet",eol_keychain_new_string(layer->tileSet));
+  eol_keychain_hash_insert(keys,"clipMaskOri",eol_keychain_new_orientation(layer->clipMaskOri));
+  /*pack other extensible parts of the level*/
+  eol_keychain_hash_insert(keys,"tileMap",eol_tile_map_build_keychain(layer->tileMap));
+  eol_keychain_hash_insert(keys,"backgrounds",eol_level_build_backgrounds_keychain(layer->backgrounds));
+  eol_keychain_hash_insert(keys,"spawnList",eol_level_build_spawn_list(layer->spawnList));
+
+  return keys;
+}
+
+eolBool eol_level_build_save_keychain(eolLevel *level,eolKeychain *keys)
+{
+  GList *l;
+  eolKeychain *layers;
+  if ((!level)||(!keys))return eolFalse;
+  eol_keychain_hash_insert(keys,"idName",eol_keychain_new_string(level->idName));
+  eol_keychain_hash_insert(keys,"layerCount",eol_keychain_new_uint(level->layerCount));
+  eol_keychain_hash_insert(keys,"cameraDist",eol_keychain_new_float(level->cameraDist));
+  eol_keychain_hash_insert(keys,"keys",eol_keychain_clone(level->keys));
+  
+  layers = eol_keychain_new_list();
+  for (l = level->layers;l != NULL;l = l->next)
+  {
+    eol_keychain_list_append(layers,eol_level_build_layer_keychain(l->data));
+  }
+  eol_keychain_hash_insert(keys,"layers",layers);
+  return eolTrue;
+}
+
+void eol_level_save(char *filename,eolLevel *level)
+{
+  eolConfig *fileData;
+  eolKeychain *fileKey;
+  if ((!level)||(!filename)||(strlen(filename)==0))
+  {
+    eol_logger_message(EOL_LOG_ERROR,"eol_level_save: Passed an empty parameter.");
+    return;
+  }
+  fileData = eol_config_new();
+  if (!fileData)
+  {
+    eol_logger_message(EOL_LOG_ERROR,"eol_level_save: failed to allocate new config data");
+    return;
+  }
+  eol_line_cpy(fileData->filename,filename);
+  fileKey = eol_keychain_new_hash();
+  if (fileKey)
+  {
+    fileData->_node = fileKey;
+    if (eol_level_build_save_keychain(level,fileKey))
+    {
+      /*now save the config to disk*/
+      eol_config_save_binary(fileData,filename);
+    }
+  }
+  eol_config_free(&fileData);
+}
+
 
 /*
   *** DRAWING ***
