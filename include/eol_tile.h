@@ -80,8 +80,53 @@ void eol_tile_map_delete(eolTileMap *map);
  */
 void eol_tile_map_free(eolTileMap **map);
 
+/**
+ * @brief Destructive add tile to the map.  If a tile already exists in the desired location,
+ * it is first removed and then this new tile is added in its place.
+ * @param map the map to add a tile to
+ * @param x the target X coordinate
+ * @param y the target Y coordinate
+ * @param tileIndex the tile type index to define the tile
+ */
+void eol_tile_add_to_map_overwrite(eolTileMap *map,eolInt x, eolInt y,eolUint tileIndex);
 
+/**
+ * @brief non-destructive add tile to the map.  If a tile already exists in the desired location,
+ * this operation fails.
+ * @param map the map to add a tile to
+ * @param x the target X coordinate
+ * @param y the target Y coordinate
+ * @param tileIndex the tile type index to define the tile
+ */
+void eol_tile_add_to_map(eolTileMap *map,eolInt x, eolInt y,eolUint tileIndex);
+
+/**
+ * @brief moves a tile that already exists in the map to another location.  It is non-destructive
+ * if a tile already exists in that location this fails.
+ * @param map the map within to move
+ * @param newX the new X coordinate in map space
+ * @param newY the new Y coordinate in map space
+ * @param tile the tile to move
+ * @return eolFalse on error or collision, eolTrue if successful
+ */
+eolBool eol_tile_move_in_map(eolTileMap *map,eolInt newX, eolInt newY,eolTile *tile);
+
+/**
+ * @brief deletes a tile from the map found at the provided location
+ * if no tile exists in the target location, this is a no op.
+ * @param map the map to delete a tile from
+ * @param x the target x coordinate
+ * @param y the target y coordinate
+ */
+void eol_tile_remove_from_map(eolTileMap *map,eolInt x, eolInt y);
+
+/**
+ * @brief draw the tile map to the screen
+ * @param map the map to draw
+ */
 void eol_tile_map_draw(eolTileMap *map);
+
+/*TODO*/
 void eol_tile_map_add_to_space(eolTileMap *map, cpSpace *space);
 
 /**
@@ -91,7 +136,7 @@ void eol_tile_map_add_to_space(eolTileMap *map, cpSpace *space);
  * @param y the y coordinate to check at
  * @return NULL on error or not found or the tile at the location
  */
-eolTile *eol_tile_map_get_by_tilexy(eolTileMap *map,eolInt x, eolInt y);
+eolTile *eol_tile_get_by_tilexy(eolTileMap *map,eolInt x, eolInt y);
 
 /**
  * @brief given coordinates in draw space, return the tile that exists there or NULL on not found
@@ -100,7 +145,7 @@ eolTile *eol_tile_map_get_by_tilexy(eolTileMap *map,eolInt x, eolInt y);
  * @param y the y coordinate to check at
  * @return NULL on error or not found or the tile at the location
  */
-eolTile *eol_tile_map_get_by_spacexy(eolTileMap *map,eolFloat x, eolFloat y);
+eolTile *eol_tile_get_by_spacexy(eolTileMap *map,eolFloat x, eolFloat y);
 
 /**
  * @brief creates a tile map keychain to be saved to disk
