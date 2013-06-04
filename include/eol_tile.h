@@ -34,6 +34,11 @@
  * ie: it can take up some integer width and height of tile spaces.  The Footprint.
  */
 
+/**
+ * @brief the eolTileType is a tile archetype that will define the tiles in the map.
+ * The benefit of using tiles is to have uniform blocks to build the level with.  This
+ * type describes what those blocks should look like.
+ */
 typedef struct
 {
   eolUint        id;        /**<unique tile id.  Must be unique per map*/
@@ -43,14 +48,23 @@ typedef struct
   eolLine        actorFile; /**<filename of the mode file to load.*/
 }eolTileType;
 
+
+/**
+ * @brief the eolTile describes a specific instance of a tile.  Based on a tile type
+ * these are the actual building blocks that make up a tile map.
+ */
 typedef struct
 {
-  eolUint          id;      /**<which tile type this tile is*/
+  eolUint          id;      /**<the unique id of this tile in the map*/
+  eolUint          tileType;/**<which tile type this tile is*/
   eolInt           x,y;     /**<which tile space this tile is in.*/
   eolActor       * actor;   /**<the actor holding the tile*/
   eolOrientation   ori;     /**<orientation of THIS tile*/
 }eolTile;
 
+/**
+ * @brief the eolTileMap is the container for all the tiles and tile definitions for a layer
+ */
 typedef struct
 {
   eolFloat    tileWidth;      /**<width of tile spaces in gl coordinate space*/
@@ -79,6 +93,16 @@ void eol_tile_map_delete(eolTileMap *map);
  * @param map a pointer to your map pointer.
  */
 void eol_tile_map_free(eolTileMap **map);
+
+/**
+ * @brief load a type type from config
+ * @param tileType a keychain describing a tile type
+ * @return a pointer to the created and configured tile type
+ */
+eolTileType *eol_tile_type_load(eolKeychain *tileType);
+
+void eol_tile_map_add_type(eolTileMap *map,eolKeychain *tileType);
+
 
 /**
  * @brief Destructive add tile to the map.  If a tile already exists in the desired location,

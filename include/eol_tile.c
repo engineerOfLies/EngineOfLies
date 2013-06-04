@@ -1,11 +1,128 @@
 #include "eol_tile.h"
 #include "eol_logger.h"
+#include "eol_config.h"
+
+/*TODO: make the tile system use the resource manager for tile types at the least*/
 /*local variables*/
 
 /*local function prototypes*/
+eolTileType *eol_tile_map_get_tiletype_by_id(eolTileMap *map,eolUint id);
 
 /*definitions*/
 
+/*tile type operations*/
+
+void eol_tile_map_load_tile_set(eolTileMap *map,eolLine filename)
+{
+  int i,count;
+  eolKeychain *tileTypeList;
+  eolConfig *conf;
+  if (!map)return;
+  conf = eol_config_load(filename);
+  if (!conf)return;
+  if (!eol_config_get_keychain_by_tag(&tileTypeList,conf,"tileSet"))
+  {
+    return;
+  }
+  count = eol_keychain_get_list_count(tileTypeList);
+  for (i = 0; i < count;i++)
+  {
+    eol_tile_map_add_type(map,eol_keychain_get_list_nth(tileTypeList, i));
+  }
+}
+
+void eol_tile_type_delete(eolTileType *tile)
+{
+  if (!tile)return;
+  free(tile);
+}
+
+void eol_tile_type_free(eolTileType **tile)
+{
+  if (!tile)
+  {
+    return;
+  }
+  eol_tile_type_delete(*tile);
+  *tile = NULL;
+}
+
+eolTileType *eol_tile_type_new()
+{
+  eolTileType *newTile = NULL;
+  newTile = (eolTileType *)malloc(sizeof(eolTileType));
+  if (!newTile)return NULL;
+  memset(newTile,0,sizeof(eolTileType));
+  eol_orientation_clear(&newTile->ori);
+  return newTile;
+}
+
+eolTileType *eol_tile_type_load(eolKeychain *tileType)
+{
+  eolTileType *newTile = NULL;
+  if (!tileType)return NULL;
+  newTile = eol_tile_type_new();
+  if (!newTile)return NULL;
+  eol_keychain_get_hash_value_as_uint(&newTile->id, tileType,"id");
+  eol_keychain_get_hash_value_as_uint(&newTile->footWidth, tileType,"footWidth");
+  eol_keychain_get_hash_value_as_uint(&newTile->footHeight, tileType,"footHeight");
+  eol_keychain_get_hash_value_as_orientation(&newTile->ori, tileType,"ori");
+  eol_keychain_get_hash_value_as_line(newTile->actorFile, tileType,"actorFile");
+  return newTile;
+}
+
+void eol_tile_map_remove_type(eolTileMap *map,eolUint id)
+{
+  GList *t;
+  eolTileType *newTile;
+  if (!map)return;
+  newTile = eol_tile_map_get_tiletype_by_id(map,id);
+  if (!newTile)return;
+  t = g_list_find(map->tileSet,newTile);
+  if (!t)return;
+  eol_tile_type_free(&newTile);
+  map->tileSet = g_list_delete_link(map->tileSet,t);
+}
+
+void eol_tile_map_add_type_overwrite(eolTileMap *map,eolKeychain *tileType)
+{
+  eolUint id = 0;
+  if ((!map)||(!tileType))return;
+  if (eol_keychain_get_hash_value_as_uint(&id, tileType,"id"))
+  {
+    eol_tile_map_remove_type(map,id);
+  }
+  eol_tile_map_add_type(map,tileType);
+}
+
+void eol_tile_map_add_type(eolTileMap *map,eolKeychain *tileType)
+{
+  eolUint id = 0;
+  eolTileType *newTile;
+  if ((!map) || (!tileType))return;
+  if (!eol_keychain_get_hash_value_as_uint(&id, tileType,"id"))return;
+  newTile = eol_tile_map_get_tiletype_by_id(map,id);
+  if (newTile)
+  {
+    /*data already exists, return*/
+    return;
+  }
+}
+
+
+eolTileType *eol_tile_map_get_tiletype_by_id(eolTileMap *map,eolUint id)
+{
+  GList *t;
+  eolTileType *tt;
+  if (!map)return NULL;
+  for (t = map->tileSet;t != NULL;t = t->next)
+  {
+    if (!t->data)continue;
+    tt = (eolTileType*)t->data;
+    if (tt->id == id)return tt;
+  }
+  return NULL;
+}
 /*tile operations*/
 
 void eol_tile_draw(eolTile *tile,eolFloat tileWidth,eolFloat tileHeight)
@@ -66,7 +183,9 @@ void eol_tile_add_to_map(eolTileMap *map,eolInt x, eolInt y,eolUint tileIndex)
   if (!tile)return;
   tile->x = x;
   tile->y = y;
-  tile->id = tileIndex;
+  /*TODO check for id collision*/
+  tile->id = map->tileIdPool++;
+  tile->tileType = tileIndex;
   map->map = g_list_append(map->map,tile);
   /*TODO lookup tileIndex and set ori and actor*/
 }
