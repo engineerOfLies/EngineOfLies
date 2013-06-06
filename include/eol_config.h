@@ -81,6 +81,12 @@ eolBool eol_config_get_vec3d_by_tag(
   eolLine    tag
 );
 
+eolBool eol_config_get_orientation_by_tag(
+  eolOrientation  * output,
+  eolConfig       * conf,
+  eolLine           tag
+);
+
 eolBool eol_config_get_int_by_tag(
   eolInt    *output,
   eolConfig *conf,

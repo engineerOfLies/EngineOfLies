@@ -101,8 +101,33 @@ void eol_tile_map_free(eolTileMap **map);
  */
 eolTileType *eol_tile_type_load(eolKeychain *tileType);
 
+/**
+ * @brief Adds a new tile type to the map's tile set, overwriting a type with the same id
+ * @param map the map to add the tile type to
+ * @param tileType a keychain describing the tileType to add
+ */
+void eol_tile_map_add_type_overwrite(eolTileMap *map,eolKeychain *tileType);
+
+/**
+ * @brief Adds a new tile type to the map's tile set, no-op on collision
+ * @param map the map to add the tile type to
+ * @param tileType a keychain describing the tileType to add
+ */
 void eol_tile_map_add_type(eolTileMap *map,eolKeychain *tileType);
 
+/**
+ * @brief removes and deletes the tile type with the id from the map
+ * @param map the map to remove the tile type from
+ * @param id the tile type to remove
+ */
+void eol_tile_map_remove_type(eolTileMap *map,eolUint id);
+
+/**
+ * @brief Finds the tile type by the id specified
+ * @param map the map to search through
+ * @param id the id to seach for
+ */
+eolTileType *eol_tile_map_get_tiletype_by_id(eolTileMap *map,eolUint id);
 
 /**
  * @brief Destructive add tile to the map.  If a tile already exists in the desired location,
@@ -121,8 +146,9 @@ void eol_tile_add_to_map_overwrite(eolTileMap *map,eolInt x, eolInt y,eolUint ti
  * @param x the target X coordinate
  * @param y the target Y coordinate
  * @param tileIndex the tile type index to define the tile
+ * @return NULL on collision or error, valid tile pointer on success
  */
-void eol_tile_add_to_map(eolTileMap *map,eolInt x, eolInt y,eolUint tileIndex);
+eolTile * eol_tile_add_to_map(eolTileMap *map,eolInt x, eolInt y,eolUint tileIndex);
 
 /**
  * @brief moves a tile that already exists in the map to another location.  It is non-destructive
@@ -177,5 +203,10 @@ eolTile *eol_tile_get_by_spacexy(eolTileMap *map,eolFloat x, eolFloat y);
  * @return NULL on error or the configured keychain that describes the tile map
  */
 eolKeychain *eol_tile_map_build_keychain(eolTileMap *map);
+
+/**
+ * @brief given a loaded keychain, build a tile map from the data
+ */
+eolTileMap *eol_tile_map_build_from_definition(eolKeychain *def);
 
 #endif

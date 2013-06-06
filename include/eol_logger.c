@@ -71,6 +71,7 @@ void eol_logger_message(eolLogLevel level,char *msg,...)
     va_start(ap,msg);
     vfprintf(stdout,msg,ap);
     va_end(ap);
+    fprintf(stdout,"\n");
   }
   if (_eol_logger_file == NULL)
   {
@@ -80,6 +81,7 @@ void eol_logger_message(eolLogLevel level,char *msg,...)
   }
   va_start(ap,msg);
   vfprintf(_eol_logger_file,msg,ap);
+  fprintf(_eol_logger_file,"\n");
   va_end(ap);
 }
 

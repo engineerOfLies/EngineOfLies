@@ -27,8 +27,17 @@ eolSpawnGeneric _eol_level_spawn_generic = NULL;
 void eol_level_close();
 void eol_level_delete(void *leveldata);
 eolBool eol_level_load_data_from_file(char * filename,void *data);
+eolLevelLayer *eol_level_layer_new();
 
 /*function definitions*/
+
+void eol_level_setup(eolLevel *level)
+{
+  if (!level)return;
+  
+}
+
+
 void eol_level_init()
 {
   cpInitChipmunk();
@@ -118,9 +127,13 @@ void eol_level_close()
 void eol_level_free(eolLevel **level)
 {
   if (!eol_level_initialized())return;
-  if (_eol_level_current == *level)
+  if (!level)return;
+  if (_eol_level_current != NULL)
   {
-    _eol_level_current = NULL;
+    if (_eol_level_current == *level)
+    {
+      _eol_level_current = NULL;
+    }
   }
   eol_resource_free_element(_eol_level_manager,(void **)level);
 }
@@ -182,13 +195,22 @@ eolLevelLayer *eol_level_add_layer(eolLevel *level)
 {
   eolLevelLayer *layer = NULL;
   if (!level)return NULL;
+  layer = eol_level_layer_new();
+  if (!layer)return NULL;
+  level->layers = g_list_append(level->layers,layer);
+  level->layerCount++;
+  return layer;
+}
+
+eolLevelLayer *eol_level_layer_new()
+{
+  eolLevelLayer *layer = NULL;
   layer = (eolLevelLayer*)malloc(sizeof(eolLevelLayer));
   if (layer == NULL)
   {
     eol_logger_message(
       EOL_LOG_ERROR,
-      "eol_level:failed to allocated a layer for level %s\n",
-      level->idName);
+      "eol_level:failed to allocated a layer");
     return NULL;
   }
   memset(layer,0,sizeof(eolLevelLayer));
@@ -198,8 +220,7 @@ eolLevelLayer *eol_level_add_layer(eolLevel *level)
   {
     eol_logger_message(
       EOL_LOG_ERROR,
-      "Unable to create a physics space for new layer in level %s!\n",
-      level->idName);
+      "Unable to create a physics space for new layer!");
     eol_level_delete_layer(layer);
     return NULL;
   }
@@ -209,8 +230,6 @@ eolLevelLayer *eol_level_add_layer(eolLevel *level)
   cpSpaceSetCollisionSlop(layer->space, _eol_level_slop);
   cpSpaceSetCollisionBias(layer->space, _eol_level_bias);
   
-  level->layers = g_list_append(level->layers,layer);
-  level->layerCount++;
   return layer;
 }
 
@@ -257,14 +276,79 @@ eolLevel *eol_level_new()
 /*
   *** LOAD AND SAVING ***
  */
+
+eolLevelLayer *eol_level_build_layer_from_key(eolKeychain *key)
+{
+  eolLevelLayer *layer = NULL;
+  if (!key)return NULL;
+  layer = eol_level_layer_new();
+  if (!layer)return NULL;
+  
+  eol_keychain_get_hash_value_as_line(layer->idName,key,"idName");
+  eol_keychain_get_hash_value_as_orientation(&layer->ori,key,"ori");
+  eol_keychain_get_hash_value_as_rectfloat(&layer->bounds,key,"bounds");
+  eol_keychain_get_hash_value_as_bool(&layer->usesClipMesh,key,"usesClipMesh");
+  eol_keychain_get_hash_value_as_bool(&layer->usesTileMap,key,"usesTileMap");
+  eol_keychain_get_hash_value_as_line(layer->clipMeshFile,key,"clipMeshFile");
+  eol_keychain_get_hash_value_as_line(layer->tileSet,key,"tileSet");
+  eol_keychain_get_hash_value_as_orientation(&layer->clipMaskOri,key,"clipMaskOri");
+
+  layer->keys = eol_keychain_clone(eol_keychain_get_hash_value(key,"keys"));
+  /*
+  eolTileMap  * tileMap;
+  GList       * spawnList;
+  GList       * backgrounds;
+*/
+  return layer;
+}
+
+GList *eol_level_build_layers_from_keychain(eolKeychain *keys)
+{
+  eolLevelLayer *layer = NULL;
+  GList *layerList = NULL;
+  eolKeychain *layerKey;
+  int i, count;
+  if (!keys)return NULL;
+  if (keys->keyType != eolKeychainList)return NULL;
+  count = eol_keychain_get_list_count(keys);
+  for (i = 0;i < count;i++)
+  {
+    layerKey = eol_keychain_get_list_nth(keys, i);
+    layer = eol_level_build_layer_from_key(layerKey);
+    if (layer)
+    {
+      layerList = g_list_append(layerList,layer);
+    }
+  }
+  return layerList;
+}
+
 eolLevel *eol_level_load(char *filename)
 {
   eolLevel *level;
+  eolKeychain *keys;
+  eolConfig *conf;
   if ((!filename)||(strlen(filename) == 0))return NULL;
+  conf = eol_config_load_binary(filename);
+  if (!conf)
+  {
+    return NULL;
+  }
   level = eol_level_new();
   if (!level)return NULL;
-  /*load config*/
   /*parse it*/
+  eol_config_get_line_by_tag(level->idName,conf,"idName");
+  eol_config_get_uint_by_tag(&level->layerCount,conf,"layerCount");
+  eol_config_get_float_by_tag(&level->cameraDist,conf,"cameraDist");
+  if (eol_config_get_keychain_by_tag(&keys,conf,"keys"))
+  {
+    level->keys = eol_keychain_clone(keys);
+  }
+  if (eol_config_get_keychain_by_tag(&keys,conf,"layers"))
+  {
+    level->layers = eol_level_build_layers_from_keychain(keys);
+  }
+  
   return level;
 }
 
@@ -298,13 +382,18 @@ eolKeychain *eol_level_build_spawn_list(GList *spawnList)
 {
   GList *l;
   eolKeychain *spawnKeys;
+  eolKeychain *key;
   if (!spawnList)return NULL;
   spawnKeys = eol_keychain_new_list();
   if (!spawnKeys)return NULL;
   for (l = spawnList;l != NULL;l = l->next)
   {
     if (!l->data)continue;
-    eol_keychain_list_append(spawnKeys,eol_spawn_build_keychain(l->data));
+    key = eol_spawn_build_keychain(l->data);
+    if (key != NULL)
+    {
+      eol_keychain_list_append(spawnKeys,key);
+    }
   }
   return spawnKeys;
 }
@@ -312,13 +401,13 @@ eolKeychain *eol_level_build_spawn_list(GList *spawnList)
 eolKeychain *eol_level_build_layer_keychain(eolLevelLayer *layer)
 {
   eolKeychain *keys;
+  eolKeychain *key;
   if (!layer)return NULL;
   keys = eol_keychain_new_hash();
   if (!keys)return NULL;
   eol_keychain_hash_insert(keys,"idName",eol_keychain_new_string(layer->idName));
   eol_keychain_hash_insert(keys,"keys",eol_keychain_clone(layer->keys));
-  eol_keychain_hash_insert(keys,"alpha",eol_keychain_new_float(layer->alpha));
-  eol_keychain_hash_insert(keys,"color",eol_keychain_new_vec3d(layer->color));
+  eol_keychain_hash_insert(keys,"ori",eol_keychain_new_orientation(layer->ori));
   eol_keychain_hash_insert(keys,"bounds",eol_keychain_new_rectf(layer->bounds));
   eol_keychain_hash_insert(keys,"usesClipMesh",eol_keychain_new_bool(layer->usesClipMesh));
   eol_keychain_hash_insert(keys,"usesTileMap",eol_keychain_new_bool(layer->usesTileMap));
@@ -326,9 +415,21 @@ eolKeychain *eol_level_build_layer_keychain(eolLevelLayer *layer)
   eol_keychain_hash_insert(keys,"tileSet",eol_keychain_new_string(layer->tileSet));
   eol_keychain_hash_insert(keys,"clipMaskOri",eol_keychain_new_orientation(layer->clipMaskOri));
   /*pack other extensible parts of the level*/
-  eol_keychain_hash_insert(keys,"tileMap",eol_tile_map_build_keychain(layer->tileMap));
-  eol_keychain_hash_insert(keys,"backgrounds",eol_level_build_backgrounds_keychain(layer->backgrounds));
-  eol_keychain_hash_insert(keys,"spawnList",eol_level_build_spawn_list(layer->spawnList));
+  key = eol_tile_map_build_keychain(layer->tileMap);
+  if (key != NULL)
+  {
+    eol_keychain_hash_insert(keys,"tileMap",key);
+  }
+  key = eol_level_build_backgrounds_keychain(layer->backgrounds);
+  if (key != NULL)
+  {
+  eol_keychain_hash_insert(keys,"backgrounds",key);
+  }
+  key = eol_level_build_spawn_list(layer->spawnList);
+  if (key != NULL)
+  {
+    eol_keychain_hash_insert(keys,"spawnList",key);
+  }
 
   return keys;
 }
@@ -463,9 +564,13 @@ void eol_level_draw(eolLevel *level)
         layerNode = layerNode->next,i++)
   {
     if (layerNode->data == NULL)continue;
-    if (i >= level->active)alpha = 0.25;
+    if (i > level->active)
+    {
+      alpha = 0.25;
+    }
+    else alpha = 1;
     layer = (eolLevelLayer *)layerNode->data;
-    layer->alpha = alpha;
+    layer->ori.alpha = alpha;
     eol_level_draw_layer_backgrounds(layer);
   }
 }

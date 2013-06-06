@@ -63,9 +63,8 @@ typedef struct
 {
   eolLine       idName;       /**<unique id for the level layer.  This should be unique*/
 
-  eolFloat      alpha;        /**<translucency to apply to all layer assets.  by setting it to 0, you turn off
-                                 rendering for the layer*/
-  eolVec3D      color;        /**<Color shift applied to whole level.*/
+  eolOrientation ori;         /**<orientation applied to the whole layer*/
+
   eolRectFloat  bounds;       /**<absolute bounds in model space for the layer*/
   eolBool       usesClipMesh; /**<if true, the layer will build collision data from clip mesh*/
   eolBool       usesTileMap;  /**<if true, the layer will build collision data from tile map*/

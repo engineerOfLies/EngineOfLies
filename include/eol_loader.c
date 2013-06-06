@@ -40,7 +40,7 @@ eolFile *eol_loader_read_file_binary(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader: not initialized\n"
+        "eol_loader: not initialized"
       );
     return NULL;
   }
@@ -48,7 +48,7 @@ eolFile *eol_loader_read_file_binary(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader: passed NULL data to load from object\n"
+        "eol_loader: passed NULL data to load from object"
       );
     return NULL;
   }
@@ -57,7 +57,7 @@ eolFile *eol_loader_read_file_binary(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader: unable to allocate eolFile handle\n"
+        "eol_loader: unable to allocate eolFile handle"
       );
     return NULL;
   }
@@ -68,7 +68,7 @@ eolFile *eol_loader_read_file_binary(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader:Unable to open file %s!\n",
+        "eol_loader:Unable to open file %s for reading!",
         filename);
     free(file);
     return NULL;
@@ -86,7 +86,7 @@ eolFile *eol_loader_write_file_binary(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader: not initialized\n"
+        "eol_loader: not initialized"
       );
     return NULL;
   }
@@ -94,7 +94,7 @@ eolFile *eol_loader_write_file_binary(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader: passed NULL data to load from object\n"
+        "eol_loader: passed NULL data to load from object"
       );
     return NULL;
   }
@@ -103,7 +103,7 @@ eolFile *eol_loader_write_file_binary(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader: unable to allocate eolFile handle\n"
+        "eol_loader: unable to allocate eolFile handle"
       );
     return NULL;
   }
@@ -114,7 +114,7 @@ eolFile *eol_loader_write_file_binary(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader:Unable to open file %s!\n",
+        "eol_loader:Unable to open file %s for writing!",
         filename);
     free(file);
     return NULL;
@@ -133,7 +133,7 @@ eolFile *eol_loader_read_file(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader: not initialized\n"
+        "eol_loader: not initialized"
       );
   	return NULL;
   }
@@ -141,7 +141,7 @@ eolFile *eol_loader_read_file(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader: passed NULL data to load from object\n"
+        "eol_loader: passed NULL data to load from object"
       );
   	return NULL;
   }
@@ -150,7 +150,7 @@ eolFile *eol_loader_read_file(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader: unable to allocate eolFile handle\n"
+        "eol_loader: unable to allocate eolFile handle"
       );
   	return NULL;
   }
@@ -161,7 +161,7 @@ eolFile *eol_loader_read_file(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader:Unable to open file %s!\n",
+        "eol_loader:Unable to open file %s!",
         filename);
     free(file);
     return NULL;
@@ -172,7 +172,7 @@ eolFile *eol_loader_read_file(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader:Unable to allocate space for %s file reading!\n",
+        "eol_loader:Unable to allocate space for %s file reading!",
         filename);
     PHYSFS_close(file->_PSfile);
     free(file);
@@ -185,7 +185,7 @@ eolFile *eol_loader_read_file(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader: failed to open file: %s\n",
+        "eol_loader: failed to open file: %s",
         filename);
     PHYSFS_close(file->_PSfile);
     free(file->_buffer);
@@ -220,7 +220,7 @@ void eol_loader_write_uint_to_file(eolFile *file,eolUint data)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_loader:file not opened for writing\n");
+      "eol_loader:file not opened for writing");
     return;
   }
   if (file->_fileEndian == EOLFILELISTTLEENDIAN)
@@ -240,7 +240,7 @@ void eol_loader_write_int_to_file(eolFile *file,eolInt data)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_loader:file not opened for writing\n");
+      "eol_loader:file not opened for writing");
     return;
   }
   if (file->_fileEndian == EOLFILELISTTLEENDIAN)
@@ -261,7 +261,7 @@ void eol_loader_write_line_to_file(eolFile *file,eolLine data)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_loader:file not opened for writing\n");
+      "eol_loader:file not opened for writing");
     return;
   }
   for (i = 0;i < EOLLINELEN;i++)
@@ -286,7 +286,7 @@ void eol_loader_write_string_to_file(eolFile *file,char * data)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_loader:file not opened for writing\n");
+      "eol_loader:file not opened for writing");
     return;
   }
   len = strlen(data);
@@ -312,7 +312,7 @@ void eol_loader_read_uint_from_file(eolUint * data, eolFile *file)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_loader:file %s not opened for reading in binary\n",
+      "eol_loader:file %s not opened for reading in binary",
       file->filename);
     return;
   }
@@ -333,7 +333,7 @@ void eol_loader_read_int_from_file(eolInt * data, eolFile *file)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_loader:file %s not opened for reading in binary\n",
+      "eol_loader:file %s not opened for reading in binary",
       file->filename);
      return;
   }
@@ -357,7 +357,7 @@ void eol_loader_read_string_from_file(char ** data, eolFile *file)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_loader:file %s not opened for reading in binary\n",
+      "eol_loader:file %s not opened for reading in binary",
       file->filename);
     return;
   }
@@ -367,7 +367,7 @@ void eol_loader_read_string_from_file(char ** data, eolFile *file)
   {
     eol_logger_message(
       EOL_LOG_INFO,
-      "eol_loader:expected string from file: %s, has zero length.\n",
+      "eol_loader:expected string from file: %s, has zero length.",
       file->filename);
     return;
   }
@@ -378,7 +378,7 @@ void eol_loader_read_string_from_file(char ** data, eolFile *file)
     {
       eol_logger_message(
         EOL_LOG_INFO,
-        "eol_loader:failed to allocate string buffer for reading from file %s.\n",
+        "eol_loader:failed to allocate string buffer for reading from file %s.",
         file->filename);
       return;
     }
@@ -468,7 +468,7 @@ void eol_loader_write_keychain_link(eolKeychain *link,eolFile *file)
     default:
       eol_logger_message(
         EOL_LOG_WARN,
-        "eol_loader:unsupported keychain type for writing: %i\n",
+        "eol_loader:unsupported keychain type for writing: %i",
         link->keyType);
   }
 }
@@ -506,6 +506,7 @@ eolKeychain *eol_loader_read_keychain_hash(eolFile *file)
   if (itemCount == 0)return NULL;
   link = eol_keychain_new_hash();
   if (link == NULL)return NULL;
+  eol_logger_message(EOL_LOG_WARN,"hash of %i items:",itemCount);
   for (i= 0;i < itemCount; i++)
   {
     if (buffer != NULL)
@@ -514,16 +515,18 @@ eolKeychain *eol_loader_read_keychain_hash(eolFile *file)
       buffer = NULL;
     }
     eol_loader_read_string_from_file(&buffer,file);
-    if (strlen(buffer) == 0)
+    if ((!buffer) || (strlen(buffer) == 0))
     {
       eol_logger_message(
         EOL_LOG_WARN,
-        "eol_loader:missing hash key in file: %s\nexpected %i keys, failed on %i\n",
+        "eol_loader:missing hash key in file: %s\nexpected %i keys, failed on %i",
         file->filename,
         itemCount,
         i);
       return link;
     }
+    eol_logger_message(EOL_LOG_WARN,"hash key: %s",buffer);
+    printf("\t");
     eol_keychain_hash_insert(link,buffer,eol_loader_read_keychain_link(file));
   }
   return link;
@@ -538,6 +541,7 @@ eolKeychain *eol_loader_read_keychain_list(eolFile *file)
   if (!itemCount)return NULL;
   link = eol_keychain_new_list();
   if (link == NULL)return NULL;
+  eol_logger_message(EOL_LOG_WARN,"list of %i items:",itemCount);
   for (i = 0;i < itemCount;i++)
   {
     eol_keychain_list_append(link,eol_loader_read_keychain_link(file));
@@ -552,6 +556,7 @@ eolKeychain *eol_loader_read_keychain_string(eolFile *file)
   eol_loader_read_string_from_file((char **)&buffer,file);
   if ((buffer == NULL) || (strlen(buffer) == 0))return NULL;
   link = eol_keychain_new_string(buffer);
+  eol_logger_message(EOL_LOG_WARN,"string: %s",buffer);
   free(buffer);
   return link;
 }
@@ -572,7 +577,7 @@ eolKeychain *eol_loader_read_keychain_link(eolFile *file)
     default:
       eol_logger_message(
         EOL_LOG_WARN,
-        "eol_loader:unsupported keychain type for reading: %i\n",
+        "eol_loader:unsupported keychain type for reading: %i",
         newtype);
   }
   return NULL;

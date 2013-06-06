@@ -231,6 +231,18 @@ void eol_config_parse_tier(yaml_parser_t *parser, eolKeychain *chain)
   while (!done);
 }
 
+eolBool eol_config_get_orientation_by_tag(
+  eolOrientation  * output,
+  eolConfig       * conf,
+  eolLine           tag
+)
+{
+  g_return_val_if_fail(conf, eolFalse);
+  g_return_val_if_fail(output, eolFalse);
+  return eol_keychain_get_hash_value_as_orientation(output, conf->_node, tag);
+}
+
+
 eolBool eol_config_get_keychain(eolKeychain *output,
                                 eolConfig *conf)
 {

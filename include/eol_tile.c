@@ -12,9 +12,19 @@ eolTileType *eol_tile_map_get_tiletype_by_id(eolTileMap *map,eolUint id);
 
 /*tile type operations*/
 
-void eol_tile_map_load_tile_set(eolTileMap *map,eolLine filename)
+void eol_tile_set_build_from_definition(eolTileMap *map,eolKeychain *tileTypeList)
 {
   int i,count;
+  if ((!map)||(!tileTypeList))return;
+  count = eol_keychain_get_list_count(tileTypeList);
+  for (i = 0; i < count;i++)
+  {
+    eol_tile_map_add_type(map,eol_keychain_get_list_nth(tileTypeList, i));
+  }
+}
+
+void eol_tile_map_load_tile_set(eolTileMap *map,eolLine filename)
+{
   eolKeychain *tileTypeList;
   eolConfig *conf;
   if (!map)return;
@@ -24,11 +34,7 @@ void eol_tile_map_load_tile_set(eolTileMap *map,eolLine filename)
   {
     return;
   }
-  count = eol_keychain_get_list_count(tileTypeList);
-  for (i = 0; i < count;i++)
-  {
-    eol_tile_map_add_type(map,eol_keychain_get_list_nth(tileTypeList, i));
-  }
+  eol_tile_set_build_from_definition(map,tileTypeList);
 }
 
 void eol_tile_type_delete(eolTileType *tile)
@@ -164,6 +170,32 @@ eolTile *eol_tile_new()
   return tile;
 }
 
+void eol_tile_map_add_map_by_definition(eolTileMap *map,eolKeychain *tileList)
+{
+  int i,count;
+  if ((!map)||(!tileList))return;
+  count = eol_keychain_get_list_count(tileList);
+  for (i = 0; i < count;i++)
+  {
+    eol_tile_map_add_type(map,eol_keychain_get_list_nth(tileList, i));
+  }
+}
+
+void eol_tile_map_add_tile_by_definition(eolTileMap *map,eolKeychain *def)
+{
+  eolInt x;
+  eolInt y;
+  eolUint tileIndex;
+  eolTile * tile;
+  if ((!map)||(!def))return;
+  eol_keychain_get_hash_value_as_int(&x,def,"x");
+  eol_keychain_get_hash_value_as_int(&y,def,"y");
+  eol_keychain_get_hash_value_as_uint(&tileIndex,def,"tileIndex");
+  tile = eol_tile_add_to_map(map,x, y,tileIndex);
+  if (!tileIndex)return;
+  eol_keychain_get_hash_value_as_orientation(&tile->ori,def,"ori");
+}
+
 void eol_tile_add_to_map_overwrite(eolTileMap *map,eolInt x, eolInt y,eolUint tileIndex)
 {
   if (!map)return;
@@ -171,23 +203,32 @@ void eol_tile_add_to_map_overwrite(eolTileMap *map,eolInt x, eolInt y,eolUint ti
   eol_tile_add_to_map(map,x, y,tileIndex);
 }
 
-void eol_tile_add_to_map(eolTileMap *map,eolInt x, eolInt y,eolUint tileIndex)
+eolTile *eol_tile_add_to_map(eolTileMap *map,eolInt x, eolInt y,eolUint tileIndex)
 {
   eolTile *tile;
-  if (!map)return;
+  eolTileType *tileType;
+  if (!map)return NULL;
+  tileType = eol_tile_map_get_tiletype_by_id(map,tileIndex);
+  if (!tileType)
+  {
+    eol_logger_message(EOL_LOG_ERROR,"eol_tile_add_to_map: tile type with index %i not found.",tileIndex);
+    return NULL;
+  }
   if (eol_tile_get_by_tilexy(map,x,y))
   {
-    return;
+    return NULL;
   }
   tile = eol_tile_new();
-  if (!tile)return;
+  if (!tile)return NULL;
   tile->x = x;
   tile->y = y;
   /*TODO check for id collision*/
   tile->id = map->tileIdPool++;
   tile->tileType = tileIndex;
   map->map = g_list_append(map->map,tile);
-  /*TODO lookup tileIndex and set ori and actor*/
+  eol_orientation_copy(&tile->ori,tileType->ori);
+  tile->actor = eol_actor_load(tileType->actorFile);
+  return tile;
 }
 
 eolBool eol_tile_move_in_map(eolTileMap *map,eolInt newX, eolInt newY,eolTile *tile)
@@ -361,6 +402,7 @@ eolKeychain *eol_tile_layout_build_keychain(GList *tileMap)
 eolKeychain *eol_tile_map_build_keychain(eolTileMap *map)
 {
   eolKeychain *mapKeys;
+  eolKeychain *key;
   if (!map)return NULL;
   mapKeys = eol_keychain_new_hash();
   if (!mapKeys)return NULL;
@@ -369,9 +411,39 @@ eolKeychain *eol_tile_map_build_keychain(eolTileMap *map)
   eol_keychain_hash_insert(mapKeys,"spaceWidth",eol_keychain_new_uint(map->spaceWidth));
   eol_keychain_hash_insert(mapKeys,"spaceHeight",eol_keychain_new_uint(map->spaceHeight));
   eol_keychain_hash_insert(mapKeys,"tileIdPool",eol_keychain_new_uint(map->tileIdPool));
-  eol_keychain_hash_insert(mapKeys,"tileSet",eol_tile_set_build_keychain(map->tileSet));
-  eol_keychain_hash_insert(mapKeys,"map",eol_tile_layout_build_keychain(map->map));
+  key = eol_tile_set_build_keychain(map->tileSet);
+  if (key != NULL)
+  {
+    eol_keychain_hash_insert(mapKeys,"tileSet",key);
+  }
+  key = eol_tile_layout_build_keychain(map->map);
+  if (key != NULL)
+  {
+    eol_keychain_hash_insert(mapKeys,"map",key);
+  }
   return mapKeys;
+}
+
+eolTileMap *eol_tile_map_build_from_definition(eolKeychain *def)
+{
+  eolTileMap *map;
+  eolKeychain *tileTypeList;
+  eolKeychain *tileList;
+  if (!def)return NULL;
+  map = eol_tile_map_new();
+  if (!map)return NULL;
+  eol_keychain_get_hash_value_as_float(&map->tileWidth,def,"tileWidth");
+  eol_keychain_get_hash_value_as_float(&map->tileHeight,def,"tileHeight");
+  eol_keychain_get_hash_value_as_uint(&map->spaceWidth,def,"spaceWidth");
+  eol_keychain_get_hash_value_as_uint(&map->spaceHeight,def,"spaceHeight");
+  eol_keychain_get_hash_value_as_uint(&map->tileIdPool,def,"tileIdPool");
+  
+  tileTypeList = eol_keychain_get_hash_value(def,"tileSet");
+  eol_tile_set_build_from_definition(map,tileTypeList);
+  
+  tileList = eol_keychain_get_hash_value(def,"map");
+  eol_tile_map_add_map_by_definition(map,tileList);
+  return map;
 }
 
 /*eol@eof*/
