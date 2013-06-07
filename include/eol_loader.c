@@ -506,7 +506,6 @@ eolKeychain *eol_loader_read_keychain_hash(eolFile *file)
   if (itemCount == 0)return NULL;
   link = eol_keychain_new_hash();
   if (link == NULL)return NULL;
-  eol_logger_message(EOL_LOG_WARN,"hash of %i items:",itemCount);
   for (i= 0;i < itemCount; i++)
   {
     if (buffer != NULL)
@@ -525,8 +524,6 @@ eolKeychain *eol_loader_read_keychain_hash(eolFile *file)
         i);
       return link;
     }
-    eol_logger_message(EOL_LOG_WARN,"hash key: %s",buffer);
-    printf("\t");
     eol_keychain_hash_insert(link,buffer,eol_loader_read_keychain_link(file));
   }
   return link;
@@ -541,7 +538,6 @@ eolKeychain *eol_loader_read_keychain_list(eolFile *file)
   if (!itemCount)return NULL;
   link = eol_keychain_new_list();
   if (link == NULL)return NULL;
-  eol_logger_message(EOL_LOG_WARN,"list of %i items:",itemCount);
   for (i = 0;i < itemCount;i++)
   {
     eol_keychain_list_append(link,eol_loader_read_keychain_link(file));
@@ -556,7 +552,6 @@ eolKeychain *eol_loader_read_keychain_string(eolFile *file)
   eol_loader_read_string_from_file((char **)&buffer,file);
   if ((buffer == NULL) || (strlen(buffer) == 0))return NULL;
   link = eol_keychain_new_string(buffer);
-  eol_logger_message(EOL_LOG_WARN,"string: %s",buffer);
   free(buffer);
   return link;
 }

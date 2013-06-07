@@ -217,8 +217,10 @@ void eol_keychain_list_move_nth_top(eolKeychain *list, eolUint n);
  */
 void eol_keychain_list_clear(eolKeychain *list);
 
-
-void eol_keychain_print_string(eolLine key, eolKeychain *chain,eolUint level);
+/**
+ * @brief prints to terminal the keychain specified
+ */
+void eol_keychain_print(eolKeychain *chain);
 
 /**
 * @brief convenience function when working with GString types.

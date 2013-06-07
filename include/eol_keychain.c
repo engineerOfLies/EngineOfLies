@@ -7,6 +7,9 @@
 #include <glib.h>
 
 /*local prototypes*/
+void eol_keychain_print_link(eolKeychain *link,eolUint depth,eolBool listStart);
+
+/*function definitions*/
 
 void eol_g_string_free(char *string)
 {
@@ -607,14 +610,69 @@ eolBool eol_keychain_get_hash_value_as_rectfloat(eolRectFloat *output, eolKeycha
   return eolTrue;
 }
 
-void eol_keychain_print_hash(eolLine key, eolKeychain *chain, eolUint level)
+void eol_keychain_print_string(eolKeychain *link,eolUint depth)
 {
-  
+  int i;
+  if ((!link)||(!link->keyValue))return;
+  for (i = 0; i < depth;i++){printf("  ");}
+  printf("%s\n",(char *)link->keyValue);
+}
+
+void eol_keychain_print_hash(eolKeychain *link,eolUint depth,eolBool listStart)
+{
+  int i;
+  GList *keys = NULL;
+  GList *values = NULL;
+  if (!link)return;
+  if (link->keyType != eolKeychainHash)return;
+  keys = g_hash_table_get_keys((GHashTable*)link->keyValue);
+  values = g_hash_table_get_values((GHashTable*)link->keyValue);
+  if (!listStart)printf("\n");
+  for (;(keys != NULL) && (values != NULL); keys = keys->next,values = values->next)
+  {
+    for (i = 0; i < depth;i++){printf("  ");}
+    printf("%s :",(char *)keys->data);
+    eol_keychain_print_link((eolKeychain *)values->data,depth + 1,eolFalse);
+    printf("\n");
+  }
+}
+
+void eol_keychain_print_list(eolKeychain *link,eolUint depth,eolBool listStart)
+{
+  int i;
+  GList *it;
+  if (!link)return;
+  if (link->keyType != eolKeychainList)return;
+  printf("\n");
+  for (it = (GList *)link->keyValue;it != NULL;it = it->next)
+  {
+    for (i = 0; i < (depth - 1);i++){printf("  ");}
+    printf("- ");
+    eol_keychain_print_link((eolKeychain *)it->data,depth + 1,eolTrue);
+    printf("\n");
+  }
+}
+
+void eol_keychain_print_link(eolKeychain *link,eolUint depth,eolBool listStart)
+{
+  if (!link)return;
+  switch(link->keyType)
+  {
+    case eolKeychainString:
+      eol_keychain_print_string(link,depth);
+      break;
+    case eolKeychainList:
+      eol_keychain_print_list(link,depth,listStart);
+      break;
+    case eolKeychainHash:
+      eol_keychain_print_hash(link,depth,listStart);
+      break;
+  }
 }
 
 void eol_keychain_print(eolKeychain *chain)
 {
-  
+  eol_keychain_print_link(chain,0,eolFalse);
 }
 
 /*eol@eof*/
