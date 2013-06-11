@@ -221,7 +221,7 @@ eolKeychain *eol_keychain_new_int(eolInt n)
 eolKeychain *eol_keychain_new_uint(eolInt n)
 {
   eolLine text;
-  snprintf(text,EOLLINELEN,"%ui",n);
+  snprintf(text,EOLLINELEN,"%u",n);
   return eol_keychain_new_string(text);
 }
 

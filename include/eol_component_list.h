@@ -41,6 +41,7 @@ typedef struct
   GList     * itemList;   /**<list of eolComponent's*/
   GList     * topItem;    /**<the top left most item*/
   GList     * selection;  /**<the list item that is selected*/
+  GList     * updatedItems;
   eolBool     showHSlider;/**<if true, shows the Horizontal slider*/
   eolBool     showVSlider;/**<if true, shows the Vertical slider*/
   eolRect     vSliderBounds;
@@ -54,6 +55,8 @@ typedef struct
   eolVec3D    highlightColor;
   eolVec3D    textColor;
   eolFloat    alpha;
+  eolVec3D    backgroundColor;
+  eolFloat    backgroundAlpha;
 }eolComponentList;
 
 #endif

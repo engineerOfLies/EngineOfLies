@@ -264,6 +264,13 @@ void eol_level_clear_layer_space(eolLevelLayer *layer)
 
 }
 
+eolLevelLayer *eol_level_get_layer_n(eolLevel *level,eolUint n)
+{
+  if (!level)return NULL;
+  if (n >= level->layerCount)return NULL;
+  return (eolLevelLayer*)g_list_nth_data(level->layers,n);
+}
+
 eolLevelLayer *eol_level_layer_new()
 {
   eolLevelLayer *layer = NULL;
@@ -277,6 +284,7 @@ eolLevelLayer *eol_level_layer_new()
   }
   memset(layer,0,sizeof(eolLevelLayer));
 
+  eol_orientation_clear(&layer->ori);
   eol_level_clear_layer_space(layer);
   
   return layer;
@@ -296,6 +304,7 @@ eolBackground *eol_level_add_background_to_layer(eolLevelLayer *layer)
     return NULL;
   }
   memset(back,0,sizeof(eolBackground));
+  eol_orientation_clear(&back->ori);
   layer->backgrounds = g_list_append(layer->backgrounds,back);
   return back;
 }

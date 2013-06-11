@@ -373,11 +373,27 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
     window->modFocusPrev = eol_input_parse("mod",hotmod);
   }
 
-  if (tempr.x < 0)
+  if ((tempr.x >0)&&(tempr.x < 1))
+  {
+    tempr.x = sw * tempr.x;
+  }
+  else if ((tempr.x <0) && (tempr.x > -1))
+  {
+    tempr.x = sw + (sw * tempr.x);
+  }
+  else if (tempr.x < 0)
   {
     tempr.x = sw + tempr.x;
   }
-  if (tempr.y < 0)
+  if ((tempr.y >0)&&(tempr.y < 1))
+  {
+    tempr.y = sh * tempr.y;
+  }
+  else if ((tempr.y <0) && (tempr.y > -1))
+  {
+    tempr.y = sh + (sh * tempr.y);
+  }
+  else if (tempr.y < 0)
   {
     tempr.y = sh + tempr.y;
   }

@@ -20,6 +20,8 @@
 
 #include "eol_types.h"
 #include "eol_keychain.h"
+#include <glib/glist.h>
+
 /**
  * @purpose This will create the components used for window construction.
     Similar in concept to a gtkWidget, but severely limited to the components
@@ -522,12 +524,8 @@ eolComponent *eol_list_new(
     eolVec2D      itemDimensions,
     eolBool       showVSlider,
     eolBool       showHSlider,
-    eolBool       allowSelection,
-    eolBool       showBackground,
-    eolUint       fontSize,
-    eolVec3D      textColor,
-    eolFloat      alpha
-  );
+    eolUint       fontSize
+);
 
 /**
  * @brief created a list component, grabbing parameters from the supplied keychain config.
@@ -536,6 +534,13 @@ eolComponent *eol_list_new(
  * @return a pointer to the created and configured component or NULL on error.
  */
 eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def);
+
+/**
+ * @brief if the list has any child updates, return them.
+ * @param listComp the list component to check
+ * @return a GList of updated components.  Do NOT edit this list.
+ */
+GList *eol_list_get_updates(eolComponent *listComp);
 
 /**
  * @brief adds a text item to the list.

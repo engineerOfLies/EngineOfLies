@@ -128,6 +128,14 @@ eolLevel *eol_level_new();
 eolLevelLayer *eol_level_add_layer(eolLevel *level);
 
 /**
+ * @brief get the nth layer of a level
+ * @param level a pointer to the level to search
+ * @param n the index of the layer to get
+ * @return NULL on miss or error, a pointer to the layer otherwise
+ */
+eolLevelLayer *eol_level_get_layer_n(eolLevel *level,eolUint n);
+
+/**
  * @brief allocated an empty background, adds it to the layer in question and returns a pointer
  * to the newly created background.
  * @param layer the layer to add a background to.

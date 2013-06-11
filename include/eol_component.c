@@ -10,7 +10,6 @@
 #include "eol_draw.h"
 #include "eol_input.h"
 #include "eol_config.h"
-#include <glib/glist.h>
 #include <glib/gstring.h>
 
 /*local types*/

@@ -69,11 +69,7 @@ eolComponent *eol_list_new(
     eolVec2D      itemDimensions,
     eolBool       showVSlider,
     eolBool       showHSlider,
-    eolBool       allowSelection,
-    eolBool       showBackground,
-    eolUint       fontSize,
-    eolVec3D      textColor,
-    eolFloat      alpha
+    eolUint       fontSize
   )
 {
   eolRectFloat slideRect = {0,0,1,1};
@@ -100,8 +96,6 @@ eolComponent *eol_list_new(
     eol_component_free(&component);
     return NULL;
   }
-  list->allowSelection = allowSelection;
-  list->showBackground = showBackground;
   component->id = id;
   eol_word_cpy(component->name,name);
   list->itemBounds.x = component->bounds.x;
@@ -141,8 +135,6 @@ eolComponent *eol_list_new(
       0
     );
   }
-  eol_vec3d_copy(list->textColor,textColor);
-  list->alpha = alpha;
   return component;
 }
 
@@ -212,7 +204,7 @@ void eol_component_list_draw(eolComponent *component, eolRect bounds)
   r.w = component->bounds.w + 2;
   r.h = component->bounds.h + 2;
   if (list->showBackground)
-    eol_draw_solid_rect(component->bounds,eol_vec3d(0.1,0.1,0.1),1);
+    eol_draw_solid_rect(component->bounds,list->backgroundColor,list->backgroundAlpha);
   /*draw list items*/
   scaleArea = eol_component_list_scaleable_area(list);
   /*TODO make the iterator start at the top position of the scroll*/
@@ -248,7 +240,7 @@ void eol_component_list_draw(eolComponent *component, eolRect bounds)
 
 eolBool eol_component_list_update(eolComponent *component)
 {
-  GList *it = NULL;
+  GList *it = NULL,*c = NULL;
   eolVec2D scaleArea;
   eolFloat slide = 0;
   eolComponentList *list;
@@ -256,6 +248,11 @@ eolBool eol_component_list_update(eolComponent *component)
   eolBool updated = eolFalse;
   list = eol_component_get_list_data(component);
   if (list == NULL)return eolFalse;
+  if (list->updatedItems != NULL)
+  {
+    g_list_free(list->updatedItems);
+    list->updatedItems = NULL;
+  }
   /*Update Sliders if visible*/
   scaleArea = eol_component_list_scaleable_area(list);
   if ((list->showVSlider) && (scaleArea.y > 1))
@@ -280,6 +277,23 @@ eolBool eol_component_list_update(eolComponent *component)
     list->topOffset.x = -(scaleArea.x * slide);
   }
   /*iterate through glist and update elements*/
+  for (c = list->itemList;c != NULL; c= c->next)
+  {
+    if (c->data != NULL)
+    {
+      item = (eolComponentListItem*)c->data;
+      if (eol_component_update(item->item))
+      {
+        list->updatedItems = g_list_append(list->updatedItems ,item->item);
+      }
+    }
+  }
+  if (list->updatedItems)
+  {
+    updated = eolTrue;
+  }
+  
+  /*check for selection:*/
   if (list->allowSelection)
   {
     for (it = list->itemList;it != NULL;it = it->next)
@@ -301,6 +315,14 @@ eolBool eol_component_list_update(eolComponent *component)
     }
   }
   return updated;
+}
+
+GList *eol_list_get_updates(eolComponent *listComp)
+{
+  eolComponentList * list = NULL;
+  list = eol_component_get_list_data(listComp);
+  if (!list)return NULL;
+  return list->updatedItems;
 }
 
 void eol_component_make_list(
@@ -424,6 +446,7 @@ void eol_list_add_text_item(
 
 void eol_component_list_new(eolComponent *component)
 {
+  eolComponentList *listData;
   if (component->componentData != NULL)
   {
     eol_logger_message(
@@ -439,7 +462,19 @@ void eol_component_list_new(eolComponent *component)
       "eol_actor: failed to allocate data for new list\n");
     return;
   }
+  /*default values*/
   memset(component->componentData,0,sizeof(eolComponentList));
+  listData = (eolComponentList *)component->componentData;
+  listData->backgroundAlpha = 1;
+  eol_vec3d_set(listData->backgroundColor,0.1,0.1,0.1);
+  
+  listData->allowSelection = eolTrue;
+  listData->showBackground = eolTrue;
+  listData->fontSize = 2;
+  eol_vec3d_set(listData->highlightColor,0.2,1,1);
+  eol_vec3d_set(listData->textColor,1,1,1);
+  listData->alpha = 1;
+
   component->type = eolListComponent;
 }
 
@@ -604,16 +639,19 @@ eolVec2D eol_component_list_get_item_position(eolComponent *list,eolUint positio
 
 eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
 {
+  int i;
   eolUint       id;
   eolLine       name;
   eolUint       fontSize = 3;
   eolRectFloat  rect;
   eolUint       listType = 0;
-  eolBool       allowSelection = eolTrue;
-  eolBool       showBackground = eolTrue;
+  eolKeychain * chain = NULL;
+  eolKeychain * item = NULL;
   eolBool       showVslider = eolTrue,showHslider = eolTrue;
   eolVec2D      itemDim;
   eolComponent * list = NULL;
+  eolComponent * itemComp = NULL;
+  eolComponentList *listData = NULL;
   if (!def)return NULL;
   eol_keychain_get_hash_value_as_line(name, def, "name");
   eol_keychain_get_hash_value_as_uint(&id, def, "id");
@@ -621,8 +659,6 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
   eol_keychain_get_hash_value_as_bool(&showVslider, def, "showVSlider");
   eol_keychain_get_hash_value_as_bool(&showHslider, def, "showHSlider");
   eol_keychain_get_hash_value_as_uint(&fontSize, def, "fontSize");
-  eol_keychain_get_hash_value_as_bool(&showBackground, def, "showBackground");
-  eol_keychain_get_hash_value_as_bool(&allowSelection, def, "allowSelection");
   
   list = eol_list_new(
     id,
@@ -633,15 +669,39 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
     itemDim,
     showVslider,
     showHslider,
-    allowSelection,
-    showBackground,
-    fontSize,
-    eol_vec3d(1,1,1),
-    1
+    fontSize
   );
   if (!list)
   {
     return NULL;
+  }
+  listData = eol_component_get_list_data(list);
+  if (listData)
+  {
+    eol_keychain_get_hash_value_as_vec3d(&listData->backgroundColor, def, "backgroundColor");
+    eol_keychain_get_hash_value_as_float(&listData->backgroundAlpha, def, "backgroundAlpha");
+    eol_keychain_get_hash_value_as_bool(&listData->showBackground, def, "showBackground");
+    eol_keychain_get_hash_value_as_bool(&listData->allowSelection, def, "allowSelection");
+
+  }
+  chain = eol_keychain_get_hash_value(def,"items");
+  if (chain)
+  {
+    if (chain->keyType == eolKeychainList)
+    {
+      for (i = 0; i < chain->itemCount; i++)
+      {
+        item = eol_keychain_get_list_nth(chain, i);
+        if (item != NULL)
+        {
+          itemComp = eol_component_make_from_config(item,list->bounds);
+          if (itemComp )
+          {
+            eol_list_add_item(list,itemComp );
+          }
+        }
+      }        
+    }
   }
   return list;
 }
