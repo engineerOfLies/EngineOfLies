@@ -3,6 +3,7 @@
 #include "eol_actor.h"
 #include "eol_draw.h"
 #include "eol_resource.h"
+#include "eol_types.h"
 
 /*local data types*/
 typedef void (*eolEntityDrawType)(eolEntity *ent);

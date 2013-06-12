@@ -18,7 +18,7 @@ http://www.opengl.org/
 http://chipmunk-physics.net/
   Chipmunk for 2D collision handling
 
-For fmemopen compatibility on the MAC you may need *:
+For fmemopen compatibility on the MAC you may need:
   http://www.dragonflybsd.org/download/
   * though there are plans to remove this dependancy.
   
@@ -26,5 +26,5 @@ The library is being written in C with plans for bindings in other languages.
 The library is geared towards platformers, shooters, role playing games and
 adventure games.
 
-
-
+On Ubuntu, you'll need the following packages
+sudo apt-get install physfs-dev libyaml-dev libxmu-dev libxi-dev

@@ -20,7 +20,7 @@
 
 #include "eol_types.h"
 #include <SDL_mixer.h>
-#include <glib/ghash.h>
+#include <glib.h>
 
 typedef struct
 {
