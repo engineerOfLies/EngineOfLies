@@ -91,6 +91,7 @@ eolKeychain *eol_keychain_new_bool(eolBool n);
 eolKeychain *eol_keychain_new_int(eolInt n);
 eolKeychain *eol_keychain_new_uint(eolInt n);
 eolKeychain *eol_keychain_new_float(eolFloat n);
+eolKeychain *eol_keychain_new_vec2d(eolVec2D n);
 eolKeychain *eol_keychain_new_vec3d(eolVec3D n);
 eolKeychain *eol_keychain_new_vec4d(eolVec4D n);
 eolKeychain *eol_keychain_new_rect(eolRect n);
@@ -164,6 +165,7 @@ eolBool eol_keychain_get_hash_value_as_uint(eolUint *output, eolKeychain *hash, 
 eolBool eol_keychain_get_hash_value_as_int(eolInt *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_float(eolFloat *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_line(eolLine output, eolKeychain *hash, eolLine key);
+eolBool eol_keychain_get_hash_value_as_vec2d(eolVec2D *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_vec3d(eolVec3D *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_vec4d(eolVec4D *output, eolKeychain *hash, eolLine key);
 eolBool eol_keychain_get_hash_value_as_rect(eolRect *output, eolKeychain *hash, eolLine key);

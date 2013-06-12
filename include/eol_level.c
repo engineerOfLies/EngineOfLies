@@ -424,9 +424,6 @@ eolLevel *eol_level_load(char *filename)
   }
   level = eol_level_new();
   if (!level)return NULL;
-  eol_logger_message(EOL_LOG_ERROR,"loading data:\n");
-  eol_keychain_print(conf->_node);
-
   /*parse it*/
   eol_config_get_line_by_tag(level->idName,conf,"idName");
   eol_config_get_uint_by_tag(&level->layerCount,conf,"layerCount");
@@ -580,8 +577,6 @@ void eol_level_save(char *filename,eolLevel *level)
       eol_config_save_binary(fileData,filename);
     }
   }
-  eol_logger_message(EOL_LOG_ERROR,"saving data:\n");
-  eol_keychain_print(fileData->_node);
   eol_config_free(&fileData);
 }
 

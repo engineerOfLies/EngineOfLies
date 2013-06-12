@@ -31,8 +31,17 @@ eolBool eol_dialog_text_block_update(eolWindow *win,GList *updates)
   return eolFalse;
 }
 
+void eol_dialog_message(eolLine title,eolText message)
+{
+  eol_dialog_text_block(title,
+                        message,
+                        "OK",
+                        NULL,
+                        NULL);
+}
+
 void eol_dialog_text_block(eolLine title,
-                           char   *text,
+                           eolText text,
                            eolWord okText,
                            void    *data,
                            eolWindowCallback onOK)
@@ -73,15 +82,37 @@ void eol_dialog_text_block(eolLine title,
   win->update = eol_dialog_text_block_update;
 
   by = eol_window_get_relative_position(2,win->rect.h);
-  comp = eol_label_new(0,"text_title",eol_rectf(0.5,by,1,1),win->rect,eolTrue,
-                       title,eolJustifyCenter,eolFalse,4,NULL,eol_vec3d(1,1,1),1);
+  comp = eol_label_new(
+    0,
+    "text_title",
+    eol_rectf(0.5,by,1,1),
+    win->rect,
+    eolTrue,
+    title,
+    eolJustifyCenter,
+    eolFalse,
+    4,
+    NULL,
+    eol_vec3d(1,1,1),
+    1);
   eol_window_add_component(win,comp);
 
   
   bx = eol_window_get_relative_position(brect.w,win->rect.w);
   by = eol_window_get_relative_position(4 +trect.h,win->rect.h);
-  comp = eol_label_new(1,"text_block",eol_rectf(0.5-(bx/2),by,1,1),win->rect,eolTrue,
-                       text,eolJustifyLeft,eolTrue,3,NULL,eol_vec3d(1,1,1),1);
+  comp = eol_label_new(
+    1,
+    "text_block",
+    eol_rectf(0.5-(bx/2),by,1,1),
+    win->rect,
+    eolTrue,
+    text,
+    eolJustifyLeft,
+    eolTrue,
+    3,
+    NULL,
+    eol_vec3d(1,1,1),
+    1);
   eol_window_add_component(win,comp);
 
   bx = eol_window_get_relative_position(win->rect.w - bw,win->rect.w);
@@ -90,7 +121,7 @@ void eol_dialog_text_block(eolLine title,
                               "ok_button",
                               eol_rectf(bx,by,1,1),
                               win->rect,
-                              "OK",
+                              okText,
                               SDLK_RETURN,
                               0,
                               eolFalse);
@@ -98,10 +129,13 @@ void eol_dialog_text_block(eolLine title,
 
   win->customData = data;
 
-  eol_window_allocat_callbacks(win,1);
-  if ((win->callbacks != NULL) && (win->callbackCount == 1))
+  if (onOK != NULL)
   {
-    win->callbacks[0] = onOK;
+    eol_window_allocat_callbacks(win,1);
+    if ((win->callbacks != NULL) && (win->callbackCount == 1))
+    {
+      win->callbacks[0] = onOK;
+    }
   }
 }
 

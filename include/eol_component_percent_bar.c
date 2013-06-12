@@ -93,7 +93,7 @@ eolComponent *eol_percent_bar_new(
     return NULL;
   }
   component->id = id;
-  eol_word_cpy(component->name,name);
+  eol_line_cpy(component->name,name);
 
   return component;
 }

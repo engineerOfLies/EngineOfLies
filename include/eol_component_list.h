@@ -50,6 +50,7 @@ typedef struct
   eolComponent *vSlider;/**<the vertical slider*/
   eolBool     allowSelection;
   eolBool     showBackground;
+  eolBool     showBoarder;
   eolBool     multiSelection;/**<if more than one item can be selected*/
   eolUint     fontSize;
   eolVec3D    highlightColor;

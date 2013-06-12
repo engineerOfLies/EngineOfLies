@@ -503,9 +503,9 @@ void eol_font_draw_text_block_custom(
   {
     space = 0;
     i = 0;
-    whitespace = eolFalse;
     do
     {
+      whitespace = eolFalse;
       if(sscanf(&text[i],"%c",&word[0]) == EOF)break;
       if(word[0] == ' ')
       {

@@ -19,6 +19,7 @@ void eol_component_make_list(
     eolBool   showHSlider,
     eolBool   showVSlider,
     eolVec2D  displayItems,
+    eolVec2D  itemPadding,
     eolUint   fontSize
   );
   
@@ -67,6 +68,7 @@ eolComponent *eol_list_new(
     eolRect       bounds,
     eolUint       listType,
     eolVec2D      itemDimensions,
+    eolVec2D      itemPadding,
     eolBool       showVSlider,
     eolBool       showHSlider,
     eolUint       fontSize
@@ -87,6 +89,7 @@ eolComponent *eol_list_new(
     showHSlider,
     showVSlider,
     itemDimensions,
+    itemPadding,
     fontSize
   );
 
@@ -97,7 +100,7 @@ eolComponent *eol_list_new(
     return NULL;
   }
   component->id = id;
-  eol_word_cpy(component->name,name);
+  eol_line_cpy(component->name,name);
   list->itemBounds.x = component->bounds.x;
   list->itemBounds.y = component->bounds.y;
   list->itemBounds.w = component->bounds.w;
@@ -226,8 +229,10 @@ void eol_component_list_draw(eolComponent *component, eolRect bounds)
     }
     eol_component_draw(item->item,item->item->bounds);
   }
-  if (list->showBackground)
+  if (list->showBoarder)
+  {
     eol_draw_rect(r,eol_vec3d(1,1,1),1);
+  }
   if ((list->showVSlider) && (scaleArea.y > 1))
   {
     eol_component_draw(list->vSlider,list->vSliderBounds);
@@ -331,6 +336,7 @@ void eol_component_make_list(
     eolBool   showHSlider,
     eolBool   showVSlider,
     eolVec2D  displayItems,
+    eolVec2D  itemPadding,
     eolUint   fontSize
   )
 {
@@ -356,6 +362,10 @@ void eol_component_make_list(
     case eolListLines:
       break;
     case eolListBlock:
+      if (displayItems.x != 0)
+      {
+        list->numPerRow = (eolInt)(component->bounds.w / displayItems.x);
+      }
       break;
     case eolListDock:
       list->numPerRow = -1;
@@ -363,6 +373,7 @@ void eol_component_make_list(
   }
   list->listType = listType;
   eol_vec2d_copy(list->displayItems,displayItems);
+  eol_vec2d_copy(list->itemPadding,itemPadding);
   list->showVSlider = showVSlider;
   list->showHSlider = showHSlider;
   component->data_free = eol_component_list_free;
@@ -470,6 +481,7 @@ void eol_component_list_new(eolComponent *component)
   
   listData->allowSelection = eolTrue;
   listData->showBackground = eolTrue;
+  listData->showBoarder = eolTrue;
   listData->fontSize = 2;
   eol_vec3d_set(listData->highlightColor,0.2,1,1);
   eol_vec3d_set(listData->textColor,1,1,1);
@@ -645,20 +657,44 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
   eolUint       fontSize = 3;
   eolRectFloat  rect;
   eolUint       listType = 0;
+  eolLine       listTypeLine = "text";
   eolKeychain * chain = NULL;
   eolKeychain * item = NULL;
   eolBool       showVslider = eolTrue,showHslider = eolTrue;
-  eolVec2D      itemDim;
+  eolVec2D      itemDim = {16,16},itemPadding = {8,8};
   eolComponent * list = NULL;
   eolComponent * itemComp = NULL;
   eolComponentList *listData = NULL;
   if (!def)return NULL;
   eol_keychain_get_hash_value_as_line(name, def, "name");
+  
+  if (eol_keychain_get_hash_value_as_line(listTypeLine, def, "listType"))
+  {
+      if (eol_line_cmp(listTypeLine,"text") == 0)
+      {
+        listType = 0;
+      }
+      else if (eol_line_cmp(listTypeLine,"lines") == 0)
+      {
+        listType = 1;
+      }
+      else if (eol_line_cmp(listTypeLine,"block") == 0)
+      {
+        listType = 2;
+      }
+      else if (eol_line_cmp(listTypeLine,"dock") == 0)
+      {
+        listType = 3;
+      }
+  }
+  
   eol_keychain_get_hash_value_as_uint(&id, def, "id");
   eol_keychain_get_hash_value_as_rectfloat(&rect, def, "rect");
   eol_keychain_get_hash_value_as_bool(&showVslider, def, "showVSlider");
   eol_keychain_get_hash_value_as_bool(&showHslider, def, "showHSlider");
   eol_keychain_get_hash_value_as_uint(&fontSize, def, "fontSize");
+  eol_keychain_get_hash_value_as_vec2d(&itemDim, def, "itemDimensions");
+  eol_keychain_get_hash_value_as_vec2d(&itemPadding, def, "itemPadding");
   
   list = eol_list_new(
     id,
@@ -667,6 +703,7 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
     winRect,
     listType,
     itemDim,
+    itemPadding,
     showVslider,
     showHslider,
     fontSize
@@ -681,6 +718,7 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
     eol_keychain_get_hash_value_as_vec3d(&listData->backgroundColor, def, "backgroundColor");
     eol_keychain_get_hash_value_as_float(&listData->backgroundAlpha, def, "backgroundAlpha");
     eol_keychain_get_hash_value_as_bool(&listData->showBackground, def, "showBackground");
+    eol_keychain_get_hash_value_as_bool(&listData->showBoarder, def, "showBoarder");
     eol_keychain_get_hash_value_as_bool(&listData->allowSelection, def, "allowSelection");
 
   }

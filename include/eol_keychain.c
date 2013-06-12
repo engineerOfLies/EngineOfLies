@@ -232,6 +232,13 @@ eolKeychain *eol_keychain_new_float(eolFloat n)
   return eol_keychain_new_string(text);
 }
 
+eolKeychain *eol_keychain_new_vec2d(eolVec2D n)
+{
+  eolLine text;
+  snprintf(text,EOLLINELEN,"%f,%f",n.x,n.y);
+  return eol_keychain_new_string(text);
+}
+
 eolKeychain *eol_keychain_new_vec3d(eolVec3D n)
 {
   eolLine text;
@@ -544,7 +551,7 @@ eolBool eol_keychain_get_hash_value_as_vec4d(eolVec4D *output, eolKeychain *hash
   if (!chain)return eolFalse;
   if (chain->keyType != eolKeychainString)return eolFalse;
   eol_line_cpy(keyValue,chain->keyValue);
-  if (sscanf(keyValue,"%lf,%lf,%lf,%lf",&temp.x,&temp.y,&temp.z,&temp.w) != 3)return eolFalse;
+  if (sscanf(keyValue,"%lf,%lf,%lf,%lf",&temp.x,&temp.y,&temp.z,&temp.w) != 4)return eolFalse;
   eol_vec4d_copy((*output),temp);
   return eolTrue;
 }
@@ -561,6 +568,21 @@ eolBool eol_keychain_get_hash_value_as_vec3d(eolVec3D *output, eolKeychain *hash
   eol_line_cpy(keyValue,chain->keyValue);
   if (sscanf(keyValue,"%lf,%lf,%lf",&temp.x,&temp.y,&temp.z) != 3)return eolFalse;
   eol_vec3d_copy((*output),temp);
+  return eolTrue;
+}
+
+eolBool eol_keychain_get_hash_value_as_vec2d(eolVec2D *output, eolKeychain *hash, eolLine key)
+{
+  eolVec2D temp = {0,0};
+  eolLine keyValue;
+  eolKeychain *chain;
+  if ((!hash) || (!output) || (strlen(key) == 0))return eolFalse;
+  chain = eol_keychain_get_hash_value(hash,key);
+  if (!chain)return eolFalse;
+  if (chain->keyType != eolKeychainString)return eolFalse;
+  eol_line_cpy(keyValue,chain->keyValue);
+  if (sscanf(keyValue,"%lf,%lf",&temp.x,&temp.y) != 2)return eolFalse;
+  eol_vec2d_copy((*output),temp);
   return eolTrue;
 }
 

@@ -203,7 +203,7 @@ void eol_component_move(eolComponent *component,eolRect newbounds);
  */
 eolComponent *eol_slider_new(
     eolUint      id,
-    eolWord      name,
+    eolLine      name,
     eolRectFloat rect,
     eolRect      bounds,
     eolBool      vertical,
@@ -239,7 +239,7 @@ eolComponent *eol_percent_bar_create_from_config(eolKeychain *def,eolRect parent
  */
 eolComponent *eol_slider_common_new(
     eolUint        id,
-    eolWord        name,
+    eolLine        name,
     eolRectFloat   rect,
     eolRect        bounds,
     eolBool        vertical,
@@ -290,7 +290,7 @@ void eol_slider_set_position(eolComponent *comp, eolFloat newPos);
  */
 eolComponent *eol_label_new(
     eolUint        id,
-    eolWord        name,
+    eolLine        name,
     eolRectFloat   rect,
     eolRect        bounds,
     eolBool        canHasFocus,
@@ -356,7 +356,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def);
  */
 eolComponent *eol_button_new(
     eolUint        id,
-    eolWord        name,
+    eolLine        name,
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
@@ -388,7 +388,7 @@ eolComponent *eol_button_new(
  */
 eolComponent *eol_button_stock_new(
     eolUint        id,
-    eolWord        name,
+    eolLine        name,
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
@@ -411,7 +411,7 @@ eolComponent *eol_button_stock_new(
  */
 eolComponent *eol_button_text_new(
     eolUint        id,
-    eolWord        name,
+    eolLine        name,
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
@@ -460,7 +460,7 @@ void eol_button_get_stock_size(eolUint *w, eolUint *h);
   */
 eolComponent *eol_entry_new(
     eolUint       id,
-    eolWord       name,
+    eolLine       name,
     eolRectFloat  rect,
     eolRect       bounds,
     char        * output,
@@ -502,7 +502,7 @@ eolComponent *eol_entry_create_from_config(eolKeychain *def, eolRect parentRect)
   */
 eolComponent *eol_line_entry_new(
     eolUint       id,
-    eolWord       name,
+    eolLine       name,
     eolRectFloat  rect,
     eolRect       bounds,
     eolLine       output
@@ -517,11 +517,12 @@ eolComponent *eol_line_entry_new(
  */
 eolComponent *eol_list_new(
     eolUint       id,
-    eolWord       name,
+    eolLine       name,
     eolRectFloat  rect,
     eolRect       bounds,
     eolUint       listType,
     eolVec2D      itemDimensions,
+    eolVec2D      itemPadding,
     eolBool       showVSlider,
     eolBool       showHSlider,
     eolUint       fontSize
@@ -637,7 +638,7 @@ void eol_component_get_rect_from_bounds(eolRect *rect,eolRect canvas, eolRectFlo
 
 eolComponent *eol_percent_bar_new(
     eolUint       id,
-    eolWord       name,
+    eolLine       name,
     eolRectFloat  rect,
     eolRect       bounds,
     eolBool       vertical,

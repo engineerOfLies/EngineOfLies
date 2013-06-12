@@ -48,10 +48,17 @@ eolWindow *eol_dialog_text_prompt(char *output,
   * @param question the text to show in the dialog box
   */
 void eol_dialog_text_block(eolLine title,
-                           char   *text,
+                           eolText text,
                            eolWord okText,
                            void    *data,
                            eolWindowCallback onOK);
+
+/**
+ * @brief pops up a generic information dialog box
+ * @param title the title to display in the box
+ * @param message the message to display
+ */
+void eol_dialog_message(eolLine title,eolText message);
 
 /**
  * @brief pops up a yes / no window dialog.

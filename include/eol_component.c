@@ -1056,7 +1056,7 @@ void eol_slider_set_position(eolComponent *comp, eolFloat newPos)
 
 eolComponent *eol_slider_common_new(
     eolUint        id,
-    eolWord        name,
+    eolLine        name,
     eolRectFloat   rect,
     eolRect        bounds,
     eolBool        vertical,
@@ -1105,7 +1105,7 @@ eolComponent *eol_slider_common_new(
 
 eolComponent *eol_slider_new(
     eolUint       id,
-    eolWord       name,
+    eolLine       name,
     eolRectFloat  rect,
     eolRect       bounds,
     eolBool       vertical,
@@ -1140,7 +1140,7 @@ eolComponent *eol_slider_new(
     return NULL;
   }
   component->id = id;
-  eol_word_cpy(component->name,name);
+  eol_line_cpy(component->name,name);
   component->type = eolSliderComponent;
   eol_rectf_copy(&component->rect,rect);
   eol_component_get_rect_from_bounds(&component->bounds,bounds, rect);
@@ -1211,7 +1211,7 @@ eolComponent *eol_slider_create_from_config(eolKeychain *def,eolRect parentRect)
 
 eolComponent *eol_label_new(
     eolUint        id,
-    eolWord        name,
+    eolLine        name,
     eolRectFloat   rect,
     eolRect        bounds,
     eolBool        canHasFocus,
@@ -1262,7 +1262,7 @@ void eol_entry_get_line(eolComponent *component,eolLine output)
 
 eolComponent *eol_line_entry_new(
     eolUint       id,
-    eolWord       name,
+    eolLine       name,
     eolRectFloat  rect,
     eolRect       bounds,
     eolLine       output
@@ -1340,7 +1340,7 @@ eolComponent *eol_entry_create_from_config(eolKeychain *def, eolRect parentRect)
 
 eolComponent *eol_entry_new(
     eolUint       id,
-    eolWord       name,
+    eolLine       name,
     eolRectFloat  rect,
     eolRect       bounds,
     char        * output,
