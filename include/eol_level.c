@@ -29,6 +29,7 @@ void eol_level_delete(void *leveldata);
 eolBool eol_level_load_data_from_file(char * filename,void *data);
 eolLevelLayer *eol_level_layer_new();
 void eol_level_clear_layer_space(eolLevelLayer *layer);
+void eol_level_delete_layer(eolLevelLayer * level);
 /*function definitions*/
 
 
@@ -39,6 +40,7 @@ void eol_level_layer_setup_background(eolBackground *back)
   {
     eol_model_free(&back->model);
   }
+  if (strlen(back->modelFile)<=0)return;
   back->model = eol_model_load(back->modelFile);
 }
 
@@ -46,11 +48,14 @@ void eol_level_setup_layer(eolLevelLayer *layer)
 {
   GList *b;
   if (!layer)return;
-  eol_mesh_free(&layer->clipMesh);
-  layer->clipMesh = eol_mesh_load(layer->clipMeshFile);
-  
   eol_level_clear_layer_space(layer);
-  eol_level_add_mask_to_space(layer);
+
+  eol_mesh_free(&layer->clipMesh);
+  if (strlen(layer->clipMeshFile) > 0)
+  {
+    layer->clipMesh = eol_mesh_load(layer->clipMeshFile);
+    eol_level_add_mask_to_space(layer);
+  }
   
   /*backgrounds*/
   for (b = layer->backgrounds;b != NULL; b = b->next)
@@ -173,6 +178,19 @@ void eol_level_free(eolLevel **level)
   eol_resource_free_element(_eol_level_manager,(void **)level);
 }
 
+void eol_level_delete_Layer_n(eolLevel *level,eolUint layerIndex)
+{
+  GList *l;
+  eolLevelLayer * layer = NULL;
+  if (!level)return;
+  l = g_list_nth(level->layers,layerIndex);
+  if ((!l)||(!l->data))return;
+  layer = (eolLevelLayer *)l->data;
+  eol_level_delete_layer(layer);
+  l->data = NULL;
+  level->layers = g_list_delete_link(level->layers,l);
+}
+
 void eol_level_delete_layer(eolLevelLayer * level)
 {
   eolBackground *b = NULL;
@@ -286,6 +304,8 @@ eolLevelLayer *eol_level_layer_new()
   memset(layer,0,sizeof(eolLevelLayer));
 
   eol_orientation_clear(&layer->ori);
+  eol_orientation_clear(&layer->clipMaskOri);
+  eol_vec3d_set(layer->clipMaskOri.color,1,1,1);
   eol_level_clear_layer_space(layer);
   
   return layer;
@@ -521,7 +541,7 @@ eolKeychain *eol_level_build_layer_keychain(eolLevelLayer *layer)
   key = eol_level_build_backgrounds_keychain(layer->backgrounds);
   if (key != NULL)
   {
-  eol_keychain_hash_insert(keys,"backgrounds",key);
+    eol_keychain_hash_insert(keys,"backgrounds",key);
   }
   key = eol_level_build_spawn_list(layer->spawnList);
   if (key != NULL)
@@ -602,6 +622,10 @@ void eol_level_draw_current()
     case eolLevelDrawClip:
       eol_level_draw_clip(_eol_level_current);
       break;
+    case eolLevelDrawAll:
+      eol_level_draw(_eol_level_current);
+      eol_level_draw_clip(_eol_level_current);
+      break;
   }
 }
 
@@ -671,6 +695,10 @@ void eol_level_draw(eolLevel *level)
     {
       alpha = 0.25;
     }
+    if (i < level->active)
+    {
+      alpha = 0.5;
+    }
     else alpha = 1;
     layer = (eolLevelLayer *)layerNode->data;
     layer->ori.alpha = alpha;
@@ -697,20 +725,24 @@ void eol_level_draw_clip(eolLevel *level)
   eol_level_draw_layer_clipmask(layer);
 }
 
-void eol_level_set_active_layer(eolLevel *level, eolUint layer)
+eolLevelLayer* eol_level_set_active_layer(eolLevel *level, eolUint layer)
 {
-  if (!level)return;
-  if (!level->layers)return;
-  if (layer >= level->layerCount)
+  eolLevelLayer *l;
+  if (!level)return NULL;
+  if (!level->layers)return NULL;
+  if (layer >= g_list_length(level->layers))
   {
     eol_logger_message(
       EOL_LOG_WARN,
       "eol_level:cannot set active layer %i for level %s\n",
       layer,
       level->idName);
-    return;
+    return NULL;
   }
+  l = g_list_nth_data(level->layers,layer);
+  if (!l)return NULL;
   level->active = layer;
+  return l;
 }
 
 void eol_level_set_current_level(eolLevel *level)

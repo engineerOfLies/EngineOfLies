@@ -36,7 +36,8 @@
 enum eolLevelDrawModes {
   eolLevelDrawClip,
   eolLevelDrawMesh,
-  eolLevelDrawFull
+  eolLevelDrawFull,
+  eolLevelDrawAll
 };
 
 /**
@@ -128,6 +129,14 @@ eolLevel *eol_level_new();
 eolLevelLayer *eol_level_add_layer(eolLevel *level);
 
 /**
+ * @brief deletes the nth layer of the level, freeing all assets
+ * No Op if the level is null or the layer does not exist
+ * @param level the level to delete a layer from
+ * @param layerIndex the index of the layer to be deleted
+ */
+void eol_level_delete_Layer_n(eolLevel *level,eolUint layerIndex);
+
+/**
  * @brief get the nth layer of a level
  * @param level a pointer to the level to search
  * @param n the index of the layer to get
@@ -205,8 +214,9 @@ void eol_level_draw_clip(eolLevel *level);
  * @brief sets which layer in the level has the focus and gets updated.
  * @param level the level to set
  * @param layer layer number for the level to make active
+ * @return a pointer to the newly activated layer
  */
-void eol_level_set_active_layer(eolLevel *level, eolUint layer);
+eolLevelLayer* eol_level_set_active_layer(eolLevel *level, eolUint layer);
 
 /**
  * @brief sets the passed in level as the active level for rendering and updating.
