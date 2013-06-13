@@ -26,7 +26,7 @@ eolResourceHeader *eol_resource_get_header_by_index(eolResourceManager *manager,
 void *eol_resource_manager_load_resource(eolResourceManager *manager,char *filename)
 {
   eolResourceHeader * element = NULL;
-  if (!filename)return NULL;
+  if ((!filename)||(strlen(filename) <= 0))return NULL;
   if (!manager)
   {
     eol_logger_message(
@@ -242,7 +242,6 @@ void * eol_resource_new_element(eolResourceManager *manager)
   int i = 0;
   eolResourceHeader *element = NULL;
   eolResourceHeader *oldest = NULL;
-  eolUint            oldestIndex = 0;
   eolUint            oldestTime = eol_graphics_get_now() + 1;
   if (manager == NULL)
   {
@@ -269,7 +268,6 @@ void * eol_resource_new_element(eolResourceManager *manager)
       {
         oldest = element;
         oldestTime = element->timeFree;
-        oldestIndex = i;
         if (element->timeFree == 0)
         {
           /*cant get older than never used*/

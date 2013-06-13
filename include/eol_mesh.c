@@ -174,7 +174,7 @@ void eol_mesh_load_from_object(char *filename,eolMesh *model)
   if (file == NULL)
     return;
 
-  strcpy(model->filename,filename);
+  eol_line_cpy(model->filename,filename);
 
   eol_mesh_object_get_counts(model,file->file);
 /*TODO add more memory checks for allocation*/
@@ -215,7 +215,7 @@ void eol_mesh_load_from_object(char *filename,eolMesh *model)
 
 void eol_mesh_object_get_counts(eolMesh* model, FILE* file)
 {
-  char buf[128];
+  char buf[256];
   int  numvertices = 0;
   int  numnormals = 0;
   int  numtexcoords = 0;
@@ -226,7 +226,6 @@ void eol_mesh_object_get_counts(eolMesh* model, FILE* file)
   {
     return;
   }
-
   while(fscanf(file, "%s", buf) != EOF)
   {
     switch(buf[0])

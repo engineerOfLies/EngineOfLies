@@ -117,8 +117,9 @@ void eol_loader_write_uint_to_file(eolFile *file,eolUint data);
  * does nothing if the file handle is NULL or opened for writing.
  * @param data output. Left alone on error or eof
  * @param file the file handle to read from
+ * @param returns eolTrue if success or eolFalse on error
  */
-void eol_loader_read_uint_from_file(eolUint * data, eolFile *file);
+eolBool eol_loader_read_uint_from_file(eolUint * data, eolFile *file);
 
 /**
 * @brief write data to an open eolFile buffer.

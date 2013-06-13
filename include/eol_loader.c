@@ -52,6 +52,11 @@ eolFile *eol_loader_read_file_binary(char *filename)
       );
     return NULL;
   }
+  if (strlen(filename) <= 0)
+  {
+    eol_logger_message(EOL_LOG_ERROR,"eol_loader_read_file_binary: passed an empty filename to load.");
+    return NULL;
+  }
   file = (eolFile *)malloc(sizeof(eolFile));
   if (file == NULL)
   {
@@ -75,7 +80,11 @@ eolFile *eol_loader_read_file_binary(char *filename)
   }
   file->_fileMode = eolLoaderReadBinary;
   eol_line_cpy(file->filename,filename);
-  eol_loader_read_uint_from_file((eolUint *)&file->_fileEndian,file);
+  if (!eol_loader_read_uint_from_file((eolUint *)&file->_fileEndian,file))
+  {
+    eol_loader_close_file(&file);
+    return NULL;
+  }
   return file;
 }
 
@@ -144,6 +153,11 @@ eolFile *eol_loader_read_file(char *filename)
         "eol_loader: passed NULL data to load from object"
       );
   	return NULL;
+  }
+  if (strlen(filename) <= 0)
+  {
+    eol_logger_message(EOL_LOG_ERROR,"eol_loader_read_file: passed an empty filename to load.");
+    return NULL;
   }
   file = (eolFile *)malloc(sizeof(eolFile));
   if (file == NULL)
@@ -305,16 +319,16 @@ void eol_loader_write_string_to_file(eolFile *file,char * data)
   }
 }
 
-void eol_loader_read_uint_from_file(eolUint * data, eolFile *file)
+eolBool eol_loader_read_uint_from_file(eolUint * data, eolFile *file)
 {
-  if ((!file) || (!data))return;
+  if ((!file) || (!data))return eolFalse;
   if (file->_fileMode != eolLoaderReadBinary)
   {
     eol_logger_message(
       EOL_LOG_WARN,
       "eol_loader:file %s not opened for reading in binary",
       file->filename);
-    return;
+    return eolFalse;
   }
   if (file->_fileEndian == EOLFILELISTTLEENDIAN)
   {
@@ -324,6 +338,7 @@ void eol_loader_read_uint_from_file(eolUint * data, eolFile *file)
   {
     PHYSFS_readUBE32(file->_PSfile, (PHYSFS_uint32 *)data);
   }
+  return eolTrue;
 }
 
 void eol_loader_read_int_from_file(eolInt * data, eolFile *file)

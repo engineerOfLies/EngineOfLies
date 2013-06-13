@@ -234,6 +234,7 @@ eolLevelLayer *eol_level_add_layer(eolLevel *level)
   if (!layer)return NULL;
   level->layers = g_list_append(level->layers,layer);
   level->layerCount++;
+  snprintf(layer->idName,EOLLINELEN,"layer_%i",level->layerCount);
   return layer;
 }
 
@@ -304,6 +305,7 @@ eolBackground *eol_level_add_background_to_layer(eolLevelLayer *layer)
     return NULL;
   }
   memset(back,0,sizeof(eolBackground));
+  eol_line_cpy(back->modelFile,"\0");
   eol_orientation_clear(&back->ori);
   layer->backgrounds = g_list_append(layer->backgrounds,back);
   return back;
@@ -336,7 +338,7 @@ eolLevel *eol_level_new()
   *** LOAD AND SAVING ***
  */
 
-void eol_level_build_backgrouns_from_keychain(eolLevelLayer *layer,eolKeychain *keychain)
+void eol_level_build_backgrounds_from_keychain(eolLevelLayer *layer,eolKeychain *keychain)
 {
   eolBackground backTemp, *newBack;
   int i,count;
@@ -381,7 +383,7 @@ eolLevelLayer *eol_level_build_layer_from_key(eolKeychain *key)
   bkey = eol_keychain_get_hash_value(key,"backgrounds");
   if (bkey)
   {
-    eol_level_build_backgrouns_from_keychain(layer,bkey);
+    eol_level_build_backgrounds_from_keychain(layer,bkey);
   }
   /*
   eolTileMap  * tileMap;
@@ -435,8 +437,11 @@ eolLevel *eol_level_load(char *filename)
   if (eol_config_get_keychain_by_tag(&keys,conf,"layers"))
   {
     level->layers = eol_level_build_layers_from_keychain(keys);
+    if (level->layers)
+    {
+      level->layerCount = g_list_length(level->layers);
+    }
   }
-  
   return level;
 }
 
