@@ -23,7 +23,7 @@ GLIB_LDFLAGS = `pkg-config --libs glib-2.0`
 SDL_CFLAGS = `sdl-config --cflags` 
 SDL_LDFLAGS = `sdl-config --libs` -lSDL_image -lSDL_ttf -lSDL_mixer -lSDL_net -lGLU -lz -lphysfs -lglib-2.0
 LFLAGS = -g -shared -Wl,-soname,lib$(PROJECT).so.1 -o ../lib/lib$(PROJECT).so.1.0.1
-CFLAGS = -g -fPIC -Wall -pedantic -Wno-unknown-pragmas
+CFLAGS = -g  -fPIC -Wall -pedantic -Wno-unknown-pragmas 
 # -fgnu89-inline 
 # -std=gnu99 
 # -ffast-math for relase version
@@ -46,6 +46,8 @@ sources:
 #	@echo Building source list
 #	@for i in *.c; do echo `basename $$i .c`.o\\ >> makefile.sources; done
 #	@echo Done
+
+makefile.dep: depend
 
 depend:
 	@-rm makefile.dep

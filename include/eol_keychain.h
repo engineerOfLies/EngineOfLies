@@ -19,7 +19,7 @@
 */
 
 #include "eol_types.h"
-#include <glib/gstring.h>
+#include <glib.h>
 
 /**
  * @brief the typed pointer is a pointer to a very limited subset of types.  It packs
