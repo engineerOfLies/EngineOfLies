@@ -594,17 +594,17 @@ eolBool eol_component_list_delete_selected_item(eolComponent *list)
 eolComponent *eol_component_list_get_item_by_name(eolComponent *list,eolLine name)
 {
   GList *l;
-  eolComponent *item;
+  eolComponentListItem *item;
   eolComponentList * ldata;
   ldata = eol_component_get_list_data(list);
   if (!ldata)return NULL;
   for (l = ldata->itemList;l != NULL;l = l->next)
   {
     if (!l->data)continue;
-    item = (eolComponent*)l->data;
-    if (eol_line_cmp(item->name,name)== 0)
+    item = (eolComponentListItem*)l->data;
+    if (eol_line_cmp(item->item->name,name)== 0)
     {
-      return item;
+      return item->item;
     }
   }
   return NULL;

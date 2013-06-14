@@ -183,7 +183,6 @@ void eol_level_hide_layer(eolLevel *level, eolUint n, eolBool hide)
   eolLevelLayer *layer;
   layer = eol_level_get_layer_n(level,n);
   if (!layer)return;
-  printf("hide toggling\n");
   layer->hidden = hide;
 }
 
