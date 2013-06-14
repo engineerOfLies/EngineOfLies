@@ -65,7 +65,7 @@ typedef struct
   eolLine       idName;       /**<unique id for the level layer.  This should be unique*/
 
   eolOrientation ori;         /**<orientation applied to the whole layer*/
-
+  eolBool       hidden;       /**<if this layer should be drawn or not*/
   eolRectFloat  bounds;       /**<absolute bounds in model space for the layer*/
   eolBool       usesClipMesh; /**<if true, the layer will build collision data from clip mesh*/
   eolBool       usesTileMap;  /**<if true, the layer will build collision data from tile map*/
@@ -143,6 +143,8 @@ void eol_level_delete_Layer_n(eolLevel *level,eolUint layerIndex);
  * @return NULL on miss or error, a pointer to the layer otherwise
  */
 eolLevelLayer *eol_level_get_layer_n(eolLevel *level,eolUint n);
+
+void eol_level_hide_layer(eolLevel *level, eolUint n, eolBool hide);
 
 /**
  * @brief allocated an empty background, adds it to the layer in question and returns a pointer

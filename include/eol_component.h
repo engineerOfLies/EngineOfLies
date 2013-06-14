@@ -427,6 +427,7 @@ eolComponent *eol_button_text_new(
  * @param newText the new text to assign
  */
 void eol_button_set_text(eolComponent *button,eolLine newText);
+void eol_button_get_text(eolLine outText,eolComponent *button);
 
 void eol_button_set_inactive(eolComponent *button);
 void eol_button_set_active(eolComponent *button);
@@ -542,6 +543,14 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def);
  * @return a GList of updated components.  Do NOT edit this list.
  */
 GList *eol_list_get_updates(eolComponent *listComp);
+
+/**
+ * @brief lookup an item in the list by its component name
+ * @param list the list to search through
+ * @param name the name of the item to find
+ * @return NULL on error or not found or the eolComponent with the name
+ */
+eolComponent *eol_component_list_get_item_by_name(eolComponent *list,eolLine name);
 
 /**
  * @brief adds a text item to the list.

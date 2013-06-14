@@ -591,6 +591,26 @@ eolBool eol_component_list_delete_selected_item(eolComponent *list)
   return eolTrue;
 }
 
+eolComponent *eol_component_list_get_item_by_name(eolComponent *list,eolLine name)
+{
+  GList *l;
+  eolComponent *item;
+  eolComponentList * ldata;
+  ldata = eol_component_get_list_data(list);
+  if (!ldata)return NULL;
+  for (l = ldata->itemList;l != NULL;l = l->next)
+  {
+    if (!l->data)continue;
+    item = (eolComponent*)l->data;
+    if (eol_line_cmp(item->name,name)== 0)
+    {
+      return item;
+    }
+  }
+  return NULL;
+}
+
+
 eolBool eol_component_list_get_selected_id(eolUint *id,eolComponent *list)
 {
   eolComponent *item;

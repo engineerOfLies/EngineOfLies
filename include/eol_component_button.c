@@ -114,6 +114,14 @@ void eol_button_set_text(eolComponent *button,eolLine newText)
   eol_line_cpy(buttonData->buttonText,newText);
 }
 
+void eol_button_get_text(eolLine outText,eolComponent *button)
+{
+  eolComponentButton *buttonData = NULL;
+  buttonData = eol_component_get_button_data(button);
+  if (!buttonData)return;
+  eol_line_cpy(outText,buttonData->buttonText);
+}
+
 void eol_button_get_stock_size(eolUint *w, eolUint *h)
 {
   if (_eol_component_stock_button[0] == NULL)return;

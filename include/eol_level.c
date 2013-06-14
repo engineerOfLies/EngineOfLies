@@ -178,6 +178,15 @@ void eol_level_free(eolLevel **level)
   eol_resource_free_element(_eol_level_manager,(void **)level);
 }
 
+void eol_level_hide_layer(eolLevel *level, eolUint n, eolBool hide)
+{
+  eolLevelLayer *layer;
+  layer = eol_level_get_layer_n(level,n);
+  if (!layer)return;
+  printf("hide toggling\n");
+  layer->hidden = hide;
+}
+
 void eol_level_delete_Layer_n(eolLevel *level,eolUint layerIndex)
 {
   GList *l;
@@ -629,7 +638,7 @@ void eol_level_draw_current()
   }
 }
 
-void eol_level_draw_background(eolBackground * back)
+void eol_level_draw_background(eolBackground * back,eolFloat alpha)
 {
   if (!back)return;
   if (!back->model)return;
@@ -639,18 +648,18 @@ void eol_level_draw_background(eolBackground * back)
     back->ori.rotation,
     back->ori.scale,
     back->ori.color,
-    back->ori.alpha,
+    back->ori.alpha * alpha,
     0
   );
 }
 
-void eol_level_draw_layer_backgrounds(eolLevelLayer *layer)
+void eol_level_draw_layer_backgrounds(eolLevelLayer *layer,eolFloat alpha)
 {
   GList *b;
   if (!layer)return;
   for (b = layer->backgrounds; b != NULL; b= b->next)
   {
-    eol_level_draw_background((eolBackground *)b->data);
+    eol_level_draw_background((eolBackground *)b->data,alpha);
   }
 }
 
@@ -691,6 +700,8 @@ void eol_level_draw(eolLevel *level)
         layerNode = layerNode->next,i++)
   {
     if (layerNode->data == NULL)continue;
+    layer = (eolLevelLayer *)layerNode->data;
+    if (layer->hidden)continue;
     if (i > level->active)
     {
       alpha = 0.25;
@@ -700,9 +711,10 @@ void eol_level_draw(eolLevel *level)
       alpha = 0.5;
     }
     else alpha = 1;
-    layer = (eolLevelLayer *)layerNode->data;
     layer->ori.alpha = alpha;
-    eol_level_draw_layer_backgrounds(layer);
+    eol_level_draw_layer_backgrounds(layer,alpha);
+    /*TODO: draw tiles*/
+    /*TODO: draw entities*/
   }
 }
 
