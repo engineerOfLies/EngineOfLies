@@ -12,6 +12,28 @@ eolBool eol_loader_initialized()
 	return _eol_loader_initialized;
 }
 
+void eol_loader_add_write_path(char *path,char *point)
+{
+  if (!_eol_loader_initialized)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_loader_add_write_path: loader not yet initialized!"
+    );
+    return;
+  }
+  if ((!path)||(strlen(path) <= 0))
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_loader_add_write_path: path not valid!"
+    );
+    return;
+  }
+  PHYSFS_mount(path, point, 1);
+  PHYSFS_setWriteDir(path);
+}
+
 void eol_loader_init()
 {
   PHYSFS_init(NULL);

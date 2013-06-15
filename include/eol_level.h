@@ -51,6 +51,7 @@ typedef void (*eolSpawnGeneric)(eolSpawn *spawn);
 typedef struct
 {
   eolOrientation   ori;
+  eolBool          hidden;    /**<to draw or not*/
   eolLine          modelFile;
   eolFloat         followCam; /**<For paralax effect. 0 if not, 1 if follows completely*/
   eolModel       * model;
@@ -160,7 +161,15 @@ void eol_level_move_layer_n_down(eolLevel * level,eolUint n);
  */
 eolLevelLayer *eol_level_get_layer_n(eolLevel *level,eolUint n);
 
+/**
+ * @brief sets the hidden status of a layer
+ * @param level the level that owns the layer
+ * @param n the layer index to hide/unhide
+ * @param hide if true, set the layer to hidden, false to unhide
+ */
 void eol_level_hide_layer(eolLevel *level, eolUint n, eolBool hide);
+
+/*background editing*/
 
 /**
  * @brief allocated an empty background, adds it to the layer in question and returns a pointer
@@ -169,6 +178,32 @@ void eol_level_hide_layer(eolLevel *level, eolUint n, eolBool hide);
  * @return a pointer to an allocated, but empty layer, or NULL on error.
  */
 eolBackground *eol_level_add_background_to_layer(eolLevelLayer *layer);
+
+/**
+ * @brief free the model and delete the background from the layer
+ * @param layer the layer to delete a background from
+ * @param n the index of the background in the layer
+ */
+void eol_level_delete_background(eolLevelLayer *layer,eolUint n);
+
+/**
+ * @brief change the hidden status of a background in a layer
+ * @param layer the layer owning the background
+ * @param n the background index to hide or unhide
+ * @param hide eolTrue to hide the background, eolFalse to show the background
+ */
+void eol_level_hide_background(eolLevelLayer *layer,eolUint n, eolBool hide);
+
+void eol_level_move_background_down(eolLevelLayer *layer,eolUint n);
+void eol_level_move_background_up(eolLevelLayer *layer,eolUint n);
+
+/**
+ * @brief gets the nth background from the level
+ * @param layer the layer that owns the background
+ * @param n the index of the background to get
+ * @return a pointer to the background or NULL if not found or error
+ */
+eolBackground *eol_level_get_background(eolLevelLayer *layer,eolUint n);
 
 /**
  * @brief allocates and loads a level from file.

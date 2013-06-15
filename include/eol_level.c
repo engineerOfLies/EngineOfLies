@@ -348,6 +348,61 @@ eolLevelLayer *eol_level_layer_new()
   return layer;
 }
 
+/*background handling*/
+
+void eol_level_hide_background(eolLevelLayer *layer,eolUint n, eolBool hide)
+{
+  eolBackground *background;
+  background = eol_level_get_background(layer,n);
+  if (!background)return;
+  background->hidden = hide;
+}
+
+void eol_level_move_background_up(eolLevelLayer *layer,eolUint n)
+{
+  GList *l;
+  if (!layer)return;
+  if (n < 1)return;
+  l = g_list_nth(layer->backgrounds,n);
+  if (!l)return;
+  layer->backgrounds = g_list_insert(layer->backgrounds,l->data, n - 1);
+  layer->backgrounds = g_list_delete_link(layer->backgrounds,l);
+}
+
+void eol_level_move_background_down(eolLevelLayer *layer,eolUint n)
+{
+  GList *l;
+  if (!layer)return;
+  if (n >= g_list_length(layer->backgrounds) - 1)return;
+  l = g_list_nth(layer->backgrounds,n);
+  if (!l)return;
+  layer->backgrounds = g_list_insert(layer->backgrounds,l->data, n + 2);
+  layer->backgrounds = g_list_delete_link(layer->backgrounds,l);
+}
+
+
+void eol_level_delete_background(eolLevelLayer *layer,eolUint n)
+{
+  eolBackground *background;
+  GList *l;
+  if (!layer)return;
+  l = g_list_nth(layer->backgrounds,n);
+  if (!l)return;
+  background = l->data;
+  if (background)
+  {
+    eol_model_free(&background->model);
+  }
+  free(background);
+  layer->backgrounds = g_list_delete_link(layer->backgrounds,l);
+}
+
+eolBackground *eol_level_get_background(eolLevelLayer *layer,eolUint n)
+{
+  if (!layer)return NULL;
+  return g_list_nth_data(layer->backgrounds,n);
+}
+
 eolBackground *eol_level_add_background_to_layer(eolLevelLayer *layer)
 {
   eolBackground *back;
@@ -520,6 +575,7 @@ eolKeychain *eol_level_build_backgrounds_keychain(GList *backgrounds)
       bgItem = eol_keychain_new_hash();
       if (!bgItem)continue;
       eol_keychain_hash_insert(bgItem,"ori",eol_keychain_new_orientation(bg->ori));
+      eol_keychain_hash_insert(bgItem,"hidden",eol_keychain_new_bool(bg->hidden));
       eol_keychain_hash_insert(bgItem,"modelFile",eol_keychain_new_string(bg->modelFile));
       eol_keychain_hash_insert(bgItem,"followCam",eol_keychain_new_float(bg->followCam));
       eol_keychain_list_append(bgList,bgItem);
@@ -558,6 +614,7 @@ eolKeychain *eol_level_build_layer_keychain(eolLevelLayer *layer)
   eol_keychain_hash_insert(keys,"idName",eol_keychain_new_string(layer->idName));
   eol_keychain_hash_insert(keys,"ori",eol_keychain_new_orientation(layer->ori));
   eol_keychain_hash_insert(keys,"bounds",eol_keychain_new_rectf(layer->bounds));
+  eol_keychain_hash_insert(keys,"hidden",eol_keychain_new_bool(layer->hidden));
   eol_keychain_hash_insert(keys,"usesClipMesh",eol_keychain_new_bool(layer->usesClipMesh));
   eol_keychain_hash_insert(keys,"usesTileMap",eol_keychain_new_bool(layer->usesTileMap));
   eol_keychain_hash_insert(keys,"clipMeshFile",eol_keychain_new_string(layer->clipMeshFile));
@@ -670,6 +727,7 @@ void eol_level_draw_background(eolBackground * back,eolFloat alpha)
 {
   if (!back)return;
   if (!back->model)return;
+  if (back->hidden)return;
   eol_model_draw(
     back->model,
     back->ori.position,
