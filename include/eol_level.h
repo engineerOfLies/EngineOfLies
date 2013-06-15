@@ -137,6 +137,22 @@ eolLevelLayer *eol_level_add_layer(eolLevel *level);
 void eol_level_delete_Layer_n(eolLevel *level,eolUint layerIndex);
 
 /**
+ * @brief changes the place in the layer list of the nth layer to one position up
+ * No op if layer doesn't exist, cant move further up or any missing data
+ * @param level the level to alter
+ * @param n the layer to move up
+ */
+void eol_level_move_layer_n_up(eolLevel * level,eolUint n);
+
+/**
+ * @brief changes the place in the layer list of the nth layer to one position down
+ * No op if layer doesn't exist, cant move further up or any missing data
+ * @param level the level to alter
+ * @param n the layer to move down
+ */
+void eol_level_move_layer_n_down(eolLevel * level,eolUint n);
+
+/**
  * @brief get the nth layer of a level
  * @param level a pointer to the level to search
  * @param n the index of the layer to get
@@ -219,6 +235,14 @@ void eol_level_draw_clip(eolLevel *level);
  * @return a pointer to the newly activated layer
  */
 eolLevelLayer* eol_level_set_active_layer(eolLevel *level, eolUint layer);
+
+/**
+ * @brief rename the specified layer
+ * @param level the parent level
+ * @param n the layer index to alter
+ * @param newName the new name for the layer
+ */
+void eol_level_rename_layer_n(eolLevel * level,eolUint n, eolLine newName);
 
 /**
  * @brief sets the passed in level as the active level for rendering and updating.

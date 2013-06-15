@@ -3,6 +3,12 @@
 #include "eol_graphics.h"
 #include "eol_font.h"
 
+typedef struct
+{
+  void *customData;
+  char *output;
+}eolEntryData;
+
 /*local global variables*/
 eolBool _eol_dialog_quitting = eolFalse;
 
@@ -58,7 +64,7 @@ void eol_dialog_text_block(eolLine title,
   {
     eol_logger_message(
       EOL_LOG_ERROR,
-      "eol_dialog:failed to make text block dialog.\n");
+      "eol_dialog:failed to make text block dialog.");
     return;
   }
   strncpy(win->name,"text_block",EOLLINELEN);
@@ -187,7 +193,7 @@ void eol_dialog_yes_no(eolLine question,
   {
     eol_logger_message(
       EOL_LOG_ERROR,
-      "eol_dialog:failed to make yes/no dialog.\n");
+      "eol_dialog:failed to make yes/no dialog.");
     return;
   }
   strncpy(win->name,"yesno",EOLLINELEN);
@@ -262,8 +268,18 @@ eolBool eol_dialog_text_prompt_update(eolWindow *win,GList *updates)
 {
   GList *c;
   eolWindowCallback call = NULL;
+  eolEntryData *entryData;
   eolComponent *comp = NULL;
   if ((win == NULL)||(updates == NULL))return eolFalse;
+  entryData = (eolEntryData*)win->customData;
+  if (!entryData)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_dialog_text_prompt_update:NULL entry data!"
+    );
+    return eolFalse;
+  }
   for (c = updates;c != NULL;c = c->next)
   {
     if (c->data == NULL)continue;
@@ -271,11 +287,13 @@ eolBool eol_dialog_text_prompt_update(eolWindow *win,GList *updates)
     switch (comp->id)
     {
       case 1:
-        eol_entry_assign_output(eol_window_get_component_by_id(win,3));
+        eol_entry_get_line(
+          eol_window_get_component_by_name(win,"text_entry"),
+          entryData->output);
         if (win->callbacks != NULL)
         {
           call = win->callbacks[0];
-          if (call != NULL)call(win->customData);
+          if (call != NULL)call(entryData->customData);
         }
         eol_window_free(&win);
         return eolTrue;
@@ -283,13 +301,21 @@ eolBool eol_dialog_text_prompt_update(eolWindow *win,GList *updates)
         if (win->callbacks != NULL)
         {
           call = win->callbacks[1];
-          if (call != NULL)call(win->customData);
+          if (call != NULL)call(entryData->customData);
         }
         eol_window_free(&win);
         return eolTrue;
     }
   }
   return eolFalse;
+}
+
+void eol_dialog_text_prompt_delete(void *data)
+{
+  eolEntryData *entryData;
+  if (!data)return;
+  entryData = data;
+  free(entryData);
 }
 
 eolWindow *eol_dialog_text_prompt(char *output,
@@ -306,20 +332,39 @@ eolWindow *eol_dialog_text_prompt(char *output,
   eolUint bw,bh;  /*button dimensions*/
   eolUint sw,sh;  /*screen dimensions*/
   eolBool wordWrap = eolFalse;
+  eolEntryData *entryData;
   eolWindow *win = eol_window_new();
   eolComponent *comp = NULL;
+  if (!output)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_dialog_text_prompt:no out parameter provided.");
+    return NULL;
+  }
   if (!win)
   {
     eol_logger_message(
       EOL_LOG_ERROR,
-      "eol_dialog:failed to make test prompt dialog.\n");
+      "eol_dialog_text_prompt:failed to make test prompt dialog.");
     return NULL;
   }
+
+  win->customData = malloc(sizeof(eolEntryData));
+  if (!win->customData)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_dialog_text_prompt:failed to allocate window data");
+    eol_window_free(&win);
+    return NULL;
+  }
+  memset(win->customData,0,sizeof(eolEntryData));
+  entryData = (eolEntryData*)win->customData;
+  entryData->customData = customData;
+  entryData->output = output;
   
-  if (lineWidth == 0)
-    wordWrap = eolFalse;
-  else
-    wordWrap = eolTrue;
+  wordWrap = eolFalse;
   
   strncpy(win->name,"gettext",EOLLINELEN);
   eol_graphics_get_size(&sw, &sh);
@@ -341,6 +386,7 @@ eolWindow *eol_dialog_text_prompt(char *output,
   win->canHasFocus = eolTrue;
   win->drawGeneric = eolTrue;
   win->update = eol_dialog_text_prompt_update;
+  win->custom_delete = eol_dialog_text_prompt_delete;
   
   comp = eol_label_new(0,"text_prompt_title",eol_rectf(0.5,0.1,1,1),win->rect,eolTrue,
                        question,eolJustifyCenter,eolFalse,3,NULL,eol_vec3d(1,1,1),1);
@@ -368,7 +414,7 @@ eolWindow *eol_dialog_text_prompt(char *output,
   
   comp = eol_entry_new(3,
                        "text_entry",
-                       eol_rectf(0.05,0.25,0.9,0.25),
+                       eol_rectf(0.025,0.25,0.95,0.25),
                        win->rect,
                        output,
                        bufferSize,
@@ -380,9 +426,10 @@ eolWindow *eol_dialog_text_prompt(char *output,
                        eol_vec3d(1,1,1),
                        1,
                        eol_vec3d(0.2,0.2,0.2));
+  comp->hasFocus = eolTrue;
+  comp->canHasFocus = eolTrue;
   eol_window_add_component(win,comp);
 
-  win->customData = customData;
   eol_window_allocat_callbacks(win,2);
   if ((win->callbacks != NULL) && (win->callbackCount == 2))
   {

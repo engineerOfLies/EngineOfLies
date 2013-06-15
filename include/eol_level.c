@@ -199,6 +199,35 @@ void eol_level_delete_Layer_n(eolLevel *level,eolUint layerIndex)
   level->layers = g_list_delete_link(level->layers,l);
 }
 
+void eol_level_move_layer_n_up(eolLevel * level,eolUint n)
+{
+  GList *l;
+  if ((!level)||(n == 0))return;
+  l = g_list_nth(level->layers,n);
+  if (!l)return;
+  level->layers = g_list_insert(level->layers,l->data,n-1);
+  level->layers = g_list_delete_link(level->layers,l);
+}
+
+void eol_level_rename_layer_n(eolLevel * level,eolUint n, eolLine newName)
+{
+  eolLevelLayer *layer;
+  layer = eol_level_get_layer_n(level,n);
+  if (!layer)return;
+  eol_line_cpy(layer->idName,newName);
+}
+
+void eol_level_move_layer_n_down(eolLevel * level,eolUint n)
+{
+  GList *l;
+  if (!level)return;
+  if (n >= g_list_length(level->layers) - 1)return;
+  l = g_list_nth(level->layers,n);
+  if (!l)return;
+  level->layers = g_list_insert(level->layers,l->data,n+2);
+  level->layers = g_list_delete_link(level->layers,l);
+}
+
 void eol_level_delete_layer(eolLevelLayer * level)
 {
   eolBackground *b = NULL;

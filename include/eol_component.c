@@ -733,7 +733,7 @@ void eol_entry_assign_output(eolComponent *component)
   }
   if (entry->entry_callback == NULL)
   {
-    eol_logger_message(EOL_LOG_WARN,"eol_component:unable to assign output.  No callback specified\n");
+    eol_logger_message(EOL_LOG_INFO,"eol_component:unable to assign output.  No callback specified\n");
     return;
   }
   entry->entry_callback(entry->callback_data,entry->buffer->str);
