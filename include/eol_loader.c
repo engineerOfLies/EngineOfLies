@@ -12,7 +12,7 @@ eolBool eol_loader_initialized()
 	return _eol_loader_initialized;
 }
 
-void eol_loader_add_write_path(char *path,char *point)
+void eol_loader_add_write_path(char *path)
 {
   if (!_eol_loader_initialized)
   {
@@ -30,15 +30,21 @@ void eol_loader_add_write_path(char *path,char *point)
     );
     return;
   }
-  PHYSFS_mount(path, point, 1);
-  PHYSFS_setWriteDir(path);
+  if(PHYSFS_setWriteDir(path))
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_loader_add_write_path: %s",
+      PHYSFS_getLastError()
+    );
+  }
 }
 
 void eol_loader_init()
 {
   PHYSFS_init(NULL);
-  PHYSFS_mount("./", NULL, 1);
-  PHYSFS_setWriteDir("./");
+  PHYSFS_mount("./", NULL, 1);/*search path*/
+  PHYSFS_setWriteDir("./");/*write path*/
   _eol_loader_initialized = eolTrue;
 }
 
@@ -145,8 +151,9 @@ eolFile *eol_loader_write_file_binary(char *filename)
   {
     eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_loader:Unable to open file %s for writing!",
-        filename);
+        "eol_loader:Unable to open file %s for writing!\nPhysFS: %s",
+        filename,
+        PHYSFS_getLastError());
     free(file);
     return NULL;
   }

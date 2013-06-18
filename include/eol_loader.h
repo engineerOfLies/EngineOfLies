@@ -74,11 +74,10 @@ eolBool eol_loader_initialized();
 void eol_loader_add_search_path(char *filename,char *point);
 
 /**
- * @brief adds a write path to the loader.  Only write paths will be written to.
+ * @brief sets the write path to the loader.  Only write path will be written to.
  * @param path the new path, relative to the execution folder to make writable
- * @param point the mount "point" for the new path
  */
-void eol_loader_add_write_path(char *path,char *point);
+void eol_loader_add_write_path(char *path);
 
 /**
  * @brief opens a file for reading from the filesystem or a pak file

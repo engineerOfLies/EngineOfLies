@@ -37,6 +37,8 @@ typedef struct
   eolVec3D  color;
   eolVec3D  bgcolor;
   eolFloat  alpha;
+  eolFloat  cursorBlink;
+  eolFloat  cursorBlinkDirection;
   void      (*entry_callback)(void *data,eolLine output);/**< callback when entry is changed*/
   void    * callback_data;/**<custom data to be passed along with the callback*/
 }eolComponentEntry;
@@ -404,6 +406,7 @@ void eol_component_slider_draw(eolComponent *component, eolRect bounds)
 void eol_component_entry_draw(eolComponent *component, eolRect bounds)
 {
   eolRect r;
+  eolText buffer;
   eolComponentEntry *entry = eol_component_get_entry_data(component);
   if (entry == NULL)return;
   r.x = component->bounds.x - 1;
@@ -412,13 +415,34 @@ void eol_component_entry_draw(eolComponent *component, eolRect bounds)
   r.h = component->bounds.h + 2;
   eol_draw_solid_rect(r,eol_vec3d(1,1,1),1);
   eol_draw_solid_rect(component->bounds,entry->bgcolor,1);
-  if (entry->buffer->len <= 0)return;
+  eol_text_cpy(buffer,entry->buffer->str);
+  if (component->hasFocus)
+  {
+    if (entry->cursorBlinkDirection <= 0)
+    {
+      entry->cursorBlink -= 0.1;
+      if (entry->cursorBlink < -1)
+      {
+        entry->cursorBlinkDirection = 1;
+      }
+    }
+    else
+    {
+      snprintf(buffer,EOLTEXTLEN,"%s |",entry->buffer->str);
+      entry->cursorBlink += 0.1;
+      if (entry->cursorBlink > 1)
+      {
+        entry->cursorBlinkDirection = -1;
+      }
+    }
+  }
+  if (strlen(buffer)<= 0)return;
   if (entry->font == NULL)
   {
     if (entry->wordWrap)
     {
       eol_font_draw_text_block(
-      entry->buffer->str,
+      buffer,
       component->bounds.x,
       component->bounds.y,
       component->bounds.w,
@@ -431,7 +455,7 @@ void eol_component_entry_draw(eolComponent *component, eolRect bounds)
     else
     {
       eol_font_draw_text_justify(
-        entry->buffer->str,
+        buffer,
         component->bounds.x,
         component->bounds.y,
         entry->color,
@@ -446,7 +470,7 @@ void eol_component_entry_draw(eolComponent *component, eolRect bounds)
     if (entry->wordWrap)
     {
       eol_font_draw_text_block_custom(
-        entry->buffer->str,
+        buffer,
         component->bounds,
         entry->color,
         entry->alpha,
@@ -456,7 +480,7 @@ void eol_component_entry_draw(eolComponent *component, eolRect bounds)
     else
     {
       eol_font_draw_text_justify_custom(
-        entry->buffer->str,
+        buffer,
         component->bounds.x,
         component->bounds.y,
         entry->color,
@@ -663,6 +687,11 @@ eolBool eol_component_entry_update(eolComponent *component)
   if (eol_input_is_key_released(SDLK_MINUS))
   {
     eol_entry_append_char(component,'-');
+    return eolFalse;
+  }
+  if (eol_input_is_key_released(SDLK_SLASH))
+  {
+    eol_entry_append_char(component,'/');
     return eolFalse;
   }
   for (key = SDLK_0;key <= SDLK_9;key++)
