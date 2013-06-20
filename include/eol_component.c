@@ -436,7 +436,10 @@ void eol_component_draw(eolComponent *component,eolRect bounds)
 {
   if (!component)return;
   if (component->data_draw == NULL)return;
-  component->data_draw(component,bounds);
+  if (!component->hidden)
+  {
+    component->data_draw(component,bounds);
+  }
 }
 
 /*
@@ -1091,6 +1094,7 @@ eolComponent * eol_component_make_from_config(eolKeychain *config,eolRect boundi
   /*common to all components config*/
   eol_keychain_get_hash_value_as_bool(&comp->canHasFocus, config, "canHaveFocus");
   eol_keychain_get_hash_value_as_bool(&comp->hasFocus, config, "focusDefault");
+  eol_keychain_get_hash_value_as_bool(&comp->hidden, config, "hidden");
   return comp;
 }
 

@@ -103,6 +103,7 @@ typedef struct eolComponent_S
   eolInt        state;
   eolInt        oldState;
   eolUint       type;
+  eolBool       hidden;         /**<if true, it is not drawn*/
   void        * componentData;
   void          (*data_free)(struct eolComponent_S *component);
   void          (*data_draw)(struct eolComponent_S *component,eolRect bounds);

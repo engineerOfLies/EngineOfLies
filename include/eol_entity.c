@@ -116,7 +116,7 @@ void eol_entity_init()
 {
   eol_logger_message(
       EOL_LOG_INFO,
-      "eol_entity:initializing\n");
+      "eol_entity:initializing");
   _eol_entity_manager = eol_resource_manager_init(
     "eol_entity_manager",
     _eol_entity_max,
@@ -127,7 +127,7 @@ void eol_entity_init()
     );
   eol_logger_message(
       EOL_LOG_INFO,
-      "eol_entity:initialized\n");
+      "eol_entity:initialized");
   atexit(eol_entity_close);
   _eol_entity_initialized = eolTrue;
 
@@ -137,7 +137,7 @@ void eol_entity_close()
 {
   eol_logger_message(
     EOL_LOG_INFO,
-    "eol_entity:closing\n");
+    "eol_entity:closing");
   eol_resource_manager_free(&_eol_entity_manager);
   _eol_entity_max = 0;
   _eol_entity_custom_data_size = 0;
@@ -145,7 +145,7 @@ void eol_entity_close()
   _eol_entity_initialized = eolFalse;
   eol_logger_message(
     EOL_LOG_INFO,
-    "eol_entity:closed\n");
+    "eol_entity:closed");
 }
 
 void eol_entity_clear()
@@ -154,7 +154,7 @@ void eol_entity_clear()
   {
     eol_logger_message(
       EOL_LOG_INFO,
-      "eol_entity:cannot clear, not initialized\n");
+      "eol_entity:cannot clear, not initialized");
     return;
   }
   if (!_eol_entity_manager)return;
@@ -224,7 +224,7 @@ eolEntity *eol_entity_new()
   {
     eol_logger_message(
       EOL_LOG_INFO,
-      "eol_entdow:used uninitialized\n");
+      "eol_entdow:used uninitialized");
     return NULL;
   }
   ent = (eolEntity *)eol_resource_new_element(_eol_entity_manager);
@@ -232,7 +232,7 @@ eolEntity *eol_entity_new()
   {
     eol_logger_message(
       EOL_LOG_INFO,
-      "eol_entity:failed to get new resource\n");
+      "eol_entity:failed to get new resource");
     return NULL;
   }
   if (_eol_entity_custom_data_size > 0)
@@ -257,7 +257,7 @@ void eol_entity_register_custom_delete(eolEntityCustomDelete delfunc)
   if (_eol_entity_initialized)
   {
     eol_logger_message(EOL_LOG_ERROR,
-                       "eol_entity:cannot register custom delete after init!\n");
+                       "eol_entity:cannot register custom delete after init!");
     return;
   }
   _eol_entity_custom_delete = delfunc;
@@ -268,7 +268,7 @@ void eol_entity_register_custom_data_size(eolUint customSize)
   if (_eol_entity_initialized)
   {
     eol_logger_message(EOL_LOG_ERROR,
-                       "eol_entity:cannot register custom data size after init!\n");
+                       "eol_entity:cannot register custom data size after init!");
                        return;
   }
   _eol_entity_custom_data_size = customSize;
@@ -540,13 +540,13 @@ void eol_entity_draw(eolEntity *ent)
   if (!ent)return;
   if (ent->shown == eolFalse)
   {
-    eol_logger_message(EOL_LOG_INFO,"eol_entity:skipping draw re: not shown\n");
+    eol_logger_message(EOL_LOG_INFO,"eol_entity:skipping draw re: not shown");
     return;
   }
   /*NOTE: may end up drawing other effects...*/
   if (ent->ori.alpha == 0.0f)
   {
-    eol_logger_message(EOL_LOG_INFO,"eol_entity:skipping draw re: 0 alpha\n");
+    eol_logger_message(EOL_LOG_INFO,"eol_entity:skipping draw re: 0 alpha");
     return;
   }
   if (_eol_entity_draw_func != NULL)
@@ -607,7 +607,7 @@ static void eol_entity_handle_touch(cpBody *body, cpArbiter *arbiter, void *data
   if (self == NULL)
   {
     eol_logger_message(
-      EOL_LOG_ERROR,"Given bad pointer to self in HandleEntityTouch.\n");
+      EOL_LOG_ERROR,"Given bad pointer to self in HandleEntityTouch.");
     return;
   }
   if ((self->touch == NULL) && (self->levelTouch == NULL))
@@ -655,14 +655,14 @@ void eol_entity_add_to_space(eolEntity *ent,cpSpace *space)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_entity:passed NULL data to add_to_space.\n");
+      "eol_entity:passed NULL data to add_to_space.");
     return;
   }
   if (ent->body == NULL)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_entity:cannot add a NULL body to a space for entity %s.\n",
+      "eol_entity:cannot add a NULL body to a space for entity %s.",
       ent->name);
     return;
   }
@@ -670,7 +670,7 @@ void eol_entity_add_to_space(eolEntity *ent,cpSpace *space)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_entity:cannot add a NULL shape to a space for entity %s.\n",
+      "eol_entity:cannot add a NULL shape to a space for entity %s.",
       ent->name);
     return;
   }
@@ -678,7 +678,7 @@ void eol_entity_add_to_space(eolEntity *ent,cpSpace *space)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_entity:failed to add body to a space for entity %s.\n",
+      "eol_entity:failed to add body to a space for entity %s.",
       ent->name);
     return;
   }
@@ -687,7 +687,7 @@ void eol_entity_add_to_space(eolEntity *ent,cpSpace *space)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_entity:failed to add shape to a space for entity %s.\n",
+      "eol_entity:failed to add shape to a space for entity %s.",
       ent->name);
     return;
   }
@@ -700,7 +700,7 @@ void eol_entity_remove_from_space(eolEntity *ent)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_entity:passed NULL data to remove_from_space.\n");
+      "eol_entity:passed NULL data to remove_from_space.");
     return;
   }
   if (ent->_space == NULL)
@@ -728,7 +728,7 @@ void eol_entity_shape_make_circle(eolEntity *ent)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_entity:passed NULL data to shape make circle.\n");
+      "eol_entity:passed NULL data to shape make circle.");
     return;
   }
   /*cleanup any potential old space data*/
@@ -738,7 +738,7 @@ void eol_entity_shape_make_circle(eolEntity *ent)
   {
     eol_logger_message(
     EOL_LOG_ERROR,
-    "eol_entity:failed to create a new body for physics entity.\n");
+    "eol_entity:failed to create a new body for physics entity.");
     return;
   }
   ent->shapeType = eolEntityCircle;
@@ -754,7 +754,7 @@ void eol_entity_shape_make_rect(eolEntity *ent)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_entity:passed NULL data to shape make circle.\n");
+      "eol_entity:passed NULL data to shape make circle.");
     return;
   }
   eol_entity_remove_from_space(ent);
@@ -765,7 +765,7 @@ void eol_entity_shape_make_rect(eolEntity *ent)
     {
       eol_logger_message(
         EOL_LOG_ERROR,
-        "eol_entity:failed to create a new body for physics entity.\n");
+        "eol_entity:failed to create a new body for physics entity.");
       return;
     }
   }

@@ -112,6 +112,13 @@ eolBool eol_mouse_input_double_tapped(eolUint button);
 void eol_mouse_get_position(eolInt *x, eolInt *y);
 
 /**
+ * @brief gets the current mouse position as a 2d vector
+ *
+ * @param pos putput pointer to where the X & Y position can be written to.
+ */
+void eol_mouse_get_position_vec2d(eolVec2D *pos);
+
+/**
 * @brief gets the change in mouse position since the last input frame
 *
 * @param x putput pointer to where the change in X position can be written to.

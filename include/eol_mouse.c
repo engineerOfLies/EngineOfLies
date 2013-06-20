@@ -90,6 +90,13 @@ eolBool eol_mouse_input_state(eolUint button)
   return (_eol_mouse.buttons & mask);
 }
 
+void eol_mouse_get_position_vec2d(eolVec2D *pos)
+{
+  if (!pos)return;
+  pos->x = (eolFloat)_eol_mouse.x;
+  pos->y = (eolFloat)_eol_mouse.y;
+}
+
 void eol_mouse_get_position(eolInt *x, eolInt *y)
 {
   if (x)*x = _eol_mouse.x;

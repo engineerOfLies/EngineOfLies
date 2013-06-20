@@ -31,6 +31,47 @@ void eol_draw_trail(eolTrail * trail,
   }
 }
 
+void eol_draw_cirlce_2D(eolVec2D point,
+                   eolFloat radius,
+                   eolUint  segments,
+                   eolVec3D color,
+                   eolFloat alpha)
+{
+  eolVec3D pos,pos2;
+  eolGraphicsView view;
+  
+  eol_graphics_get_view(&view);
+  
+  eol_opengl_get_gl_coordinate(
+    point.x,
+    point.y,
+    EOL_2DPLANE_,
+    view.modelView,
+    view.projection,
+    view.viewPort,
+    &pos.x,
+    &pos.y,
+    &pos.z
+  );
+  eol_opengl_get_gl_coordinate(
+    point.x + radius,
+    point.y,
+    EOL_2DPLANE_,
+    view.modelView,
+    view.projection,
+    view.viewPort,
+    &pos2.x,
+    &pos2.y,
+    &pos2.z
+  );
+  
+  eol_draw_cirlce_3D(pos,
+                     fabs(pos2.x - pos.x),
+                     segments,
+                     color,
+                     alpha);
+}
+
 void eol_draw_cirlce_3D(eolVec3D point,
                         eolFloat radius,
                         eolUint  segments,
@@ -91,6 +132,48 @@ void eol_draw_dot_3D(eolVec3D point,
   glPopMatrix();
   glColor4f(1,1,1,1);
   glDisable(GL_BLEND);
+}
+
+void eol_draw_line_2D(eolVec2D p1,
+                      eolVec2D p2,
+                      eolFloat radius,
+                      eolVec3D color,
+                      eolFloat alpha)
+{
+  eolVec3D pos,pos2;
+  eolGraphicsView view;
+    
+  eol_graphics_get_view(&view);
+  
+  eol_opengl_get_gl_coordinate(
+    p1.x,
+    p1.y,
+    EOL_2DPLANE_,
+    view.modelView,
+    view.projection,
+    view.viewPort,
+    &pos.x,
+    &pos.y,
+    &pos.z
+  );
+  
+  eol_opengl_get_gl_coordinate(
+    p2.x,
+    p2.y,
+    EOL_2DPLANE_,
+    view.modelView,
+    view.projection,
+    view.viewPort,
+    &pos2.x,
+    &pos2.y,
+    &pos2.z
+  );
+  
+  eol_draw_line_3D(pos,
+                   pos2,
+                   radius,
+                   color,
+                   alpha);
 }
 
 void eol_draw_line_3D(eolVec3D p1,
