@@ -352,6 +352,7 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
   eol_config_get_bool_by_tag(&centerTopBottom,conf,"centerTopBottom");
   eol_config_get_line_by_tag(window->name,conf,"name");
   eol_config_get_rectfloat_by_tag(&tempr,conf,"rect");
+  eol_config_get_bool_by_tag(&window->hidden,conf,"hidden");
   if (eol_config_get_line_by_tag(hotkey, conf, "nextFocusHotkey"))
   {
     window->inputFocusNext = eol_input_parse("key", hotkey);

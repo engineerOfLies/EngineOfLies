@@ -246,6 +246,11 @@ eolVec4D *eol_vec4d_new()
   return vec;
 }
 
+eolFloat eol_vec2d_angle(eolVec2D v)
+{
+  return eol_vector_angle(v.x,v.y);
+}
+
 eolFloat eol_vector_angle(eolFloat x,eolFloat y)
 {
   eolFloat angle = atan2(y, x) + M_PI;
