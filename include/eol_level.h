@@ -33,13 +33,6 @@
  * layered levels
  */
 
-enum eolLevelDrawModes {
-  eolLevelDrawClip,
-  eolLevelDrawMesh,
-  eolLevelDrawFull,
-  eolLevelDrawAll
-};
-
 /**
  * @brief function pointer prototype used to spawn the entities for the level
  * the application will receive a name and a hash.  The hash is keyed on the name

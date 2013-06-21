@@ -277,11 +277,17 @@ void eol_sprite_draw_transformed_3d(
   	    "passed in a NULL sprite to draw.\n");
     return;
   }
-  glDisable(GL_DEPTH_TEST);
+  glEnable(GL_DEPTH_TEST);
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_COLOR_MATERIAL);
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
+
+  glEnable(GL_NORMALIZE);
+  glEnable(GL_LIGHTING);
+  
+  glDepthFunc(GL_LEQUAL);
+  
   glColor4f(color.x,color.y,color.z,alpha);
   
   src.x = frame%sprite->framesPerLine * sprite->frameTextureWidth;
@@ -320,6 +326,8 @@ void eol_sprite_draw_transformed_3d(
   glPopMatrix();
   glColor4f(1,1,1,1);
   glDisable(GL_BLEND);
+  glDisable(GL_LIGHTING);
+  glDisable(GL_NORMALIZE);
   glDisable(GL_COLOR_MATERIAL);
   glDisable(GL_TEXTURE_2D);
   glEnable(GL_DEPTH_TEST);  

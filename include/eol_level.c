@@ -16,7 +16,10 @@ eolFloat   _eol_level_clip_thickness = 0.5;
 eolFloat   _eol_level_slop = 0.1;
 eolFloat   _eol_level_bias = 0.1;
 eolUint    _eol_level_layer_draw_range = 0;
-eolUint    _eol_level_draw_mode = 0;
+eolBool    _eol_level_draw_backgrounds = eolTrue;
+eolBool    _eol_level_draw_clipmask    = eolTrue;
+eolBool    _eol_level_draw_tiles       = eolTrue;
+eolBool    _eol_level_draw_bounds      = eolTrue;
 eolUint    _eol_level_max = 0; /**<maximum number of levels that can be loaded
                                    at a time, ie: buffered*/
 eolSpawnGeneric _eol_level_spawn_generic = NULL;
@@ -111,22 +114,18 @@ void eol_level_config()
   _eol_level_max_layers = 3;
   _eol_level_max = 10;
   _eol_level_layer_draw_range = 1;
-  _eol_level_draw_mode = eolLevelDrawFull;
   conf = eol_config_load("system/level.cfg");
   if (conf == NULL)return;
-  eol_config_get_uint_by_tag(&_eol_level_draw_mode,conf,"drawLevel");
   eol_config_get_uint_by_tag(&_eol_level_layer_draw_range,conf,"drawDepth");
   eol_config_get_uint_by_tag(&_eol_level_clip_iterations ,conf,"iterations");
   eol_config_get_float_by_tag(&_eol_level_clip_step ,conf,"clipStep");
   eol_config_get_float_by_tag(&_eol_level_clip_thickness ,conf,"clipThickness");
   eol_config_get_float_by_tag(&_eol_level_slop,conf,"clipSlop");
   eol_config_get_float_by_tag(&_eol_level_bias,conf,"clipBias");
-  
-}
-
-void eol_level_set_draw_mode(eolUint mode)
-{
-  _eol_level_draw_mode = mode;
+  eol_config_get_bool_by_tag(&_eol_level_draw_backgrounds,conf,"drawBackgrounds");
+  eol_config_get_bool_by_tag(&_eol_level_draw_clipmask,conf,"drawClipMask");
+  eol_config_get_bool_by_tag(&_eol_level_draw_tiles,conf,"drawTiles");
+  eol_config_get_bool_by_tag(&_eol_level_draw_bounds,conf,"drawBounds");  
 }
 
 void eol_level_register_spawn_generic(eolSpawnGeneric spawnGeneric)
@@ -708,19 +707,7 @@ void eol_level_draw_current()
 {
   if (!eol_level_initialized())return;
   if (_eol_level_current == NULL)return;
-  switch (_eol_level_draw_mode)
-  {
-    case eolLevelDrawFull:
-      eol_level_draw(_eol_level_current);
-      break;
-    case eolLevelDrawClip:
-      eol_level_draw_clip(_eol_level_current);
-      break;
-    case eolLevelDrawAll:
-      eol_level_draw(_eol_level_current);
-      eol_level_draw_clip(_eol_level_current);
-      break;
-  }
+  eol_level_draw(_eol_level_current);
 }
 
 void eol_level_draw_background(eolBackground * back,eolFloat alpha)
@@ -771,6 +758,40 @@ void eol_level_draw_layer_bounds(eolLevelLayer *layer)
   eol_draw_rect_3D(layer->bounds,ori);
 }
 
+void eol_level_draw_layer(eolLevelLayer * layer,eolFloat alpha)
+{
+  if (!layer)return;
+  glPushMatrix();
+  glTranslatef(layer->ori.position.x,layer->ori.position.y,layer->ori.position.z);
+  glRotatef(layer->ori.rotation.x, 1.0f, 0.0f, 0.0f);
+  glRotatef(layer->ori.rotation.y, 0.0f, 1.0f, 0.0f);
+  glRotatef(layer->ori.rotation.z, 0.0f, 0.0f, 1.0f);
+  glScalef(layer->ori.scale.x,
+           layer->ori.scale.y,
+           layer->ori.scale.z);
+  /*draw all layer stuffs*/
+  if (_eol_level_draw_backgrounds)
+  {
+    eol_level_draw_layer_backgrounds(layer,alpha);
+  }
+  if (_eol_level_draw_tiles)
+  {
+    /*TODO: draw tiles*/
+  }
+  if (_eol_level_draw_clipmask)
+  {
+    eol_level_draw_layer_clipmask(layer);
+  }
+  if (_eol_level_draw_bounds)
+  {
+    eol_level_draw_layer_bounds(layer);
+  }
+  
+  /*TODO: draw entities*/
+  
+  glPopMatrix();
+}
+
 void eol_level_draw(eolLevel *level)
 {
   int i;
@@ -797,10 +818,7 @@ void eol_level_draw(eolLevel *level)
       alpha = 0.5;
     }
     else alpha = 1;
-    layer->ori.alpha = alpha;
-    eol_level_draw_layer_backgrounds(layer,alpha);
-    /*TODO: draw tiles*/
-    /*TODO: draw entities*/
+    eol_level_draw_layer(layer,alpha);
   }
 }
 
