@@ -319,6 +319,59 @@ void eol_vec3d_rotate_point(eolVec3D *dst, eolVec3D point, eolVec3D origin, eolV
 }
 
 
+void eol_rect3d_clear(eolRect3D *r)
+{
+  if (!r)return;
+  memset(r,0,sizeof(eolRect3D));
+}
+
+eolRect3D eol_rect3d_from_vec3d(eolVec3D corner,eolVec3D size)
+{
+  eolRect3D r;
+  r.x = corner.x;
+  r.y = corner.y;
+  r.z = corner.z;
+  r.w = size.x;
+  r.h = size.y;
+  r.d = size.z;
+  return r;
+}
+
+eolRect3D eol_rect3d(eolFloat x,eolFloat y,eolFloat z,eolFloat w,eolFloat h,eolFloat d)
+{
+  eolRect3D r;
+  r.x = x;
+  r.y = y;
+  r.z = z;
+  r.w = w;
+  r.h = h;
+  r.d = d;
+  return r;
+}
+
+eolBool eol_rect3d_overlap(eolRect3D a, eolRect3D b)
+{
+  if ((a.x > (b.x + b.w)) || (a.y > (b.y + b.h))
+    || (b.x > (a.x + a.w)) || (b.y > (a.y + a.h))
+    || (b.z > (a.z + a.d)) || (b.z > (a.z + a.d)))
+    return eolFalse;
+  return eolTrue;
+}
+
+void eol_rect_set(
+  eolRect * r,
+  eolInt    x,
+  eolInt    y,
+  eolUint   w,
+  eolUint   h
+)
+{
+  r->x = x;
+  r->y = y;
+  r->w = w;
+  r->h = h;
+}
+
 
 eolRect eol_rect(
   eolInt  x,
@@ -396,6 +449,11 @@ eolBool eol_rect_lap_rect(eolRect a, eolRect b)
   return eolTrue;
 }
 
+void eol_orientation_zero(eolOrientation *out)
+{
+  if (!out)return;
+  memset(out,0,sizeof(eolOrientation));
+}
 
 void eol_orientation_copy(eolOrientation *dst,eolOrientation src)
 {

@@ -19,7 +19,7 @@
 */
 
 #include "eol_model.h"
-
+#include "eol_types.h"
 /**
  * @purpose the purpose of an actor type is to provide a specific instance of an
  *          animated model.  Actors might be used by entities, particles or UI
@@ -145,6 +145,11 @@ void eol_actor_draw(
     eolFloat alpha
   );
 
+void eol_actor_draw_ori(
+  eolActor *act,
+  eolOrientation ori
+);
+
 void eol_actor_draw_wire(
     eolActor *act,
     eolVec3D position,
@@ -153,6 +158,11 @@ void eol_actor_draw_wire(
     eolVec3D color,
     eolFloat alpha
   );
+
+void eol_actor_draw_wire_ori(
+  eolActor *act,
+  eolOrientation ori
+);
 
 #endif
 

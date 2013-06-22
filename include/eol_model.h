@@ -53,6 +53,7 @@ typedef struct
   eolVec3D       scale;              /**<default scaling applied to the model*/
   eolVec3D       offset;             /**<default position offset for drawing*/
   eolVec3D       rotation;           /**<default rotation for drawing*/
+  eolVec3D       bounds;             /**<bounds of the model*/
   eolMesh      * _mesh;              /**<optional pointer to the 3d Mesh data*/
   eolLine        _meshFile;          /**<file to load for a mesh*/
   eolSprite    * _skin;              /**<optional pointer to the mesh skin sprite*/
@@ -158,6 +159,25 @@ eolAction * eol_model_get_action(
     eolModel *model,
     eolWord   aName
   );
+
+/**
+ * @brief change the scale of the model (does not affect the underlying mesh)
+ * @param model the model to scale
+ * @param scale the factor to apply the model to
+ */
+void eol_model_scale(
+    eolModel *model,
+    eolVec3D scale
+);
+
+/**
+ * @brief get the bounding dimensions of the model
+ * @param model the model to get the dimensions from
+ * @return a zero vector if passed NULL or the dimensions of the model passed
+ */
+eolVec3D eol_model_get_bounds(
+  eolModel *model
+);
 
 #endif
 

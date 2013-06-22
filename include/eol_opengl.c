@@ -467,6 +467,23 @@ GLboolean eol_opengl_is_initialized()
 	return _eol_opengl_initialized;
 }
 
+void eol_opengl_get_screen_coordinate(
+  GLdouble glx,
+  GLdouble gly,
+  GLdouble glz,
+  const GLdouble * model,
+  const GLdouble * proj,
+  const GLint    * view,
+  GLint    *x,
+  GLint    *y
+)
+{
+  GLdouble tx,ty,tz;
+  gluProject(glx,gly,glz,model,proj,view,&tx,&ty,&tz);
+  if (x)*x = (GLint)x;
+  if (y)*y = (GLint)y;
+}
+
 void eol_opengl_get_gl_coordinate(
   GLint    x,
   GLint    y,

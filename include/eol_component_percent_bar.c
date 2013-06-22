@@ -196,7 +196,7 @@ eolComponent *eol_percent_bar_create_from_config(eolKeychain *def,eolRect parent
 
   if (!def)
   {
-    eol_logger_message(EOL_LOG_WARN,"eol_component_get_percent_bar: passed bad def parameter");
+    eol_logger_message(EOL_LOG_WARN,"eol_percent_bar_create_from_config: passed bad def parameter");
     return NULL;
   }
 

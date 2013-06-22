@@ -220,6 +220,18 @@ eolBool eol_model_load_data_from_file(char * filename,void *data)
       eol_armature_link_mesh(model->_arm,model->_mesh);
     }
   }
+  if (model->_sprite)
+  {
+    model->bounds.x = model->_sprite->x3D * model->scale.x;
+    model->bounds.y = model->_sprite->y3D * model->scale.y;
+    model->bounds.z = 0;
+  }
+  else if (model->_mesh)
+  {
+    model->bounds.x = model->_mesh->bounds.x * model->scale.x;
+    model->bounds.y = model->_mesh->bounds.y * model->scale.y;
+    model->bounds.z = model->_mesh->bounds.z * model->scale.z;
+  }
   eol_config_free(&config);
   return eolTrue;
 }
@@ -269,7 +281,7 @@ void eol_model_draw(
   {
     /*cannot draw a zero scaled model*/
     eol_logger_message(
-      EOL_LOG_WARN,
+      EOL_LOG_INFO,
       "eol_model: cannot draw a zero scaled model\n");
     return;
   }
@@ -408,6 +420,40 @@ void eol_model_draw_wire(
       );
     }
   }
+}
+
+void eol_model_scale(
+  eolModel *model,
+  eolVec3D scale
+  )
+{
+  if (!model)return;
+  model->scale.x *= scale.x;
+  model->scale.y *= scale.y;
+  model->scale.z *= scale.z;
+  if (model->_sprite)
+  {
+    model->bounds.x = model->_sprite->x3D * model->scale.x;
+    model->bounds.y = model->_sprite->y3D * model->scale.y;
+    model->bounds.z = 0;
+  }
+  else if (model->_mesh)
+  {
+    model->bounds.x = model->_mesh->bounds.x * model->scale.x;
+    model->bounds.y = model->_mesh->bounds.y * model->scale.y;
+    model->bounds.z = model->_mesh->bounds.z * model->scale.z;
+  }
+  /*TODO: handle sprite models*/
+}
+
+eolVec3D eol_model_get_bounds(
+  eolModel *model  
+)
+{
+  eolVec3D out;
+  eol_vec3d_clear(out);
+  if (!model)return out;
+  return model->bounds;
 }
 
 /*eol@eof*/

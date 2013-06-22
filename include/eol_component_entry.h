@@ -42,5 +42,6 @@ typedef struct
   void    * callback_data;/**<custom data to be passed along with the callback*/
 }eolComponentEntry;
 
+eolComponent *eol_entry_create_from_config(eolKeychain *def, eolRect parentRect);
 
 #endif

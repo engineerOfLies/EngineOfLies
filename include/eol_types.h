@@ -195,6 +195,14 @@ void eol_rectf_copy(
     eolRectFloat   s
   );
 
+void eol_rect_set(
+  eolRect * r,
+  eolInt    x,
+  eolInt    y,
+  eolUint   w,
+  eolUint   h
+);
+
 void eol_rectf_set(
     eolRectFloat * d,
     eolFloat       x,
@@ -294,6 +302,50 @@ void eol_angle_clamp_degrees(eolFloat *a);
 */
 typedef eolUI32 eolTime;
 
+/**
+ * @purpose A bounding box for 3D
+ */
+typedef struct
+{
+  eolFloat x,y,z;  /**<upper left front corner*/
+  eolFloat w,h,d;  /**<width, height and depth*/
+}eolRect3D;
+
+/**
+ * @brief zeros the rect
+ * @param r a rect to zero
+ */
+void eol_rect3d_clear(eolRect3D *r);
+
+/**
+ * @brief constructs a rect3D from two vector types
+ * @param corner the upper left front corner of the rect
+ * @param size the width, heigh and depth of the rect
+ * @return a rect sized to the specified dimensions
+ */
+eolRect3D eol_rect3d_from_vec3d(eolVec3D corner,eolVec3D size);
+
+/**
+ * @brief constructs a rect3D from component dimensions
+ * @param x the upper position of the rect
+ * @param y the left position of the rect
+ * @param z the front position of the rect
+ * @param w the width
+ * @param h the height
+ * @param d the depth
+ * @return a rect sized to the specified dimensions
+ */
+eolRect3D eol_rect3d(eolFloat x,eolFloat y,eolFloat z,eolFloat w,eolFloat h,eolFloat d);
+
+/**
+ * @brief checks if the two rects overlap
+ * @param a one rect to check
+ * @param b another rect to check
+ * @return eolTrue if the overlap at all, eolFalse otherwise
+ */
+eolBool eol_rect3d_overlap(eolRect3D a, eolRect3D b);
+
+
 /*
   3d orientation
 */
@@ -330,11 +382,23 @@ void eol_orientation_mix(eolOrientation * out,
                          eolOrientation   in2);
 
 /**
- * @brief sets the passed orientation to a default set up.
+ * @brief sets the passed orientation to a default,sane set up.
  * sets alpha and scale to 1, all else to zero
+ * @param out the orientation to reset
  */
 void eol_orientation_clear(eolOrientation *out);
 
+/**
+ * @brief sets the passed orientation to all zero
+ * @param out the orientation to zero
+ */
+void eol_orientation_zero(eolOrientation *out);
+
+/**
+ * @brief copies the data from one orientation to another
+ * @param dst the destination orientation, if null this is a no-op
+ * @param src the source orientation
+ */
 void eol_orientation_copy(eolOrientation *dst,eolOrientation src);
 /*
   3d trails.

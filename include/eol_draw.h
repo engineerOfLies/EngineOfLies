@@ -19,6 +19,20 @@
 */
 #include "eol_types.h"
 
+/**
+ * @brief gets the 3d space coordinates based on 2d screen coordinates
+ * @param out output if NULL, this is a no-op
+ * @param in the input coordinates
+ */
+void eol_draw_get_3d_position(eolVec3D *out,eolVec2D in);
+
+/**
+ * @brief gets the 2d screen coordinates based on 3d space coordinates
+ * @param out output if NULL, this is a no-op
+ * @param in the input coordinates
+ */
+void eol_draw_get_2d_position(eolVec2D *out,eolVec3D in);
+
 void eol_draw_trail(eolTrail * trail,
                     eolFloat   radius,
                     eolBool    fade,

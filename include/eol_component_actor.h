@@ -1,7 +1,7 @@
-#ifndef __EOL_COMPONENT_PERCENT_BAR__
-#define __EOL_COMPONENT_PERCENT_BAR__
+#ifndef __EOL_COMPONENT_ACTOR__
+#define __EOL_COMPONENT_ACTOR__
 /*
-    Copyright 2012 Engineer of Lies
+    Copyright 2013 Engineer of Lies
     This file is part of the Engine of Lies game engine library
 
     The Engine of Lies (EOL) is free software: you can redistribute it and/or modify
@@ -20,21 +20,21 @@
 
 #include "eol_component.h"
 #include "eol_types.h"
-#include <glib/glist.h>
+#include "eol_actor.h"
 
 typedef struct
 {
-  eolBool     vertical;
-  eolBool     ascending;
-  eolFloat  * max;
-  eolFloat  * value;
-  eolFloat    percent;
-  eolVec3D    statusColor;
-  eolVec3D    backgroundColor;
-  eolFloat    statusAlpha;
-  eolFloat    backgroundAlpha;
-}eolComponentPercentBar;
+  eolFloat        scaleToFitFactor;
+  eolRectFloat    bounds3D;
+  eolLine         actorFile;
+  eolActor      * actor;
+  eolLine         action;
+  eolOrientation  ori;
+  eolOrientation  vectorOri;/**<set a rotation, or pulse or fade in/out*/
+  eolBool         rotating;
+  eolBool         fading;
+}eolComponentActor;
 
-eolComponent *eol_percent_bar_create_from_config(eolKeychain *def,eolRect parentRect);
+eolComponent *eol_component_actor_create_from_config(eolKeychain *def, eolRect parentRect);
 
 #endif

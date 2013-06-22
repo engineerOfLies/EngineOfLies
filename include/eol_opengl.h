@@ -887,7 +887,7 @@ void eol_opengl_init();
 GLboolean eol_opengl_is_initialized();
 
 /**
- * @brief calculated the 3D position for the given 2D position at the depth
+ * @brief calculate the 3D position for the given 2D position at the depth
  * provided
  *
  * @param x the 2D space x position
@@ -897,7 +897,7 @@ GLboolean eol_opengl_is_initialized();
  * @param proj the current gl projection
  * @param view the current gl view
  * @param glx the output projected x position in 3D
- * @param gly the output projected x position in 3D
+ * @param gly the output projected y position in 3D
  * @param glz the output projected z position in 3D
  */
 void eol_opengl_get_gl_coordinate(
@@ -911,6 +911,29 @@ void eol_opengl_get_gl_coordinate(
   GLdouble * gly,
   GLdouble * glz
   );
+
+/**
+ * @brief calculate the 2D screen coordinates for the given 3D position
+ * @param glx x position in 3D
+ * @param gly y position in 3D
+ * @param glz z position in 3D
+ * @param model the current gl model
+ * @param proj the current gl projection
+ * @param view the current gl view
+ * @param x output the 2D space x position
+ * @param y output he 2D space y position
+ */
+void eol_opengl_get_screen_coordinate(
+  GLdouble glx,
+  GLdouble gly,
+  GLdouble glz,
+  const GLdouble * model,
+  const GLdouble * proj,
+  const GLint    * view,
+  GLint    *x,
+  GLint    *y
+);
+
 /**
   * @brief returns the smallest bounding power of two
   *

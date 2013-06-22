@@ -269,6 +269,45 @@ void eol_draw_rect_3D(eolRectFloat rect, eolOrientation ori)
   glEnable(GL_DEPTH_TEST);
 }
 
+void eol_draw_get_2d_position(eolVec2D *out,eolVec3D in)
+{
+  eolGraphicsView view;
+  eolInt x,y;
+  if (!out)return;
+  eol_graphics_get_view(&view);
+  eol_opengl_get_screen_coordinate(
+    in.x,
+    in.y,
+    in.z,
+    view.modelView,
+    view.projection,
+    view.viewPort,
+    &x,
+    &y
+  );
+  out->x = x;
+  out->y = y;
+}
+
+void eol_draw_get_3d_position(eolVec3D *out,eolVec2D in)
+{
+  eolGraphicsView view;
+  if (!out)return;
+  
+  eol_graphics_get_view(&view);
+  eol_opengl_get_gl_coordinate(
+    in.x,
+    in.y,
+    EOL_2DPLANE_,
+    view.modelView,
+    view.projection,
+    view.viewPort,
+    &out->x,
+    &out->y,
+    &out->z
+  );
+}
+
 void eol_draw_rect(eolRect rect,eolVec3D color,eolFloat alpha)
 {
     eolVec3D pos,pos2;

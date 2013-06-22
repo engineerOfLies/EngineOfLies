@@ -35,6 +35,23 @@ void eol_actor_clear(eolActor *act)
   memset(act,0,sizeof(eolActor));
 }
 
+void eol_actor_draw_ori(
+  eolActor *act,
+  eolOrientation ori
+)
+{
+  if (!act)return;
+  eol_model_draw(
+    act->model,
+    ori.position,
+    ori.rotation,
+    ori.scale,
+    ori.color,
+    ori.alpha,
+    act->frame
+  );
+}
+
 void eol_actor_draw(
     eolActor *act,
     eolVec3D position,
@@ -56,6 +73,23 @@ void eol_actor_draw(
   );
 }
 
+void eol_actor_draw_wire_ori(
+  eolActor *act,
+  eolOrientation ori
+)
+{
+  if (!act)return;
+  eol_model_draw_wire(
+    act->model,
+    ori.position,
+    ori.rotation,
+    ori.scale,
+    ori.color,
+    ori.alpha,
+    act->frame
+  );
+}
+  
 void eol_actor_draw_wire(
     eolActor *act,
     eolVec3D position,

@@ -1,11 +1,12 @@
 #include "eol_component_button.h"
 #include "eol_component_list.h"
+#include "eol_component_actor.h"
+#include "eol_component_entry.h"
 #include "eol_component_percent_bar.h"
 #include "eol_component.h"
 #include "eol_logger.h"
 #include "eol_font.h"
 #include "eol_sprite.h"
-#include "eol_actor.h"
 #include "eol_mouse.h"
 #include "eol_draw.h"
 #include "eol_config.h"
@@ -22,16 +23,6 @@ typedef struct
   eolFloat   alpha;
   eolFont  * font;    /**<if defined, it will use the custom font to draw text*/
 }eolComponentLabel;
-
-typedef struct
-{
-  eolActor * actor;
-  eolVec3D   position;
-  eolVec3D   rotation;
-  eolVec3D   scale;
-  eolVec3D   color;
-  eolFloat   alpha;
-}eolComponentActor;
 
 typedef struct
 {
@@ -74,13 +65,10 @@ eolInt eol_component_get_state(eolComponent *component);
 void eol_component_textinput_new(eolComponent *component);
 void eol_component_textinput_get_text(eolComponent *component,char *text);
 
-void eol_component_actor_new(eolComponent *component);
-void eol_component_actor_load(eolComponent *component,char * filename);
 
 void eol_component_get_rect_from_bounds(eolRect *rect,eolRect canvas, eolRectFloat bounds);
 
 void eol_component_label_free(eolComponent *component);
-void eol_component_actor_free(eolComponent *component);
 void eol_component_slider_free(eolComponent *component);
 void eol_component_image_free(eolComponent *component);
 
@@ -164,7 +152,7 @@ eolComponent * eol_component_new()
   {
     eol_logger_message(
       EOL_LOG_ERROR,
-      "eol_component: failed to allocate new component!\n");
+      "eol_component: failed to allocate new component!");
     return NULL;
   }
   memset(component,0,sizeof(eolComponent));
@@ -241,17 +229,6 @@ eolComponentImage *eol_component_get_image_data(eolComponent *component)
   return (eolComponentImage*)component->componentData;
 }
 
-eolComponentActor *eol_component_get_actor_data(eolComponent *component)
-{
-  if ((!component)||
-    (!component->componentData)||
-    (component->type != eolActorComponent))
-  {
-    return NULL;
-  }
-  return (eolComponentActor*)component->componentData;
-}
-
 eolComponentSlider *eol_component_get_slider_data(eolComponent *component)
 {
   if ((!component)||
@@ -275,15 +252,6 @@ void eol_component_label_free(eolComponent *component)
   if (label->font != NULL)eol_font_free(&label->font);
   free(label);
   label = NULL;
-  component->componentData = NULL;
-}
-
-void eol_component_actor_free(eolComponent *component)
-{
-  eolComponentActor *actor = eol_component_get_actor_data(component);
-  if (actor == NULL)return;
-  eol_actor_free(&actor->actor);
-  free(actor);
   component->componentData = NULL;
 }
 
@@ -611,7 +579,7 @@ void eol_component_make_label(
   {
     eol_logger_message(
       EOL_LOG_ERROR,
-      "eol_component:Failed to duplicate string for new label\n");
+      "eol_component:Failed to duplicate string for new label");
     eol_component_label_free(component);
     return;
   }
@@ -642,7 +610,7 @@ void eol_component_slider_new(eolComponent *component)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_component:tried to make a label out of an existing component\n");
+      "eol_component_slider_new:tried to make a label out of an existing component");
     return;
   }
   component->componentData = malloc(sizeof(eolComponentSlider));
@@ -650,7 +618,7 @@ void eol_component_slider_new(eolComponent *component)
   {
     eol_logger_message(
       EOL_LOG_ERROR,
-      "eol_actor: failed to allocate data for new slider\n");
+      "eol_component_slider_new: failed to allocate data for new slider");
     return;
   }
   memset(component->componentData,0,sizeof(eolComponentSlider));
@@ -717,7 +685,7 @@ void eol_component_label_new(eolComponent *component)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_component:tried to make a label out of an existing component\n");
+      "eol_component_label_new:tried to make a label out of an existing component");
     return;
   }
   component->componentData = malloc(sizeof(eolComponentLabel));
@@ -725,7 +693,7 @@ void eol_component_label_new(eolComponent *component)
   {
     eol_logger_message(
       EOL_LOG_ERROR,
-      "eol_actor: failed to allocate data for new label\n");
+      "eol_component_label_new: failed to allocate data for new label");
     return;
   }
   memset(component->componentData,0,sizeof(eolComponentLabel));
@@ -1062,7 +1030,7 @@ eolComponent * eol_component_make_from_config(eolKeychain *config,eolRect boundi
   eolComponent *comp = NULL;
   if (!eol_keychain_get_hash_value_as_line(typecheck, config, "type"))
   {
-    eol_logger_message(EOL_LOG_WARN,"eol_component: Config missing component data\n");
+    eol_logger_message(EOL_LOG_WARN,"eol_component: Config missing component data");
     return NULL;
   }
   if (eol_line_cmp(typecheck,"BUTTON") == 0)
@@ -1089,7 +1057,11 @@ eolComponent * eol_component_make_from_config(eolKeychain *config,eolRect boundi
   {
     comp = eol_entry_create_from_config(config,boundingRect);
   }
-  else eol_logger_message(EOL_LOG_WARN,"eol_component: Config component type unsupported\n");
+  else if (eol_line_cmp(typecheck,"ACTOR") == 0)
+  {
+    comp = eol_component_actor_create_from_config(config,boundingRect);
+  }
+  else eol_logger_message(EOL_LOG_WARN,"eol_component: Config component type unsupported");
   if (!comp)return NULL;
   /*common to all components config*/
   eol_keychain_get_hash_value_as_bool(&comp->canHasFocus, config, "canHaveFocus");

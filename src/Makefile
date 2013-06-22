@@ -15,17 +15,17 @@ OBJ = $(patsubst %.c,%.o,$(wildcard *.c))
 #
 
 # Linux
-PROJECT = eoltest
+PROJECT = test_app
 CC      = gcc
 #CC	= clang
+EOL_PATH = ../../EngineOfLies/
 GLIB_CFLAGS = `pkg-config --cflags glib-2.0`
 GLIB_LDFLAGS = `pkg-config --libs glib-2.0`
 SDL_CFLAGS = `sdl-config --cflags`
-SDL_LDFLAGS = `sdl-config --libs` -lSDL_image -lSDL_ttf -lSDL_mixer -lSDL_net -lGLU -lz -lphysfs -lglib-2.0
-EOL_CFLAGS = -I../include
-EOL_LDFLAGS = ../lib/libeol.a
-YAML_LDFLAGS = `pkg-config --libs yaml-0.1`
-YAML_CFLAGS = `pkg-config --cflags yaml-0.1`
+SDL_LDFLAGS = `sdl-config --libs` -lSDL_image -lSDL_ttf -lSDL_mixer -lSDL_net -lGLU -lz -lphysfs -lglib-2.0 -lyaml
+YAML_LDFLAGS = /usr/lib/x86_64-linux-gnu/libyaml.so
+EOL_CFLAGS = -I$(EOL_PATH)/include
+EOL_LDFLAGS = $(EOL_PATH)/lib/libeol.a
 LFLAGS = -g  -o ../$(PROJECT) -lphysfs
 CFLAGS = -g -Wall -pedantic -std=gnu99 -fgnu89-inline -Wno-unknown-pragmas 
 # -ffast-math for relase version
@@ -44,7 +44,7 @@ docs:
 depend:
 	@-rm makefile.dep
 	@echo Creating dependencies.
-	@for i in *.c; do $(CC) -I../include $(INC) -MM $$i; done > makefile.dep
+	@for i in *.c; do $(CC) $(EOL_CFLAGS) $(INC) -MM $$i; done > makefile.dep
 	@echo Done.
 
 clean:
@@ -64,5 +64,5 @@ include makefile.dep
 #
 
 .c.o:
-	$(CC) $(CFLAGS) $(EOL_CFLAGS) $(SDL_CFLAGS) $(GLIB_CFLAGS) $(YAML_CFLAGS) -c $<
+	$(CC) $(CFLAGS) $(EOL_CFLAGS) $(SDL_CFLAGS) $(GLIB_CFLAGS) -c $<
 
