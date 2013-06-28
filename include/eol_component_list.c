@@ -422,7 +422,7 @@ void eol_list_add_item(eolComponent *list,eolComponent *item)
   item->bounds.h = ldata->displayItems.y;
   item->bounds.x = itemPos.x;
   item->bounds.y = itemPos.y;
-  eol_component_move(item,item->bounds);
+//  eol_component_move(item,item->bounds);
   /*x position will be set at draw*/
   ldata->itemList = g_list_append(ldata->itemList,listItem);
   ldata->itemCount++;
