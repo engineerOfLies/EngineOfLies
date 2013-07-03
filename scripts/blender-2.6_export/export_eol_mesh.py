@@ -107,7 +107,13 @@ def write_animation(filename, objects, scene):
 
     def veckey2d(v):
         return round(v.x, 6), round(v.y, 6)
-
+        
+    for ob in objects:
+        if (ob.type != 'ARMATURE'):
+            continue
+        break
+    else:
+        return
     print('EOL Armature Export path:',filename)
 
     time1 = time.time()
