@@ -92,6 +92,17 @@ void eol_camera_set_roll(eolFloat roll);
 void eol_camera_set_pitch(eolFloat pitch);
 void eol_camera_set_yaw(eolFloat yaw);
 
+/**
+ * @brief get the camera position in 3D space
+ * @param position output position of the camera
+ */
+void eol_camera_get_position(eolVec3D *position);
+
+/**
+ * @brief get the camera rotation
+ * @param rotation output position of the camera
+ */
+void eol_camera_get_rotation(eolVec3D *rotation);
 
 eolBool eol_camera_is_rect_in_view(eolVec3D point, eolRectFloat bounds);
 eolBool eol_camera_is_circle_in_view(eolVec3D point, eolFloat radius);

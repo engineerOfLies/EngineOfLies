@@ -463,7 +463,7 @@ void eol_entity_draw_box(eolEntity *ent)
       rect.h = ent->boundingBox.h;
       eol_orientation_copy(&ori,ent->ori);
       eol_vec3d_clear(ori.rotation);
-      eol_draw_rect_3D(rect, ori);
+      eol_draw_rect_3D(rect, 2,ori);
       break;
     case eolEntityCircle:
       eol_draw_cirlce_3D(ent->ori.position,

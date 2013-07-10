@@ -19,6 +19,7 @@ eolUint    _eol_level_layer_draw_range = 0;
 eolBool    _eol_level_draw_backgrounds = eolTrue;
 eolBool    _eol_level_draw_clipmask    = eolTrue;
 eolBool    _eol_level_draw_tiles       = eolTrue;
+eolBool    _eol_level_draw_tilegrid    = eolTrue;
 eolBool    _eol_level_draw_bounds      = eolTrue;
 eolUint    _eol_level_max = 0; /**<maximum number of levels that can be loaded
                                    at a time, ie: buffered*/
@@ -35,6 +36,15 @@ void eol_level_clear_layer_space(eolLevelLayer *layer);
 void eol_level_delete_layer(eolLevelLayer * level);
 /*function definitions*/
 
+void eol_level_enable_tile_draw(eolBool enable)
+{
+  _eol_level_draw_tiles = enable;
+}
+
+void eol_level_enable_tile_grid_draw(eolBool enable)
+{
+  _eol_level_draw_tilegrid = enable;
+}
 
 void eol_level_layer_setup_background(eolBackground *back)
 {
@@ -125,6 +135,7 @@ void eol_level_config()
   eol_config_get_bool_by_tag(&_eol_level_draw_backgrounds,conf,"drawBackgrounds");
   eol_config_get_bool_by_tag(&_eol_level_draw_clipmask,conf,"drawClipMask");
   eol_config_get_bool_by_tag(&_eol_level_draw_tiles,conf,"drawTiles");
+  eol_config_get_bool_by_tag(&_eol_level_draw_tilegrid,conf,"drawTileGrid");
   eol_config_get_bool_by_tag(&_eol_level_draw_bounds,conf,"drawBounds");  
 }
 
@@ -267,6 +278,7 @@ void eol_level_delete(void *data)
   GList *l = NULL;
   if (!data)return;
   level = (eolLevel *)data;
+  eol_tile_set_free(&level->tileSet);
   for (l = level->layers; l != NULL;l = l->next)
   {
     eol_level_delete_layer(l->data);
@@ -345,6 +357,70 @@ eolLevelLayer *eol_level_layer_new()
   eol_level_clear_layer_space(layer);
   
   return layer;
+}
+
+/*tile handling*/
+
+eolBool eol_level_get_layer_tilexy_by_mouse(eolLevelLayer *layer, eolUint *x, eolUint *y)
+{
+  if (!layer)
+  {
+    return eolFalse;
+  }
+  return eol_tile_get_tilexy_by_mouse(layer->tileMap, layer->ori, x, y);
+}
+
+eolUint eol_level_get_tile_set_count(eolLevel *level)
+{
+  if (!level)return 0;
+  return eol_tile_set_get_count(level->tileSet);
+}
+
+eolTileType *eol_level_get_tile_set_by_id(eolLevel *level,eolUint id)
+{
+  if (!level)return NULL;
+  return eol_tile_set_get_tiletype_by_id(level->tileSet,id);
+}
+
+eolTileType *eol_level_get_tile_set_nth(eolLevel *level,eolUint n)
+{
+  if (!level)return NULL;
+  return eol_tile_set_get_nth(level->tileSet,n);
+}
+
+void eol_level_load_tile_set(eolLevel *level, eolLine filename)
+{
+  eolConfig *conf;
+  eolKeychain *keychain;
+  if (!level)return;
+  conf = eol_config_load(filename);
+  if (!conf)return;
+  if (!eol_config_get_keychain_by_tag(&keychain,
+                                 conf,
+                                 "tileSet"))
+  {
+    eol_logger_message(EOL_LOG_WARN,"in file %s, could not find key tileSet!",filename);
+    return;
+  }
+  eol_level_load_tile_set_from_keychain(level,keychain);
+}
+
+void eol_level_load_tile_set_from_keychain(eolLevel *level, eolKeychain *keychain)
+{
+  if ((!level)||(!keychain))return;
+  eol_tile_set_build_from_definition(level->tileSet,keychain);
+}
+
+void eol_level_load_tile_type(eolLevel *level, eolLine filename)
+{
+  if (!level)return;
+  eol_tile_set_add_type_from_file(level->tileSet,filename,NULL);
+}
+
+void eol_level_replace_tile_type(eolLevel *level, eolLine filename, eolUint id)
+{
+  if (!level)return;
+  eol_tile_set_add_type_overwrite_from_file(level->tileSet,filename,id);
 }
 
 /*background handling*/
@@ -441,6 +517,7 @@ eolLevel *eol_level_new()
     return NULL;
   }
   eol_word_cpy(level->idName,"Untitled");
+  level->tileSet = eol_tile_set_new();
   level->keys = eol_keychain_new_list();
   return level;
 }
@@ -755,7 +832,7 @@ void eol_level_draw_layer_bounds(eolLevelLayer *layer)
   eolOrientation ori;
   if (!layer)return;
   eol_orientation_clear(&ori);
-  eol_draw_rect_3D(layer->bounds,ori);
+  eol_draw_rect_3D(layer->bounds,2,ori);
 }
 
 void eol_level_draw_layer(eolLevelLayer * layer,eolFloat alpha)
@@ -776,7 +853,11 @@ void eol_level_draw_layer(eolLevelLayer * layer,eolFloat alpha)
   }
   if (_eol_level_draw_tiles)
   {
-    /*TODO: draw tiles*/
+    eol_tile_map_draw(layer->tileMap);
+  }
+  if (_eol_level_draw_tilegrid)
+  {
+    eol_tile_grid_draw(layer->tileMap, eol_vec3d(0.5,0.5,0.5));
   }
   if (_eol_level_draw_clipmask)
   {

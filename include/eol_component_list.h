@@ -34,6 +34,7 @@ typedef struct
   eolUint     listType;   /**<see list type enumaration in header*/
   eolUint     itemCount;  /**<number of items in the list*/
   eolRectFloat itemBounds; /**<sub area for drawing items*/
+  eolRect     itemRect;     /**<the bounding rect per item*/
   eolVec2D    itemPadding;
   eolVec2D    displayItems;/**<dimensions for drawing items*/
   eolUint     numPerRow;  /**<how many items appear per row*/

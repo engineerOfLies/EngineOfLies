@@ -583,6 +583,7 @@ void eol_vec3d_cross_product(eolVec3D *out, eolVec3D v1, eolVec3D v2);
 #define eol_vec3d_set(v, a, b, c)  (v.x=(a), v.y=(b), v.z=(c))
 #define eol_vec4d_set(v, a, b, c,d)  (v.x=(a), v.y=(b), v.z=(c), v.w=(d))
 
+void eol_vec3d_print(eolLine out, eolVec3D v);
 
 eolVec2D *eol_vec2d_new();
 eolVec3D *eol_vec3d_new();
@@ -657,6 +658,28 @@ void eol_vec4d_set_magnitude(eolVec4D * V,eolFloat magnitude);
 eolBool eol_distance_between_less_than2d(eolVec3D p1,eolVec3D p2,eolFloat size);
 eolBool eol_distance_between_less_than3d(eolVec3D p1,eolVec3D p2,eolFloat size);
 eolBool eol_distance_between_less_than4d(eolVec3D p1,eolVec3D p2,eolFloat size);
+
+/**
+ * @brief given a rotation, get the component vectors
+ * @param angles the input rotation
+ * @param forward output optional calculated forward vector
+ * @param right output optional calculated right vector
+ * @param up output optional calculated up vector
+ */
+void eol_vec3d_angle_vectors(eolVec3D angles, eolVec3D *forward, eolVec3D *right, eolVec3D *up);
+
+/**
+ * @brief rotate an eolVec3D about another vector
+ * @param dst output result
+ * @param dir the vector to rotate about
+ * @param point the point to rotate
+ * @param degrees how far to rotate
+ */
+void eol_vec3d_rotate_about_vector(eolVec3D *dst, eolVec3D dir, eolVec3D point, eolFloat degrees);
+
+void eol_vec3d_rotate_about_x(eolVec3D *vect, eolFloat angle);
+void eol_vec3d_rotate_about_y(eolVec3D *vect, eolFloat angle);
+void eol_vec3d_rotate_about_z(eolVec3D *vect, eolFloat angle);
 
 #endif
 

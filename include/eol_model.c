@@ -186,6 +186,7 @@ eolBool eol_model_load_data_from_file(char * filename,void *data)
   eol_config_get_line_by_tag(model->name,config,"model");
   eol_config_get_line_by_tag(model->_meshFile,config,"mesh");
   eol_config_get_line_by_tag(model->_skinFile,config,"skin");
+  eol_config_get_vec3d_by_tag(&model->offset,config,"offset");
   if (!eol_config_get_vec3d_by_tag(&model->scale,config,"scale"))
   {
     eol_vec3d_set(model->scale,1,1,1);

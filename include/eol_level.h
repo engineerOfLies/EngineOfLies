@@ -88,6 +88,7 @@ typedef struct
   eolFloat        cameraDist; /**<Camera follow distance*/
   eolKeychain   * keys;       /**<level configuration keys*/
   GList         * layers;     /**<the allocated list of level layers*/
+  eolTileSet    * tileSet;    /**<the set of eolTiles that can be in the level  References layer tiles, do not edit*/
 }eolLevel;
 
 
@@ -106,6 +107,22 @@ void eol_level_config();
  */
 void eol_level_clear();
 
+/**
+ * @brief enable / disable drawing of tiles
+ * @param enable set to true to turn it on, false to turn it off
+ */
+void eol_level_enable_tile_draw(eolBool enable);
+
+/**
+ * @brief enable / disable drawing of the tile grid
+ * @param enable set to true to turn it on, false to turn it off
+ */
+void eol_level_enable_tile_grid_draw(eolBool enable);
+
+/**
+ * @brief sets up the level manager
+ * @return eolFalse on error
+ */
 eolBool eol_level_initialized();
 
 /**
@@ -285,6 +302,82 @@ void eol_level_set_current_level(eolLevel *level);
 void eol_level_update_active();
 
 void eol_level_add_mask_to_space(eolLevelLayer *layer);
+/*
+ * *** Tiles ***
+ */
+
+/**
+ * @brief loads a set of tile definitions from file and uses it as the tileset for the level
+ * This will blow out any previously loaded tile set, and re-sync active tiles to the new set.
+ * 
+ * @param level the level to load the tile set for
+ * @param filename the file containing tile set definitions
+ */
+void eol_level_load_tile_set(eolLevel *level, eolLine filename);
+
+/**
+ * @brief load a tileset from the keychain provided
+ * @param level the level to load the tile set for
+ * @param keychain the keychain containing the tile definitions
+ */
+void eol_level_load_tile_set_from_keychain(eolLevel *level, eolKeychain *keychain);
+
+/**
+ * @brief loads a single tile definition into the existing map.  Will assign it a new ID
+ * @param level the level to get the new tile
+ * @param filename the file containing tile definition
+ */
+void eol_level_load_tile_type(eolLevel *level, eolLine filename);
+
+/**
+ * @brief replace a tile with a new one from disk.  Re-syncs existing tiles to match the one loaded
+ * @param level the level to get the replacement tile type
+ * @param filename the file containing the tile data
+ * @param id the id of the tile type to replace
+ */
+void eol_level_replace_tile_type(eolLevel *level, eolLine filename, eolUint id);
+
+/**
+ * @brief delete the tile type from the set and all associated tiles using that type in ALL layers
+ * @param level the level to be cleaned
+ * @param tileIndex the tile Index to be destroyed
+ */
+void eol_level_delete_tile_type(eolLevel *level, eolUint tileIndex);
+
+/**
+ * @brief gets the nth tile in the tile set of the level
+ * @param level the level to query
+ * @param n the index of the tile to return (not the tile type's id)
+ * @return NULL on error or not found, a pointer otherwise.  This pointer is not yours to free.
+ */
+eolTileType *eol_level_get_tile_set_nth(eolLevel *level,eolUint n);
+
+/**
+ * @brief gets the tile type in the tile set of the level by its id
+ * @param level the level to query
+ * @param id the id of the tile to return (not the tile type's index in the list)
+ * @return NULL on error or not found, a pointer otherwise.  This pointer is not yours to free.
+ */
+eolTileType *eol_level_get_tile_set_by_id(eolLevel *level,eolUint id);
+
+/**
+ * @brief get the number of tiles in the level's tile set
+ * @param level the level to query
+ * @return 0 on error or empty, the number otherwise
+ */
+eolUint eol_level_get_tile_set_count(eolLevel *level);
+
+/**
+ * @brief get the index x,y by the mouse position
+ * NOTE: this returns a position if there is a tile under the mouse or not, as long
+ * as the mouse is within the tile space
+ * @param layer the owning layer to seach
+ * @param x optional output.  the X position of the tile map under the mouse
+ * @param y optional output.  the Y position of the tile map under the mouse
+ * @return eolFalse on error or the mouse is outside the map.  eolTrue otherwise
+ */
+eolBool eol_level_get_layer_tilexy_by_mouse(eolLevelLayer *layer, eolUint *x, eolUint *y);
+
 
 /*
   *** ENTITY ***

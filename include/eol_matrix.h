@@ -27,6 +27,13 @@
 typedef eolDouble eolMat4[4][4];
 
 /**
+ * @brief converts from opengl matrix to eolMat4
+ */
+void eol_mat4_from_mat16(
+  eolMat4 *out,
+  GLdouble in[16]);
+
+/**
  * @brief make a matrix with the values provided.
  */
 void m_eol_mat4(
@@ -49,7 +56,33 @@ void eol_mat4_mult_vert(
     eolMat4    mat,
     eolVec3D   ver
   );
-  
+
+/**
+ * @brief multiply the 3D vector by the matrix
+ *
+ * @param out the output transformed vector
+ * @param mat the matrix to apply to the vector
+ * @param ver the vector to multiply by the matrix
+ */
+void eol_mat4_mult_vec3d(
+  eolVec3D * out,
+  eolMat4    mat,
+  eolVec3D   vec3d
+);
+
+/**
+ * @brief multiply the 4D vector by the matrix
+ *
+ * @param out the output transformed vector
+ * @param mat the matrix to apply to the vector
+ * @param ver the vector to multiply by the matrix
+ */
+void eol_mat4_mult_vec4d(
+  eolVec4D * out,
+  eolMat4    mat,
+  eolVec4D   vec
+);
+
 void eol_mat4_mult_vert_factor(
     eolVec3D * out,
     eolMat4    mat,
@@ -106,6 +139,14 @@ void eol_mat4_print(
  * @param in  the input vector, the vector to be rotated.
  */
 void eol_matrix_rotate_vec3d(eolVec3D *out,eolVec3D rot,eolVec3D in);
+
+/**
+ * @brief invert a 4x4 matrix
+ * @param d output destination matrix
+ * @param s source matrix
+ * @return eolFalse if the matrix cannot be inverted, eolTrue on success
+ */
+eolBool eol_matrix_invert(eolMat4 d, eolMat4 s);
 
 #endif
 

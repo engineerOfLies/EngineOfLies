@@ -25,6 +25,7 @@ void eol_keychain_scalar_free(eolKeychain *scalar)
   free(scalar->keyValue);
   scalar->keyValue = NULL;
 }
+
 void eol_keychain_destroy(eolKeychain *link)
 {
   eol_keychain_free(&link);
@@ -415,6 +416,8 @@ eolKeychain *eol_keychain_get_hash_nth(eolLine key, eolKeychain *hash, eolUint n
   values = g_hash_table_get_values(hashtable);
   if ((!keys)||(!values))return NULL;
   eol_line_cpy(key,g_list_nth_data(keys,n));
+  g_list_free(values);
+  g_list_free(keys);
   return g_list_nth_data(values,n);
 }
 
@@ -657,6 +660,8 @@ void eol_keychain_print_hash(eolKeychain *link,eolUint depth,eolBool listStart)
     eol_keychain_print_link((eolKeychain *)values->data,depth + 1,eolFalse);
     printf("\n");
   }
+  g_list_free(values);
+  g_list_free(keys);
 }
 
 void eol_keychain_print_list(eolKeychain *link,eolUint depth,eolBool listStart)

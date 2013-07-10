@@ -311,6 +311,7 @@ void eol_component_button_draw(eolComponent *component,eolRect bounds)
 void eol_component_make_button(
     eolComponent * component,
     char         * buttonText,
+    eolUint        justify,
     eolUint        buttonType,
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
@@ -343,31 +344,44 @@ void eol_component_make_button(
   component->data_update = eol_component_button_update;
   component->data_free = eol_component_button_free;
   component->data_draw = eol_component_button_draw;
+  button->justify = justify;
   switch(buttonType)
   {
     case eolButtonCustom:
       button->button[eolButtonIdle] = eol_sprite_load(buttonUpFile,-1,-1);
       button->button[eolButtonHighlight] = eol_sprite_load(buttonHighFile,-1,-1);
       button->button[eolButtonPressed] = eol_sprite_load(buttonDownFile,-1,-1);
-      button->justify = eolJustifyCenter;
+      if (button->justify == eolJustifyNone)
+      {
+        button->justify = eolJustifyCenter;
+      }
       break;
     case eolButtonText:
       button->button[eolButtonIdle] = NULL;
       button->button[eolButtonHighlight] = NULL;
       button->button[eolButtonPressed] = NULL;
-      button->justify = eolJustifyLeft;
+      if (button->justify == eolJustifyNone)
+      {
+        button->justify = eolJustifyLeft;
+      }
       break;
     case eolButtonStock:
       button->button[eolButtonIdle] = _eol_component_stock_button[eolButtonIdle];
       button->button[eolButtonHighlight] = _eol_component_stock_button[eolButtonHighlight];
       button->button[eolButtonPressed] = _eol_component_stock_button[eolButtonPressed];
-      button->justify = eolJustifyCenter;
+      if (button->justify == eolJustifyNone)
+      {
+        button->justify = eolJustifyCenter;
+      }
       break;
     case eolButtonRect:
       component->data_draw = eol_component_button_draw_rect;
       eol_vec3d_copy(button->backgroundColor,backgroundColor);
       button->backgroundAlpha = backgroundAlpha;
-      button->justify = eolJustifyLeft;
+      if (button->justify == eolJustifyNone)
+      {
+        button->justify = eolJustifyLeft;
+      }
       eol_vec3d_copy(button->highlightColor,highlightColor);
       eol_vec3d_copy(button->pressColor,pressColor);
       break;
@@ -401,6 +415,7 @@ eolComponent *eol_button_stock_new(
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
+    eolInt         justify,
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
     eolBool        center
@@ -417,6 +432,7 @@ eolComponent *eol_button_stock_new(
     buttonHotkey,
     buttonHotkeymod,
     center,
+    justify,
     NULL,
     NULL,
     NULL,
@@ -433,6 +449,7 @@ eolComponent *eol_button_text_new(
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
+    eolInt         justify,
     eolUint        fontSize,
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
@@ -450,6 +467,7 @@ eolComponent *eol_button_text_new(
     buttonHotkey,
     buttonHotkeymod,
     center,
+    justify,
     NULL,
     NULL,
     NULL,
@@ -493,8 +511,11 @@ void eol_button_move(eolComponent *component,eolRect newbounds)
   }
   if (button->centered)
   {
-    component->bounds.x -= component->bounds.w/2;
     component->bounds.y -= component->bounds.h/2;
+  }
+  if (button->justify == eolJustifyCenter)
+  {
+    component->bounds.x -= component->bounds.w/2;
   }
 }
 
@@ -509,6 +530,7 @@ eolComponent *eol_button_new(
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
     eolBool        center,
+    eolInt         justify,
     char         * buttonFileUp,
     char         * buttonFileHigh,
     char         * buttonFileDown,
@@ -526,6 +548,7 @@ eolComponent *eol_button_new(
   eol_component_make_button(
     component,
     buttonText,
+    justify,
     buttonType,
     buttonHotkey,
     buttonHotkeymod,
@@ -582,7 +605,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
   eolUint id;
   eolUint fontSize = 3;
   eolRectFloat rect;
-  eolLine justify;
+  eolLine justify = "NONE";
   eolLine buttonText;
   eolLine name;
   eolLine hotkey;
@@ -645,6 +668,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
       rect,
       winrect,
       buttonText,
+      eol_font_justify_from_string(justify),
       hotkeybutton,
       hotkeymod,
       eolFalse
@@ -658,6 +682,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
       rect,
       winrect,
       buttonText,
+      eol_font_justify_from_string(justify),
       fontSize,
       hotkeybutton,
       hotkeymod,
@@ -677,6 +702,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
       hotkeybutton,
       hotkeymod,
       center,
+      eol_font_justify_from_string(justify),
       buttonFile,
       buttonHighFile,
       buttonHitFile,
@@ -699,6 +725,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
       hotkeybutton,
       hotkeymod,
       center,
+      eol_font_justify_from_string(justify),
       buttonFile,
       buttonHighFile,
       buttonHitFile,

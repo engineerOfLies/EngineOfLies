@@ -3,6 +3,7 @@
 #include "eol_logger.h"
 #include "eol_loader.h"
 #include "eol_shader.h"
+#include "eol_3d_op.h"
 #include <glib/glist.h>
 
 /*local global variables*/
@@ -349,6 +350,12 @@ void eol_mesh_get_mesh_from_object_file(eolMesh * model, FILE* file)
         model->_faces[numfaces].vertices[2]--;
         model->_faces[numfaces].texels[2]--;
         model->_faces[numfaces].normals[2]--;
+        eol_3d_op_get_triangle_normal(
+          model->_vertices[model->_faces[numfaces].vertices[0]],
+          model->_vertices[model->_faces[numfaces].vertices[1]],
+          model->_vertices[model->_faces[numfaces].vertices[2]],
+          &model->_faces[numfaces].normal
+        );
         numfaces++;
         break;
       default:

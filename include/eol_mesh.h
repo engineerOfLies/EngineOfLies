@@ -39,9 +39,10 @@ typedef eolFloat eolVert2D[2];
  */
 typedef struct
 {
-  eolInt vertices[3];  /**<index of vertex*/
-  eolInt normals[3];  /**<index of vertex*/
-  eolInt texels[3];  /**<index of vertex*/
+  eolInt    vertices[3]; /**<index of vertex*/
+  eolInt    normals[3];  /**<index of vertex*/
+  eolInt    texels[3];   /**<index of vertex*/
+  eolVec3D  normal;      /**<normal of the triangle*/
 }eolFace;
 
 typedef struct

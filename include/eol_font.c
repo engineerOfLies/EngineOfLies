@@ -747,7 +747,7 @@ eolUint eol_font_justify_from_string(eolLine justify)
     (eol_line_cmp(justify,"right") == 0) ||
     (eol_line_cmp(justify,"Right") == 0))
     return eolJustifyRight;
-  return eolJustifyLeft;
+  return eolJustifyNone;
 }
 
 

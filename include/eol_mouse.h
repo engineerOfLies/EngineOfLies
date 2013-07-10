@@ -18,6 +18,7 @@
     along with the EOL game engine.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "eol_types.h"
+#include "eol_3d_op.h"
 
 enum eolMouseStates {
   eolMouseLeft       = 0,
@@ -133,5 +134,28 @@ void eol_mouse_get_motion(eolInt *dx, eolInt *dy);
 * @return eolTrue if the mouse is in the rect, eolFalse otherwise.
 */
 eolBool eol_mouse_in_rect(eolRect rect);
+
+/**
+ * @brief this returns the mouse position in 3D space and the vector that
+ * points into the screen.  This can be used to have mouse selection of objects in 3D space
+ * @param position output optional if passed, this will return the mouse's position in 3D space
+ * @param vecctor output optional if passed, this will return a vector pointing from the mouse into the screen
+ */
+void eol_mouse_get_3d_ray(eolVec3D *position,eolVec3D *vector);
+
+/**
+ * @brief draw the line under the mouse in 3D space.
+ * NOTE: it may only be visible as a red dot with a green border.
+ * If the ray intersects something, only the red dot.
+ */
+void eol_mouse_draw_3d_ray();
+
+/**
+ * @brief get the point where the mouse intersects the provided quad.
+ * @param contact output optional this will be the point the mouse is over on the quad
+ * @param quad the quad to test
+ */
+eolBool eol_mouse_get_quad3d_intersect(eolVec3D *contact,eolQuad3D quad);
+
 
 #endif

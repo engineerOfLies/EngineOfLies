@@ -147,6 +147,18 @@ void eol_camera_set_rotation(eolVec3D rotation)
   eol_vec3d_copy(_eol_camera.rotation,rotation);
 }
 
+void eol_camera_get_rotation(eolVec3D *rotation)
+{
+  if (!rotation)return;
+  eol_vec3d_copy((*rotation),_eol_camera.rotation);
+}
+
+void eol_camera_get_position(eolVec3D *position)
+{
+  if (!position)return;
+  eol_vec3d_copy((*position),_eol_camera.position);
+}
+
 void eol_camera_set_position_2d(eolVec2D position)
 {
   eol_vec2d_copy(_eol_camera.position,position);

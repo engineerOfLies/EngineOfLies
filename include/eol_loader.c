@@ -468,6 +468,8 @@ void eol_loader_write_keychain_hash(eolKeychain *link,eolFile *file)
     eol_loader_write_string_to_file(file,(char *)keys->data);
     eol_loader_write_keychain_link((eolKeychain *)values->data,file);
   }
+  g_list_free(values);
+  g_list_free(keys);
 }
 
 void eol_loader_write_keychain_list(eolKeychain *link,eolFile *file)

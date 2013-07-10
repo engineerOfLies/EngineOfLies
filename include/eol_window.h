@@ -130,6 +130,23 @@ void eol_window_free(eolWindow **win);
 void eol_window_free_if_outside_click(eolWindow **win);
 
 /**
+ * @brief check the mouse has been clicked outside the window
+ * @param win the window context to check
+ * @return eolTrue if the mouse has been clicked outside the window,
+ *         eolFalse on error or otherwise
+ */
+eolBool eol_window_mouse_outside(eolWindow *win);
+
+
+/**
+ * @brief check the mouse has been clicked inside the window
+ * @param win the window context to check
+ * @return eolTrue if the mouse has been clicked inside the window,
+ *         eolFalse on error or otherwise
+ */
+eolBool eol_window_mouse_inside(eolWindow *win);
+
+/**
  * @brief Adds a component to the window.  Component should already be set up.
  * @param win the window to get the new component
  * @param comp the component to add to the window

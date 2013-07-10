@@ -57,6 +57,7 @@ eolUint     _eol_component_label_font_size = 1;
 /*local function prototypes*/
 void eol_component_label_new(eolComponent *component);
 void eol_component_label_free(eolComponent *component);
+void eol_component_label_move(eolComponent *component,eolRect newbounds);
 void eol_component_slider_new(eolComponent *component);
 
 eolBool eol_component_has_changed(eolComponent *component);
@@ -403,7 +404,11 @@ void eol_component_label_draw(eolComponent *component, eolRect bounds)
 void eol_component_draw(eolComponent *component,eolRect bounds)
 {
   if (!component)return;
-  if (component->data_draw == NULL)return;
+  if (component->data_draw == NULL)
+  {
+    printf("component %s has no draw function!\n",component->name);
+    return;
+  }
   if (!component->hidden)
   {
     component->data_draw(component,bounds);
@@ -602,6 +607,7 @@ void eol_component_make_label(
   eol_vec3d_copy(label->color,color);
   component->data_free = eol_component_label_free;
   component->data_draw = eol_component_label_draw;
+  component->data_move = eol_component_label_move;
 }
 
 void eol_component_slider_new(eolComponent *component)
@@ -630,7 +636,7 @@ eolComponent *eol_component_create_label_from_config(eolKeychain *def,eolRect pa
   eolUint       id;
   eolLine       text;
   eolLine       name;
-  eolLine       justify;
+  eolLine       justify = "LEFT";
   eolLine       wordWrap;
   eolUint       fontSize = _eol_component_label_font_size;
   eolVec3D      color;
@@ -938,6 +944,11 @@ eolComponent *eol_label_new(
   return component;
 }
 
+void eol_component_label_move(eolComponent *component,eolRect newbounds)
+{
+  if (!component)return;
+  eol_component_get_rect_from_bounds(&component->bounds,newbounds,component->rect);
+}
 
 /*utility functions*/
 void eol_component_get_rect_from_bounds(eolRect *rect,eolRect canvas, eolRectFloat bounds)

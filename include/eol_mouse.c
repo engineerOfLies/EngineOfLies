@@ -1,5 +1,9 @@
 #include "eol_mouse.h"
+#include "eol_matrix.h"
+#include "eol_3d_op.h"
+#include "eol_draw.h"
 #include "eol_sprite.h"
+#include "eol_camera.h"
 #include "eol_graphics.h"
 
 typedef struct
@@ -160,4 +164,126 @@ void eol_mouse_reset()
 {
   _eol_mouse.showHide = 0;
 }
+
+void eol_mouse_draw_3d_ray()
+{
+  eolVec3D position,vector, position2;
+  eol_mouse_get_3d_ray(&position,&vector);
+  
+  eol_vec3d_scale(vector,vector,100);
+
+  eol_vec3d_add(position2,position,vector);
+
+  eol_draw_dot_3D(position,
+                  3,
+                  eol_vec3d(1,0,0),
+                  1);
+  eol_draw_line_3D(position,
+                   position2,
+                   2,
+                   eol_vec3d(1,1,0),
+                   1);
+  eol_draw_dot_3D(position2,
+                  5,
+                  eol_vec3d(0,1,0),
+                  1);
+}
+
+eolBool eol_mouse_in_3d_quad(eolVec3D t1,eolVec3D t2,eolVec3D t3,eolVec3D t4)
+{
+  eolVec3D position,vector;
+  eol_mouse_get_3d_ray(&position,&vector);
+  return eol_3d_op_ray_in_quad(
+    position,
+    vector,
+    t1,
+    t2,
+    t3,
+    t4,
+    NULL);
+}
+
+eolBool eol_mouse_in_quad3d(eolQuad3D quad)
+{
+  eolVec3D position,vector;
+  eol_mouse_get_3d_ray(&position,&vector);
+  return eol_3d_op_ray_in_quad3d(
+    position,
+    vector,
+    quad,
+    NULL);
+}
+
+eolBool eol_mouse_get_quad3d_intersect(eolVec3D *contact,eolQuad3D quad)
+{
+  eolText text;
+  eolVec3D position,vector;
+  eol_mouse_get_3d_ray(&position,&vector);
+  eol_vec3d_scale(vector,vector,10000);
+  eol_3d_op_print_quad3d(text,quad);
+  return eol_3d_op_ray_in_quad3d(
+    position,
+    vector,
+    quad,
+    contact);
+}
+
+
+eolBool eol_mouse_in_3d_triangle(eolVec3D t1,eolVec3D t2,eolVec3D t3)
+{
+  eolVec3D position,vector;
+  eol_mouse_get_3d_ray(&position,&vector);
+  return eol_3d_op_ray_in_triangle(
+    position,
+    vector,
+    t1,
+    t2,
+    t3,
+    NULL);
+}
+
+eolBool eol_mouse_in_triangle3d(eolTriangle3D tri)
+{
+  eolVec3D position,vector;
+  eol_mouse_get_3d_ray(&position,&vector);
+  return eol_3d_op_ray_in_triangle3d(
+    position,
+    vector,
+    tri,
+    NULL);
+}
+
+
+void eol_mouse_get_3d_ray(eolVec3D *position,eolVec3D *vector)
+{
+  eolVec3D cam,pos1,pos2,rotation;
+  eolGraphicsView view;
+  eol_graphics_get_view(&view);
+
+  eol_camera_get_position(&cam);
+  
+  gluUnProject(_eol_mouse.x, _eol_mouse.y, 0.99, view.modelView, view.projection, view.viewPort, &pos1.x, &pos1.y, &pos1.z);
+  gluUnProject(_eol_mouse.x, _eol_mouse.y, 1, view.modelView, view.projection, view.viewPort, &pos2.x, &pos2.y, &pos2.z);
+
+  pos2.y *= -1;
+  pos1.y *= -1;
+  eol_vec3d_add(pos1,cam,pos1);
+  eol_vec3d_add(pos2,cam,pos2);
+  
+  if (position)
+  {
+    eol_vec3d_copy((*position),pos1);
+  }
+  if (vector)
+  {
+    eol_vec3d_sub((*vector),pos2,pos1);
+    eol_vec3d_normalize(vector);
+    eol_camera_get_rotation(&rotation);
+    eol_vec3d_rotate_about_x(vector,rotation.x);
+    eol_vec3d_rotate_about_y(vector,rotation.y);
+    eol_vec3d_rotate_about_z(vector,rotation.z);
+    
+  }
+}
+
 /*eol@eof*/

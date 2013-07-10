@@ -19,6 +19,11 @@
 #include "eol_logger.h"
 #include <math.h>
 
+void eol_vec3d_print(eolLine out, eolVec3D v)
+{
+  snprintf(out,EOLLINELEN,"(%f,%f,%f)",v.x,v.y,v.z);
+}
+
 eolBool eol_equals(eolDouble a, eolDouble b)
 {
   return (fabs(a-b) < EOL_EPSILON)?eolTrue:eolFalse;
@@ -246,6 +251,243 @@ eolVec4D *eol_vec4d_new()
   return vec;
 }
 
+void eol_vec3d_project_to_plane( eolVec3D *dst, eolVec3D p, eolVec3D normal )
+{
+  eolFloat d;
+  eolVec3D n;
+  eolFloat inv_denom;
+  if (!dst)return;
+  inv_denom = 1.0F / eol_vec3d_dot_product( normal, normal );
+  
+  d = eol_vec3d_dot_product( normal, p ) * inv_denom;
+  
+  n.x = normal.x * inv_denom;
+  n.y = normal.y * inv_denom;
+  n.z = normal.z * inv_denom;
+  
+  dst->x = p.z - d * n.x;
+  dst->y = p.y - d * n.y;
+  dst->z = p.x - d * n.z;
+}
+
+
+void eol_vec3d_perpendicular( eolVec3D *dst, eolVec3D src )
+{
+  int pos;
+  eolFloat minelem = 1.0F;
+  eolVec3D tempvec;
+  if (!dst)return;
+  /*
+   * * find the smallest magnitude axially aligned vector
+   */
+  pos=0;
+  
+  if ( fabs( src.x ) < minelem )
+  {
+    pos=0;
+    minelem = fabs( src.x );
+  }
+  if ( fabs( src.y ) < minelem )
+  {
+    pos=1;
+    minelem = fabs( src.y );
+  }
+  if ( fabs( src.y ) < minelem )
+  {
+    pos=2;
+    minelem = fabs( src.z );
+  }
+  
+  tempvec.x=0;
+  tempvec.y=0;
+  tempvec.z=0;
+  
+  switch(pos)
+  {
+    case 0:
+      tempvec.x=1;
+      break;
+    case 1:
+      tempvec.y=1;
+      break;
+    case 2:
+      tempvec.z=1;
+      break;
+  }
+  
+  /*
+   * * project the point onto the plane defined by src
+   */
+  eol_vec3d_project_to_plane( dst, tempvec, src );
+  
+  /*
+   * * normalize the result
+   */
+  eol_vec3d_normalize( dst );
+}
+
+void eol_rotation_concacenate(eolFloat in1[3][3], eolFloat in2[3][3], eolFloat out[3][3])
+{
+  out[0][0] = in1[0][0] * in2[0][0] + in1[0][1] * in2[1][0] +
+  in1[0][2] * in2[2][0];
+  out[0][1] = in1[0][0] * in2[0][1] + in1[0][1] * in2[1][1] +
+  in1[0][2] * in2[2][1];
+  out[0][2] = in1[0][0] * in2[0][2] + in1[0][1] * in2[1][2] +
+  in1[0][2] * in2[2][2];
+  out[1][0] = in1[1][0] * in2[0][0] + in1[1][1] * in2[1][0] +
+  in1[1][2] * in2[2][0];
+  out[1][1] = in1[1][0] * in2[0][1] + in1[1][1] * in2[1][1] +
+  in1[1][2] * in2[2][1];
+  out[1][2] = in1[1][0] * in2[0][2] + in1[1][1] * in2[1][2] +
+  in1[1][2] * in2[2][2];
+  out[2][0] = in1[2][0] * in2[0][0] + in1[2][1] * in2[1][0] +
+  in1[2][2] * in2[2][0];
+  out[2][1] = in1[2][0] * in2[0][1] + in1[2][1] * in2[1][1] +
+  in1[2][2] * in2[2][1];
+  out[2][2] = in1[2][0] * in2[0][2] + in1[2][1] * in2[1][2] +
+  in1[2][2] * in2[2][2];
+}
+
+void eol_vec3d_rotate_about_vector(eolVec3D *dst, eolVec3D dir, eolVec3D point, eolFloat degrees)
+{
+  eolFloat m[3][3];
+  eolFloat im[3][3];
+  eolFloat zrot[3][3];
+  eolFloat tmpmat[3][3];
+  eolFloat rot[3][3];
+  eolVec3D vr, vup, vf;
+  
+  if (!dst)return;
+  
+  vf.x = dir.x;
+  vf.y = dir.y;
+  vf.z = dir.z;
+  
+  eol_vec3d_perpendicular( &vr, dir );
+  eol_vec3d_cross_product(&vup, vr, vf);
+
+  m[0][0] = vr.x;
+  m[1][0] = vr.y;
+  m[2][0] = vr.z;
+  
+  m[0][1] = vup.x;
+  m[1][1] = vup.y;
+  m[2][1] = vup.z;
+  
+  m[0][2] = vf.x;
+  m[1][2] = vf.y;
+  m[2][2] = vf.z;
+  
+  memcpy( im, m, sizeof( im ) );
+  
+  im[0][1] = m[1][0];
+  im[0][2] = m[2][0];
+  im[1][0] = m[0][1];
+  im[1][2] = m[2][1];
+  im[2][0] = m[0][2];
+  im[2][1] = m[1][2];
+  
+  memset( zrot, 0, sizeof( zrot ) );
+  zrot[0][0] = zrot[1][1] = zrot[2][2] = 1.0F;
+  
+  zrot[0][0] = cos( ( degrees*EOL_DEGTORAD ) );
+  zrot[0][1] = sin( ( degrees*EOL_DEGTORAD ) );
+  zrot[1][0] = -sin( ( degrees*EOL_DEGTORAD ) );
+  zrot[1][1] = cos( ( degrees*EOL_DEGTORAD ) );
+  
+  eol_rotation_concacenate( m, zrot, tmpmat );
+  eol_rotation_concacenate( tmpmat, im, rot );
+  
+  dst->x = rot[0][0] * point.x + rot[0][1] * point.y + rot[0][2] * point.z;
+  dst->y = rot[1][0] * point.x + rot[1][1] * point.y + rot[1][2] * point.z;
+  dst->z = rot[2][0] * point.x + rot[2][1] * point.y + rot[2][2] * point.z;
+}
+
+void eol_vec3d_rotate_about_x(eolVec3D *vect, eolFloat angle)
+{
+  eolVec3D temp;
+  if (!vect)return;
+  
+  angle=angle*EOL_DEGTORAD;
+  
+  temp.x=vect->x;
+  temp.y=(vect->y*cos(angle))-(vect->z*sin(angle));
+  temp.z=(vect->y*sin(angle))+(vect->z*cos(angle));
+  
+  vect->x=temp.x;
+  vect->y=temp.y;
+  vect->z=temp.z;
+}
+
+void eol_vec3d_rotate_about_y(eolVec3D *vect, eolFloat angle)
+{
+  eolVec3D temp;
+  if (!vect)return;
+  
+  angle=angle*EOL_DEGTORAD;
+  
+  temp.y=vect->y;
+  temp.x=(vect->x*cos(angle))+(vect->z*sin(angle));
+  temp.z=(vect->x*sin(angle)*(-1))+(vect->z*cos(angle));
+  
+  vect->x=temp.x;
+  vect->y=temp.y;
+  vect->z=temp.z;
+}
+
+void eol_vec3d_rotate_about_z(eolVec3D *vect, eolFloat angle)
+{
+  eolVec3D temp;
+  if (!vect)return;
+  
+  angle=angle*EOL_DEGTORAD;
+  
+  temp.z=vect->z;
+  temp.x=(vect->x*cos(angle))-(vect->y*sin(angle));
+  temp.y=(vect->x*sin(angle))+(vect->y*cos(angle));
+  
+  vect->x=temp.x;
+  vect->y=temp.y;
+  vect->z=temp.z;
+}
+
+
+void eol_vec3d_angle_vectors(eolVec3D angles, eolVec3D *forward, eolVec3D *right, eolVec3D *up)
+{
+  eolFloat angle;
+  eolFloat sr, sp, sy, cr, cp, cy;
+  
+  angle = angles.x * (EOL_DEGTORAD);
+  sy = sin(angle);
+  cy = cos(angle);
+  angle = angles.y * (EOL_DEGTORAD);
+  sp = sin(angle);
+  cp = cos(angle);
+  angle = angles.z * (EOL_DEGTORAD);
+  sr = sin(angle);
+  cr = cos(angle);
+  
+  if(forward)
+  {
+    forward->x = cp*cy;
+    forward->y = cp*sy;
+    forward->z = -sp;
+  }
+  if(right)
+  {
+    right->x = (-1*sr*sp*cy+-1*cr*-sy);
+    right->y = (-1*sr*sp*sy+-1*cr*cy);
+    right->z = -1*sr*cp;
+  }
+  if(up)
+  {
+    up->x = (cr*sp*cy+-sr*-sy);
+    up->y = (cr*sp*sy+-sr*cy);
+    up->z = cr*cp;
+  }
+}
+
+
 eolFloat eol_vec2d_angle(eolVec2D v)
 {
   return eol_vector_angle(v.x,v.y);
@@ -312,12 +554,6 @@ void eol_vec3d_cross_product(eolVec3D *out, eolVec3D v1, eolVec3D v2)
   out->y = v1.z*v2.x - v1.x*v2.z;
   out->z = v1.x*v2.y - v1.y*v2.x;
 }
-
-void eol_vec3d_rotate_point(eolVec3D *dst, eolVec3D point, eolVec3D origin, eolVec3D rotation)
-{
-  
-}
-
 
 void eol_rect3d_clear(eolRect3D *r)
 {

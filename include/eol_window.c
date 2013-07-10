@@ -450,6 +450,22 @@ eolBool eol_window_load_data_from_file(char * filename,void *data)
   return eolTrue;
 }
 
+eolBool eol_window_mouse_inside(eolWindow *win)
+{
+  if (!win)return eolFalse;
+  if ((eol_mouse_input_state(eolMouseLeft)) ||
+    (eol_mouse_input_state(eolMouseRight)) ||
+    (eol_mouse_input_released(eolMouseRight)) ||
+    (eol_mouse_input_released(eolMouseLeft)))
+  {
+    if (eol_mouse_in_rect(win->rect))
+    {
+      return eolTrue;
+    }
+  }
+  return eolFalse;
+}
+
 void eol_window_free_if_outside_click(eolWindow **win)
 {
   if ((!win) || (!*win))return;

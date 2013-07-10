@@ -272,6 +272,28 @@ eolFloat eol_slider_get_position(eolComponent *comp);
  */
 void eol_slider_set_position(eolComponent *comp, eolFloat newPos);
 
+/**
+ * @brief creates a new actor component
+ * @param id the id of the component should be unique per its container
+ * @param name the name of the component, again should be unique
+ * @param rect the bounding rect relative to the parent bounds
+ * @param bounds the parent container bounds
+ * @param actorFile the actor file to load.  It describes the 3D model assets
+ * @param action if specified, this will be the default animation for the model
+ * @param rotating if eolTrue the model will rotate in place
+ * @param fading if eolTrue it will fade in and out.
+ */
+eolComponent *eol_actor_component_new(
+  eolUint       id,
+  eolWord       name,
+  eolRectFloat  rect,
+  eolRect       bounds,
+  eolLine       actorFile,
+  eolLine       action,
+  eolBool       rotating,
+  eolBool       fading
+);
+
 /* Label Functions */
 /**
  * @brief creates a new label component
@@ -366,6 +388,7 @@ eolComponent *eol_button_new(
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
     eolBool        center,
+    eolInt         justify,
     char         * buttonFileUp,
     char         * buttonFileHigh,
     char         * buttonFileDown,
@@ -393,6 +416,7 @@ eolComponent *eol_button_stock_new(
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
+    eolInt         justify,
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
     eolBool        center
@@ -416,6 +440,7 @@ eolComponent *eol_button_text_new(
     eolRectFloat   rect,
     eolRect        bounds,
     char         * buttonText,
+    eolInt         justify,
     eolUint        fontSize,
     eolInt         buttonHotkey,
     eolUint        buttonHotkeymod,
@@ -566,6 +591,19 @@ void eol_list_add_text_item(
   );
 
 /**
+ * @brief adds an actor item to the list
+ * @param list the list to add to
+ * @param itemId the id of the item to add
+ * @param actorFile the actor file to load
+ * @return NULL on error or the created Actor Component
+ */
+eolComponent *eol_list_add_actor_item(
+  eolComponent * list,
+  eolUint        itemId,
+  eolLine        actorFile
+);
+
+/**
  * @brief removes all items in the list
  * @param component the list to purge
  */
@@ -626,6 +664,10 @@ eolBool eol_component_list_get_selected_item(eolComponent **itemOut,eolComponent
 eolBool eol_component_list_delete_selected_item(eolComponent *list);
 
 eolBool eol_component_list_get_nth_item(eolComponent **itemOut,eolComponent *list,eolUint n);
+
+/*
+ * *** Entry ***
+ */
 
 /**
  * @brief changes what is in the output buffer for the entry.

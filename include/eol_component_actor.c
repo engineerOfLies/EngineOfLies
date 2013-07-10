@@ -73,6 +73,10 @@ eolComponent *eol_actor_component_new(
   }
   actor->actor = eol_actor_load(actorFile);
 
+  if (!actor->actor)
+  {
+    eol_logger_message(EOL_LOG_WARN,"failed to load actor for component: %s",actorFile);
+  }
   eol_component_actor_move(component,bounds);
   
   component->id = id;
@@ -116,11 +120,15 @@ void eol_component_actor_move(eolComponent *component,eolRect newbounds)
     if (actorLargest != 0)
     {
       /*scale model to fit range.*/
-      scaleFactor = boundsSmallest / actorLargest;
+      scaleFactor = (boundsSmallest / actorLargest) *0.25;
 
       eol_vec3d_set(
         actor->ori.scale,
         scaleFactor,scaleFactor,scaleFactor);
+    }
+    else
+    {
+      eol_logger_message(EOL_LOG_WARN,"actor with 0 scaleFactor");
     }
   }
   /*set model potion to the center of the bounds in 3d space*/

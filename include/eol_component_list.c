@@ -218,7 +218,11 @@ void eol_component_list_draw(eolComponent *component, eolRect bounds)
     itemPos = eol_component_list_get_item_position(component,position);
     item->item->bounds.x = itemPos.x;
     item->item->bounds.y = itemPos.y;
-    if (!eol_list_item_bound_check(list,item->item->bounds))continue;
+    if (!eol_list_item_bound_check(list,item->item->bounds))
+    {
+      printf("list item %s is out of bounds!\n",item->item->name);
+      continue;
+    }
     if (item->selected)
     {
       eol_draw_solid_rect(item->item->bounds,list->highlightColor,0.9);
@@ -418,15 +422,45 @@ void eol_list_add_item(eolComponent *list,eolComponent *item)
   eol_rectf_set(&item->rect,0,0,1,1);
   
   itemPos = eol_component_list_get_item_position(list,ldata->itemCount);
-  item->bounds.w = ldata->displayItems.x;
-  item->bounds.h = ldata->displayItems.y;
   item->bounds.x = itemPos.x;
   item->bounds.y = itemPos.y;
-//  eol_component_move(item,item->bounds);
+  eol_component_move(item,item->bounds);
+  item->bounds.w = ldata->displayItems.x;
+  item->bounds.h = ldata->displayItems.y;
   /*x position will be set at draw*/
   ldata->itemList = g_list_append(ldata->itemList,listItem);
   ldata->itemCount++;
   /*Update item's rect and bounds to reflect position in list*/
+}
+
+eolComponent *eol_list_add_actor_item(
+  eolComponent * list,
+  eolUint        itemId,
+  eolLine        actorFile
+  )
+{
+  eolRectFloat defaultRect = {0,0,1,1};
+  eolComponent *actor;
+  eolComponentList * ldata;
+  ldata = eol_component_get_list_data(list);
+  if (!ldata)return NULL;
+  actor = eol_actor_component_new(
+    itemId,
+    actorFile,
+    defaultRect,
+    ldata->itemRect,
+    actorFile,
+    "",
+    eolFalse,
+    eolFalse
+  );
+  if (!actor)
+  {
+    eol_logger_message(EOL_LOG_WARN,"failed to create actor component from file %s",actorFile);
+    return NULL;
+  }
+  eol_list_add_item(list,actor);
+  return actor;
 }
 
 void eol_list_add_text_item(
@@ -670,6 +704,16 @@ eolVec2D eol_component_list_get_item_position(eolComponent *list,eolUint positio
   return pos;
 }
 
+eolBool eol_list_get_item_bounds(eolComponent *listComp,eolRect *itemBounds)
+{
+  eolComponentList *ldata;
+  if (!itemBounds)return eolFalse;
+  ldata = eol_component_get_list_data(listComp);
+  if (!ldata)return eolFalse;
+  eol_rect_copy(itemBounds,ldata->itemRect);
+  return eolTrue;
+}
+
 eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
 {
   int i;
@@ -677,7 +721,6 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
   eolLine       name;
   eolUint       fontSize = 3;
   eolRectFloat  rect;
-  eolRect       itemRect;
   eolUint       listType = 0;
   eolLine       listTypeLine = "text";
   eolKeychain * chain = NULL;
@@ -730,21 +773,19 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
     showHslider,
     fontSize
   );
-  if (!list)
+  listData = eol_component_get_list_data(list);
+  if (!listData)
   {
+    eol_component_list_free(list);
     return NULL;
   }
-  eol_rect_copy(&itemRect,list->bounds);
-  listData = eol_component_get_list_data(list);
-  if (listData)
-  {
-    eol_keychain_get_hash_value_as_vec3d(&listData->backgroundColor, def, "backgroundColor");
-    eol_keychain_get_hash_value_as_float(&listData->backgroundAlpha, def, "backgroundAlpha");
-    eol_keychain_get_hash_value_as_bool(&listData->showBackground, def, "showBackground");
-    eol_keychain_get_hash_value_as_bool(&listData->showBoarder, def, "showBoarder");
-    eol_keychain_get_hash_value_as_bool(&listData->allowSelection, def, "allowSelection");
-    eol_rect_set(&itemRect,0,0,listData->displayItems.x,listData->displayItems.y);
-  }
+  eol_rect_copy(&listData->itemRect,list->bounds);
+  eol_keychain_get_hash_value_as_vec3d(&listData->backgroundColor, def, "backgroundColor");
+  eol_keychain_get_hash_value_as_float(&listData->backgroundAlpha, def, "backgroundAlpha");
+  eol_keychain_get_hash_value_as_bool(&listData->showBackground, def, "showBackground");
+  eol_keychain_get_hash_value_as_bool(&listData->showBoarder, def, "showBoarder");
+  eol_keychain_get_hash_value_as_bool(&listData->allowSelection, def, "allowSelection");
+  eol_rect_set(&listData->itemRect,0,0,listData->displayItems.x,listData->displayItems.y);
   chain = eol_keychain_get_hash_value(def,"items");
   if (chain)
   {
@@ -755,7 +796,7 @@ eolComponent * eol_list_create_from_config(eolRect winRect,eolKeychain *def)
         item = eol_keychain_get_list_nth(chain, i);
         if (item != NULL)
         {
-          itemComp = eol_component_make_from_config(item,itemRect);
+          itemComp = eol_component_make_from_config(item,listData->itemRect);
           if (itemComp )
           {
             eol_list_add_item(list,itemComp );

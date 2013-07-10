@@ -36,6 +36,7 @@ enum eolFontSizes {
 #define eolFontSizeMax 5
 
 enum eolTextJustify {
+  eolJustifyNone      = -1,
   eolJustifyLeft      = 0,
   eolJustifyCenter    = 1,
   eolJustifyRight     = 2
