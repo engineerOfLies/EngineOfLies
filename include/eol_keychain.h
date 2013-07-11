@@ -128,8 +128,14 @@ eolBool eol_keychain_get_line(eolLine output,eolKeychain *key);
 */
 void eol_keychain_list_append(eolKeychain *list,eolKeychain *item);
 
+/**
+ * @brief get the number of elements in this hash.
+ * NOTE: This does not recurse into the elements of the hash
+ * @param hash the keychain has to query
+ * @return 0 if empty or not a hash, the count otherwise
+ */
+eolUint eol_keychain_get_hash_count(eolKeychain *hash);
 
-eolUint eol_keychain_get_hash_count(eolKeychain *list);
 eolKeychain *eol_keychain_get_hash_nth(eolLine key, eolKeychain *hash, eolUint n);
 
 /**

@@ -94,7 +94,7 @@ typedef struct
   eolUint       spaceHeight;    /**<number of tiles high the space is*/
   eolRectFloat  mapRect;       /**<position and size of tile space in this map*/
   eolUint       tileIdPool;     /**<makes sure the same tile id is not used twice*/
-  eolTileSet  * tileSet;        /**<tile set to reference for these tiles*/
+  eolTileSet  * tileSet;        /**<tile set to reference for these tiles, owned by the level*/
   GList       * map;            /**<the list of all tiles in the map*/
 }eolTileMap;
 
@@ -204,13 +204,6 @@ eolTile *eol_tile_get_by_mouse(eolTileMap *map, eolOrientation LayerOri);
  * @return a pointer to the created and configured tile type
  */
 eolTileType *eol_tile_type_load(eolKeychain *tileType);
-
-/**
- * @brief load an entire set from the keychain provided
- * @param set the set to load into.  previous data will be lost
- * @param keychain the keychain containing a tileSet list
- */
-void eol_tile_set_build_from_definition(eolTileSet *set,eolKeychain *keychain);
 
 /**
  * @brief Adds a new tile type to the tile set, overwriting a type with the same id
@@ -369,7 +362,28 @@ eolKeychain *eol_tile_map_build_keychain(eolTileMap *map);
 /**
  * @brief given a loaded keychain, build a tile map from the data
  */
-eolTileMap *eol_tile_map_build_from_definition(eolKeychain *def);
+eolTileMap *eol_tile_map_build_from_definition(eolKeychain *def,eolTileSet *set);
+
+/**
+ * @brief load the tile map layout from the provided keychain
+ * @param map the map that will be populated
+ */
+void eol_tile_map_build_layout_from_definition(eolTileMap *map,eolKeychain *def);
+
+/**
+ * @brief creates a tile set keychain to be saved to disk
+ * @param set the set to create the keychain from
+ * @return NULL on error or the configured keychain that describes the tile set
+ */
+eolKeychain *eol_tile_set_build_keychain(eolTileSet *set);
+
+/**
+ * @brief load an entire set from the keychain provided
+ * @param set the set to load into.  previous data will be lost
+ * @param keychain the keychain containing a tileSet list
+ */
+void eol_tile_set_build_from_definition(eolTileSet *set,eolKeychain *keychain);
+
 
 /**
  * @brief creates a new empty tile set
@@ -398,6 +412,9 @@ eolUint eol_tile_set_get_count(eolTileSet *set);
  * @param set a pointer to the tile set pointer to free and NULLify
  */
 void eol_tile_set_free(eolTileSet **set);
+
+
+void eol_tile_set_load(eolTileSet *set,eolKeychain *tileSetDef);
 
 
 #endif

@@ -11,6 +11,7 @@
 eolTileType *eol_tile_set_get_tiletype_by_id(eolTileSet *set,eolUint id);
 void eol_tile_type_delete(eolTileType *tile);
 void eol_tile_map_delete_tiles_outside(eolTileMap *map);
+eolKeychain *eol_tile_types_build_keychain(eolTileSet *set);
 
 /*definitions*/
 
@@ -49,6 +50,18 @@ void eol_tile_map_assign_set(eolTileMap *map, eolTileSet *set)
 {
   if ((!map)||(!set))return;
   map->tileSet = set;
+}
+
+void eol_tile_set_load(eolTileSet *set,eolKeychain *tileSetDef)
+{
+  eolKeychain *tileTypeList;
+  if ((!set)||(!tileSetDef))return;
+  eol_keychain_get_hash_value_as_uint(&set->idPool, tileSetDef,"idPool");
+  tileTypeList = eol_keychain_get_hash_value(tileSetDef,"tileSet");
+  if (tileTypeList)
+  {
+    eol_tile_set_build_from_definition(set,tileTypeList);
+  }
 }
 
 void eol_tile_set_build_from_definition(eolTileSet *set,eolKeychain *tileTypeList)
@@ -718,13 +731,32 @@ void eol_tile_map_sync_tiles(eolTileMap *map)
 
 
 /*saving and loading*/
+
 eolKeychain *eol_tile_set_build_keychain(eolTileSet *set)
+{
+  eolKeychain *tileTypeList;
+  eolKeychain *tileSet;
+  if (!set)return NULL;
+  tileSet = eol_keychain_new_hash();
+  if (!tileSet)return NULL;
+  tileTypeList = eol_tile_types_build_keychain(set);
+  if (tileTypeList)
+  {
+    eol_keychain_hash_insert(tileSet,"tileSet",tileTypeList);
+  }
+  eol_keychain_hash_insert(tileSet,"idPool",eol_keychain_new_uint(set->idPool));
+  return tileSet;
+}
+
+
+eolKeychain *eol_tile_types_build_keychain(eolTileSet *set)
 {
   GList *l;
   GList *typeList;
   eolKeychain *tileSet;
   eolKeychain *tileItem;
   eolTileType *tileData;
+  eolBool itemsInList = eolFalse;
   if (!set)return NULL;
   typeList = g_hash_table_get_values(set->tileSet);
   tileSet = eol_keychain_new_list();
@@ -744,9 +776,15 @@ eolKeychain *eol_tile_set_build_keychain(eolTileSet *set)
     eol_keychain_hash_insert(tileItem,"hitBlock",eol_keychain_new_bool(tileData->hitBlock));
     eol_keychain_hash_insert(tileItem,"sightBlock",eol_keychain_new_bool(tileData->sightBlock));
     eol_keychain_list_append(tileSet,tileItem);
+    itemsInList = eolTrue;
   }
   g_list_free(typeList);
-  return tileSet;
+  if (itemsInList)
+  {
+    return tileSet;
+  }
+  eol_keychain_free(&tileSet);
+  return NULL;
 }
 
 eolKeychain *eol_tile_layout_build_keychain(GList *tileMap)
@@ -765,9 +803,13 @@ eolKeychain *eol_tile_layout_build_keychain(GList *tileMap)
     tileItem = eol_keychain_new_hash();
     if (!tileItem)continue;
     eol_keychain_hash_insert(tileItem,"id",eol_keychain_new_uint(tileData->id));
+    eol_keychain_hash_insert(tileItem,"tileType",eol_keychain_new_uint(tileData->tileType));
     eol_keychain_hash_insert(tileItem,"x",eol_keychain_new_int(tileData->x));
     eol_keychain_hash_insert(tileItem,"y",eol_keychain_new_int(tileData->y));
     eol_keychain_hash_insert(tileItem,"ori",eol_keychain_new_orientation(tileData->ori));
+    eol_keychain_hash_insert(tileItem,"walkBlock",eol_keychain_new_bool(tileData->walkBlock));
+    eol_keychain_hash_insert(tileItem,"hitBlock",eol_keychain_new_bool(tileData->hitBlock));
+    eol_keychain_hash_insert(tileItem,"sightBlock",eol_keychain_new_bool(tileData->sightBlock));
     eol_keychain_list_append(tileLayout,tileItem);
   }
   return tileLayout;
@@ -793,18 +835,59 @@ eolKeychain *eol_tile_map_build_keychain(eolTileMap *map)
   return mapKeys;
 }
 
-eolTileMap *eol_tile_map_build_from_definition(eolKeychain *def)
+void eol_tile_map_build_layout_from_definition(eolTileMap *map,eolKeychain *def)
+{
+  eolUint i,n;
+  eolKeychain *tileDef;
+  eolTile *tile;
+  if ((!map)||(!def))return;
+  n = eol_keychain_get_list_count(def);
+  for (i = 0;i < n;i++)
+  {
+    tileDef = eol_keychain_get_list_nth(def, i);
+    if (!tileDef)continue;
+    tile = eol_tile_new();
+    eol_keychain_get_hash_value_as_uint(&tile->id,tileDef,"id");
+    eol_keychain_get_hash_value_as_uint(&tile->tileType,tileDef,"tileType");
+    eol_keychain_get_hash_value_as_int(&tile->x,tileDef,"x");
+    eol_keychain_get_hash_value_as_int(&tile->y,tileDef,"y");
+    eol_keychain_get_hash_value_as_orientation(&tile->ori,tileDef,"ori");
+    eol_keychain_get_hash_value_as_bool(&tile->walkBlock,tileDef,"walkBlock");
+    eol_keychain_get_hash_value_as_bool(&tile->hitBlock,tileDef,"hitBlock");
+    eol_keychain_get_hash_value_as_bool(&tile->sightBlock,tileDef,"sightBlock");
+
+    tile->parentType = eol_tile_set_get_tiletype_by_id(map->tileSet,tile->tileType);
+    if (tile->parentType == NULL)
+    {
+      eol_logger_message(EOL_LOG_WARN,"tile %i loaded, parent type %i not found!",tile->id,tile->tileType);
+    }
+    else
+    {
+      tile->actor = eol_actor_load(tile->parentType->actorFile);
+    }
+    map->map = g_list_append(map->map,tile);
+  }
+}
+
+eolTileMap *eol_tile_map_build_from_definition(eolKeychain *def,eolTileSet *set)
 {
   eolTileMap *map;
-  if (!def)return NULL;
+  eolKeychain *layout;
+  if ((!def)||(!set))return NULL;
   map = eol_tile_map_new();
   if (!map)return NULL;
+  map->tileSet = set;
   eol_keychain_get_hash_value_as_float(&map->tileWidth,def,"tileWidth");
   eol_keychain_get_hash_value_as_float(&map->tileHeight,def,"tileHeight");
   eol_keychain_get_hash_value_as_uint(&map->spaceWidth,def,"spaceWidth");
   eol_keychain_get_hash_value_as_uint(&map->spaceHeight,def,"spaceHeight");
   eol_keychain_get_hash_value_as_uint(&map->tileIdPool,def,"tileIdPool");
-  /*TODO build tile map from definition*/
+  eol_tile_map_set_tile_size(map,map->tileWidth, map->tileHeight);
+  layout = eol_keychain_get_hash_value(def,"map");
+  if (layout)
+  {
+    eol_tile_map_build_layout_from_definition(map,layout);
+  }
   return map;
 }
 
