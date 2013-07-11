@@ -45,6 +45,7 @@ typedef struct
 {
   eolOrientation   ori;
   eolBool          hidden;    /**<to draw or not*/
+  eolBool          useAsClip; /**<if true, this background will add its geometry to the collision space*/
   eolLine          modelFile;
   eolFloat         followCam; /**<For paralax effect. 0 if not, 1 if follows completely*/
   eolModel       * model;
@@ -61,12 +62,9 @@ typedef struct
   eolOrientation ori;         /**<orientation applied to the whole layer*/
   eolBool       hidden;       /**<if this layer should be drawn or not*/
   eolRectFloat  bounds;       /**<absolute bounds in model space for the layer*/
-  eolBool       usesClipMesh; /**<if true, the layer will build collision data from clip mesh*/
+  eolBool       usesClipMesh; /**<if true, the layer will build collision data from backgrounds marked as collision masks*/
   eolBool       usesTileMap;  /**<if true, the layer will build collision data from tile map*/
   
-  eolLine       clipMeshFile; /**<the file to load for a clip mask*/
-  
-  eolOrientation clipMaskOri;/**<offset for where the clipmask is set in 3D space*/
   /*allocated data that needs to be cleaned up*/
   eolTileMap  * tileMap;      /**<the loaded tile map*/
   eolKeychain * keys;        /**<config keys for the layer*/
@@ -75,7 +73,6 @@ typedef struct
   
   /*live data*/
   cpSpace     * space;        /**<the collision space for this layer*/
-  eolMesh     * clipMesh;     /**<the collision mask as mesh data*/
   GList       * entities;     /**<entites that have been added to the layer*/
 }eolLevelLayer;
 
@@ -239,7 +236,13 @@ void eol_level_free(eolLevel **level);
 
 /**
  * @brief sets up a loaded level for use. Including spawning all entities
- * @param level the level to set up
+ * @param level the level owning the layer
+ * @param layer the layer to setup
+ */
+void eol_level_setup_layer(eolLevel *level, eolLevelLayer *layer);
+
+/**
+ * @brief sets up the level for use, including all layers
  */
 void eol_level_setup(eolLevel *level);
 

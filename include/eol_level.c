@@ -57,27 +57,24 @@ void eol_level_layer_setup_background(eolBackground *back)
   back->model = eol_model_load(back->modelFile);
 }
 
-void eol_level_setup_layer(eolLevelLayer *layer)
+void eol_level_setup_layer(eolLevel *level, eolLevelLayer *layer)
 {
   GList *b;
   if (!layer)return;
   eol_level_clear_layer_space(layer);
 
-  eol_mesh_free(&layer->clipMesh);
-  if (strlen(layer->clipMeshFile) > 0)
-  {
-    layer->clipMesh = eol_mesh_load(layer->clipMeshFile);
-    eol_level_add_mask_to_space(layer);
-  }
-  
   /*backgrounds*/
   for (b = layer->backgrounds;b != NULL; b = b->next)
   {
     eol_level_layer_setup_background((eolBackground*)b->data);
   }
+  eol_level_add_mask_to_space(layer);
   
   /*spawn list*/
   /*tiles*/
+  layer->tileMap->tileSet = level->tileSet;
+  
+  eol_level_set_current_level(level);
 }
 
 void eol_level_setup(eolLevel *level)
@@ -86,7 +83,7 @@ void eol_level_setup(eolLevel *level)
   if (!level)return;
   for (l = level->layers;l != NULL;l = l->next)
   {
-    eol_level_setup_layer((eolLevelLayer*)l->data);
+    eol_level_setup_layer(level,(eolLevelLayer*)l->data);
   }
 }
 
@@ -243,8 +240,6 @@ void eol_level_delete_layer(eolLevelLayer * level)
   eolBackground *b = NULL;
   GList *s,*e;
   if (!level)return;
-
-  eol_mesh_free(&level->clipMesh);
   
   eol_tile_map_free(&level->tileMap);
   
@@ -352,8 +347,6 @@ eolLevelLayer *eol_level_layer_new()
   memset(layer,0,sizeof(eolLevelLayer));
 
   eol_orientation_clear(&layer->ori);
-  eol_orientation_clear(&layer->clipMaskOri);
-  eol_vec3d_set(layer->clipMaskOri.color,1,1,1);
   eol_level_clear_layer_space(layer);
   
   return layer;
@@ -563,8 +556,6 @@ eolLevelLayer *eol_level_build_layer_from_key(eolKeychain *key,eolLevel *level)
   eol_keychain_get_hash_value_as_rectfloat(&layer->bounds,key,"bounds");
   eol_keychain_get_hash_value_as_bool(&layer->usesClipMesh,key,"usesClipMesh");
   eol_keychain_get_hash_value_as_bool(&layer->usesTileMap,key,"usesTileMap");
-  eol_keychain_get_hash_value_as_line(layer->clipMeshFile,key,"clipMeshFile");
-  eol_keychain_get_hash_value_as_orientation(&layer->clipMaskOri,key,"clipMaskOri");
 
   layer->keys = eol_keychain_clone(eol_keychain_get_hash_value(key,"keys"));
   
@@ -712,8 +703,6 @@ eolKeychain *eol_level_build_layer_keychain(eolLevelLayer *layer)
   eol_keychain_hash_insert(keys,"hidden",eol_keychain_new_bool(layer->hidden));
   eol_keychain_hash_insert(keys,"usesClipMesh",eol_keychain_new_bool(layer->usesClipMesh));
   eol_keychain_hash_insert(keys,"usesTileMap",eol_keychain_new_bool(layer->usesTileMap));
-  eol_keychain_hash_insert(keys,"clipMeshFile",eol_keychain_new_string(layer->clipMeshFile));
-  eol_keychain_hash_insert(keys,"clipMaskOri",eol_keychain_new_orientation(layer->clipMaskOri));
   /*pack other extensible parts of the level*/
   key = eol_keychain_clone(layer->keys);
   if (key != NULL)
@@ -816,6 +805,7 @@ void eol_level_draw_background(eolBackground * back,eolFloat alpha)
   if (!back)return;
   if (!back->model)return;
   if (back->hidden)return;
+  if (back->useAsClip)return;
   eol_model_draw(
     back->model,
     back->ori.position,
@@ -839,16 +829,25 @@ void eol_level_draw_layer_backgrounds(eolLevelLayer *layer,eolFloat alpha)
 
 void eol_level_draw_layer_clipmask(eolLevelLayer *layer)
 {
+  eolBackground *clip;
+  int i,n;
   if (!layer)return;
-  eol_mesh_draw_wire(
-    layer->clipMesh,
-    layer->clipMaskOri.position,
-    layer->clipMaskOri.rotation,
-    layer->clipMaskOri.scale,
-    layer->clipMaskOri.color,
-    layer->clipMaskOri.alpha
-  );
-
+  n = g_list_length(layer->backgrounds);
+  for (i = 0; i < n; i++)
+  {
+    clip = g_list_nth_data(layer->backgrounds,i);
+    if (!clip)continue;
+    if (!clip->useAsClip)continue;
+    eol_model_draw_wire(
+      clip->model,
+      clip->ori.position,
+      clip->ori.rotation,
+      clip->ori.scale,
+      clip->ori.color,
+      0.9,
+      0
+    );
+  }
 }
 
 void eol_level_draw_layer_bounds(eolLevelLayer *layer)
@@ -1037,21 +1036,41 @@ void eol_level_add_triangle_to_space(cpSpace *space,eolFace *face,eolMesh *mask)
 
 void eol_level_add_mask_to_space(eolLevelLayer *layer)
 {
+  eolBackground *clip;
   int i;
+  int b,n,f;
   if (!layer)return;
-  if ((!layer->space)||(!layer->clipMesh))
+  if (!layer->space)
   {
     eol_logger_message(
       EOL_LOG_ERROR,
-      "cannot add clipmesh to space %s: missing data\n",
+      "eol_level_add_mask_to_space: cannot add clipmesh to space %s: missing space",
       layer->idName);
     return;
   }
-  for (i = 0; i < layer->clipMesh->_numFaces;i++)
+  n = g_list_length(layer->backgrounds);
+  for (b = 0; b < n; b++)
   {
-    eol_level_add_triangle_to_space(layer->space,
-                                    &layer->clipMesh->_faces[i],
-                                    layer->clipMesh);
+    clip = g_list_nth_data(layer->backgrounds,b);
+    if (!clip)continue;
+    if (!clip->useAsClip)continue;
+    if (clip->model == NULL)
+    {
+      eol_logger_message(EOL_LOG_INFO,"eol_level_add_mask_to_space: clip mesh has no model!");
+      continue;
+    }
+    if (clip->model->_mesh == NULL)
+    {
+      eol_logger_message(EOL_LOG_INFO,"eol_level_add_mask_to_space: clip mesh has no mesh data!");
+      continue;
+    }
+    f = clip->model->_mesh->_numFaces;
+    for (i = 0; i < f;i++)
+    {
+      eol_level_add_triangle_to_space(layer->space,
+                                      &clip->model->_mesh->_faces[i],
+                                      clip->model->_mesh);
+    }
   }
 }
 
