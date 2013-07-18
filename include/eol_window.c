@@ -124,7 +124,7 @@ void eol_window_draw_all()
     for (c = win->components;c != NULL;c = c->next)
     {
       if (c->data == NULL)continue;
-      eol_component_draw((eolComponent *)c->data,win->rect);
+      eol_component_draw((eolComponent *)c->data);
     }
   }
 }
@@ -469,8 +469,8 @@ eolBool eol_window_mouse_inside(eolWindow *win)
 void eol_window_free_if_outside_click(eolWindow **win)
 {
   if ((!win) || (!*win))return;
-  if ((eol_mouse_input_state(eolMouseLeft)) ||
-    (eol_mouse_input_state(eolMouseRight)))
+  if ((eol_mouse_input_released(eolMouseLeft)) ||
+    (eol_mouse_input_released(eolMouseRight)))
   {
     if (!eol_mouse_in_rect((*win)->rect))
     {

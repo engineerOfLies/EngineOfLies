@@ -36,6 +36,17 @@ void eol_level_clear_layer_space(eolLevelLayer *layer);
 void eol_level_delete_layer(eolLevelLayer * level);
 /*function definitions*/
 
+void eol_level_enable_background_draw(eolBool enable)
+{
+  _eol_level_draw_backgrounds = enable;
+}
+
+void eol_level_enable_collision_draw(eolBool enable)
+{
+  _eol_level_draw_clipmask = enable;
+  _eol_level_draw_bounds = enable;
+}
+
 void eol_level_enable_tile_draw(eolBool enable)
 {
   _eol_level_draw_tiles = enable;
@@ -538,6 +549,8 @@ void eol_level_build_backgrounds_from_keychain(eolLevelLayer *layer,eolKeychain 
       eol_orientation_copy(&newBack->ori,backTemp.ori);
       eol_line_cpy(newBack->modelFile,backTemp.modelFile);
       newBack->followCam = backTemp.followCam;
+      eol_keychain_get_hash_value_as_bool(&newBack->useAsClip,key,"useAsClip");
+      eol_keychain_get_hash_value_as_bool(&newBack->hidden,key,"hidden");
     }
   }
 }
@@ -662,6 +675,7 @@ eolKeychain *eol_level_build_backgrounds_keychain(GList *backgrounds)
       if (!bgItem)continue;
       eol_keychain_hash_insert(bgItem,"ori",eol_keychain_new_orientation(bg->ori));
       eol_keychain_hash_insert(bgItem,"hidden",eol_keychain_new_bool(bg->hidden));
+      eol_keychain_hash_insert(bgItem,"useAsClip",eol_keychain_new_bool(bg->useAsClip));
       eol_keychain_hash_insert(bgItem,"modelFile",eol_keychain_new_string(bg->modelFile));
       eol_keychain_hash_insert(bgItem,"followCam",eol_keychain_new_float(bg->followCam));
       eol_keychain_list_append(bgList,bgItem);

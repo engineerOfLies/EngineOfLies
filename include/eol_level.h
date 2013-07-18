@@ -41,15 +41,41 @@
  */
 typedef void (*eolSpawnGeneric)(eolSpawn *spawn);
 
+enum EOL_TRANSITION_DIRECTIONS
+{
+  ETD_BI = 0, /**<transition works in both directions*/
+  ETD_UP = 1, /**<only from first layer to second layer*/
+  ETD_DN = 2  /**<only from second layer to first layer*/
+};
+
 typedef struct
 {
   eolOrientation   ori;
   eolBool          hidden;    /**<to draw or not*/
   eolBool          useAsClip; /**<if true, this background will add its geometry to the collision space*/
+  eolBool          useAsFloor;/**<if true, game entities will seek this level as the floor*/
   eolLine          modelFile;
   eolFloat         followCam; /**<For paralax effect. 0 if not, 1 if follows completely*/
   eolModel       * model;
 }eolBackground;
+
+
+/**
+ * @brief transition regions are for allowing entities to pass between different layer spaces seamlessly
+ * when an entity enters a transition region for one layer, they will be checked for intersection with the
+ * other layer's transition region.  While in both, the entity will be added to both physics spaces.  When
+ * the entity leaves one region, it will be removed from that regions layer.
+ * great for things like stairs between layers or transitions between layers that use different orientations
+ *   (A)   [A+B]     {B}
+ * (     {       )       }
+ */
+typedef struct
+{
+  eolRectFloat regions[2];/**<the region where two layers intersect*/
+  eolUint      layers[2]; /**<the two layers to transition between*/
+  eolUint      direction; /**<see EOL_TRANSITION_DIRECTIONS enum*/
+  eolBool      disabled;  /**<if true, this transition is not working*/
+}eolTransitionRegion;
 
 /**
  * @brief the structure used to house the level layer data.  The engine supports
@@ -64,6 +90,10 @@ typedef struct
   eolRectFloat  bounds;       /**<absolute bounds in model space for the layer*/
   eolBool       usesClipMesh; /**<if true, the layer will build collision data from backgrounds marked as collision masks*/
   eolBool       usesTileMap;  /**<if true, the layer will build collision data from tile map*/
+  eolBool       usesStaticFloorPlane;/**<if true all entities will be snapped to the z height of the layer*/
+  eolBool       useFloorTiles;/**<if true, the layer will check against floor tiles for floor height*/
+  eolBool       useFloorBackgrounds; /**<if true, the layer will check against floor backgrounds for floor heights*/
+  
   
   /*allocated data that needs to be cleaned up*/
   eolTileMap  * tileMap;      /**<the loaded tile map*/
@@ -85,6 +115,7 @@ typedef struct
   eolKeychain   * keys;       /**<level configuration keys*/
   GList         * layers;     /**<the allocated list of level layers*/
   eolTileSet    * tileSet;    /**<the set of eolTiles that can be in the level  References layer tiles, do not edit*/
+  GList         * transitions;/**<list of transition regions*/
 }eolLevel;
 
 
@@ -102,6 +133,20 @@ void eol_level_config();
  * @brief frees all loaded level data.
  */
 void eol_level_clear();
+
+/**
+ * @brief enable / disable drawing of backgrounds
+ * NOTE: does not apply to backgrounds used as masks
+ * @param enable set to true to turn it on, false to turn it off
+ */
+void eol_level_enable_background_draw(eolBool enable);
+
+/**
+ * @brief enable / disable drawing of collision masks
+ * NOTE: includes level bounds and tile outlines
+ * @param enable set to true to turn it on, false to turn it off
+ */
+void eol_level_enable_collision_draw(eolBool enable);
 
 /**
  * @brief enable / disable drawing of tiles

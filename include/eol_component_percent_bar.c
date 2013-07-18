@@ -4,7 +4,7 @@
 
 /*local function prototypes*/
 void eol_component_percent_bar_new(eolComponent *component);
-void eol_component_percent_bar_draw(eolComponent *component, eolRect bounds);
+void eol_component_percent_bar_draw(eolComponent *component);
 eolBool eol_component_percent_bar_update(eolComponent *component);
 void eol_component_percent_bar_free(eolComponent *component);
 
@@ -119,7 +119,7 @@ eolBool eol_component_percent_bar_update(eolComponent *component)
   return eolFalse;
 }
 
-void eol_component_percent_bar_draw(eolComponent *component, eolRect bounds)
+void eol_component_percent_bar_draw(eolComponent *component)
 {
   eolRect r;
   eolComponentPercentBar *bar = eol_component_get_percent_bar_data(component);

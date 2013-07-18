@@ -122,6 +122,35 @@ void eol_button_get_text(eolLine outText,eolComponent *button)
   eol_line_cpy(outText,buttonData->buttonText);
 }
 
+void eol_button_get_size(eolComponent *button,eolUint *w, eolUint *h)
+{
+  eolRect fontRect = {0,0,0,0};
+  eolUint imageW = 0, imageH = 0;
+  eolComponentButton *buttonData = NULL;
+  buttonData = eol_component_get_button_data(button);
+  if (!buttonData)return;
+  if (buttonData->button[0] != NULL)
+  {
+    imageW = buttonData->button[0]->frameWidth;
+    imageH = buttonData->button[0]->frameHeight;
+  }
+  if (strlen(buttonData->buttonText)> 0)
+  {
+    fontRect = eol_font_get_bounds(
+      buttonData->buttonText,
+      buttonData->fontSize
+    );    
+  }
+  if (w)
+  {
+    *w = MAX(imageW,fontRect.w);
+  }
+  if (h)
+  {
+    *h = MAX(imageH,fontRect.h);
+  }
+}
+
 void eol_button_get_stock_size(eolUint *w, eolUint *h)
 {
   if (_eol_component_stock_button[0] == NULL)return;
@@ -219,7 +248,7 @@ eolBool eol_component_button_update(eolComponent *component)
   return eolFalse;
 }
 
-void eol_component_button_draw_rect(eolComponent *component,eolRect bounds)
+void eol_component_button_draw_rect(eolComponent *component)
 {
   eolRect r;
   eolComponentButton *button = NULL;
@@ -257,7 +286,7 @@ void eol_component_button_draw_rect(eolComponent *component,eolRect bounds)
   eol_draw_rect(r,eol_vec3d(1,1,1),1);
 }
 
-void eol_component_button_draw(eolComponent *component,eolRect bounds)
+void eol_component_button_draw(eolComponent *component)
 {
   eolRect r;
   eolComponentButton *button = NULL;

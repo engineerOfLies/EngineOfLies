@@ -192,9 +192,10 @@ eolBool eol_list_item_bound_check(eolComponentList *list,eolRect item)
   return (eol_rect_lap_rect(b, item));
 }
 
-void eol_component_list_draw(eolComponent *component, eolRect bounds)
+void eol_component_list_draw(eolComponent *component)
 {
   eolRect r;
+  eolRect ir;   /*item rect*/
   eolVec2D itemPos = {0,0};
   eolVec2D scaleArea;
   int position = 0;
@@ -216,22 +217,21 @@ void eol_component_list_draw(eolComponent *component, eolRect bounds)
     if (!it->data)continue;
     item = (eolComponentListItem*)it->data;
     itemPos = eol_component_list_get_item_position(component,position);
-    item->item->bounds.x = itemPos.x;
-    item->item->bounds.y = itemPos.y;
-    if (!eol_list_item_bound_check(list,item->item->bounds))
+    eol_rect_set(&ir,itemPos.x,itemPos.y,list->itemRect.w,list->itemRect.h);
+    if (!eol_list_item_bound_check(list,ir))
     {
-      printf("list item %s is out of bounds!\n",item->item->name);
       continue;
     }
+    eol_component_move(item->item,ir);
     if (item->selected)
     {
-      eol_draw_solid_rect(item->item->bounds,list->highlightColor,0.9);
+      eol_draw_solid_rect(ir,list->highlightColor,0.9);
     }
+    eol_component_draw(item->item);
     if (item->highlight)
     {
-      eol_draw_rect(item->item->bounds,list->highlightColor,1);
+      eol_draw_rect(ir,list->highlightColor,1);
     }
-    eol_component_draw(item->item,item->item->bounds);
   }
   if (list->showBoarder)
   {
@@ -239,11 +239,11 @@ void eol_component_list_draw(eolComponent *component, eolRect bounds)
   }
   if ((list->showVSlider) && (scaleArea.y > 1))
   {
-    eol_component_draw(list->vSlider,list->vSliderBounds);
+    eol_component_draw(list->vSlider);
   }
   if ((list->showHSlider) && (scaleArea.x > 1))
   {
-    eol_component_draw(list->hSlider,list->hSliderBounds);
+    eol_component_draw(list->hSlider);
   }
 }
 

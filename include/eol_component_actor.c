@@ -6,7 +6,7 @@
 
 void eol_component_actor_new(eolComponent *component);
 void eol_component_actor_free(eolComponent *component);
-void eol_component_actor_draw(eolComponent *component, eolRect bounds);
+void eol_component_actor_draw(eolComponent *component);
 void eol_component_actor_move(eolComponent *component,eolRect newbounds);
 eolBool eol_component_actor_update(eolComponent *component);
 
@@ -160,7 +160,7 @@ eolBool eol_component_actor_update(eolComponent *component)
   return eolFalse;
 }
 
-void eol_component_actor_draw(eolComponent *component, eolRect bounds)
+void eol_component_actor_draw(eolComponent *component)
 {
   eolComponentActor *actor = eol_component_get_actor_data(component);
   if (!actor)return;

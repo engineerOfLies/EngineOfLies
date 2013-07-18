@@ -37,7 +37,14 @@ enum eolComponentTypes {
   eolImageComponent     = 5,  /**<for static images and icons*/
   eolActorComponent     = 6,  /**<for animated images and 3D models*/
   eolListComponent      = 7,  /**<for lists of stuff*/
-  eolPercentBarComponent= 8   /**<for a percent bar*/
+  eolPercentBarComponent= 8,  /**<for a percent bar*/
+  eolCheckComponent     = 9   /**<for a check box button*/
+};
+
+enum eolCheckStates {
+  eolCheckBadState  = -1, /**<state for a check button that is in a bad state*/
+  eolCheckChecked   = 0,  /**<state for a check button that is CHECKED*/
+  eolCheckUnchecked = 1   /**<state for a check button that is UNCHECKED*/
 };
 
 enum eolSliderTypes {
@@ -98,6 +105,7 @@ typedef struct eolComponent_S
   eolLine       name;
   eolRectFloat  rect;           /**<relative position to draw*/
   eolRect       bounds;         /**<calculated position to draw*/
+  eolRect       canvas;        /**<area allowed to draw in*/
   eolBool       canHasFocus;    /**<I apologize for the lolcat reference*/
   eolBool       hasFocus;
   eolInt        state;
@@ -106,7 +114,7 @@ typedef struct eolComponent_S
   eolBool       hidden;         /**<if true, it is not drawn*/
   void        * componentData;
   void          (*data_free)(struct eolComponent_S *component);
-  void          (*data_draw)(struct eolComponent_S *component,eolRect bounds);
+  void          (*data_draw)(struct eolComponent_S *component);
   void          (*data_move)(struct eolComponent_S *component,eolRect bounds);
   eolBool       (*data_update)(struct eolComponent_S *component);
   eolInt        (*data_get_state)(struct eolComponent_S *component);
@@ -172,9 +180,8 @@ eolInt eol_component_get_state(eolComponent *component);
 /**
  * @brief draws the component to the screen.
  * @param component the component to draw.  Some components may not be drawn by design
- * @param bounds the window bounds that the component belongs to.
  */
-void eol_component_draw(eolComponent *component,eolRect bounds);
+void eol_component_draw(eolComponent *component);
 
 /**
  * @brief updates the draw positioning for the component
@@ -327,6 +334,26 @@ eolComponent *eol_label_new(
   );
 
 /**
+ * @brief creates a new label component using defaults
+ * @param id the id for this component. This should be unique per window.
+ * @param name the name of this component.  This should be unique per window.
+ * @param rect the component position relative to the window bounds
+ * @param bounds the window rect.
+ * @param text the text to display in the label
+ * @param wordWrap if this label should word wrap or not
+ * @return a newly setup label component or NULL on error
+ */
+eolComponent *eol_label_new_default(
+  eolUint        id,
+  eolLine        name,
+  eolRectFloat   rect,
+  eolRect        bounds,
+  char         * text,
+  eolBool        wordWrap
+);
+
+
+/**
  * @brief changes a label's text
  * @param comp the label to change
  * @param text the text to change it to
@@ -339,6 +366,14 @@ void eol_label_set_text(eolComponent *comp,char *text);
  * @param text output, this buffer is filled with the text
  */
 void eol_label_get_text(eolComponent *comp,eolLine text);
+
+/**
+ * @brief gets the dimensions, in pixels of the provided label
+ * @param comp the label to check
+ * @param w output.  the width of the label
+ * @param h output.  the height of the label
+ */
+void eol_label_get_text_size(eolComponent *comp,eolUint *w,eolUint *h);
 
 /**
  * @brief create a label from config data
@@ -459,6 +494,14 @@ void eol_button_set_inactive(eolComponent *button);
 void eol_button_set_active(eolComponent *button);
 
 eolUint eol_button_get_state(eolComponent *button);
+
+/**
+ * @brief gets the dimensions for the provided button
+ * @param button the button to check
+ * @param w output.  if set, it will return the width of the button in pixels
+ * @param h output.  if set, it will return the height of the button in pixels
+ */
+void eol_button_get_size(eolComponent *button,eolUint *w, eolUint *h);
 
 /**
  * @brief gets the dimensions for a stock button
@@ -712,5 +755,27 @@ void eol_component_percent_bar_assign_values(eolComponent *component,eolFloat *m
  * @return NULL on error, or a valid component
  */
 eolComponent * eol_component_make_from_config(eolKeychain *config,eolRect boundingRect);
+
+/**
+ * @brief create a check box component from config
+ * @param def the data describing the check box
+ * @param parentRect the bounding rect of the parent
+ * @return NULL on error, or a valid check box component
+ */
+eolComponent *eol_check_create_from_config(eolKeychain *def,eolRect parentRect);
+
+/**
+ * @brief manually set the state of the check button
+ * @param component the check component
+ * @param state the state to set it too.
+ */
+void eol_component_check_set_state(eolComponent *component,eolInt state);
+
+/**
+ * @brief get the state of the check box
+ * @param component the checkbox component to check
+ * @return a value from eolCheckStates
+ */
+eolInt eol_component_check_get_state(eolComponent *component);
 
 #endif

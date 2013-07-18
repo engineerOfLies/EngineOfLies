@@ -135,6 +135,7 @@ eolTileType *eol_tile_type_load(eolKeychain *tileType)
   eol_keychain_get_hash_value_as_uint(&newTile->footHeight, tileType,"footHeight");
   eol_keychain_get_hash_value_as_orientation(&newTile->ori, tileType,"ori");
   eol_keychain_get_hash_value_as_line(newTile->actorFile, tileType,"actorFile");
+  eol_keychain_get_hash_value_as_bool(&newTile->floorTile, tileType,"floorTile");
   eol_keychain_get_hash_value_as_bool(&newTile->walkBlock, tileType,"walkBlock");
   eol_keychain_get_hash_value_as_bool(&newTile->hitBlock, tileType,"hitBlock");
   eol_keychain_get_hash_value_as_bool(&newTile->sightBlock, tileType,"sightBlock");
@@ -352,6 +353,7 @@ void eol_tile_sync_to_type(eolTileMap *map,eolTile *tile, eolTileType *tileType)
     eol_actor_free(&tile->actor);
   }
   tile->actor = eol_actor_load(tileType->actorFile);
+  tile->floorTile = tileType->floorTile;
   tile->walkBlock = tileType->walkBlock;
   tile->hitBlock = tileType->hitBlock;
   tile->sightBlock = tileType->sightBlock;
@@ -772,6 +774,7 @@ eolKeychain *eol_tile_types_build_keychain(eolTileSet *set)
     eol_keychain_hash_insert(tileItem,"footHeight",eol_keychain_new_uint(tileData->footHeight));
     eol_keychain_hash_insert(tileItem,"ori",eol_keychain_new_orientation(tileData->ori));
     eol_keychain_hash_insert(tileItem,"actorFile",eol_keychain_new_string(tileData->actorFile));
+    eol_keychain_hash_insert(tileItem,"floorTile",eol_keychain_new_bool(tileData->floorTile));
     eol_keychain_hash_insert(tileItem,"walkBlock",eol_keychain_new_bool(tileData->walkBlock));
     eol_keychain_hash_insert(tileItem,"hitBlock",eol_keychain_new_bool(tileData->hitBlock));
     eol_keychain_hash_insert(tileItem,"sightBlock",eol_keychain_new_bool(tileData->sightBlock));
@@ -807,6 +810,7 @@ eolKeychain *eol_tile_layout_build_keychain(GList *tileMap)
     eol_keychain_hash_insert(tileItem,"x",eol_keychain_new_int(tileData->x));
     eol_keychain_hash_insert(tileItem,"y",eol_keychain_new_int(tileData->y));
     eol_keychain_hash_insert(tileItem,"ori",eol_keychain_new_orientation(tileData->ori));
+    eol_keychain_hash_insert(tileItem,"floorTile",eol_keychain_new_bool(tileData->floorTile));
     eol_keychain_hash_insert(tileItem,"walkBlock",eol_keychain_new_bool(tileData->walkBlock));
     eol_keychain_hash_insert(tileItem,"hitBlock",eol_keychain_new_bool(tileData->hitBlock));
     eol_keychain_hash_insert(tileItem,"sightBlock",eol_keychain_new_bool(tileData->sightBlock));
@@ -852,6 +856,7 @@ void eol_tile_map_build_layout_from_definition(eolTileMap *map,eolKeychain *def)
     eol_keychain_get_hash_value_as_int(&tile->x,tileDef,"x");
     eol_keychain_get_hash_value_as_int(&tile->y,tileDef,"y");
     eol_keychain_get_hash_value_as_orientation(&tile->ori,tileDef,"ori");
+    eol_keychain_get_hash_value_as_bool(&tile->floorTile,tileDef,"floorTile");
     eol_keychain_get_hash_value_as_bool(&tile->walkBlock,tileDef,"walkBlock");
     eol_keychain_get_hash_value_as_bool(&tile->hitBlock,tileDef,"hitBlock");
     eol_keychain_get_hash_value_as_bool(&tile->sightBlock,tileDef,"sightBlock");

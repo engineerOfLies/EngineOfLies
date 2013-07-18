@@ -10,7 +10,7 @@
 /*local function prototypes*/
 void eol_component_entry_new(eolComponent *component);
 void eol_component_entry_free(eolComponent *component);
-void eol_component_entry_draw(eolComponent *component, eolRect bounds);
+void eol_component_entry_draw(eolComponent *component);
 eolBool eol_component_entry_update(eolComponent *component);
 
 /*definitions*/
@@ -356,7 +356,7 @@ eolComponent *eol_entry_new(
   return component;
 }
 
-void eol_component_entry_draw(eolComponent *component, eolRect bounds)
+void eol_component_entry_draw(eolComponent *component)
 {
   eolRect r;
   eolText buffer;

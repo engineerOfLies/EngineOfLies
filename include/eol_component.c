@@ -3,6 +3,7 @@
 #include "eol_component_actor.h"
 #include "eol_component_entry.h"
 #include "eol_component_percent_bar.h"
+#include "eol_component_check.h"
 #include "eol_component.h"
 #include "eol_logger.h"
 #include "eol_font.h"
@@ -110,6 +111,7 @@ void eol_component_config()
   {
     eol_label_configure(conf);
     eol_button_configure(conf);
+    eol_check_configure(conf);
     eol_config_get_line_by_tag(buf,conf,"slider_verticle");
     if (strlen(buf) > 0)
     {
@@ -287,7 +289,7 @@ void eol_component_image_free(eolComponent *component)
 */
 
 
-void eol_component_slider_draw(eolComponent *component, eolRect bounds)
+void eol_component_slider_draw(eolComponent *component)
 {
   eolRect r;
   eolVec2D drawPosition;
@@ -341,7 +343,7 @@ void eol_component_slider_draw(eolComponent *component, eolRect bounds)
 }
 
 
-void eol_component_label_draw(eolComponent *component, eolRect bounds)
+void eol_component_label_draw(eolComponent *component)
 {
   eolComponentLabel *label = eol_component_get_label_data(component);
   if (label == NULL)return;
@@ -401,7 +403,7 @@ void eol_component_label_draw(eolComponent *component, eolRect bounds)
   }
 }
 
-void eol_component_draw(eolComponent *component,eolRect bounds)
+void eol_component_draw(eolComponent *component)
 {
   if (!component)return;
   if (component->data_draw == NULL)
@@ -411,7 +413,7 @@ void eol_component_draw(eolComponent *component,eolRect bounds)
   }
   if (!component->hidden)
   {
-    component->data_draw(component,bounds);
+    component->data_draw(component);
   }
 }
 
@@ -601,7 +603,15 @@ void eol_component_make_label(
   if (r.w > component->bounds.w)component->bounds.w = r.w;
   if (r.h > component->bounds.h)component->bounds.h = r.h;
   label->justify = justify;
-  label->fontSize = fontSize;
+  if (label->fontSize == -1)
+  {
+    /*default*/
+    label->fontSize = _eol_component_label_font_size;
+  }
+  else
+  {
+    label->fontSize = fontSize;
+  }
   label->alpha = alpha;
   label->wordWrap = wordWrap;
   eol_vec3d_copy(label->color,color);
@@ -704,6 +714,37 @@ void eol_component_label_new(eolComponent *component)
   }
   memset(component->componentData,0,sizeof(eolComponentLabel));
   component->type = eolLabelComponent;
+}
+
+void eol_label_get_text_size(eolComponent *comp,eolUint *w,eolUint *h)
+{
+  eolRect fontRect = {0,0,0,0};
+  eolComponentLabel * label = NULL;
+  label = eol_component_get_label_data(comp);
+  if (label == NULL)return;
+  if (!label->buffer)return;
+  if (label->font)
+  {
+    fontRect = eol_font_get_bounds_custom(
+      label->buffer->str,
+      label->font
+    );
+  }
+  else
+  {
+    fontRect = eol_font_get_bounds(
+      label->buffer->str,
+      label->fontSize
+    );
+  }
+  if (w)
+  {
+    *w = fontRect.w;
+  }
+  if (h)
+  {
+    *h = fontRect.h;
+  }
 }
 
 void eol_label_get_text(eolComponent *comp,eolLine text)
@@ -902,6 +943,31 @@ eolComponent *eol_slider_create_from_config(eolKeychain *def,eolRect parentRect)
 }
 
 
+eolComponent *eol_label_new_default(
+  eolUint        id,
+  eolLine        name,
+  eolRectFloat   rect,
+  eolRect        bounds,
+  char         * text,
+  eolBool        wordWrap
+)
+{
+  return eol_label_new(
+    id,
+    name,
+    rect,
+    bounds,
+    eolFalse,
+    text,
+    eolJustifyLeft,
+    wordWrap,
+    _eol_component_label_font_size,
+    NULL,
+    _eol_component_label_color,
+    _eol_component_label_alpha
+  );
+}
+
 eolComponent *eol_label_new(
     eolUint        id,
     eolLine        name,
@@ -947,6 +1013,7 @@ eolComponent *eol_label_new(
 void eol_component_label_move(eolComponent *component,eolRect newbounds)
 {
   if (!component)return;
+  eol_rect_copy(&component->canvas,newbounds);
   eol_component_get_rect_from_bounds(&component->bounds,newbounds,component->rect);
 }
 
@@ -1071,6 +1138,10 @@ eolComponent * eol_component_make_from_config(eolKeychain *config,eolRect boundi
   else if (eol_line_cmp(typecheck,"ACTOR") == 0)
   {
     comp = eol_component_actor_create_from_config(config,boundingRect);
+  }
+  else if (eol_line_cmp(typecheck,"CHECK") == 0)
+  {
+    comp = eol_check_create_from_config(config,boundingRect);
   }
   else eol_logger_message(EOL_LOG_WARN,"eol_component: Config component type unsupported");
   if (!comp)return NULL;

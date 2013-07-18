@@ -47,6 +47,7 @@ typedef struct
   eolUint        footHeight;/**<Number of tile spaces high this tile takes up.  Cannot be 0*/
   eolOrientation ori;       /**<default orientation*/
   eolLine        actorFile; /**<filename of the mode file to load.*/
+  eolBool        floorTile; /**<if this tile should be considered a walkable surface*/
   eolBool        walkBlock; /**<if true, this tile type cannot be walked upon*/
   eolBool        hitBlock;  /**<if true this tile type will block weapons and projectiles*/
   eolBool        sightBlock;/**<if true this tile type will block vision*/
@@ -78,6 +79,7 @@ typedef struct
   eolInt           x,y;       /**<which tile space this tile is in.*/
   eolActor       * actor;     /**<the actor holding the tile*/
   eolOrientation   ori;       /**<orientation of THIS tile*/
+  eolBool          floorTile; /**<if this tile should be considered a walkable surface*/
   eolBool          walkBlock; /**<if true, this tile cannot be walked upon*/
   eolBool          hitBlock;  /**<if true this tile will block weapons and projectiles*/
   eolBool          sightBlock;/**<if true this tile will block vision*/
