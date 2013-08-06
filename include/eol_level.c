@@ -250,13 +250,16 @@ void eol_level_delete_layer(eolLevelLayer * level)
 {
   eolBackground *b = NULL;
   GList *s,*e;
+  eolSpawn *spawn;
   if (!level)return;
   
   eol_tile_map_free(&level->tileMap);
   
   for (s = level->spawnList; s != NULL; s = s->next)
   {
-    eol_spawn_free((eolSpawn *)s->data);
+    if (!s->data)continue;
+    spawn = (eolSpawn *)s->data;
+    eol_spawn_free(&spawn);
   }
   s = NULL;
   g_list_free(level->spawnList);

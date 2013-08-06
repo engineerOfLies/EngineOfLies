@@ -1,18 +1,61 @@
 #include "eol_spawn.h"
 #include "eol_logger.h"
+#include "eol_config.h"
 
-eolSpawn *eol_spawn_clone(eolSpawn *in)
+eolSpawn * eol_spawn_new_empty();
+
+void eol_spawn_draw(eolSpawn * spawn)
+{
+  if (!spawn)return;
+  if (!spawn->actor)return;
+  eol_actor_draw_ori(
+    spawn->actor,
+    spawn->ori
+  );
+}
+
+eolSpawn *eol_spawn_clone(eolSpawn *in,eolUint id)
 {
   eolSpawn *out;
   if (!in)return NULL;
-  out = eol_spawn_new();
+  out = eol_spawn_new_empty();
   if (!out)return NULL;
   eol_line_cpy(out->type,in->type);
-  out->id = in->id;
+  out->id = id;
   eol_orientation_copy(&out->ori,in->ori);
   out->keys = eol_keychain_clone(in->keys);
   return out;
 }
+
+GList *eol_spawn_load_from_file(eolLine filename)
+{
+  int i;
+  GList *spawnList = NULL;
+  eolSpawn *spawn;
+  eolKeychain *key,*nth;
+  eolConfig *conf;
+  conf = eol_config_load(filename);
+  if (!conf)return NULL;
+  if (eol_config_get_keychain_by_tag(&key,
+      conf,
+      "spawnList"))
+  {
+    for (i = 0; i < eol_keychain_get_list_count(key);i++)
+    {
+      nth = eol_keychain_get_list_nth(key,i);
+      if (!nth)continue;
+      spawn = eol_spawn_create_from_keychain(nth);
+      if (!spawn)continue;
+      spawnList = g_list_append(spawnList,spawn);
+    }
+    return spawnList;
+  }
+  spawn = eol_spawn_create_from_keychain(key);
+  if (!spawn)return NULL;
+  spawnList = g_list_append(spawnList,spawn);
+  return spawnList;
+}
+
 
 eolKeychain *eol_spawn_build_keychain(eolSpawn *spawn)
 {
@@ -21,25 +64,19 @@ eolKeychain *eol_spawn_build_keychain(eolSpawn *spawn)
   spawnKey = eol_keychain_new_hash();
   if (!spawnKey)return NULL;
   eol_keychain_hash_insert(spawnKey,"type",eol_keychain_new_string(spawn->type));
+  eol_keychain_hash_insert(spawnKey,"actorFile",eol_keychain_new_string(spawn->actorFile));
+  eol_keychain_hash_insert(spawnKey,"bounds",eol_keychain_new_rectf(spawn->bounds));
   eol_keychain_hash_insert(spawnKey,"id",eol_keychain_new_uint(spawn->id));
   eol_keychain_hash_insert(spawnKey,"ori",eol_keychain_new_orientation(spawn->ori));
   eol_keychain_hash_insert(spawnKey,"keys",eol_keychain_clone(spawn->keys));
   return spawnKey;
 }
 
-eolBool eol_spawn_setup(eolSpawn *spawn)
+void eol_spawn_setup(eolSpawn *spawn)
 {
-  if (!spawn)return eolFalse;
-  if (spawn->keys != NULL)return eolFalse;
-  spawn->keys = eol_keychain_new_hash();
-  if (spawn->keys == NULL)
-  {
-    eol_logger_message(
-      EOL_LOG_ERROR,
-      "eol_spawn: failed too allocated spawn key map\n");
-    return eolFalse;
-  }
-  return eolTrue;
+  if (!spawn)return;
+  if (spawn->actor != NULL)return;
+  spawn->actor = eol_actor_load(spawn->actorFile);
 }
 
 eolSpawn *eol_spawn_create_from_keychain(eolKeychain *conf)
@@ -52,10 +89,28 @@ eolSpawn *eol_spawn_create_from_keychain(eolKeychain *conf)
   eol_keychain_get_hash_value_as_orientation(&spawn->ori, conf, "ori");
   eol_keychain_get_hash_value_as_uint(&spawn->id, conf, "id");
   eol_keychain_get_hash_value_as_line(spawn->type, conf, "type");
+  eol_keychain_get_hash_value_as_line(spawn->actorFile, conf, "actorFile");
+  eol_keychain_get_hash_value_as_rectfloat(&spawn->bounds, conf, "bounds");
   return spawn;
 }
 
 eolSpawn * eol_spawn_new()
+{
+  eolSpawn *spawn = eol_spawn_new_empty();
+  if (!spawn)return NULL;
+  spawn->keys = eol_keychain_new_hash();
+  if (spawn->keys == NULL)
+  {
+    eol_logger_message(
+      EOL_LOG_ERROR,
+      "eol_spawn_new: failed to allocated spawn key map\n");
+    eol_spawn_free(&spawn);
+    return NULL;
+  }
+  return spawn;
+}
+
+eolSpawn * eol_spawn_new_empty()
 {
   eolSpawn *spawn = NULL;
   spawn = (eolSpawn *)malloc(sizeof(eolSpawn));
@@ -63,32 +118,30 @@ eolSpawn * eol_spawn_new()
   {
     eol_logger_message(
       EOL_LOG_ERROR,
-      "eol_spawn:failed to allocated a new eolSpawn\n");
+      "eol_spawn_new_empty:failed to allocated a new eolSpawn\n");
     return NULL;
   }
   memset(spawn,0,sizeof(eolSpawn));
-  if (eol_spawn_setup(spawn) == eolFalse)
-  {
-    free(spawn);
-    return NULL;
-  }
+  eol_orientation_clear(&spawn->ori);
   return spawn;
 }
 
-void eol_spawn_delete(eolSpawn **spawn)
+void eol_spawn_free(eolSpawn **spawn)
 {
   if ((!spawn) || (!*spawn))return;
-  eol_spawn_free(*spawn);
-  free(*spawn);
+  eol_spawn_delete(*spawn);
   *spawn = NULL;
 }
 
-void eol_spawn_free(eolSpawn *spawn)
+void eol_spawn_delete(eolSpawn *spawn)
 {
   if (!spawn)return;
-  if (spawn->keys == NULL)return;
-  eol_keychain_destroy(spawn->keys);
-  memset(spawn, 0, sizeof(eolSpawn));
+  if (spawn->keys != NULL)
+  {
+    eol_keychain_destroy(spawn->keys);
+  }
+  eol_actor_free(&spawn->actor);
+  free(spawn);
 }
 
 void eol_spawn_delete_key(eolSpawn *spawn,eolWord key)
