@@ -61,7 +61,10 @@ eolBool eol_window_initialized()
 
 void eol_window_config()
 {
-  /*TODO load from config*/
+  eolConfig *conf = NULL;
+  /*
+   * Defaults
+   */
   _eol_window_max = 16;
   strcpy(_eol_window_sprite_files[0],"images/UI/windowbackground1.png");
   strcpy(_eol_window_sprite_files[1],"images/UI/windowborder_corner_UL.png");
@@ -72,6 +75,24 @@ void eol_window_config()
   strcpy(_eol_window_sprite_files[6],"images/UI/windowborder_vert.png");
   strcpy(_eol_window_sprite_files[7],"images/UI/windowborder_horiz.png");
   strcpy(_eol_window_sprite_files[8],"images/UI/windowborder_vert.png");
+    
+  conf = eol_config_load("system/window.cfg");
+  if (conf == NULL)
+  {
+    /*
+     * no window config
+     */
+      return;
+  }
+  eol_config_get_line_by_tag(_eol_window_sprite_files[0],conf,"window_background");
+  eol_config_get_line_by_tag(_eol_window_sprite_files[1],conf,"window_corner_UL");
+  eol_config_get_line_by_tag(_eol_window_sprite_files[2],conf,"window_corner_UR");
+  eol_config_get_line_by_tag(_eol_window_sprite_files[3],conf,"window_corner_BL");
+  eol_config_get_line_by_tag(_eol_window_sprite_files[4],conf,"window_corner_BR");
+  eol_config_get_line_by_tag(_eol_window_sprite_files[5],conf,"window_edge_left");
+  eol_config_get_line_by_tag(_eol_window_sprite_files[6],conf,"window_edge_top");
+  eol_config_get_line_by_tag(_eol_window_sprite_files[7],conf,"window_edge_right");
+  eol_config_get_line_by_tag(_eol_window_sprite_files[8],conf,"window_edge_bottom");
 }
 
 void eol_window_clean()

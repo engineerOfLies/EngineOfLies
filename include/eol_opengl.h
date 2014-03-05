@@ -675,7 +675,7 @@ typedef void (APIENTRY * PFNGLLINKPROGRAMPROC) (GLuint program);
 #if GL_GLEXT_VERSION==85
 typedef void (APIENTRYP PFNGLSHADERSOURCEPROC) (GLuint shader, GLsizei count, const GLchar* const *string, const GLint *length);
 #else
-typedef void (APIENTRY * PFNGLSHADERSOURCEPROC) (GLuint shader, GLsizei count, const GLchar* *string, const GLint *length);
+/*typedef void (APIENTRY * PFNGLSHADERSOURCEPROC) (GLuint shader, GLsizei count, const GLchar* *string, const GLint *length);*/
 #endif
 typedef void (APIENTRY * PFNGLUSEPROGRAMPROC) (GLuint program);
 typedef void (APIENTRY * PFNGLUNIFORM1FPROC) (GLint location, GLfloat v0);

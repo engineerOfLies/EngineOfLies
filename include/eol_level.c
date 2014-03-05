@@ -3,6 +3,7 @@
 #include "eol_logger.h"
 #include "eol_resource.h"
 #include "eol_config.h"
+#include "eol_mouse.h"
 
 /*local global variables*/
 eolBool     _eol_level_initialized = eolFalse;
@@ -98,6 +99,118 @@ void eol_level_setup(eolLevel *level)
   }
 }
 
+void eol_level_add_spawn_to_layer_n(
+  eolLevel *level,
+  eolUint   n,
+  eolSpawn *spawnTemplate,
+  eolVec3D position)
+{
+  eol_level_add_spawn_to_layer(
+    level,
+    eol_level_get_layer_n(level,n),
+    spawnTemplate,
+    position);
+}
+
+void eol_level_add_spawn_to_layer(
+  eolLevel *level,
+  eolLevelLayer *layer,
+  eolSpawn *spawnTemplate,
+  eolVec3D position)
+{
+  if ((!level)||(!layer)||(!spawnTemplate))return;
+  eol_level_layer_add_spawn(
+    layer,
+    spawnTemplate,
+    position,
+    eol_level_get_new_spawn_id(level)
+  );
+}
+
+eolBool eol_level_layer_get_mouse_point(eolVec3D *point,eolLevelLayer *layer)
+{
+  eolQuad3D quad;
+  eolVec3D mousePosition;
+  if (!point)return eolFalse;
+  if (!layer)return eolFalse;
+  quad = eol_level_layer_get_bounding_quad_transformed(layer);
+  
+  if (!eol_mouse_get_quad3d_intersect(&mousePosition,quad))
+  {
+    return eolFalse;
+  }  
+  eol_3d_op_transform_vec3d_inverse_by_ori(point, mousePosition,layer->ori);
+  
+  return eolTrue;
+}
+
+eolQuad3D eol_level_layer_get_bounding_quad_transformed(eolLevelLayer *layer)
+{
+  eolQuad3D quad =
+  {
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+    {0,0,0}
+  };
+  if (!layer)return quad;
+  quad = eol_level_layer_get_bounding_quad(layer);
+  eol_3d_op_transform_quad_by_ori(&quad, quad,layer->ori);
+  return quad;
+}
+
+eolQuad3D eol_level_layer_get_bounding_quad(eolLevelLayer *layer)
+{
+  eolQuad3D quad =
+  {
+    {0,0,0},
+    {0,0,0},
+    {0,0,0},
+    {0,0,0}
+  };
+  if (!layer)
+  {
+    eol_logger_message(
+      EOL_LOG_WARN,
+      "eol_level_layer_get_bounding_quad: passed a bad layer"
+    );
+    return quad;
+  }
+  quad.t1.x = layer->bounds.x;
+  quad.t1.y = layer->bounds.y;
+
+  quad.t2.x = layer->bounds.x + layer->bounds.w;
+  quad.t2.y = layer->bounds.y;
+  
+  quad.t3.x = layer->bounds.x + layer->bounds.w;
+  quad.t3.y = layer->bounds.y + layer->bounds.h;
+
+  quad.t4.x = layer->bounds.x;
+  quad.t4.y = layer->bounds.y + layer->bounds.h;
+
+  return quad;
+}
+
+
+eolUint eol_level_get_new_spawn_id(eolLevel *level)
+{
+  if (!level)return 0;
+  return ++level->spawnPool;
+}
+
+void eol_level_layer_add_spawn(
+  eolLevelLayer *layer,
+  eolSpawn *spawnTemplate,
+  eolVec3D  position,
+  eolUint   id
+)
+{
+  eolSpawn *spawn = NULL;
+  if (!layer)return;
+  if (!spawnTemplate)return;
+  spawn = eol_spawn_clone(spawnTemplate,id);
+  eol_spawn_move(spawn, position);
+}
 
 void eol_level_init()
 {
@@ -629,6 +742,7 @@ eolLevel *eol_level_load(char *filename)
   /*parse it*/
   eol_config_get_line_by_tag(level->idName,conf,"idName");
   eol_config_get_uint_by_tag(&level->layerCount,conf,"layerCount");
+  eol_config_get_uint_by_tag(&level->spawnPool,conf,"spawnPool");
   eol_config_get_uint_by_tag(&level->active,conf,"active");
   eol_config_get_float_by_tag(&level->cameraDist,conf,"cameraDist");
   if (eol_config_get_keychain_by_tag(&keys,conf,"tileSet"))
@@ -754,6 +868,7 @@ eolBool eol_level_build_save_keychain(eolLevel *level,eolKeychain *keys)
   if ((!level)||(!keys))return eolFalse;
   eol_keychain_hash_insert(keys,"idName",eol_keychain_new_string(level->idName));
   eol_keychain_hash_insert(keys,"layerCount",eol_keychain_new_uint(level->layerCount));
+  eol_keychain_hash_insert(keys,"spawnPool",eol_keychain_new_uint(level->spawnPool));
   eol_keychain_hash_insert(keys,"active",eol_keychain_new_uint(level->active));
   eol_keychain_hash_insert(keys,"cameraDist",eol_keychain_new_float(level->cameraDist));
   key = eol_keychain_clone(level->keys);

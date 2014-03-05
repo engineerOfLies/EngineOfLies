@@ -4,6 +4,12 @@
 
 eolSpawn * eol_spawn_new_empty();
 
+void eol_spawn_move(eolSpawn * spawn, eolVec3D position)
+{
+  if (!spawn)return;
+  eol_vec3d_copy(spawn->ori.position,position);
+}
+
 void eol_spawn_draw(eolSpawn * spawn)
 {
   if (!spawn)return;

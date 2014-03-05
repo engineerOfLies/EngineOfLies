@@ -41,6 +41,13 @@ typedef struct
 }eolSpawn;
 
 /**
+ * @brief move a spawn to a new position
+ * @param spawn the spawn to move
+ * @param position the position to move to
+ */
+void eol_spawn_move(eolSpawn * spawn, eolVec3D position);
+
+/**
  * @brief draws the spawn actor.  Used for editors, not live games
  * @param spawn the spawn to load, an actor must have been loaded
  */

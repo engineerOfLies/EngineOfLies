@@ -75,7 +75,7 @@ eolComponent *eol_actor_component_new(
 
   if (!actor->actor)
   {
-    eol_logger_message(EOL_LOG_WARN,"failed to load actor for component: %s",actorFile);
+    eol_logger_message(EOL_LOG_WARN,"eol_actor_component_new: failed to load actor for component: %s",actorFile);
   }
   eol_component_actor_move(component,bounds);
   
@@ -128,7 +128,7 @@ void eol_component_actor_move(eolComponent *component,eolRect newbounds)
     }
     else
     {
-      eol_logger_message(EOL_LOG_WARN,"actor with 0 scaleFactor");
+      eol_logger_message(EOL_LOG_WARN,"eol_component_actor_move: actor %s with 0 scaleFactor",actor->actor->name);
     }
   }
   /*set model potion to the center of the bounds in 3d space*/
@@ -181,7 +181,7 @@ void eol_component_actor_new(eolComponent *component)
   {
     eol_logger_message(
       EOL_LOG_WARN,
-      "eol_component_actor_new:tried to make an actor out of an existing component\n");
+      "eol_component_actor_new: tried to make an actor out of an existing component\n");
     return;
   }
   component->componentData = malloc(sizeof(eolComponentActor));

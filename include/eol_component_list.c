@@ -185,11 +185,11 @@ void eol_component_list_free(eolComponent *component)
 eolBool eol_list_item_bound_check(eolComponentList *list,eolRect item)
 {
   eolRect b;
-  b.x = list->itemBounds.x + list->displayItems.x;
-  b.y = list->itemBounds.y + list->displayItems.y;
-  b.w = list->itemBounds.w - (list->displayItems.x * 2);
-  b.h = list->itemBounds.h - (list->displayItems.y * 2);
-  return (eol_rect_lap_rect(b, item));
+  b.x = list->itemBounds.x;
+  b.y = list->itemBounds.y;
+  b.w = list->itemBounds.w;
+  b.h = list->itemBounds.h;
+  return eol_rect_in_rect(b, item);
 }
 
 void eol_component_list_draw(eolComponent *component)
@@ -237,11 +237,11 @@ void eol_component_list_draw(eolComponent *component)
   {
     eol_draw_rect(r,eol_vec3d(1,1,1),1);
   }
-  if ((list->showVSlider) && (scaleArea.y > 1))
+  if ((list->showVSlider) && (fabs(scaleArea.y) > 1))
   {
     eol_component_draw(list->vSlider);
   }
-  if ((list->showHSlider) && (scaleArea.x > 1))
+  if ((list->showHSlider) && (fabs(scaleArea.x) > 1))
   {
     eol_component_draw(list->hSlider);
   }
@@ -264,26 +264,26 @@ eolBool eol_component_list_update(eolComponent *component)
   }
   /*Update Sliders if visible*/
   scaleArea = eol_component_list_scaleable_area(list);
-  if ((list->showVSlider) && (scaleArea.y > 1))
+  if ((list->showVSlider) && (fabs(scaleArea.y) > 1))
   {
     if (eol_component_update(list->vSlider))
     {
       updated = eolTrue;
       slide = eol_slider_get_position(list->vSlider);
-      list->topOffset.y = -(scaleArea.y * slide);
+      list->topOffset.y = (scaleArea.y * slide);
     }
     slide = eol_slider_get_position(list->vSlider);
-    list->topOffset.y = -(scaleArea.y * slide);
+    list->topOffset.y = (scaleArea.y * slide);
   }
   slide = 0;
-  if ((list->showHSlider) && (scaleArea.x > 1))
+  if ((list->showHSlider) && (fabs(scaleArea.x) > 1))
   {
     if (eol_component_update(list->hSlider) || updated)
     {
       updated = eolTrue;
     }
     slide = eol_slider_get_position(list->hSlider);
-    list->topOffset.x = -(scaleArea.x * slide);
+    list->topOffset.x = (scaleArea.x * slide);
   }
   /*iterate through glist and update elements*/
   for (c = list->itemList;c != NULL; c= c->next)
@@ -681,8 +681,8 @@ eolVec2D eol_component_list_get_total_area(eolComponentList *list)
   {
     rows = list->itemCount;
   }
-  area.x = (list->displayItems.x + list->itemPadding.x) * cols;
-  area.y = (list->displayItems.y + list->itemPadding.y) * rows;
+  area.x = (list->displayItems.x) * cols;
+  area.y = (list->displayItems.y) * rows;
   return area;
 }
 
