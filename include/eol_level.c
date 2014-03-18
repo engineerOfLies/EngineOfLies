@@ -37,6 +37,27 @@ void eol_level_clear_layer_space(eolLevelLayer *layer);
 void eol_level_delete_layer(eolLevelLayer * level);
 /*function definitions*/
 
+eolFloat eol_level_clip_step()
+{
+  return _eol_level_clip_step;
+}
+
+eolUint eol_level_clip_iterations()
+{
+  return _eol_level_clip_iterations;
+}
+
+eolFloat eol_level_slop()
+{
+  return _eol_level_slop;
+}
+
+eolFloat eol_level_bias()
+{
+  return _eol_level_bias;
+}
+
+
 void eol_level_enable_background_draw(eolBool enable)
 {
   _eol_level_draw_backgrounds = enable;

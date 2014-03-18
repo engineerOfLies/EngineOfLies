@@ -81,6 +81,8 @@ void eol_draw_tri_3D(eolVec3D p1,
  */
 void eol_draw_rect_3D(eolRectFloat rect, eolUint radius, eolOrientation ori);
 
+void eol_draw_rect_3D_solid(eolRectFloat rect, eolUint radius, eolOrientation ori);
+
 /**
  * @brief draws a rectangle on the screen in 2D space
  * @param rect the defined rectangle to draw

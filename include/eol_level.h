@@ -136,6 +136,14 @@ void eol_level_config();
 void eol_level_clear();
 
 /**
+ * @brief get level config parameters
+ */
+eolFloat eol_level_clip_step();
+eolUint eol_level_clip_iterations();
+eolFloat eol_level_slop();
+eolFloat eol_level_bias();
+
+/**
  * @brief enable / disable drawing of backgrounds
  * NOTE: does not apply to backgrounds used as masks
  * @param enable set to true to turn it on, false to turn it off
@@ -375,7 +383,29 @@ void eol_level_set_current_level(eolLevel *level);
  */
 void eol_level_update_active();
 
+/**
+ * @brief adds the loaded level mask model into the collision space as collision mask
+ * 
+ * @param layer the layer to alter
+ */
 void eol_level_add_mask_to_space(eolLevelLayer *layer);
+
+/**
+ * @brief adds a static line segment to the provide colllision space
+ * 
+ * @param sx the starting point x coordinate
+ * @param sy the starting point y coordinate
+ * @param ex the ending point x coordinate
+ * @param ey the ending point y coordinate
+ * @param space the collision space to update
+ * @return the cp shape of the added line
+ */
+cpShape *eol_level_add_segment_to_space(eolFloat sx,
+                                        eolFloat sy,
+                                        eolFloat ex,
+                                        eolFloat ey,
+                                        cpSpace *space);
+
 /*
  * *** Tiles ***
  */
