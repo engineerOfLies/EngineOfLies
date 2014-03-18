@@ -672,10 +672,8 @@ typedef GLboolean (APIENTRY * PFNGLISPROGRAMPROC) (GLuint program);
 typedef GLboolean (APIENTRY * PFNGLISSHADERPROC) (GLuint shader);
 typedef void (APIENTRY * PFNGLLINKPROGRAMPROC) (GLuint program);
 /* Newer GLEXT hack */
-#if GL_GLEXT_VERSION==85
+#if GL_GLEXT_VERSION!=85
 typedef void (APIENTRYP PFNGLSHADERSOURCEPROC) (GLuint shader, GLsizei count, const GLchar* const *string, const GLint *length);
-#else
-typedef void (APIENTRY * PFNGLSHADERSOURCEPROC) (GLuint shader, GLsizei count, const GLchar* *string, const GLint *length);
 #endif
 typedef void (APIENTRY * PFNGLUSEPROGRAMPROC) (GLuint program);
 typedef void (APIENTRY * PFNGLUNIFORM1FPROC) (GLint location, GLfloat v0);
