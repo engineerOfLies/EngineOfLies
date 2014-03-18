@@ -99,5 +99,13 @@ void eol_particle_make_point(eolVec3D position,
                              eolFloat alpha,
                              eolUint  lifetime);
 
+void eol_particle_make_trail(eolVec3D position,
+                             eolVec3D velocity,
+                             eolVec3D accel,
+                             eolFloat radius,
+                             eolVec3D color,
+                             eolFloat alpha,
+                             eolUint  lifetime);
+
 
 #endif

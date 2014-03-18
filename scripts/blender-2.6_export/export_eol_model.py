@@ -162,7 +162,7 @@ def write_file(filepath, objects, scene,
                 faceuv = False
 
             me_verts = me.vertices[:]
-
+                        
             # Make our own list so it can be sorted to reduce context switching
             face_index_pairs = [(face, index) for index, face in enumerate(me.faces)]
             # faces = [ f for f in me.faces ]

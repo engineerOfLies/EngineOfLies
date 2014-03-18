@@ -39,6 +39,8 @@ typedef struct
   eolComponent *checkButton;    /**<the button to show when checked*/
   eolComponent *uncheckButton;  /**<the button to show when unchecked*/  
   eolComponent *label;          /**<the Label Component*/
+  eolUint       hotkey;         /**<if defined, the input will operate as a hotkey*/
+  eolUint       hotkeymod;      /**<if defined, the input will operate as a hotkey only if this mod is held as well*/
   eolBool       drawLabel;      /**<if true, draw the label, don't otherwise*/
   eolBool       leftAlign;      /**<if left justified, button will be placed at the left end of area*/
   eolBool       packed;         /**<if packed, extra space is ignored and label and button will touch*/

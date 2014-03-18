@@ -219,6 +219,14 @@ void eol_rectf_set(
  */
 eolBool eol_rect_lap_rect(eolRect a, eolRect b);
 
+/**
+ * @brief checks if the second rect is inside the first rect.
+ * @param a outer rect
+ * @param b inner rect
+ * @return eolTrue if b is contained by a, eolFalse if any part of b lies outside of a
+ */
+eolBool eol_rect_in_rect(eolRect a, eolRect b);
+
 /*
  * The Vector Types
  * Not to be confused with the vector lists from STL

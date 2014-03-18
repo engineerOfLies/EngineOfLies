@@ -24,7 +24,7 @@ eolFloat    _eol_component_button_alpha = 1;
 eolBool     _eol_component_button_press_active = eolFalse;
 eolBool     _eol_component_button_hold_active = eolFalse;
 eolBool     _eol_component_button_release_active = eolTrue;
-
+eolInt      _eol_component_button_font_size = 3;
 /*function definitions*/
 
 void eol_button_configure(eolConfig *conf)
@@ -36,6 +36,7 @@ void eol_button_configure(eolConfig *conf)
   _eol_component_button_press_active = eolFalse;
   _eol_component_button_hold_active = eolFalse;
   _eol_component_button_release_active = eolTrue;
+  _eol_component_button_font_size = 3;
   eol_vec3d_set(_eol_component_button_color[0],0.8,0.8,0.8);
   eol_vec3d_set(_eol_component_button_color[1],1,1,0);
   eol_vec3d_set(_eol_component_button_color[2],0.6,0.6,0.6);
@@ -80,6 +81,7 @@ void eol_button_configure(eolConfig *conf)
     eol_config_get_vec3d_by_tag(&_eol_component_button_color[3],conf,"button_sleep_text_color");
     eol_config_get_bool_by_tag(&_eol_component_button_text_outline,conf,"button_text_outline");
     eol_config_get_float_by_tag(&_eol_component_button_alpha,conf,"button_alpha");
+    eol_config_get_int_by_tag(&_eol_component_button_font_size,conf,"button_font_size");
   }
   _eol_component_stock_button[0] = eol_sprite_load(buttonfile,-1,-1);
   _eol_component_stock_button[1] = eol_sprite_load(buttonhighfile,-1,-1);
@@ -632,7 +634,7 @@ eolComponent *eol_component_button_load(eolRect winrect,eolKeychain *def)
   eolComponent *comp = NULL;
   eolLine buttonType;
   eolUint id;
-  eolUint fontSize = 3;
+  eolUint fontSize = _eol_component_button_font_size;
   eolRectFloat rect;
   eolLine justify = "NONE";
   eolLine buttonText;

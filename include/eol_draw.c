@@ -232,6 +232,45 @@ void eol_draw_tri_3D(eolVec3D p1,
 }
 
 
+void eol_draw_rect_3D_solid(eolRectFloat rect, eolUint radius, eolOrientation ori)
+{
+  glDisable(GL_DEPTH_TEST);
+  glEnable(GL_COLOR_MATERIAL);
+  glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_BLEND);
+  glColor4f(ori.color.x,ori.color.y,ori.color.z,ori.alpha);
+  glPushMatrix();
+  glLineWidth(1 + radius);
+  glTranslatef(ori.position.x,ori.position.y,ori.position.z);
+  glRotatef(ori.rotation.x, 1.0f, 0.0f, 0.0f);
+  glRotatef(ori.rotation.y, 0.0f, 1.0f, 0.0f);
+  glRotatef(ori.rotation.z, 0.0f, 0.0f, 1.0f);
+  glScalef(ori.scale.x,ori.scale.y,ori.scale.z);
+  
+  
+  glBegin( GL_QUADS );
+  
+  glVertex3f(rect.x,rect.y,0);
+  glVertex3f(rect.x + rect.w,rect.y,0);
+  
+  glVertex3f(rect.x + rect.w,rect.y,0);
+  glVertex3f(rect.x + rect.w,rect.y + rect.h,0);
+  
+  glVertex3f(rect.x + rect.w,rect.y + rect.h,0);
+  glVertex3f(rect.x,rect.y + rect.h,0);
+  
+  glVertex3f(rect.x,rect.y + rect.h,0);
+  glVertex3f(rect.x,rect.y,0);
+  glEnd( );
+  
+  glPopMatrix();
+  glLineWidth(1);
+  glColor4f(1,1,1,1);
+  glDisable(GL_BLEND);
+  glDisable(GL_COLOR_MATERIAL);
+  glEnable(GL_DEPTH_TEST);
+}
+
 void eol_draw_rect_3D(eolRectFloat rect, eolUint radius, eolOrientation ori)
 {
   glDisable(GL_DEPTH_TEST);
@@ -249,7 +288,8 @@ void eol_draw_rect_3D(eolRectFloat rect, eolUint radius, eolOrientation ori)
   
   
   glBegin( GL_LINES );
-
+  glDepthFunc(GL_LEQUAL);
+  
   glVertex3f(rect.x,rect.y,0);
   glVertex3f(rect.x + rect.w,rect.y,0);
   

@@ -678,6 +678,14 @@ void eol_rect_copy(
   d->h = s.h;
 }
 
+eolBool eol_rect_in_rect(eolRect a, eolRect b)
+{
+  if (((b.x >= a.x)&&(b.x + b.w <= a.x + a.w)
+    && (b.y >= a.y)&&(b.y + b.h <= a.y + a.h)))
+    return eolTrue;
+  return eolFalse;
+}
+
 eolBool eol_rect_lap_rect(eolRect a, eolRect b)
 {
   if ((a.x > (b.x + b.w)) || (a.y > (b.y + b.h)) || (b.x > (a.x + a.w)) || (b.y > (a.y + a.h)))

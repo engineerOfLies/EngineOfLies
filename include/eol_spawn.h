@@ -19,6 +19,7 @@
 */
 #include "eol_types.h"
 #include "eol_keychain.h"
+#include "eol_actor.h"
 
 /**
  * @brief the spawn type is used as a descriptor for the level for the entities that
@@ -31,10 +32,26 @@
 typedef struct
 {
   eolLine type;       /**<name of the spawn type, ie: play_start, exit, arrow_trap*/
+  eolRectFloat bounds;/**<bounding rect for spawn placement*/
   eolUint id;         /**<idintifier inuque to the level*/
   eolOrientation ori; /**<orientation of the spawn*/
+  eolLine actorFile;  /**<the file to use for the editor graphic*/
+  eolActor *actor;    /**<the actor loaded during editing.  For live play, the entity will handle it*/
   eolKeychain *keys;  /**<definition of all keys for this spawn*/
 }eolSpawn;
+
+/**
+ * @brief move a spawn to a new position
+ * @param spawn the spawn to move
+ * @param position the position to move to
+ */
+void eol_spawn_move(eolSpawn * spawn, eolVec3D position);
+
+/**
+ * @brief draws the spawn actor.  Used for editors, not live games
+ * @param spawn the spawn to load, an actor must have been loaded
+ */
+void eol_spawn_draw(eolSpawn * spawn);
 
 /**
  * @brief allocates and returns an eolSpawn.  Not necessary if using a declared spawn.
@@ -43,25 +60,24 @@ typedef struct
 eolSpawn * eol_spawn_new();
 
 /**
- * @brief sets up a previously allocated eolSpawn.  Allocated internal memory.
+ * @brief loads assets for a previously loaded spawn.  If the assets have already been loaded
+ * this will be a no-op.
  * @param spawn a pointer to the address of the spawn to be set up
- * @return eolTrue on success or eolFalse if it has already been set up or error.
  */
-eolBool eol_spawn_setup(eolSpawn *spawn);
+void eol_spawn_setup(eolSpawn *spawn);
 
 /**
-* @brief frees up internally allocated memory, including the Spawn itself.
+* @brief deletes the spawn and sets the pointer passed to NULL.
 * @param spawn a pointer tmodelFileo a pointer to the spawn to be deleted.  After call 
 * the pointer will be set to NULL
 */
-void eol_spawn_delete(eolSpawn **spawn);
+void eol_spawn_free(eolSpawn **spawn);
 
 /**
- * @brief frees up internally allocated memory, but does not free the eolSpawn itself.
- * after a call to this, it can be freed with free();
+ * @brief cleans up the spawn and then deletes it, the pointer will no longer be valid after this call.
  * @param spawn pointer to the spawn to be cleared.
  */
-void eol_spawn_free(eolSpawn *spawn);
+void eol_spawn_delete(eolSpawn *spawn);
 
 /**
  * @brief adds a key to the spawn keys.  If key already exists, it will overwrite.
@@ -138,10 +154,19 @@ eolKeychain *eol_spawn_build_keychain(eolSpawn *spawn);
 eolSpawn *eol_spawn_create_from_keychain(eolKeychain *conf);
 
 /**
+ * @brief load a spawn or a list of spawn candidates from a file.
+ * note: if the file contains "spawnList:" it will be treated as a list
+ * @param filename the file to load
+ * @return a GLIST of loaded spawns or NULL on error or empty
+ */
+GList *eol_spawn_load_from_file(eolLine filename);
+
+/**
  * @brief copies the data from one spawn to another;
  * @param in the spawn that will copied.
+ * @param id a unique id for this spawn
  * @return NULL on error or a duplicated spawn
  */
-eolSpawn *eol_spawn_clone(eolSpawn *in);
+eolSpawn *eol_spawn_clone(eolSpawn *in,eolUint id);
 
 #endif

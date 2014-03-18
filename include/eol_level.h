@@ -112,6 +112,7 @@ typedef struct
   eolUint         layerCount; /**<how many layers the level contains*/
   eolUint         active;     /**<the layer that is active*/
   eolFloat        cameraDist; /**<Camera follow distance*/
+  eolUint         spawnPool;  /**<spawn unique index pool*/
   eolKeychain   * keys;       /**<level configuration keys*/
   GList         * layers;     /**<the allocated list of level layers*/
   eolTileSet    * tileSet;    /**<the set of eolTiles that can be in the level  References layer tiles, do not edit*/
@@ -133,6 +134,14 @@ void eol_level_config();
  * @brief frees all loaded level data.
  */
 void eol_level_clear();
+
+/**
+ * @brief get level config parameters
+ */
+eolFloat eol_level_clip_step();
+eolUint eol_level_clip_iterations();
+eolFloat eol_level_slop();
+eolFloat eol_level_bias();
 
 /**
  * @brief enable / disable drawing of backgrounds
@@ -219,6 +228,32 @@ eolLevelLayer *eol_level_get_layer_n(eolLevel *level,eolUint n);
  * @param hide if true, set the layer to hidden, false to unhide
  */
 void eol_level_hide_layer(eolLevel *level, eolUint n, eolBool hide);
+
+/**
+ * @brief gets the layer bounding quad in 3d space.
+ * 
+ * @param layer the owning layer
+ * @return the quad in 3d of the level bounds.  
+ */
+eolQuad3D eol_level_layer_get_bounding_quad(eolLevelLayer *layer);
+
+/**
+ * @brief gets the layer bounding quad in 3d space transformed as per layer's orientation
+ *
+ * @param layer the owning layer
+ * @return the quad in 3d of the level bounds rotated, moved and scaled
+ */
+eolQuad3D eol_level_layer_get_bounding_quad_transformed(eolLevelLayer *layer);
+
+/**
+ * @brief gets the point that the mouse is directly over in the layer plane.
+ * 
+ * @param point output. The point the mouse intersects with the layer plane.
+ * @param layer the layer to check against
+ * @return eolTrue if point was set, eolFalse on error or if mouse is outside the bounds
+ * of the layer.
+ */
+eolBool eol_level_layer_get_mouse_point(eolVec3D *point,eolLevelLayer *layer);
 
 /*background editing*/
 
@@ -348,7 +383,29 @@ void eol_level_set_current_level(eolLevel *level);
  */
 void eol_level_update_active();
 
+/**
+ * @brief adds the loaded level mask model into the collision space as collision mask
+ * 
+ * @param layer the layer to alter
+ */
 void eol_level_add_mask_to_space(eolLevelLayer *layer);
+
+/**
+ * @brief adds a static line segment to the provide colllision space
+ * 
+ * @param sx the starting point x coordinate
+ * @param sy the starting point y coordinate
+ * @param ex the ending point x coordinate
+ * @param ey the ending point y coordinate
+ * @param space the collision space to update
+ * @return the cp shape of the added line
+ */
+cpShape *eol_level_add_segment_to_space(eolFloat sx,
+                                        eolFloat sy,
+                                        eolFloat ex,
+                                        eolFloat ey,
+                                        cpSpace *space);
+
 /*
  * *** Tiles ***
  */
@@ -425,6 +482,57 @@ eolUint eol_level_get_tile_set_count(eolLevel *level);
  */
 eolBool eol_level_get_layer_tilexy_by_mouse(eolLevelLayer *layer, eolUint *x, eolUint *y);
 
+/*
+
+  Spawn
+
+ */
+
+/**
+ * @brief add a new spawn to a level layer
+ * @param layer the layer to add the spawn too
+ * @param spawnTemplate the spawn candidate to base the new spawn on
+ * @param position the position of the spawn candidate
+ */
+void eol_level_layer_add_spawn(
+  eolLevelLayer *layer,
+  eolSpawn *spawnTemplate,
+  eolVec3D  position,
+  eolUint   id
+);
+
+/**
+ * @brief gets a unique spawn id for the level
+ * @param level the level to get an ID for
+ * @return 0 on error or any other number is a unique id for this level
+ */
+eolUint eol_level_get_new_spawn_id(eolLevel *level);
+
+/**
+ * @brief adds a new spawn to a provided level layer
+ * @param level the level to add a spawn to
+ * @param layer the layer of the level to add the spawn to
+ * @param spawnTemplate the spawn candidate to use as the template
+ * @param position where in the level layer to add the spawn to
+ */
+void eol_level_add_spawn_to_layer(
+  eolLevel *level,
+  eolLevelLayer *layer,
+  eolSpawn *spawnTemplate,
+  eolVec3D position);
+
+/**
+ * @brief adds a new spawn to a provided level layer by index
+ * @param level the level to add a spawn to
+ * @param n the nth layer gets the spawn
+ * @param spawnTemplate the spawn candidate to use as the template
+ * @param position where in the level layer to add the spawn to
+ */
+void eol_level_add_spawn_to_layer_n(
+  eolLevel *level,
+  eolUint   n,
+  eolSpawn *spawnTemplate,
+  eolVec3D position);
 
 /*
   *** ENTITY ***

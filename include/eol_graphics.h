@@ -238,7 +238,7 @@ void eol_graphics_get_view(eolGraphicsView *view);
 eolUint eol_graphics_get_now();
 
 /**
- * @brief retrieves the current graphics frame time index
+ * @brief retrieves the current screen resolution
  * @param w the output width of the view screen
  * @param h the output height of the view screen
  */

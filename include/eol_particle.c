@@ -221,4 +221,26 @@ void eol_particle_make_point(eolVec3D position,
   part->lifetime = lifetime;
   part->type = eolParticlePoint;
 }
+
+void eol_particle_make_trail(eolVec3D position,
+                             eolVec3D velocity,
+                             eolVec3D accel,
+                             eolFloat radius,
+                             eolVec3D color,
+                             eolFloat alpha,
+                             eolUint  lifetime)
+{
+  eolParticle *part;
+  part = eol_particle_new();
+  if (part == NULL)return;
+  eol_vec3d_copy(part->ori.position,position);
+  eol_vec3d_copy(part->vector.position,velocity);
+  eol_vec3d_copy(part->accel.position,accel);
+  eol_vec3d_copy(part->ori.color,color);
+  part->radius = radius;
+  part->ori.alpha = alpha;
+  part->lifetime = lifetime;
+  part->type = eolParticleTrail;
+}
+
 /*eol@eof*/

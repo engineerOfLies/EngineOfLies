@@ -444,4 +444,17 @@ eolWindow *eol_dialog_text_prompt(char *output,
   return win;
 }
 
+void eol_dialog_file_selector(eolLine title,
+                              eolLine confirmText,
+                              eolLine cancelText,
+                              eolLine startPath,
+                              eolLine filter,
+                              eolBool selectPath,
+                              char *output,
+                              void *data,
+                              eolWindowCallback onSelection)
+{
+  
+}
+
 /*eol@eof*/

@@ -3,6 +3,7 @@
 #include "eol_draw.h"
 #include "eol_font.h"
 #include "eol_mouse.h"
+#include "eol_input.h"
 
 /*local function prototypes*/
 void eol_component_check_new(eolComponent *component);
@@ -396,6 +397,10 @@ eolComponent *eol_check_create_from_config(eolKeychain *def,eolRect parentRect)
   eolLine       checkText = "checked";
   eolLine       uncheckText = "unchecked";
   eolLine       stateText = "";
+  eolLine       hotkey = "";
+  eolLine       hotmod = "";
+  eolInt        hotkeybutton = 0;
+  eolInt        hotkeymodbutton = 0;
   eolInt        state = eolCheckUnchecked;
   eolComponent *checkButton= NULL;
   eolComponent *uncheckButton= NULL;
@@ -417,6 +422,14 @@ eolComponent *eol_check_create_from_config(eolKeychain *def,eolRect parentRect)
   if (eol_keychain_get_hash_value_as_line(stateText, def, "state"))
   {
     state = eol_check_get_state_by_line(stateText);
+  }
+  if (eol_keychain_get_hash_value_as_line(hotkey, def, "hotkey"))
+  {
+    hotkeybutton = eol_input_parse("key", hotkey);
+  }
+  if (eol_keychain_get_hash_value_as_line(hotmod, def, "hotkeymod"))
+  {
+    hotkeymodbutton = eol_input_parse("mod",hotmod);
   }
   
   key = eol_keychain_get_hash_value(def,"checkButton");
@@ -463,6 +476,9 @@ eolComponent *eol_check_create_from_config(eolKeychain *def,eolRect parentRect)
     eol_component_free(&label);
     return NULL;
   }
+
+  check->hotkey = hotkeybutton;
+  check->hotkeymod = hotkeymodbutton;
   
   return checkbox;
 }

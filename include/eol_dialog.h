@@ -80,4 +80,27 @@ void eol_dialog_yes_no(eolLine question,
  */
 void eol_dialog_quit();
 
+/**
+ * @brief pops up a dialog that displays a file system browser to select a file or path
+ *
+ * @param title the title to be displayed on the window
+ * @param confirmText the text to display on the OK button
+ * @param cancelText the text to display on the cancel button
+ * @param startPath the starting path to search, if this contains a file, it will be selected to start
+ * @param fileter empty or * means no filter, otherwise comma separated extentions to filter for
+ * @param output a pointer to an eolLine (should be in the data) that will be written to on selection
+ * @param data user defined data to be passed to the callback
+ * @param onSelection Called if the user selects a file
+ */
+void eol_dialog_file_selector(eolLine title,
+                              eolLine confirmText,
+                              eolLine cancelText,
+                              eolLine startPath,
+                              eolLine filter,
+                              eolBool selectPath,
+                              char *output,
+                              void *data,
+                              eolWindowCallback onSelection
+                             );
+
 #endif

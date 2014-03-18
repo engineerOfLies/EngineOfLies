@@ -20,6 +20,16 @@
 
 # <pep8-80 compliant>
 
+bl_info = {
+    "name":         "EOL MESH DATA",
+    "author":       "Engineer of Lies",
+    "blender":      (2,6,2),
+    "version":      (0,0,1),
+    "location":     "File > Import-Export",
+    "description":  "Export eol model files",
+    "category":     "Import-Export"
+}
+
 import os
 import time
 
