@@ -35,11 +35,7 @@ DOXYGEN = doxygen
 #
 
 $(PROJECT): $(OBJECTS)
-<<<<<<< HEAD
 	$(CC) $(OBJECTS) $(LFLAGS) $(SDL_LDFLAGS) $(GLIB_LDFLAGS)
-=======
-	$(CC) $(OBJECTS) $(LFLAGS) $(SDL_LDFLAGS) $(GLIB_LDFLAGS) -lchipmunk
->>>>>>> a507eb15fddba2e68b80df53aa69b13189bc98bc
 
 docs:
 	$(DOXYGEN) doxygen.cfg
