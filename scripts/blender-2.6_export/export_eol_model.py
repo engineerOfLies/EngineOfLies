@@ -164,7 +164,8 @@ def write_file(filepath, objects, scene,
             me_verts = me.vertices[:]
                         
             # Make our own list so it can be sorted to reduce context switching
-            face_index_pairs = [(face, index) for index, face in enumerate(me.faces)]
+
+            face_index_pairs = [(face, index) for index, face in enumerate(me.polygons)]
             # faces = [ f for f in me.faces ]
 
             if EXPORT_EDGES:
