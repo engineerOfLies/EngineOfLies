@@ -25,7 +25,7 @@ bl_info = {
     "version": (1, 0, 0),
     "blender": (2, 66, 0),
     "location": "File > Import-Export",
-    "description": "Export eol mesh and eol armature",
+    "description": "Export eol model (mesh & armature)",
     "warning": "",
     "wiki_url": "http://engineeroflies.github.io/EngineOfLies/",
     "support": 'NONE',
@@ -54,13 +54,13 @@ from bpy_extras.io_utils import (ImportHelper,
 class ExportEolMesh(bpy.types.Operator, ExportHelper):
     """Save an EOL Mesh File"""
 
-    bl_idname = "export_scene.eolmesh"
-    bl_label = 'Export eolMesh'
+    bl_idname = "export_scene.eolmodel"
+    bl_label = 'Export eolModel'
     bl_options = {'PRESET'}
 
-    filename_ext = ".eolmesh"
+    filename_ext = ".eolmodel"
     filter_glob = StringProperty(
-            default="*.eolmesh;*.eolarm",
+            default="*.eolmodel",
             options={'HIDDEN'},
             )
 
@@ -191,7 +191,7 @@ class ExportEolMesh(bpy.types.Operator, ExportHelper):
 
 
 def menu_func_export(self, context):
-    self.layout.operator(ExportEolMesh.bl_idname, text="EOL Mesh (.eolmesh)")
+    self.layout.operator(ExportEolMesh.bl_idname, text="EOL Model (.eolmodel)")
 
 
 def register():
