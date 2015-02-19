@@ -5,6 +5,9 @@ a 2D game engine with 3D graphics.  Written in C, compiled to a library
 
 To be compiled as a library to be linked against for individual games.
 
+Documentation can be found at:
+    http://engineeroflies.github.io/EngineOfLies/
+
 Library uses:
 http://www.libsdl.org/
   SDL for graphics mode, image loading, audio and font rendering
