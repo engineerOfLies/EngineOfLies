@@ -362,7 +362,7 @@ void eol_graphics_frame_end()
     delay = _eol_graphics_NOW - Then;
     if (delay != 0)
     {
-      _eol_graphics_FPS = 1000.0 / delay;
+        _eol_graphics_FPS = (_eol_graphics_FPS + (1000.0 / delay))*0.5;
     }
   }
 }
